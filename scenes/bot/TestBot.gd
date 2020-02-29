@@ -5,14 +5,15 @@ export (int) var crawl_speed
 var velocity: Vector2
 var roll_mode: bool = false
 var in_control: bool = true
+const CONTROL_VELOCITY: int = 1200
 var charging: bool = false
-const CHARGE_FORCE_MULT: float = 0.6
+const CHARGE_FORCE_MULT: float = 0.7
 
 func _control():
 	pass
 
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() >= 1000:
+	if linear_velocity.length() >= CONTROL_VELOCITY:
 		in_control = false
 	else:
 		in_control = true
@@ -21,14 +22,13 @@ func _physics_process(delta: float) -> void:
 	_control()
 	velocity = velocity*delta
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	if roll_mode == true:
 		velocity = velocity.normalized() * roll_speed
 	else:
 		velocity = velocity.normalized() * crawl_speed
 	if charging == true:
-		if roll_mode == true:
-			apply_central_impulse(velocity * CHARGE_FORCE_MULT)
+		apply_central_impulse(velocity * CHARGE_FORCE_MULT)
 		charging = false
 	applied_force = velocity
 
