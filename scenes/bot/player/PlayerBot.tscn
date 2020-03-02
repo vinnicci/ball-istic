@@ -9,8 +9,8 @@ radius = 25.0
 
 [node name="PlayerBot" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-roll_speed = 3000
-crawl_speed = 800
+roll_speed = 2000
+charge_cooldown = 5
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )
@@ -21,3 +21,4 @@ shape = SubResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 current = true
 zoom = Vector2( 1.5, 1.5 )
+[connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

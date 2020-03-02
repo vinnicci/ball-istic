@@ -45,23 +45,17 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="PlayerBot" parent="." instance=ExtResource( 1 )]
 position = Vector2( 192.618, 193.916 )
+linear_damp = 3.0
+angular_damp = 1.0
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 852.772, 541.116 )
-linear_damp = 1.0
-angular_damp = -1.0
 
 [node name="Dummy2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1318.54, 897.294 )
-linear_damp = 1.0
-angular_damp = -1.0
 
 [node name="Dummy3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 479.47, 842.498 )
-linear_damp = 1.0
-angular_damp = -1.0
 
 [node name="Dummy4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 976.064, 1263.75 )
-linear_damp = 1.0
-angular_damp = -1.0

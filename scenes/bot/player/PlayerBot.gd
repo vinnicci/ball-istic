@@ -1,5 +1,8 @@
 extends "res://scenes/bot/player/TestBot.gd"
 
+#eventually ??
+#mode: Character --> rolling animations based on direction
+
 func _control():
 	velocity = Vector2()
 	if Input.is_action_just_released("change_mode"):
@@ -18,5 +21,9 @@ func _control():
 func _physics_process(_delta: float) -> void:
 	if linear_velocity.length() > 2300:
 		$Sprite.texture = load("res://assets/player/charge_effect.png")
-	if linear_velocity.length() < 1500:
+	if linear_velocity.length() < 1800:
 		$Sprite.texture = load("res://assets/player/player.png")
+
+func _on_ChargeCooldown_timeout() -> void:
+	charge_ready = true
+	$ChargeCooldown.stop()
