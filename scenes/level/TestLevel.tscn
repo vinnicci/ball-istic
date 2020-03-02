@@ -4,8 +4,6 @@
 [ext_resource path="res://assets/terrain/tut_terrain.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/Dummy.tscn" type="PackedScene" id=3]
 
-
-
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 
@@ -47,6 +45,7 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200.496, 186.795 )
+mode = 0
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 852.772, 541.116 )

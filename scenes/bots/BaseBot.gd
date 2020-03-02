@@ -11,7 +11,7 @@ var velocity: Vector2
 var roll_mode: bool = false
 const ROLL_MODE_DAMP: int = 2
 const CRAWL_MODE_DAMP: int = 5
-var charging: bool = false
+var is_charging: bool = false
 const CHARGE_FORCE_MULT: float = 0.5
 const CRAWL_SPEED = 1000
 
@@ -36,8 +36,8 @@ func _physics_process(delta: float) -> void:
 	_control()
 	apply_force(delta)
 	
-	#impulse application on charge
-	if charging == true:
+	#applying impulse on charge
+	if is_charging == true:
 		charge()
 
 func adjust_properties() -> void:
@@ -57,9 +57,12 @@ func apply_force(delta) -> void:
 		velocity = velocity.normalized() * CRAWL_SPEED
 	applied_force = velocity
 
+func switch_mode() -> void:
+	roll_mode = !roll_mode
+
 func charge() -> void:
-	charging = false
-	if charge_ready == false:
+	is_charging = false
+	if charge_ready == false || roll_mode == false:
 		return
 	apply_central_impulse(velocity * CHARGE_FORCE_MULT)
 	charge_ready = false
