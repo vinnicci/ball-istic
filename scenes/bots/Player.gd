@@ -8,6 +8,7 @@ const NORMAL_SPRITE_VELOCITY_FACTOR: float = 0.6
 func _control():
 	velocity = Vector2()
 	if Input.is_action_just_released("change_mode"):
+		$VelocityDirection.visible = !$VelocityDirection.visible
 		switch_mode()
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
@@ -26,7 +27,4 @@ func _physics_process(_delta: float) -> void:
 	if linear_velocity.length() < roll_speed * NORMAL_SPRITE_VELOCITY_FACTOR:
 		$BodySprite.texture = load("res://assets/player/player.png")
 	if roll_mode == true:
-		$VelocityDirection.show()
 		$VelocityDirection.global_rotation = linear_velocity.angle()
-	else:
-		$VelocityDirection.hide()
