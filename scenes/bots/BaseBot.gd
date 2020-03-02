@@ -4,10 +4,9 @@ extends RigidBody2D
 #mode: Character --> rolling animations based on direction
 
 export (int) var roll_speed
-export (int) var charge_cooldown
 var charge_ready: bool = true
 var control_velocity: int
-const CONTROL_VELOCITY_FACTOR: float = 0.55
+const CONTROL_VELOCITY_FACTOR: float = 0.6
 var velocity: Vector2
 var roll_mode: bool = false
 const ROLL_MODE_DAMP: int = 2
@@ -18,7 +17,6 @@ const CRAWL_SPEED = 1000
 
 func _ready() -> void:
 	control_velocity = roll_speed * CONTROL_VELOCITY_FACTOR
-	$ChargeCooldown.wait_time = charge_cooldown
 
 func _control():
 	pass
@@ -30,11 +28,11 @@ func _physics_process(delta: float) -> void:
 	#properties adjustment when changing mode
 	adjust_properties()
 	
-	#bot loses control when it reaches high linear velocity length
+	#bot loses control when it reaches high speed
 	if check_if_in_control() == false:
 		return
 	
-	#control logic
+	#virtual control and velocity calculations
 	_control()
 	apply_force(delta)
 	
@@ -67,3 +65,6 @@ func charge() -> void:
 	charge_ready = false
 	$ChargeCooldown.start()
 
+func _on_ChargeCooldown_timeout() -> void:
+	charge_ready = true
+	$ChargeCooldown.stop()
