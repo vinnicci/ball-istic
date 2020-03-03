@@ -32,4 +32,4 @@ visible = false
 texture = ExtResource( 4 )
 offset = Vector2( 35, 0 )
 
-[node name="WeaponSprite" parent="Weapon" index="0" instance=ExtResource( 5 )]
+[node name="Weapon" parent="." index="5" instance=ExtResource( 5 )]

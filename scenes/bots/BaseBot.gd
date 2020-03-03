@@ -17,6 +17,7 @@ var roll_mode: bool = false
 var is_charging: bool = false
 var is_shooting: bool = false
 var velocity: Vector2
+signal shoot
 
 func _ready() -> void:
 	linear_damp = CRAWL_MODE_DAMP
@@ -39,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	
 	#shooting weapon
 	if is_shooting == true:
-		shoot()
+		weapon_shoot()
 	
 	#applying impulse on charge
 	if is_charging == true:
@@ -65,14 +66,13 @@ func switch_mode() -> void:
 		$Weapon.show()
 		linear_damp = CRAWL_MODE_DAMP
 
-func shoot() -> void:
+func weapon_shoot() -> void:
 	is_shooting = false
-	if $Weapon/ShootCooldown.is_stopped() == false || roll_mode == true:
+	if $Weapon/Cooldown.is_stopped() == false || roll_mode == true:
 		return
-	
-	#shoot logic here
-	
-	$Weapon/ShootCooldown.start()
+	emit_signal("shoot", $Weapon.get_projectile(),
+		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation)
+	$Weapon/Cooldown.start()
 
 func charge() -> void:
 	is_charging = false
@@ -83,6 +83,3 @@ func charge() -> void:
 
 func _on_ChargeCooldown_timeout() -> void:
 	$ChargeCooldown.stop()
-
-func _on_WeaponShootCooldown_timeout() -> void:
-	$Weapon/ShootCooldown.stop()

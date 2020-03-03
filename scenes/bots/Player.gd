@@ -4,8 +4,10 @@ extends "res://scenes/bots/BaseBot.gd"
 #mode: Character --> rolling animations based on direction
 
 func _control():
-	$Weapon.look_at(get_global_mouse_position())
 	velocity = Vector2()
+	$Weapon.look_at(get_global_mouse_position())
+	if Input.is_action_pressed("shoot"):
+		is_shooting = true
 	if Input.is_action_just_released("change_mode"):
 		$VelocityDirection.visible = !$VelocityDirection.visible
 		switch_mode()
