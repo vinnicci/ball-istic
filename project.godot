@@ -84,6 +84,14 @@ zoom_out={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="non-hostile bots"
+2d_physics/layer_2="hostile bots"
+2d_physics/layer_3="obstacles"
+2d_physics/layer_4="non-hostile bullets"
+2d_physics/layer_5="hostile bullets"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

@@ -3,16 +3,19 @@ extends RigidBody2D
 #eventually ??
 #mode: Character --> rolling animations based on direction
 
+#default bot values
 export (int) var roll_speed = 1500
-var charge_ready: bool = true
-var control_velocity: int
+const CRAWL_SPEED = 1000
+const CHARGE_FORCE_FACTOR: float = 0.5
+const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76
+const NORMAL_SPRITE_VELOCITY_FACTOR: float = 0.6
 const CONTROL_VELOCITY_FACTOR: float = 0.6
-var roll_mode: bool = false
 const ROLL_MODE_DAMP: int = 2
 const CRAWL_MODE_DAMP: int = 5
+var control_velocity: int
+var roll_mode: bool = false
 var is_charging: bool = false
-const CHARGE_FORCE_MULT: float = 0.5
-const CRAWL_SPEED = 1000
+var is_shooting: bool = false
 var velocity: Vector2
 
 func _ready() -> void:
@@ -26,13 +29,17 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	#bot loses control when it reaches high speed
+	#bot loses control when it's more than control_velocity
 	if check_if_in_control() == false:
 		return
 	
-	#virtual control and velocity calculations
+	#velocity calculations
 	_control()
 	apply_force(delta)
+	
+	#shooting weapon
+	if is_shooting == true:
+		shoot()
 	
 	#applying impulse on charge
 	if is_charging == true:
@@ -42,7 +49,7 @@ func check_if_in_control() -> bool:
 	return linear_velocity.length() < control_velocity
 
 func apply_force(delta) -> void:
-	velocity = velocity*delta
+	velocity = velocity * delta
 	if roll_mode == true:
 		velocity = velocity.normalized() * roll_speed
 	else:
@@ -52,18 +59,30 @@ func apply_force(delta) -> void:
 func switch_mode() -> void:
 	roll_mode = !roll_mode
 	if roll_mode == true:
+		$Weapon.hide()
 		linear_damp = ROLL_MODE_DAMP
 	if roll_mode == false:
+		$Weapon.show()
 		linear_damp = CRAWL_MODE_DAMP
+
+func shoot() -> void:
+	is_shooting = false
+	if $Weapon/ShootCooldown.is_stopped() == false || roll_mode == true:
+		return
+	
+	#shoot logic here
+	
+	$Weapon/ShootCooldown.start()
 
 func charge() -> void:
 	is_charging = false
-	if charge_ready == false || roll_mode == false:
+	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
-	apply_central_impulse(velocity * CHARGE_FORCE_MULT)
-	charge_ready = false
+	apply_central_impulse(velocity * CHARGE_FORCE_FACTOR)
 	$ChargeCooldown.start()
 
 func _on_ChargeCooldown_timeout() -> void:
-	charge_ready = true
 	$ChargeCooldown.stop()
+
+func _on_WeaponShootCooldown_timeout() -> void:
+	$Weapon/ShootCooldown.stop()

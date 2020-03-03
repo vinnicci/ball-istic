@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="WeaponSprite" type="Sprite"]
+
+[node name="Muzzle" type="Position2D" parent="."]
+
+[node name="ShootCooldown" type="Timer" parent="."]

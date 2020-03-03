@@ -2,10 +2,9 @@ extends "res://scenes/bots/BaseBot.gd"
 
 #eventually ??
 #mode: Character --> rolling animations based on direction
-const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76
-const NORMAL_SPRITE_VELOCITY_FACTOR: float = 0.6
 
 func _control():
+	$Weapon.look_at(get_global_mouse_position())
 	velocity = Vector2()
 	if Input.is_action_just_released("change_mode"):
 		$VelocityDirection.visible = !$VelocityDirection.visible
