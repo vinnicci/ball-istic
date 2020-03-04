@@ -3,6 +3,7 @@
 [ext_resource path="res://scenes/bots/BaseBot.gd" type="Script" id=1]
 
 [sub_resource type="PhysicsMaterial" id=1]
+friction = 0.3
 bounce = 0.7
 
 [sub_resource type="CircleShape2D" id=2]
@@ -20,6 +21,7 @@ health_capacity = 50
 visible = false
 
 [node name="BodyTexture" type="Polygon2D" parent="."]
+antialiased = true
 polygon = PoolVector2Array( 0.00585938, -25.0119, 6.44806, -24.1627, 12.5632, -21.6246, 17.6582, -17.6868, 21.626, -12.4783, 24, -7, 25.0039, -0.00125349, 24.1543, 6.51226, 21.6354, 12.519, 17.7004, 17.6613, 12.5284, 21.626, 6.56634, 24.1152, 0.0215683, 25.0283, -6.48025, 24.1417, -12.4431, 21.7078, -17.6759, 17.6572, -21.6222, 12.5288, -24.1256, 6.44422, -24.9774, 0.0293264, -24.1082, -6.50726, -21.6448, -12.4883, -17.6682, -17.6946, -12.5159, -21.6499, -6.4684, -24.1272 )
 
 [node name="BodyCollisionShape" type="CollisionShape2D" parent="."]
