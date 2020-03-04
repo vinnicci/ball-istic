@@ -23,9 +23,5 @@ func _control():
 		is_charging = true
 
 func _physics_process(_delta: float) -> void:
-	if linear_velocity.length() > roll_speed * CHARGE_SPRITE_VELOCITY_FACTOR:
-		$BodySprite.texture = load("res://assets/player/charge_effect.png")
-	if linear_velocity.length() < roll_speed * NORMAL_SPRITE_VELOCITY_FACTOR:
-		$BodySprite.texture = load("res://assets/player/player.png")
 	if roll_mode == true:
 		$VelocityDirection.global_rotation = linear_velocity.angle()

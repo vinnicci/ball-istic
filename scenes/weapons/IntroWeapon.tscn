@@ -9,7 +9,6 @@
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
 heat_per_shot = 2
-heat_capacity = 100
 heat_dissipation = 5.0
 
 [node name="WeaponSprite" parent="." index="0"]

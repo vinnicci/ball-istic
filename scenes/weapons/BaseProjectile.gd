@@ -25,5 +25,5 @@ func _on_RangeTimer_timeout() -> void:
 	queue_free()
 	$RangeTimer.stop()
 
-func _on_Projectile_body_entered(body: Node) -> void:
+func _on_Projectile_body_entered(_body: Node) -> void:
 	pass
