@@ -4,7 +4,11 @@ extends RigidBody2D
 #mode: Character --> rolling animations based on direction
 
 #default bot values
+export (int) var shield_capacity = 1000
+export (int) var health_capacity = 500
 export (int) var roll_speed = 1500
+export (bool) var destructible = true
+export (bool) var hostile = true
 const CRAWL_SPEED = 1000
 const CHARGE_FORCE_FACTOR: float = 0.5
 const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76

@@ -10,6 +10,7 @@ radius = 25.0
 
 [node name="Dummy" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
+destructible = false
 
 [node name="BodySprite" parent="." index="0"]
 texture = ExtResource( 1 )

@@ -10,6 +10,7 @@ radius = 5.0
 [node name="Projectile" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 speed = 1000
+damage = 5
 proj_range = 0.7
 
 [node name="ProjectileSprite" parent="." index="0"]

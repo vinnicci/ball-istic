@@ -10,7 +10,7 @@
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 
 [sub_resource type="TileSet" id=2]
-0/name = "tut_terrain.png 0"
+0/name = "ground"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
@@ -20,7 +20,7 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 0/navigation_offset = Vector2( 0, 0 )
 0/shapes = [  ]
 0/z_index = 0
-1/name = "tut_terrain.png 1"
+1/name = "wall"
 1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
@@ -48,29 +48,56 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200.496, 186.795 )
+collision_mask = 15
 mode = 0
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="Dummy" parent="." instance=ExtResource( 3 )]
 position = Vector2( 852.772, 541.116 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="Dummy2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1318.54, 897.294 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="Dummy3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 479.47, 842.498 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="Dummy4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 976.064, 1263.75 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="HeavyDummy" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1276.7, 547.964 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="HeavyDummy2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 799.349, 1110.05 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="HeavyDummy3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1118.52, 703.314 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 
 [node name="HeavyDummy4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 488.648, 1333.19 )
+collision_mask = 15
+shield_capacity = 1000
+health_capacity = 500
 [connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]

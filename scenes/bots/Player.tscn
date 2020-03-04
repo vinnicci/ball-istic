@@ -13,6 +13,7 @@ radius = 25.0
 mode = 2
 script = ExtResource( 2 )
 roll_speed = 2000
+hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 current = true
