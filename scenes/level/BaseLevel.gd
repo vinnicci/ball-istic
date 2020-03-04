@@ -1,4 +1,4 @@
 extends Node2D
 
-func _on_Player_shoot(projectile, proj_position, proj_direction) -> void:
+func _on_Player_shoot(_projectile, _proj_position, _proj_direction) -> void:
 	pass
