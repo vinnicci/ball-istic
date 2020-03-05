@@ -12,7 +12,7 @@ export (bool) var destructible = true
 export (bool) var hostile = true
 export (int) var bot_radius = 25
 const CRAWL_SPEED = 1000
-const CHARGE_FORCE_FACTOR: float = 0.5
+const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76
 const NORMAL_SPRITE_VELOCITY_FACTOR: float = 0.6
 const CONTROL_VELOCITY_FACTOR: float = 0.6
@@ -22,13 +22,14 @@ const CRAWL_MODE_DAMP: int = 5
 var control_velocity: int
 var roll_mode: bool = false
 var charge_direction: float
+var orig_modulate: Color
 var velocity: Vector2
 signal shoot
 
 
 func _ready() -> void:
 	#body set up
-	set_up_body_texture()
+	set_up_effects()
 	
 	#physics set up
 	set_up_bot_physics()
@@ -58,7 +59,8 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 
-func set_up_body_texture() -> void:
+func set_up_effects() -> void:
+	orig_modulate = modulate
 	var circle_points = []
 	for i in range(24):
 		circle_points.append(Vector2(bot_radius,0).rotated(deg2rad(i*15.0)))
@@ -74,13 +76,11 @@ func set_up_bot_physics() -> void:
 
 
 func check_for_charge_sprite_effects() -> void:
+	var effect_modulate = Color(3,3,3,1)
 	if linear_velocity.length() > roll_speed * CHARGE_SPRITE_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
-		$ChargeSprite.show()
-		$BodyTexture.hide()
+		modulate = effect_modulate
 	if linear_velocity.length() < roll_speed * NORMAL_SPRITE_VELOCITY_FACTOR:
-		$ChargeSprite.hide()
-		$BodyTexture.show()
-
+		modulate = lerp(modulate, orig_modulate, 0.5)
 
 func apply_rolling_effects() -> void:
 	if $BodyTexture.texture_offset.x < -bot_radius*2 || $BodyTexture.texture_offset.x > bot_radius*2:
