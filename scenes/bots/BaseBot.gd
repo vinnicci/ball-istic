@@ -1,7 +1,8 @@
 extends RigidBody2D
 
 #eventually ??
-#mode: Character --> rolling animations based on direction
+#implementation of BodyTexture(Polygon2d) to autodraw circle and resize according
+#to bot_radius
 
 #default bot values
 export (int) var shield_capacity = 1000
@@ -9,6 +10,7 @@ export (int) var health_capacity = 500
 export (int) var roll_speed = 1500
 export (bool) var destructible = true
 export (bool) var hostile = true
+export (int) var bot_radius = 25
 const CRAWL_SPEED = 1000
 const CHARGE_FORCE_FACTOR: float = 0.5
 const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76
@@ -17,7 +19,6 @@ const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const CRAWL_MODE_DAMP: int = 5
-const AVERAGE_BOT_SIZE: int = 50
 var control_velocity: int
 var roll_mode: bool = false
 var is_charging: bool = false
@@ -29,6 +30,8 @@ signal shoot
 func _ready() -> void:
 	linear_damp = CRAWL_MODE_DAMP
 	control_velocity = roll_speed * CONTROL_VELOCITY_FACTOR
+	$BodyTexture.position = Vector2(-bot_radius, -bot_radius)
+	$BodyTexture.offset = Vector2(bot_radius, bot_radius)
 
 func _control():
 	pass
@@ -60,9 +63,9 @@ func check_for_charge_sprite_effects() -> void:
 		$BodyTexture.show()
 
 func apply_rolling_effects() -> void:
-	if $BodyTexture.texture_offset.x < -AVERAGE_BOT_SIZE || $BodyTexture.texture_offset.x > AVERAGE_BOT_SIZE:
+	if $BodyTexture.texture_offset.x < -bot_radius*2 || $BodyTexture.texture_offset.x > bot_radius*2:
 		$BodyTexture.texture_offset.x = 0
-	if $BodyTexture.texture_offset.y < -AVERAGE_BOT_SIZE || $BodyTexture.texture_offset.y > AVERAGE_BOT_SIZE:
+	if $BodyTexture.texture_offset.y < -bot_radius*2 || $BodyTexture.texture_offset.y > bot_radius*2:
 		$BodyTexture.texture_offset.y = 0
 	if roll_mode == true:
 		$BodyTexture.texture_offset -= (linear_velocity/roll_speed) * ROLLING_EFFECT_FACTOR
