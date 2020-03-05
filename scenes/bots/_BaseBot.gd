@@ -1,8 +1,7 @@
 extends RigidBody2D
 
 #eventually ??
-#implementation of BodyTexture(Polygon2d) to autodraw circle and resize according
-#to bot_radius
+#animation states
 
 #default bot values
 export (int) var shield_capacity = 1000
@@ -11,10 +10,11 @@ export (int) var roll_speed = 1500
 export (bool) var destructible = true
 export (bool) var hostile = true
 export (int) var bot_radius = 25
-const CRAWL_SPEED = 1000
+const CRAWL_SPEED: int = 1000
 const CHARGE_FORCE_FACTOR: float = 0.6
-const CHARGE_SPRITE_VELOCITY_FACTOR: float = 0.76
-const NORMAL_SPRITE_VELOCITY_FACTOR: float = 0.6
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.76
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
+const CHARGE_GLOW_SIZE: float = 3.0
 const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
@@ -22,7 +22,6 @@ const CRAWL_MODE_DAMP: int = 5
 var control_velocity: int
 var roll_mode: bool = false
 var charge_direction: float
-var orig_modulate: Color
 var velocity: Vector2
 signal shoot
 
@@ -40,6 +39,7 @@ func _physics_process(delta: float) -> void:
 	check_for_charge_sprite_effects()
 	
 	#rolling sprite effect
+	#bodytexture size must be the same as bot's rect size(radius*2 x radius*2) for this to work
 	apply_rolling_effects()
 	
 	#bot loses control when it's more than control_velocity
@@ -60,13 +60,26 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 
 func set_up_effects() -> void:
-	orig_modulate = modulate
-	var circle_points = []
-	for i in range(24):
-		circle_points.append(Vector2(bot_radius,0).rotated(deg2rad(i*15.0)))
+	var circle_points = plot_circle_points(bot_radius)
 	$BodyTexture.polygon = circle_points
 	$BodyTexture.position = Vector2(-bot_radius, -bot_radius)
 	$BodyTexture.offset = Vector2(bot_radius, bot_radius)
+	$ChargeEffectBody.polygon = circle_points
+	$ChargeEffectBody.position = Vector2(-bot_radius, -bot_radius)
+	$ChargeEffectBody.offset = Vector2(bot_radius, bot_radius)
+	var charge_effect_circle = bot_radius + CHARGE_GLOW_SIZE
+	$ChargeEffectGlow.polygon = plot_circle_points(charge_effect_circle)
+	$ChargeEffectGlow.position = Vector2(-charge_effect_circle, -charge_effect_circle)
+	$ChargeEffectGlow.offset = Vector2(charge_effect_circle, charge_effect_circle)
+	$ChargeEffectBody.color.a = 0
+	$ChargeEffectGlow.color.a = 0
+
+
+func plot_circle_points(radius) -> Array:
+	var circle_points = []
+	for i in range(24):
+		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*15.0)))
+	return circle_points
 
 
 func set_up_bot_physics() -> void:
@@ -76,11 +89,13 @@ func set_up_bot_physics() -> void:
 
 
 func check_for_charge_sprite_effects() -> void:
-	var effect_modulate = Color(3,3,3,1)
-	if linear_velocity.length() > roll_speed * CHARGE_SPRITE_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
-		modulate = effect_modulate
-	if linear_velocity.length() < roll_speed * NORMAL_SPRITE_VELOCITY_FACTOR:
-		modulate = lerp(modulate, orig_modulate, 0.5)
+	if linear_velocity.length() > roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
+		$ChargeEffectGlow.color.a = 255
+		$ChargeEffectBody.color.a = 255
+	if linear_velocity.length() < roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+		$ChargeEffectGlow.color.a = lerp($ChargeEffectGlow.color.a, 0, 0.3)
+		$ChargeEffectBody.color.a = lerp($ChargeEffectBody.color.a, 0, 0.3)
+
 
 func apply_rolling_effects() -> void:
 	if $BodyTexture.texture_offset.x < -bot_radius*2 || $BodyTexture.texture_offset.x > bot_radius*2:
