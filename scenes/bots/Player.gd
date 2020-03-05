@@ -1,4 +1,4 @@
-extends "res://scenes/bots/BaseBot.gd"
+extends "res://scenes/bots/_BaseBot.gd"
 
 #eventually ??
 #mode: Character --> rolling animations based on direction
