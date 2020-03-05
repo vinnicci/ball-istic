@@ -21,23 +21,18 @@ const ROLL_MODE_DAMP: int = 2
 const CRAWL_MODE_DAMP: int = 5
 var control_velocity: int
 var roll_mode: bool = false
-var is_charging: bool = false
-var is_shooting: bool = false
 var charge_direction: float
 var velocity: Vector2
 signal shoot
 
+
 func _ready() -> void:
-	linear_damp = CRAWL_MODE_DAMP
-	control_velocity = roll_speed * CONTROL_VELOCITY_FACTOR
-	$BodyTexture.position = Vector2(-bot_radius, -bot_radius)
-	$BodyTexture.offset = Vector2(bot_radius, bot_radius)
+	#body set up
+	set_up_body_texture()
+	
+	#physics set up
+	set_up_bot_physics()
 
-func _control():
-	pass
-
-func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:
 	#charge sprite effects
@@ -54,6 +49,30 @@ func _physics_process(delta: float) -> void:
 	_control()
 	apply_force(delta)
 
+
+func _control():
+	pass
+
+
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
+	pass
+
+
+func set_up_body_texture() -> void:
+	var circle_points = []
+	for i in range(24):
+		circle_points.append(Vector2(bot_radius,0).rotated(deg2rad(i*15.0)))
+	$BodyTexture.polygon = circle_points
+	$BodyTexture.position = Vector2(-bot_radius, -bot_radius)
+	$BodyTexture.offset = Vector2(bot_radius, bot_radius)
+
+
+func set_up_bot_physics() -> void:
+	$BodyCollisionShape.shape.radius = bot_radius
+	linear_damp = CRAWL_MODE_DAMP
+	control_velocity = roll_speed * CONTROL_VELOCITY_FACTOR
+
+
 func check_for_charge_sprite_effects() -> void:
 	if linear_velocity.length() > roll_speed * CHARGE_SPRITE_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
 		$ChargeSprite.show()
@@ -61,6 +80,7 @@ func check_for_charge_sprite_effects() -> void:
 	if linear_velocity.length() < roll_speed * NORMAL_SPRITE_VELOCITY_FACTOR:
 		$ChargeSprite.hide()
 		$BodyTexture.show()
+
 
 func apply_rolling_effects() -> void:
 	if $BodyTexture.texture_offset.x < -bot_radius*2 || $BodyTexture.texture_offset.x > bot_radius*2:
@@ -72,8 +92,10 @@ func apply_rolling_effects() -> void:
 	if roll_mode == false:
 		$BodyTexture.texture_offset = lerp($BodyTexture.texture_offset, Vector2(0,0), 0.5)
 
+
 func check_if_in_control() -> bool:
 	return linear_velocity.length() < control_velocity
+
 
 func apply_force(delta) -> void:
 	velocity = velocity * delta
@@ -82,6 +104,7 @@ func apply_force(delta) -> void:
 	else:
 		velocity = velocity.normalized() * CRAWL_SPEED
 	applied_force = velocity
+
 
 func switch_mode() -> void:
 	roll_mode = !roll_mode
@@ -92,19 +115,21 @@ func switch_mode() -> void:
 		$Weapon.show()
 		linear_damp = CRAWL_MODE_DAMP
 
+
 func weapon_shoot() -> void:
-	is_shooting = false
 	if $Weapon/Cooldown.is_stopped() == false || roll_mode == true:
 		return
 	emit_signal("shoot", $Weapon.get_projectile(),
 		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation)
 	$Weapon/Cooldown.start()
 
+
 func charge() -> void:
 	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(roll_speed,0).rotated(charge_direction) * CHARGE_FORCE_FACTOR)
 	$ChargeCooldown.start()
+
 
 func _on_ChargeCooldown_timeout() -> void:
 	$ChargeCooldown.stop()
