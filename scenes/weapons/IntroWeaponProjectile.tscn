@@ -11,7 +11,7 @@ radius = 5.0
 script = ExtResource( 3 )
 speed = 1000
 damage = 5
-proj_range = 0.7
+proj_range = 1.5
 
 [node name="ProjectileSprite" parent="." index="0"]
 texture = ExtResource( 1 )

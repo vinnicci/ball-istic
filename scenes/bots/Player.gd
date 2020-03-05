@@ -9,7 +9,6 @@ func _control():
 	if Input.is_action_pressed("shoot"):
 		weapon_shoot()
 	if Input.is_action_just_released("change_mode"):
-		$VelocityDirection.visible = !$VelocityDirection.visible
 		switch_mode()
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
@@ -22,7 +21,3 @@ func _control():
 	if Input.is_action_just_released("charge_roll"):
 		charge_direction = $Weapon.global_rotation
 		charge()
-
-func _physics_process(_delta: float) -> void:
-	if roll_mode == true:
-		$VelocityDirection.global_rotation = linear_velocity.angle()
