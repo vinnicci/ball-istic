@@ -19,9 +19,8 @@ const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const CRAWL_MODE_DAMP: int = 5
-var control_velocity: int
+onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 var roll_mode: bool = false
-var charge_direction: float
 var velocity: Vector2
 signal shoot
 
@@ -35,10 +34,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	#charge sprite effects
-	check_for_charge_sprite_effects()
+	#charge graphical effects
+	check_for_charge_effects()
 	
-	#rolling sprite effect
+	#rolling graphical effect
 	#bodytexture size must be the same as bot's rect size(radius*2 x radius*2) for this to work
 	apply_rolling_effects()
 	
@@ -85,10 +84,9 @@ func plot_circle_points(radius) -> Array:
 func set_up_bot_physics() -> void:
 	$BodyCollisionShape.shape.radius = bot_radius
 	linear_damp = CRAWL_MODE_DAMP
-	control_velocity = roll_speed * CONTROL_VELOCITY_FACTOR
 
 
-func check_for_charge_sprite_effects() -> void:
+func check_for_charge_effects() -> void:
 	if linear_velocity.length() > roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
 		$ChargeEffectGlow.color.a = 255
 		$ChargeEffectBody.color.a = 255
@@ -139,12 +137,8 @@ func weapon_shoot() -> void:
 	$Weapon/Cooldown.start()
 
 
-func charge() -> void:
+func charge(charge_direction) -> void:
 	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(roll_speed,0).rotated(charge_direction) * CHARGE_FORCE_FACTOR)
 	$ChargeCooldown.start()
-
-
-func _on_ChargeCooldown_timeout() -> void:
-	$ChargeCooldown.stop()

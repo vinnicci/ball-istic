@@ -17,7 +17,7 @@ hostile = false
 current = true
 zoom = Vector2( 1.5, 1.5 )
 
-[node name="BodyTexture" parent="." index="3"]
+[node name="BodyTexture" parent="." index="2"]
 texture = ExtResource( 7 )
 
 [node name="Weapon" parent="." index="4" instance=ExtResource( 5 )]

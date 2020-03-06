@@ -10,6 +10,3 @@ export (float) var heat_dissipation
 
 func get_projectile() -> Area2D:
 	return Projectile.instance()
-
-func _on_Cooldown_timeout() -> void:
-	$Cooldown.stop()

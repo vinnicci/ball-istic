@@ -23,7 +23,6 @@ func _process(delta: float) -> void:
 
 func _on_RangeTimer_timeout() -> void:
 	queue_free()
-	$RangeTimer.stop()
 
 func _on_Projectile_body_entered(_body: Node) -> void:
 	pass

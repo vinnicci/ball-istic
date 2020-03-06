@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="Project Ball-istic"
 config/icon="res://icon.png"
 
+[display]
+
+window/vsync/use_vsync=false
+
 [importer_defaults]
 
 texture={
@@ -81,5 +85,6 @@ shoot={
 
 [rendering]
 
+quality/filters/use_nearest_mipmap_filter=true
 environment/default_clear_color=Color( 0.137255, 0.137255, 0.137255, 1 )
 environment/default_environment="res://default_env.tres"

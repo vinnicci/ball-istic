@@ -19,5 +19,4 @@ func _control():
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_just_released("charge_roll"):
-		charge_direction = $Weapon.global_rotation
-		charge()
+		charge($Weapon.global_rotation)
