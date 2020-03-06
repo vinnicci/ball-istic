@@ -5,12 +5,8 @@
 [ext_resource path="res://scenes/bots/Dummy.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/_BaseWeapon.tscn" type="PackedScene" id=4]
 
-
-
 [node name="Dummy" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-shield_capacity = 1000
-health_capacity = 500
 destructible = false
 
 [node name="BodyTexture" parent="." index="1"]

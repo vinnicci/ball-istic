@@ -12,6 +12,7 @@ bounce = 0.5
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 script = ExtResource( 1 )
+bot_radius = 32
 
 [node name="ChargeEffectGlow" type="Polygon2D" parent="."]
 color = Color( 1, 0.156863, 0.592157, 1 )
