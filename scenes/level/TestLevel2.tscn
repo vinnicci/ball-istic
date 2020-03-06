@@ -17,12 +17,16 @@ position = Vector2( 280.205, 320.235 )
 
 [node name="Dummy" parent="." index="2" instance=ExtResource( 4 )]
 position = Vector2( -259.839, 983.176 )
+mode = 2
 
 [node name="Dummy2" parent="." index="3" instance=ExtResource( 4 )]
 position = Vector2( 14.0454, 2331.53 )
+mode = 2
 
 [node name="Dummy3" parent="." index="4" instance=ExtResource( 4 )]
 position = Vector2( 2612.44, 547.77 )
+mode = 2
 
 [node name="Dummy4" parent="." index="5" instance=ExtResource( 4 )]
 position = Vector2( 2331.53, 2471.99 )
+mode = 2

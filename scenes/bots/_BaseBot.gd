@@ -100,8 +100,10 @@ func apply_rolling_effects() -> void:
 		$BodyTexture.texture_offset.x = 0
 	if $BodyTexture.texture_offset.y < -bot_radius*2 || $BodyTexture.texture_offset.y > bot_radius*2:
 		$BodyTexture.texture_offset.y = 0
+	if $BodyTexture.texture_rotation < -360 || $BodyTexture.texture_rotation > 360:
+		$BodyTexture.texture_rotation = 0
 	if roll_mode == true:
-		$BodyTexture.texture_offset -= (linear_velocity/roll_speed) * ROLLING_EFFECT_FACTOR
+		$BodyTexture.texture_offset -= (linear_velocity.rotated(-rotation)/roll_speed) * ROLLING_EFFECT_FACTOR
 	if roll_mode == false:
 		$BodyTexture.texture_offset = lerp($BodyTexture.texture_offset, Vector2(0,0), 0.5)
 
