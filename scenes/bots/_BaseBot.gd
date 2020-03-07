@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 #eventually ??
-#animation states
+#animation states, deciding if turret mode is stationary or mobile
 
 #default bot values
 export (int) var shield_capacity = 1000
@@ -14,11 +14,11 @@ const CRAWL_SPEED: int = 1000
 const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.76
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
-const CHARGE_GLOW_SIZE: float = 3.0
+const OUTLINE_SIZE: float = 2.5
 const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
-const CRAWL_MODE_DAMP: int = 5
+const SHOOT_MODE_DAMP: int = 5
 onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 var roll_mode: bool = false
 var velocity: Vector2
@@ -66,12 +66,31 @@ func set_up_effects() -> void:
 	$ChargeEffectBody.polygon = circle_points
 	$ChargeEffectBody.position = Vector2(-bot_radius, -bot_radius)
 	$ChargeEffectBody.offset = Vector2(bot_radius, bot_radius)
-	var charge_effect_circle = bot_radius + CHARGE_GLOW_SIZE
-	$ChargeEffectGlow.polygon = plot_circle_points(charge_effect_circle)
-	$ChargeEffectGlow.position = Vector2(-charge_effect_circle, -charge_effect_circle)
-	$ChargeEffectGlow.offset = Vector2(charge_effect_circle, charge_effect_circle)
-	$ChargeEffectBody.color.a = 0
-	$ChargeEffectGlow.color.a = 0
+	var outline = bot_radius + OUTLINE_SIZE
+	$Outline.polygon = plot_circle_points(outline)
+	$Outline.position = Vector2(-outline, -outline)
+	$Outline.offset = Vector2(outline, outline)
+	set_up_legs([circle_points[2], circle_points[10], circle_points[18]])
+
+
+func set_up_legs(points) -> void:
+	for i in points.size():
+		var leg = $Legs/LegSprite.duplicate(DUPLICATE_USE_INSTANCING)
+		match i:
+			0:
+				$Legs/Leg1.add_child(leg)
+				$Legs/Leg1.position = points[0]
+				$Legs/Leg1.rotation = deg2rad(15*2) #<-- 15 degrees times point num from argument
+			1:
+				$Legs/Leg2.add_child(leg)
+				$Legs/Leg2.position = points[1]
+				$Legs/Leg2.rotation = deg2rad(15*10)
+			2:
+				$Legs/Leg3.add_child(leg)
+				$Legs/Leg3.position = points[2]
+				$Legs/Leg3.rotation = deg2rad(15*18)
+	$Legs/LegSprite.hide()
+
 
 
 func plot_circle_points(radius) -> Array:
@@ -83,16 +102,16 @@ func plot_circle_points(radius) -> Array:
 
 func set_up_bot_physics() -> void:
 	$BodyCollisionShape.shape.radius = bot_radius
-	linear_damp = CRAWL_MODE_DAMP
+	linear_damp = SHOOT_MODE_DAMP
 
 
 func check_for_charge_effects() -> void:
 	if linear_velocity.length() > roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
-		$ChargeEffectGlow.color.a = 255
+		$Outline.color = Color(0.941406, 0.150772, 0.929053)
 		$ChargeEffectBody.color.a = 255
 	if linear_velocity.length() < roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		$ChargeEffectGlow.color.a = lerp($ChargeEffectGlow.color.a, 0, 0.3)
-		$ChargeEffectBody.color.a = lerp($ChargeEffectBody.color.a, 0, 0.3)
+		$Outline.color = lerp($Outline.color, Color(1,1,1), 0.1)
+		$ChargeEffectBody.color.a = lerp($ChargeEffectBody.color.a, 0, 0.5)
 
 
 func apply_rolling_effects() -> void:
@@ -116,19 +135,21 @@ func apply_force(delta) -> void:
 	velocity = velocity * delta
 	if roll_mode == true:
 		velocity = velocity.normalized() * roll_speed
-	else:
-		velocity = velocity.normalized() * CRAWL_SPEED
+#	else:
+#		velocity = velocity.normalized() * CRAWL_SPEED
 	applied_force = velocity
 
 
 func switch_mode() -> void:
 	roll_mode = !roll_mode
+	$Weapon.visible = !$Weapon.visible
+	$Legs.visible = !$Legs.visible
 	if roll_mode == true:
-		$Weapon.hide()
 		linear_damp = ROLL_MODE_DAMP
+		mode = RigidBody2D.MODE_RIGID
 	if roll_mode == false:
-		$Weapon.show()
-		linear_damp = CRAWL_MODE_DAMP
+		linear_damp = SHOOT_MODE_DAMP
+		mode = RigidBody2D.MODE_CHARACTER
 
 
 func weapon_shoot() -> void:

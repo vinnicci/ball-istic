@@ -14,8 +14,18 @@ gravity_scale = 0.0
 script = ExtResource( 1 )
 bot_radius = 32
 
-[node name="ChargeEffectGlow" type="Polygon2D" parent="."]
-color = Color( 1, 0.156863, 0.592157, 1 )
+[node name="Legs" type="Node2D" parent="."]
+
+[node name="LegSprite" type="Sprite" parent="Legs"]
+visible = false
+
+[node name="Leg1" type="Position2D" parent="Legs"]
+
+[node name="Leg2" type="Position2D" parent="Legs"]
+
+[node name="Leg3" type="Position2D" parent="Legs"]
+
+[node name="Outline" type="Polygon2D" parent="."]
 
 [node name="BodyTexture" type="Polygon2D" parent="."]
 
