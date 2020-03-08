@@ -4,10 +4,13 @@
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource( 1 )
+speed = 500
+damage = 5.0
+proj_range = 0.5
 
-[node name="ProjectileSprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 
-[node name="ProjectileCollisionShape" type="CollisionShape2D" parent="."]
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
 
 [node name="RangeTimer" type="Timer" parent="."]
 one_shot = true

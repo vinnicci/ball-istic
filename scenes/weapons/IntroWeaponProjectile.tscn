@@ -10,12 +10,12 @@ radius = 5.0
 [node name="Projectile" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 speed = 1000
-damage = 5
+damage = 5.0
 proj_range = 1.5
 
-[node name="ProjectileSprite" parent="." index="0"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )
 offset = Vector2( -9, 0 )
 
-[node name="ProjectileCollisionShape" parent="." index="1"]
+[node name="CollisionShape" parent="." index="1"]
 shape = SubResource( 1 )

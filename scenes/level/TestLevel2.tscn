@@ -51,67 +51,43 @@ script = ExtResource( 7 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 3 )]
 position = Vector2( 280.205, 320.235 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 4 )]
 position = Vector2( -259.839, 983.176 )
 mode = 2
-contacts_reported = 0
-contact_monitor = false
 
 [node name="Dummy2" parent="Bots" index="2" instance=ExtResource( 4 )]
 position = Vector2( 14.0454, 2331.53 )
 mode = 2
-contacts_reported = 0
-contact_monitor = false
 
 [node name="Dummy3" parent="Bots" index="3" instance=ExtResource( 4 )]
 position = Vector2( 2612.44, 547.77 )
 mode = 2
-contacts_reported = 0
-contact_monitor = false
 
 [node name="Dummy4" parent="Bots" index="4" instance=ExtResource( 4 )]
 position = Vector2( 2331.53, 2471.99 )
 mode = 2
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy" parent="Bots" index="5" instance=ExtResource( 6 )]
 position = Vector2( -53.946, 872.947 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy2" parent="Bots" index="6" instance=ExtResource( 6 )]
 position = Vector2( 367.815, 2506.05 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy3" parent="Bots" index="7" instance=ExtResource( 6 )]
 position = Vector2( 2967.04, 975.935 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy4" parent="Bots" index="8" instance=ExtResource( 6 )]
 position = Vector2( 805.455, 121.975 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy5" parent="Bots" index="9" instance=ExtResource( 6 )]
 position = Vector2( 1792.85, 762.445 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy6" parent="Bots" index="10" instance=ExtResource( 6 )]
 position = Vector2( 1826.2, 2730.56 )
-contacts_reported = 0
-contact_monitor = false
 
 [node name="ShieldedDummy7" parent="Bots" index="11" instance=ExtResource( 6 )]
 position = Vector2( 2720.19, 1402.91 )
-contacts_reported = 0
-contact_monitor = false
 [connection signal="body_entered" from="Bots/Player" to="Bots/Player" method="_on_charge_collision"]
 [connection signal="body_entered" from="Bots/Dummy" to="Bots/Dummy" method="_on_charge_collision"]
 [connection signal="body_entered" from="Bots/Dummy2" to="Bots/Dummy2" method="_on_charge_collision"]

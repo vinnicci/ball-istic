@@ -42,7 +42,7 @@ func _control():
 
 func animate_charge_level_bar() -> void:
 	charge_level.value = 0
-	charge_level.modulate = Color(0.541176, 0.541176, 0.541176)
+	charge_level.modulate = Color(0.627451, 0.627451, 0.627451)
 	var tween = charge_level.get_node("Tween")
 	tween.interpolate_property(charge_level, 'value', charge_level.value, charge_level.max_value,
 		$ChargeCooldown.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
