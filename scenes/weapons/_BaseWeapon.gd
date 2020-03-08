@@ -4,9 +4,23 @@ extends Node2D
 #however you can name the scene as anything
 
 export (PackedScene) var Projectile
-export (int) var heat_per_shot
-export (int) var heat_capacity
-export (float) var heat_dissipation
+export (float) var heat_per_shot = 1
+export (float) var heat_capacity = 20
+export (float) var heat_dissipation = 2
+var current_heat: float
+
 
 func get_projectile() -> Area2D:
+	$Cooldown.start()
+	current_heat += heat_per_shot
 	return Projectile.instance()
+
+
+func _process(_delta: float) -> void:
+	if current_heat > heat_capacity:
+		$OverheatCooldown.start()
+
+
+func _on_DissipationCooldown_timeout() -> void:
+	if current_heat > 0:
+		current_heat -= heat_dissipation

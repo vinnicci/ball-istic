@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/bots/_BaseBot.gd" type="Script" id=1]
+[ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
 bounce = 0.5
 
 [sub_resource type="CircleShape2D" id=2]
+radius = 32.0
 
 [node name="BaseBot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
@@ -38,3 +40,29 @@ shape = SubResource( 2 )
 [node name="ChargeCooldown" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="Bars" type="Node2D" parent="."]
+
+[node name="Shield" type="TextureProgress" parent="Bars"]
+modulate = Color( 0.235294, 0.933333, 0.901961, 1 )
+margin_left = -25.0
+margin_top = 47.0
+margin_right = 25.0
+margin_bottom = 52.0
+value = 100.0
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="TextureProgress" parent="Bars"]
+modulate = Color( 0.937255, 0.266667, 0.266667, 1 )
+margin_left = -25.0
+margin_top = 54.0
+margin_right = 25.0
+margin_bottom = 59.0
+value = 100.0
+texture_progress = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

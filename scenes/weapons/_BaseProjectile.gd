@@ -4,7 +4,7 @@ extends Area2D
 #however you can name the scene as anything
 
 export (int) var speed
-export (int) var damage
+export (float) var damage
 export (float) var proj_range
 var hostile_projectile: bool
 var velocity: Vector2
@@ -20,11 +20,14 @@ func _travel(pos, dir, origin) -> void:
 	rotation = dir
 	velocity = speed * Vector2(1,0).rotated(dir).normalized()
 
+
 func _process(delta: float) -> void:
 	position += velocity * delta
 
+
 func _on_RangeTimer_timeout() -> void:
 	queue_free()
+
 
 func _on_Projectile_body_entered(_body: Node) -> void:
 	if _body.destructible == false:

@@ -1,13 +1,47 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/player/player_leg.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/Player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/bots/_BaseBot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=4]
 [ext_resource path="res://scenes/weapons/IntroWeapon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/player/player_n_paint_job.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
+
+[sub_resource type="Animation" id=3]
+resource_name = "too_much_heat"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.913725, 0.639216, 0.0588235, 1 ), Color( 0.960784, 0.0901961, 0, 1 ), Color( 0.913725, 0.639216, 0.0588235, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "charge_ready"
+length = 0.06
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.02, 0.04, 0.06 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0, 0.0588235, 0.737255, 1 ) ]
+}
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -16,7 +50,7 @@ hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 current = true
-zoom = Vector2( 1.5, 1.5 )
+zoom = Vector2( 1.7, 1.7 )
 
 [node name="LegSprite" parent="Legs" index="0"]
 visible = true
@@ -29,7 +63,44 @@ texture = ExtResource( 7 )
 [node name="BodyCollisionShape" parent="." index="3"]
 shape = SubResource( 1 )
 
-[node name="Weapon" parent="." index="4" instance=ExtResource( 5 )]
-
-[node name="ChargeCooldown" parent="." index="5"]
+[node name="ChargeCooldown" parent="." index="4"]
 wait_time = 1.0
+
+[node name="Weapon" parent="." index="5" instance=ExtResource( 5 )]
+heat_per_shot = 1.0
+
+[node name="WeaponHeat" type="TextureProgress" parent="Bars" index="2"]
+modulate = Color( 0.913725, 0.639216, 0.0588235, 1 )
+margin_left = -52.0
+margin_top = 25.0
+margin_right = -2.0
+margin_bottom = 30.0
+rect_rotation = -90.0
+texture_progress = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Bars/WeaponHeat" index="0"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/WeaponHeat" index="1"]
+anims/too_much_heat = SubResource( 3 )
+
+[node name="ChargeLevel" type="TextureProgress" parent="Bars" index="3"]
+modulate = Color( 0, 0.0588235, 0.737255, 1 )
+margin_left = 47.0
+margin_top = 25.0
+margin_right = 97.0
+margin_bottom = 30.0
+rect_rotation = -90.0
+value = 100.0
+texture_progress = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Bars/ChargeLevel" index="0"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/ChargeLevel" index="1"]
+anims/charge_ready = SubResource( 2 )
+[connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

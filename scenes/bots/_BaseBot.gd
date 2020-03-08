@@ -8,7 +8,8 @@ export (int) var health_capacity = 100
 export (int) var roll_speed = 1500
 export (bool) var destructible = true
 export (bool) var hostile = true
-export (int) var bot_radius = 25
+export (int) var bot_radius = 32
+const AVERAGE_BOT_RADIUS = 32
 const CRAWL_SPEED: int = 1000
 const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.76
@@ -26,6 +27,8 @@ onready var leg3 = $Legs/Leg3
 onready var body_outline = $Body/BodyOutline
 onready var body_texture = $Body/BodyTexture
 onready var body_charge_effect = $Body/BodyChargeEffect
+onready var shield_bar = $Bars/Shield
+onready var health_bar = $Bars/Health
 var roll_mode: bool = false
 var velocity: Vector2
 signal shoot
@@ -33,15 +36,18 @@ signal shoot
 
 func _ready() -> void:
 	#body set up
-	set_up_effects()
+	set_up_body_graphics()
 	
 	#physics set up
-	set_up_bot_physics()
+	set_up_properties()
 
 
 func _physics_process(delta: float) -> void:
 	#charge graphical effects
 	apply_charge_effects()
+	
+	#keep shield and health bars rotation
+	$Bars.global_rotation = 0
 	
 	#rolling graphical effect
 	#bodytexture size must be the same as bot's rect size(radius*2 x radius*2) for this to work
@@ -64,7 +70,8 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 
-func set_up_effects() -> void:
+func set_up_body_graphics() -> void:
+	$Bars.position.y += bot_radius - AVERAGE_BOT_RADIUS
 	var circle_points = plot_circle_points(bot_radius)
 	body_texture.polygon = circle_points
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
@@ -105,9 +112,15 @@ func plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-func set_up_bot_physics() -> void:
+func set_up_properties() -> void:
 	$BodyCollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
+	if destructible == false:
+		$Bars.hide()
+	shield_bar.max_value = shield_capacity
+	shield_bar.value = shield_capacity
+	health_bar.max_value = health_capacity
+	health_bar.value = health_capacity
 
 
 func apply_charge_effects() -> void:
@@ -131,7 +144,6 @@ func apply_rolling_effects() -> void:
 		body_texture.texture_offset.y = 0
 	if body_texture.texture_rotation < -360 || body_texture.texture_rotation > 360:
 		body_texture.texture_rotation = 0
-	
 
 
 func check_if_in_control() -> bool:
@@ -158,11 +170,10 @@ func switch_mode() -> void:
 
 
 func weapon_shoot() -> void:
-	if $Weapon/Cooldown.is_stopped() == false || roll_mode == true:
+	if $Weapon/Cooldown.is_stopped() == false || $Weapon/OverheatCooldown.is_stopped() == false || roll_mode == true:
 		return
 	emit_signal("shoot", $Weapon.get_projectile(),
 		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, hostile)
-	$Weapon/Cooldown.start()
 
 
 func charge(charge_direction) -> void:
@@ -177,9 +188,9 @@ func take_damage(damage):
 		return
 	if shield_capacity >= 0:
 		shield_capacity -= damage
-		print("shield: " + shield_capacity as String)
+		shield_bar.value -= damage
 	if shield_capacity <= 0:
 		health_capacity -= damage
-		print("health: " + health_capacity as String)
+		health_bar.value -= damage
 	if health_capacity <= 0:
 		queue_free()
