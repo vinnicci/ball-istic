@@ -32,6 +32,7 @@ onready var health_bar = $Bars/Health
 var roll_mode: bool = false
 var velocity: Vector2
 signal shoot
+var colliding_bod
 
 
 func _ready() -> void:
@@ -62,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	apply_force(delta)
 
 
-func _control():
+func _control() -> void:
 	pass
 
 

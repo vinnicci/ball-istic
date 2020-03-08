@@ -10,7 +10,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "too_much_heat"
 length = 0.2
 tracks/0/type = "value"
@@ -26,8 +26,7 @@ tracks/0/keys = {
 "values": [ Color( 0.913725, 0.639216, 0.0588235, 1 ), Color( 0.960784, 0.0901961, 0, 1 ), Color( 0.913725, 0.639216, 0.0588235, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "charge_ready"
+[sub_resource type="Animation" id=3]
 length = 0.06
 step = 0.02
 tracks/0/type = "value"
@@ -84,7 +83,7 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="Bars/WeaponHeat" index="0"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/WeaponHeat" index="1"]
-anims/too_much_heat = SubResource( 3 )
+anims/too_much_heat = SubResource( 2 )
 
 [node name="ChargeLevel" type="TextureProgress" parent="Bars" index="3"]
 modulate = Color( 0, 0.0588235, 0.737255, 1 )
@@ -102,5 +101,5 @@ __meta__ = {
 [node name="Tween" type="Tween" parent="Bars/ChargeLevel" index="0"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/ChargeLevel" index="1"]
-anims/charge_ready = SubResource( 2 )
+anims/charge_ready = SubResource( 3 )
 [connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

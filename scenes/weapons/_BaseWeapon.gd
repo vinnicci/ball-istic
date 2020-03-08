@@ -18,9 +18,14 @@ func get_projectile() -> Area2D:
 
 func _process(_delta: float) -> void:
 	if current_heat > heat_capacity:
+		$AnimationPlayer.play("overheat")
 		$OverheatCooldown.start()
 
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
 		current_heat -= heat_dissipation
+
+
+func _on_OverheatCooldown_timeout() -> void:
+	$AnimationPlayer.play_backwards("overheat")

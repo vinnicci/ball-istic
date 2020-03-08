@@ -8,7 +8,7 @@ const HEAT_BAR_WARNING_THRESHOLD = 0.8
 
 func _ready() -> void:
 	weapon_heat.max_value = $Weapon.heat_capacity
-	weapon_heat.value = $Weapon.heat_capacity
+	weapon_heat.value = 0
 
 
 func _process(_delta: float) -> void:
@@ -50,9 +50,9 @@ func animate_charge_level_bar() -> void:
 
 
 func animate_weapon_heat_bar() -> void:
-	weapon_heat.value = $Weapon.current_heat
 	if $Weapon.current_heat > $Weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
 		weapon_heat.get_node("AnimationPlayer").play("too_much_heat")
+	weapon_heat.value = $Weapon.current_heat
 	var tween = weapon_heat.get_node("Tween")
 	tween.interpolate_property(weapon_heat, 'value', weapon_heat.value, weapon_heat.value,
 		0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
