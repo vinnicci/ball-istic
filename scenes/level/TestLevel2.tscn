@@ -53,24 +53,23 @@ script = ExtResource( 7 )
 position = Vector2( -559.961, -54.1898 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 4 )]
+is_hostile = false
 
 [node name="Dummy2" parent="Bots" index="2" instance=ExtResource( 4 )]
 position = Vector2( -505.771, 1258.41 )
+is_hostile = false
 
-[node name="Dummy3" parent="Bots" index="3" instance=ExtResource( 4 )]
-position = Vector2( 2727.55, 963.374 )
-
-[node name="DestructibleDummy" parent="Bots" index="4" instance=ExtResource( 6 )]
+[node name="DestructibleDummy" parent="Bots" index="3" instance=ExtResource( 6 )]
 position = Vector2( 1366.79, 475.666 )
 
-[node name="DestructibleDummy2" parent="Bots" index="5" instance=ExtResource( 6 )]
+[node name="DestructibleDummy2" parent="Bots" index="4" instance=ExtResource( 6 )]
 position = Vector2( 252.885, 2041.15 )
 
-[node name="DestructibleDummy3" parent="Bots" index="6" instance=ExtResource( 6 )]
+[node name="DestructibleDummy3" parent="Bots" index="5" instance=ExtResource( 6 )]
 position = Vector2( 2884.1, 1463.12 )
 
-[node name="DestructibleDummy4" parent="Bots" index="7" instance=ExtResource( 6 )]
+[node name="DestructibleDummy4" parent="Bots" index="6" instance=ExtResource( 6 )]
 position = Vector2( 1524.33, 2879.28 )
 
-[node name="DestructibleDummy5" parent="Bots" index="8" instance=ExtResource( 6 )]
+[node name="DestructibleDummy5" parent="Bots" index="7" instance=ExtResource( 6 )]
 position = Vector2( 2445.27, 2752.25 )

@@ -9,6 +9,7 @@ export (float) var proj_range
 var proj_origin: bool
 var velocity: Vector2
 
+
 func _travel(pos, dir, origin) -> void:
 	#projectile behavior could be implemented here
 	proj_origin = origin

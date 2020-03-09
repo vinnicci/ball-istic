@@ -90,6 +90,6 @@ anims/charge_ready = SubResource( 2 )
 [node name="ChargeCooldown" parent="." index="5"]
 wait_time = 1.0
 
-[node name="Weapon" parent="." index="7" instance=ExtResource( 5 )]
+[node name="Weapon" parent="." index="8" instance=ExtResource( 5 )]
 heat_per_shot = 1.0
 [connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

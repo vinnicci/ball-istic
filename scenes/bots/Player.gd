@@ -21,9 +21,12 @@ func _process(_delta: float) -> void:
 
 func _control():
 	velocity = Vector2()
-	$Weapon.look_at(get_global_mouse_position())
+	if in_control == false:
+		print("wah")
+	if in_control == true:
+		$Weapon.look_at(get_global_mouse_position())
 	if Input.is_action_pressed("shoot"):
-		weapon_shoot()
+		shoot_weapon()
 	if Input.is_action_just_released("change_mode"):
 		switch_mode()
 	if Input.is_action_pressed("move_up"):

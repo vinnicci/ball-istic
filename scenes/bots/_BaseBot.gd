@@ -11,56 +11,49 @@ const DEFAULT_BOT_RADIUS = 32
 const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
-const OUTLINE_SIZE: float = 3.0 		#charge collider radius will have the same size
+const OUTLINE_SIZE: float = 3.0
 const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-onready var leg_sprite = $Legs/Sprite
-onready var leg1 = $Legs/Leg1
-onready var leg2 = $Legs/Leg2
-onready var leg3 = $Legs/Leg3
-onready var body_outline = $Body/Outline
-onready var body_texture = $Body/Texture
-onready var body_charge_effect = $Body/ChargeEffect
-onready var shield_bar = $Bars/Shield
-onready var health_bar = $Bars/Health
+const TRANSFORM_ANIM_SPEED: float = 0.2
 onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 onready var roll_mode: bool = false
+var legs_position = {}
 var charging: bool = false
 var charge_damage: int = 20
-var shield_recovery: int = 3
+var shield_recovery: int = 3 #(2 * shield_recovery) per second -> update is 0.5 sec
 var velocity: Vector2
+var in_control: bool = true
 var current_shield: int
 var current_health: int
 var current_roll_speed: int
-signal shoot
+signal shooting
 
 
 func _ready() -> void:
-	#body set up
 	set_up_body_graphics()
-	
-	#physics set up
 	set_up_properties()
 
 
 func _physics_process(delta: float) -> void:
-	#charge graphical effects
-	#eventually?? make this a signal
+	#charge roll graphical feedback/effects
 	apply_charge_effects()
 	
-	#keep shield and health bars in place
+	#keeps shield and health bars in place
 	$Bars.global_rotation = 0
 	
-	#rolling graphical effect
+	#rolling ball graphical effect
 	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
 	#because texture offset resets based on radius
 	apply_rolling_effects()
 	
 	#high speed means temporarily losing control
-	#makes charge roll an attack commitment
-	if check_if_in_control() == false:
+	#makes charge roll an attack commitment, as a result it
+	#becomes a high risk high reward move
+	check_if_in_control()
+	if in_control == false:
+		$Weapon.look_at(Vector2(1,0))
 		return
 	
 	#velocity calculations
@@ -76,6 +69,9 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 
+onready var body_outline = $Body/Outline
+onready var body_texture = $Body/Texture
+onready var body_charge_effect = $Body/ChargeEffect
 func set_up_body_graphics() -> void:
 	$Bars.position.y += bot_radius - DEFAULT_BOT_RADIUS
 	var circle_points = plot_circle_points(bot_radius)
@@ -89,25 +85,32 @@ func set_up_body_graphics() -> void:
 	body_outline.polygon = plot_circle_points(outline)
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
-	set_up_legs([circle_points[2], circle_points[10], circle_points[18]])
+	set_up_legs([circle_points[4], circle_points[12], circle_points[20]])
 
 
 func set_up_legs(points) -> void:
+	var leg_sprite = $Legs/Sprite
+	var leg1 = $Legs/Leg1
+	var leg2 = $Legs/Leg2
+	var leg3 = $Legs/Leg3
 	for i in points.size():
 		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
 		match i:
 			0:
 				leg1.add_child(leg)
 				leg1.position = points[0]
-				leg1.rotation = deg2rad(15*2) #<-- 15 degrees times index from circle_points[index]
+				legs_position[leg1] = points[0]
+				leg1.rotation = deg2rad(15*4) #<-- 15 degrees times index from circle_points[index]
 			1:
 				leg2.add_child(leg)
 				leg2.position = points[1]
-				leg2.rotation = deg2rad(15*10)
+				legs_position[leg2] = points[1]
+				leg2.rotation = deg2rad(15*12)
 			2:
 				leg3.add_child(leg)
 				leg3.position = points[2]
-				leg3.rotation = deg2rad(15*18)
+				legs_position[leg3] = points[2]
+				leg3.rotation = deg2rad(15*20)
 	leg_sprite.hide()
 
 
@@ -118,6 +121,8 @@ func plot_circle_points(radius) -> Array:
 	return circle_points
 
 
+onready var shield_bar = $Bars/Shield
+onready var health_bar = $Bars/Health
 func set_up_properties() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
@@ -132,19 +137,18 @@ func set_up_properties() -> void:
 	current_roll_speed = roll_speed
 
 
-func apply_charge_effects() -> void: #needs refactoring!!
+func apply_charge_effects() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
 		body_outline.color = Color(0.917647, 0, 0.752941)
 		body_charge_effect.color.a = 255
 		charging = true
 	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = Color(1,1,1)
-		body_charge_effect.color.a = 0
+		body_outline.color = lerp(body_outline.color, Color(1,1,1), 0.8)
+		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		charging = false
-#		body_outline.color = lerp(body_outline.color, Color(1,1,1), 0.5)
-#		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 
 
+#still looks flat, "bulge" texture effect shader??..
 func apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -159,8 +163,11 @@ func apply_rolling_effects() -> void:
 		body_texture.texture_rotation = 0
 
 
-func check_if_in_control() -> bool:
-	return linear_velocity.length() < control_velocity
+func check_if_in_control() -> void:
+	if linear_velocity.length() < control_velocity:
+		in_control = true
+	else:
+		in_control = false
 
 
 func apply_force(delta) -> void:
@@ -172,8 +179,8 @@ func apply_force(delta) -> void:
 
 func switch_mode() -> void:
 	roll_mode = !roll_mode
-	$Weapon.visible = !$Weapon.visible
-	$Legs.visible = !$Legs.visible
+	animate_legs()
+	animate_weapon_hatch()
 	if roll_mode == true:
 		linear_damp = ROLL_MODE_DAMP
 		mode = RigidBody2D.MODE_RIGID
@@ -182,10 +189,46 @@ func switch_mode() -> void:
 		mode = RigidBody2D.MODE_CHARACTER
 
 
-func weapon_shoot() -> void:
+func animate_legs() -> void:
+	in_control = false
+	var leg_tween = $Legs/LegTween
+	if roll_mode == true:
+		for leg in legs_position.keys():
+			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
+				TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			leg_tween.start()
+	if roll_mode == false:
+		for leg in legs_position.keys():
+			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), legs_position[leg],
+				TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			leg_tween.start()
+
+
+func _on_LegTween_tween_all_completed() -> void:
+	in_control = true
+
+
+func animate_weapon_hatch() -> void:
+	in_control = false
+	var weapon_hatch_animation = $WeaponHatch/WeaponHatchAnimationPlayer
+	if roll_mode == true:
+		weapon_hatch_animation.play("change_mode")
+	if roll_mode == false:
+		weapon_hatch_animation.play_backwards("change_mode")
+
+
+func _on_WeaponHatchAnimationPlayer_animation_finished(anim_name: String) -> void:
+	if roll_mode == true:
+		$Weapon.hide()
+	if roll_mode == false:
+		$Weapon.show()
+	in_control = true
+
+
+func shoot_weapon() -> void:
 	if $Weapon/Cooldown.is_stopped() == false || $Weapon/OverheatCooldown.is_stopped() == false || roll_mode == true:
 		return
-	emit_signal("shoot", $Weapon.get_projectile(),
+	emit_signal("shooting", $Weapon.get_projectile(),
 		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, is_hostile)
 
 
