@@ -30,9 +30,9 @@ func _on_RangeTimer_timeout() -> void:
 
 
 func _on_Projectile_body_entered(_body: Node) -> void:
-	if _body.destructible == false:
+	if _body.is_destructible == false:
 		queue_free()
 		return
-	if _body.has_method("take_damage") && _body.hostile != hostile_projectile:
+	if _body.has_method("take_damage") && _body.is_hostile != hostile_projectile:
 		_body.take_damage(damage)
 		queue_free()

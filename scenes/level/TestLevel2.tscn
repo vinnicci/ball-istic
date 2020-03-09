@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/bots/Dummy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/TestLevel2.gd" type="Script" id=5]
 [ext_resource path="res://scenes/bots/ShieldedDummy.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/level/Wall.gd" type="Script" id=7]
+[ext_resource path="res://scenes/level/TestLevel2TileMap.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
@@ -50,53 +50,45 @@ tile_data = PoolIntArray( -196615, 0, 0, -196614, 0, 0, -196613, 0, 0, -196612, 
 script = ExtResource( 7 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 3 )]
-position = Vector2( 280.205, 320.235 )
+position = Vector2( -583.6, -250.114 )
+shield_capacity = 100
+health_capacity = 100
+is_destructible = true
+is_hostile = false
+bot_radius = 32
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 4 )]
-position = Vector2( -259.839, 983.176 )
-mode = 2
+position = Vector2( -171.647, 446.282 )
+is_destructible = false
 
 [node name="Dummy2" parent="Bots" index="2" instance=ExtResource( 4 )]
-position = Vector2( 14.0454, 2331.53 )
-mode = 2
+position = Vector2( 799.384, 961.223 )
+is_destructible = false
 
 [node name="Dummy3" parent="Bots" index="3" instance=ExtResource( 4 )]
-position = Vector2( 2612.44, 547.77 )
-mode = 2
+position = Vector2( 2707.12, 647.354 )
+is_destructible = false
 
-[node name="Dummy4" parent="Bots" index="4" instance=ExtResource( 4 )]
-position = Vector2( 2331.53, 2471.99 )
-mode = 2
+[node name="ShieldedDummy" parent="Bots" index="4" instance=ExtResource( 6 )]
+position = Vector2( 1485.97, 407.048 )
 
-[node name="ShieldedDummy" parent="Bots" index="5" instance=ExtResource( 6 )]
-position = Vector2( -53.946, 872.947 )
+[node name="ShieldedDummy2" parent="Bots" index="5" instance=ExtResource( 6 )]
+position = Vector2( 2800.3, 980.84 )
 
-[node name="ShieldedDummy2" parent="Bots" index="6" instance=ExtResource( 6 )]
-position = Vector2( 367.815, 2506.05 )
+[node name="ShieldedDummy3" parent="Bots" index="6" instance=ExtResource( 6 )]
+position = Vector2( 2829.72, 1510.49 )
 
-[node name="ShieldedDummy3" parent="Bots" index="7" instance=ExtResource( 6 )]
-position = Vector2( 2967.04, 975.935 )
+[node name="ShieldedDummy4" parent="Bots" index="7" instance=ExtResource( 6 )]
+position = Vector2( -250.114, 2035.24 )
 
-[node name="ShieldedDummy4" parent="Bots" index="8" instance=ExtResource( 6 )]
-position = Vector2( 805.455, 121.975 )
+[node name="ShieldedDummy5" parent="Bots" index="8" instance=ExtResource( 6 )]
+position = Vector2( 696.396, 2363.82 )
 
-[node name="ShieldedDummy5" parent="Bots" index="9" instance=ExtResource( 6 )]
-position = Vector2( 1792.85, 762.445 )
+[node name="ShieldedDummy6" parent="Bots" index="9" instance=ExtResource( 6 )]
+position = Vector2( 2687.5, 2373.63 )
+is_hostile = false
 
-[node name="ShieldedDummy6" parent="Bots" index="10" instance=ExtResource( 6 )]
-position = Vector2( 1826.2, 2730.56 )
+[node name="Texture" parent="Bots/ShieldedDummy6/Body" index="1"]
+color = Color( 0.372549, 1, 0.352941, 1 )
 
-[node name="ShieldedDummy7" parent="Bots" index="11" instance=ExtResource( 6 )]
-position = Vector2( 2720.19, 1402.91 )
-[connection signal="body_entered" from="Bots/Player" to="Bots/Player" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/Dummy" to="Bots/Dummy" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/Dummy2" to="Bots/Dummy2" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/Dummy3" to="Bots/Dummy3" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/Dummy4" to="Bots/Dummy4" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy" to="Bots/ShieldedDummy" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy2" to="Bots/ShieldedDummy2" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy3" to="Bots/ShieldedDummy3" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy4" to="Bots/ShieldedDummy4" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy5" to="Bots/ShieldedDummy5" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy6" to="Bots/ShieldedDummy6" method="_on_charge_collision"]
-[connection signal="body_entered" from="Bots/ShieldedDummy7" to="Bots/ShieldedDummy7" method="_on_charge_collision"]
+[editable path="Bots/ShieldedDummy6"]

@@ -3,7 +3,7 @@ extends "res://scenes/bots/_BaseBot.gd"
 #eventually ??
 onready var weapon_heat = $Bars/WeaponHeat
 onready var charge_level = $Bars/ChargeLevel
-const HEAT_BAR_WARNING_THRESHOLD = 0.8
+const HEAT_BAR_WARNING_THRESHOLD = 0.75
 
 
 func _ready() -> void:
@@ -37,7 +37,7 @@ func _control():
 	if Input.is_action_just_released("charge_roll"):
 		if $ChargeCooldown.is_stopped() == true && roll_mode == true:
 			animate_charge_level_bar()
-		charge($Weapon.global_rotation)
+		charge_roll($Weapon.global_rotation)
 
 
 func animate_charge_level_bar() -> void:
@@ -53,10 +53,6 @@ func animate_weapon_heat_bar() -> void:
 	if $Weapon.current_heat > $Weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
 		weapon_heat.get_node("AnimationPlayer").play("too_much_heat")
 	weapon_heat.value = $Weapon.current_heat
-	var tween = weapon_heat.get_node("Tween")
-	tween.interpolate_property(weapon_heat, 'value', weapon_heat.value, weapon_heat.value,
-		0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
 
 
 func _on_ChargeCooldown_timeout() -> void:

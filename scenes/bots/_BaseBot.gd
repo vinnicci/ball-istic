@@ -4,20 +4,18 @@ extends RigidBody2D
 export (int) var shield_capacity = 100
 export (int) var health_capacity = 100
 export (int) var roll_speed = 1500
-export (bool) var destructible = true
-export (bool) var hostile = true
+export (bool) var is_destructible = true
+export (bool) var is_hostile = true
 export (int) var bot_radius = 32
-const AVERAGE_BOT_RADIUS = 32
-const CRAWL_SPEED: int = 1000
+const DEFAULT_BOT_RADIUS = 32
 const CHARGE_FORCE_FACTOR: float = 0.6
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.76
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
-const OUTLINE_SIZE: float = 2.5 		#charge collider radius will have the same size
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
+const OUTLINE_SIZE: float = 3.0 		#charge collider radius will have the same size
 const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 onready var leg_sprite = $Legs/Sprite
 onready var leg1 = $Legs/Leg1
 onready var leg2 = $Legs/Leg2
@@ -27,9 +25,11 @@ onready var body_texture = $Body/Texture
 onready var body_charge_effect = $Body/ChargeEffect
 onready var shield_bar = $Bars/Shield
 onready var health_bar = $Bars/Health
-onready var charge_collider_collision = $ChargeCollider/Collision
-var roll_mode: bool = false
+onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
+onready var roll_mode: bool = false
+var charging: bool = false
 var charge_damage: int = 20
+var shield_recovery: int = 3
 var velocity: Vector2
 var current_shield: int
 var current_health: int
@@ -47,16 +47,19 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	#charge graphical effects
+	#eventually?? make this a signal
 	apply_charge_effects()
 	
-	#keep shield and health bars rotation
+	#keep shield and health bars in place
 	$Bars.global_rotation = 0
 	
 	#rolling graphical effect
-	#bodytexture size must be the same as bot's rect size(radius*2 x radius*2) for this to work
+	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
+	#because texture offset resets based on radius
 	apply_rolling_effects()
 	
-	#bot loses control when it's more than control_velocity
+	#high speed means temporarily losing control
+	#makes charge roll an attack commitment
 	if check_if_in_control() == false:
 		return
 	
@@ -74,7 +77,7 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 
 func set_up_body_graphics() -> void:
-	$Bars.position.y += bot_radius - AVERAGE_BOT_RADIUS
+	$Bars.position.y += bot_radius - DEFAULT_BOT_RADIUS
 	var circle_points = plot_circle_points(bot_radius)
 	body_texture.polygon = circle_points
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
@@ -86,7 +89,6 @@ func set_up_body_graphics() -> void:
 	body_outline.polygon = plot_circle_points(outline)
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
-	charge_collider_collision.shape.radius = outline
 	set_up_legs([circle_points[2], circle_points[10], circle_points[18]])
 
 
@@ -119,7 +121,7 @@ func plot_circle_points(radius) -> Array:
 func set_up_properties() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
-	if destructible == false:
+	if is_destructible == false:
 		$Bars.hide()
 	current_shield = shield_capacity
 	current_health = health_capacity
@@ -130,15 +132,17 @@ func set_up_properties() -> void:
 	current_roll_speed = roll_speed
 
 
-func apply_charge_effects() -> void:
+func apply_charge_effects() -> void: #needs refactoring!!
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
 		body_outline.color = Color(0.917647, 0, 0.752941)
 		body_charge_effect.color.a = 255
-		charge_collider_collision.disabled = false
-	if linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = lerp(body_outline.color, Color(1,1,1), 0.1)
-		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.5)
-		charge_collider_collision.disabled = true
+		charging = true
+	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+		body_outline.color = Color(1,1,1)
+		body_charge_effect.color.a = 0
+		charging = false
+#		body_outline.color = lerp(body_outline.color, Color(1,1,1), 0.5)
+#		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 
 
 func apply_rolling_effects() -> void:
@@ -173,7 +177,7 @@ func switch_mode() -> void:
 	if roll_mode == true:
 		linear_damp = ROLL_MODE_DAMP
 		mode = RigidBody2D.MODE_RIGID
-	if roll_mode == false:
+	elif roll_mode == false:
 		linear_damp = SHOOT_MODE_DAMP
 		mode = RigidBody2D.MODE_CHARACTER
 
@@ -182,29 +186,41 @@ func weapon_shoot() -> void:
 	if $Weapon/Cooldown.is_stopped() == false || $Weapon/OverheatCooldown.is_stopped() == false || roll_mode == true:
 		return
 	emit_signal("shoot", $Weapon.get_projectile(),
-		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, hostile)
+		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, is_hostile)
 
 
-func charge(charge_direction) -> void:
+func charge_roll(charge_direction) -> void:
 	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * CHARGE_FORCE_FACTOR)
 	$ChargeCooldown.start()
 
 
-func take_damage(damage):
-	if destructible == false:
+func take_damage(damage) -> void:
+	if is_destructible == false:
 		return
-	if current_shield > 0:
+	if current_shield - damage >= 0:
 		current_shield -= damage
 		shield_bar.value = current_shield
-	elif current_shield <= 0:
-		current_health -= damage
+	elif current_shield - damage < 0:
+		current_health += current_shield - damage
+		current_shield = 0
+		shield_bar.value = current_shield
 		health_bar.value = current_health
 	if current_health <= 0:
 		queue_free()
 
 
-func _on_ChargeCollider_body_entered(body: Node) -> void:
-	if body != self && body.has_method("take_damage"):
+func _on_Bot_body_entered(body: Node) -> void:
+	if body.has_method("take_damage") == false:
+		return
+	if charging == true && body is RigidBody2D && is_hostile != body.is_hostile:
 		body.take_damage(charge_damage)
+
+
+func _on_ShieldRecoveryTimer_timeout() -> void:
+	if current_shield + shield_recovery > shield_capacity:
+		current_shield = shield_capacity
+	elif current_shield + shield_recovery <= shield_capacity:
+		current_shield += shield_recovery
+	shield_bar.value = current_shield
