@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/Dummy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/TestLevel2.gd" type="Script" id=5]
-[ext_resource path="res://scenes/bots/ShieldedDummy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/DestructibleDummy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/TestLevel2TileMap.gd" type="Script" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
@@ -39,7 +39,7 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 1/shapes = [  ]
 1/z_index = 0
 
-[node name="TestLevel2" instance=ExtResource( 2 )]
+[node name="Level" instance=ExtResource( 2 )]
 script = ExtResource( 5 )
 
 [node name="Wall" type="TileMap" parent="." index="0"]
@@ -50,45 +50,27 @@ tile_data = PoolIntArray( -196615, 0, 0, -196614, 0, 0, -196613, 0, 0, -196612, 
 script = ExtResource( 7 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 3 )]
-position = Vector2( -583.6, -250.114 )
-shield_capacity = 100
-health_capacity = 100
-is_destructible = true
-is_hostile = false
-bot_radius = 32
+position = Vector2( -559.961, -54.1898 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 4 )]
-position = Vector2( -171.647, 446.282 )
-is_destructible = false
 
 [node name="Dummy2" parent="Bots" index="2" instance=ExtResource( 4 )]
-position = Vector2( 799.384, 961.223 )
-is_destructible = false
+position = Vector2( -505.771, 1258.41 )
 
 [node name="Dummy3" parent="Bots" index="3" instance=ExtResource( 4 )]
-position = Vector2( 2707.12, 647.354 )
-is_destructible = false
+position = Vector2( 2727.55, 963.374 )
 
-[node name="ShieldedDummy" parent="Bots" index="4" instance=ExtResource( 6 )]
-position = Vector2( 1485.97, 407.048 )
+[node name="DestructibleDummy" parent="Bots" index="4" instance=ExtResource( 6 )]
+position = Vector2( 1366.79, 475.666 )
 
-[node name="ShieldedDummy2" parent="Bots" index="5" instance=ExtResource( 6 )]
-position = Vector2( 2800.3, 980.84 )
+[node name="DestructibleDummy2" parent="Bots" index="5" instance=ExtResource( 6 )]
+position = Vector2( 252.885, 2041.15 )
 
-[node name="ShieldedDummy3" parent="Bots" index="6" instance=ExtResource( 6 )]
-position = Vector2( 2829.72, 1510.49 )
+[node name="DestructibleDummy3" parent="Bots" index="6" instance=ExtResource( 6 )]
+position = Vector2( 2884.1, 1463.12 )
 
-[node name="ShieldedDummy4" parent="Bots" index="7" instance=ExtResource( 6 )]
-position = Vector2( -250.114, 2035.24 )
+[node name="DestructibleDummy4" parent="Bots" index="7" instance=ExtResource( 6 )]
+position = Vector2( 1524.33, 2879.28 )
 
-[node name="ShieldedDummy5" parent="Bots" index="8" instance=ExtResource( 6 )]
-position = Vector2( 696.396, 2363.82 )
-
-[node name="ShieldedDummy6" parent="Bots" index="9" instance=ExtResource( 6 )]
-position = Vector2( 2687.5, 2373.63 )
-is_hostile = false
-
-[node name="Texture" parent="Bots/ShieldedDummy6/Body" index="1"]
-color = Color( 0.372549, 1, 0.352941, 1 )
-
-[editable path="Bots/ShieldedDummy6"]
+[node name="DestructibleDummy5" parent="Bots" index="8" instance=ExtResource( 6 )]
+position = Vector2( 2445.27, 2752.25 )

@@ -189,7 +189,7 @@ func weapon_shoot() -> void:
 		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, is_hostile)
 
 
-func charge_roll(charge_direction) -> void:
+func charge_attack(charge_direction) -> void:
 	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * CHARGE_FORCE_FACTOR)
@@ -212,9 +212,9 @@ func take_damage(damage) -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if body.has_method("take_damage") == false:
-		return
-	if charging == true && body is RigidBody2D && is_hostile != body.is_hostile:
+	if charging == true && body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
+		body.take_damage(charge_damage)
+	elif charging == true:
 		body.take_damage(charge_damage)
 
 

@@ -6,16 +6,16 @@ extends Area2D
 export (int) var speed
 export (float) var damage
 export (float) var proj_range
-var hostile_projectile: bool
+var proj_origin: bool
 var velocity: Vector2
 
 func _travel(pos, dir, origin) -> void:
-	#scattershots and others could be implemented here
-	hostile_projectile = origin
-	
-	#vanilla projectile implementation
+	#projectile behavior could be implemented here
+	proj_origin = origin
 	$RangeTimer.wait_time = proj_range
 	$RangeTimer.start()
+	
+	#basic projectile implementation
 	position = pos
 	rotation = dir
 	velocity = speed * Vector2(1,0).rotated(dir).normalized()
@@ -30,9 +30,10 @@ func _on_RangeTimer_timeout() -> void:
 
 
 func _on_Projectile_body_entered(_body: Node) -> void:
-	if _body.is_destructible == false:
-		queue_free()
-		return
-	if _body.has_method("take_damage") && _body.is_hostile != hostile_projectile:
+	if _body.get_parent().name == "Bots" && _body.is_hostile != proj_origin:
 		_body.take_damage(damage)
-		queue_free()
+	elif _body.get_parent().name == "Bots" && _body.is_hostile == proj_origin:
+		return
+	else:
+		_body.take_damage(damage)
+	queue_free()

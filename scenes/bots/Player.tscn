@@ -41,12 +41,7 @@ tracks/0/keys = {
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-shield_capacity = null
-health_capacity = null
-roll_speed = 2000
-is_destructible = null
-is_hostile = null
-bot_radius = null
+is_hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 current = true

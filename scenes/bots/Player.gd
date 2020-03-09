@@ -37,7 +37,7 @@ func _control():
 	if Input.is_action_just_released("charge_roll"):
 		if $ChargeCooldown.is_stopped() == true && roll_mode == true:
 			animate_charge_level_bar()
-		charge_roll($Weapon.global_rotation)
+		charge_attack($Weapon.global_rotation)
 
 
 func animate_charge_level_bar() -> void:
