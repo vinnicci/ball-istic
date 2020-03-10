@@ -67,9 +67,16 @@ position = Vector2( 252.885, 2041.15 )
 
 [node name="DestructibleDummy3" parent="Bots" index="5" instance=ExtResource( 6 )]
 position = Vector2( 2884.1, 1463.12 )
+is_hostile = false
 
 [node name="DestructibleDummy4" parent="Bots" index="6" instance=ExtResource( 6 )]
 position = Vector2( 1524.33, 2879.28 )
 
 [node name="DestructibleDummy5" parent="Bots" index="7" instance=ExtResource( 6 )]
 position = Vector2( 2445.27, 2752.25 )
+
+[node name="DestructibleDummy6" parent="Bots" index="8" instance=ExtResource( 6 )]
+position = Vector2( 40.1658, 2597.96 )
+
+[node name="DestructibleDummy7" parent="Bots" index="9" instance=ExtResource( 6 )]
+position = Vector2( 2381.74, 492.36 )

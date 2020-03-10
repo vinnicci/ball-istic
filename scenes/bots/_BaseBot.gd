@@ -20,11 +20,11 @@ const TRANSFORM_ANIM_SPEED: float = 0.2
 onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 onready var roll_mode: bool = false
 var legs_position = {}
-var charging: bool = false
 var charge_damage: int = 20
 var shield_recovery: int = 3 #(2 * shield_recovery) per second -> update is 0.5 sec
 var velocity: Vector2
 var in_control: bool = true
+var charging: bool = false
 var current_shield: int
 var current_health: int
 var current_roll_speed: int
@@ -53,7 +53,6 @@ func _physics_process(delta: float) -> void:
 	#becomes a high risk high reward move
 	check_if_in_control()
 	if in_control == false:
-		$Weapon.look_at(Vector2(1,0))
 		return
 	
 	#velocity calculations
@@ -137,14 +136,21 @@ func set_up_properties() -> void:
 	current_roll_speed = roll_speed
 
 
+onready var body_weapon_hatch = $Body/WeaponHatch
 func apply_charge_effects() -> void:
+	var hostile = Color(0.941406, 0.172836, 0.172836)
+	var non_hostile = Color(0.223529, 0.956863, 0.25098)
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
-		body_outline.color = Color(0.917647, 0, 0.752941)
+		body_outline.color = Color(1, 0.2, 0.839216)
 		body_charge_effect.color.a = 255
 		charging = true
 	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = lerp(body_outline.color, Color(1,1,1), 0.8)
+		if is_hostile == true:
+			body_outline.color = lerp(body_outline.color, hostile, 0.8)
+		elif is_hostile == false:
+			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
+		body_weapon_hatch.color = body_outline.color
 		charging = false
 
 
@@ -164,10 +170,12 @@ func apply_rolling_effects() -> void:
 
 
 func check_if_in_control() -> void:
-	if linear_velocity.length() < control_velocity:
-		in_control = true
-	else:
+	if $Body/WeaponHatch/WeaponHatchAnimationPlayer.is_playing() == true:
+		return
+	if linear_velocity.length() > control_velocity:
 		in_control = false
+	else:
+		in_control = true
 
 
 func apply_force(delta) -> void:
@@ -210,15 +218,17 @@ func _on_LegTween_tween_all_completed() -> void:
 
 func animate_weapon_hatch() -> void:
 	in_control = false
-	var weapon_hatch_animation = $WeaponHatch/WeaponHatchAnimationPlayer
+	var weapon_hatch_animation = body_weapon_hatch.get_node("WeaponHatchAnimationPlayer")
 	if roll_mode == true:
 		weapon_hatch_animation.play("change_mode")
 	if roll_mode == false:
+		body_weapon_hatch.show()
 		weapon_hatch_animation.play_backwards("change_mode")
 
 
 func _on_WeaponHatchAnimationPlayer_animation_finished(anim_name: String) -> void:
 	if roll_mode == true:
+		body_weapon_hatch.hide()
 		$Weapon.hide()
 	if roll_mode == false:
 		$Weapon.show()
@@ -255,10 +265,13 @@ func take_damage(damage) -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if charging == true && body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-		body.take_damage(charge_damage)
-	elif charging == true:
-		body.take_damage(charge_damage)
+	if charging == true:
+		if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
+			body.take_damage(charge_damage)
+		elif body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
+			return
+		else:
+			body.take_damage(charge_damage)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:
