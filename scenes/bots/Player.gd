@@ -1,17 +1,21 @@
 extends "res://scenes/bots/_BaseBot.gd"
 
 #eventually ??
-onready var weapon_heat = $Bars/WeaponHeat
-onready var charge_level = $Bars/ChargeLevel
-const HEAT_BAR_WARNING_THRESHOLD = 0.75
+onready var weapon_heat = $PlayerBars/WeaponHeat
+onready var charge_level = $PlayerBars/ChargeLevel
+const PLAYER_BARS_OFFSET: int = 15
+const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 
 
 func _ready() -> void:
+	weapon_heat.rect_position.x -= weapon_heat.rect_size.y + bot_radius + PLAYER_BARS_OFFSET
+	charge_level.rect_position.x += bot_radius + PLAYER_BARS_OFFSET
 	weapon_heat.max_value = $Weapon.heat_capacity
 	weapon_heat.value = 0
 
 
 func _process(_delta: float) -> void:
+	$PlayerBars.global_rotation = 0
 	if $Weapon/OverheatCooldown.is_stopped() == false:
 		weapon_heat.modulate = Color(0.960784, 0.090196, 0)
 	if $Weapon/OverheatCooldown.is_stopped() == true && weapon_heat.get_node("AnimationPlayer").is_playing() == false:
@@ -21,10 +25,7 @@ func _process(_delta: float) -> void:
 
 func _control():
 	velocity = Vector2()
-	if in_control == false:
-		print("wah")
-	if in_control == true:
-		$Weapon.look_at(get_global_mouse_position())
+	$Weapon.look_at(get_global_mouse_position())
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 	if Input.is_action_just_released("change_mode"):

@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/weapons/Scattershot.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/scattershot.png" type="Texture" id=3]
+[ext_resource path="res://scenes/weapons/ScattershotProjectile.tscn" type="PackedScene" id=4]
+
+[node name="Weapon" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+Projectile = ExtResource( 4 )
+heat_per_shot = 5.0
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+offset = Vector2( 8, 0 )
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 31, 0 )
+
+[node name="Cooldown" parent="." index="2"]
+wait_time = 0.5

@@ -1,25 +1,26 @@
 extends Area2D
 
+
 #be sure to name root node as Projectile
 #however you can name the scene as anything
-
-export (int) var speed
-export (float) var damage
-export (float) var proj_range
+export (int) var speed = 1000
+export (float) var damage = 5
+export (float) var proj_range = 0.5
 var proj_origin: bool
 var velocity: Vector2
 
 
-func _travel(pos, dir, origin) -> void:
-	#projectile behavior could be implemented here
+func ready_travel(pos, dir, origin) -> void:
 	proj_origin = origin
 	$RangeTimer.wait_time = proj_range
 	$RangeTimer.start()
-	
-	#basic projectile implementation
-	position = pos
-	rotation = dir
-	velocity = speed * Vector2(1,0).rotated(dir).normalized()
+	_travel(pos, dir)
+	velocity = speed * Vector2(1,0).rotated(rotation).normalized()
+
+
+#virtual func for proj behavior while travelling
+func _travel(pos, dir):
+	pass
 
 
 func _process(delta: float) -> void:

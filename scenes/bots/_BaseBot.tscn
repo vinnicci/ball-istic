@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/bots/_BaseBot.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=2]
@@ -6,22 +6,6 @@
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.2
 bounce = 0.6
-
-[sub_resource type="Animation" id=3]
-resource_name = "change_mode"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1, 0.5 ), Vector2( 1, 1e-05 ) ]
-}
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 32.0
@@ -55,8 +39,7 @@ color = Color( 0.223529, 0.956863, 0.25098, 1 )
 [node name="WeaponHatch" type="Polygon2D" parent="Body"]
 polygon = PoolVector2Array( 32, 0, 30.91, 8.282, 27.713, 16, -27.713, 16, -30.91, 8.282, -32, 0, -30.91, -8.282, -27.713, -16, 27.713, -16, 30.91, -8.282 )
 
-[node name="WeaponHatchAnimationPlayer" type="AnimationPlayer" parent="Body/WeaponHatch"]
-anims/change_mode = SubResource( 3 )
+[node name="WeaponHatchTween" type="Tween" parent="Body/WeaponHatch"]
 
 [node name="ChargeEffect" type="Polygon2D" parent="Body"]
 
@@ -68,9 +51,8 @@ shape = SubResource( 2 )
 [node name="Shield" type="TextureProgress" parent="Bars"]
 modulate = Color( 0.235294, 0.933333, 0.901961, 1 )
 margin_left = -25.0
-margin_top = 47.0
 margin_right = 25.0
-margin_bottom = 52.0
+margin_bottom = 5.0
 value = 100.0
 texture_progress = ExtResource( 2 )
 __meta__ = {
@@ -80,9 +62,8 @@ __meta__ = {
 [node name="Health" type="TextureProgress" parent="Bars"]
 modulate = Color( 1, 0.309804, 0.309804, 1 )
 margin_left = -25.0
-margin_top = 58.0
 margin_right = 25.0
-margin_bottom = 63.0
+margin_bottom = 5.0
 value = 100.0
 texture_progress = ExtResource( 2 )
 __meta__ = {
@@ -98,5 +79,5 @@ wait_time = 0.5
 autostart = true
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Legs/LegTween" to="." method="_on_LegTween_tween_all_completed"]
-[connection signal="animation_finished" from="Body/WeaponHatch/WeaponHatchAnimationPlayer" to="." method="_on_WeaponHatchAnimationPlayer_animation_finished"]
+[connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

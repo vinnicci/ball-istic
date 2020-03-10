@@ -5,8 +5,6 @@
 [node name="Projectile" type="Area2D"]
 script = ExtResource( 1 )
 speed = 500
-damage = 5.0
-proj_range = 0.5
 
 [node name="Sprite" type="Sprite" parent="."]
 

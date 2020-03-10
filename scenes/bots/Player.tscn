@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/bots/Player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/bots/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=4]
-[ext_resource path="res://scenes/weapons/IntroWeapon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/weapons/Scattershot.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/player/player_n_paint_job.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
@@ -41,6 +41,9 @@ tracks/0/keys = {
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
+shield_capacity = 50
+health_capacity = 50
+roll_speed = 1250
 is_hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
@@ -57,11 +60,12 @@ color = Color( 0.392157, 0.890196, 0.772549, 1 )
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 7 )
 
-[node name="WeaponHeat" type="TextureProgress" parent="Bars" index="2"]
+[node name="PlayerBars" type="Node2D" parent="." index="5"]
+
+[node name="WeaponHeat" type="TextureProgress" parent="PlayerBars" index="0"]
 modulate = Color( 0.913725, 0.639216, 0.0588235, 1 )
-margin_left = -52.0
 margin_top = 25.0
-margin_right = -2.0
+margin_right = 50.0
 margin_bottom = 30.0
 rect_rotation = -90.0
 texture_progress = ExtResource( 4 )
@@ -69,14 +73,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/WeaponHeat" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBars/WeaponHeat" index="0"]
 anims/too_much_heat = SubResource( 1 )
 
-[node name="ChargeLevel" type="TextureProgress" parent="Bars" index="3"]
+[node name="ChargeLevel" type="TextureProgress" parent="PlayerBars" index="1"]
 modulate = Color( 0.117647, 1, 0.27451, 1 )
-margin_left = 47.0
 margin_top = 25.0
-margin_right = 97.0
+margin_right = 50.0
 margin_bottom = 30.0
 rect_rotation = -90.0
 value = 100.0
@@ -85,14 +88,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="Bars/ChargeLevel" index="0"]
+[node name="Tween" type="Tween" parent="PlayerBars/ChargeLevel" index="0"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Bars/ChargeLevel" index="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBars/ChargeLevel" index="1"]
 anims/charge_ready = SubResource( 2 )
 
-[node name="ChargeCooldown" parent="." index="5"]
+[node name="ChargeCooldown" parent="." index="6"]
 wait_time = 1.0
 
-[node name="Weapon" parent="." index="7" instance=ExtResource( 5 )]
-heat_per_shot = 1.0
+[node name="Weapon" parent="." index="8" instance=ExtResource( 5 )]
 [connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

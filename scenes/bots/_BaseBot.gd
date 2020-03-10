@@ -1,13 +1,15 @@
 extends RigidBody2D
 
 #default bot values
-export (int) var shield_capacity = 100
-export (int) var health_capacity = 100
-export (int) var roll_speed = 1500
+export (int) var shield_capacity = 20
+export (int) var health_capacity = 20
+export (int) var roll_speed = 1000
 export (bool) var is_destructible = true
 export (bool) var is_hostile = true
 export (int) var bot_radius = 32
-const DEFAULT_BOT_RADIUS = 32
+export (int) var charge_roll_damage: int = 20
+export (float) var shield_recovery: int = 3.0 #shield recovery per 0.5 sec -> x2 per sec
+const BARS_OFFSET: int = 15
 const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
@@ -16,12 +18,8 @@ const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-const TRANSFORM_ANIM_SPEED: float = 0.2
-onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
-onready var roll_mode: bool = false
+const TRANSFORM_ANIM_SPEED: float = 0.3 #absolute minimum is 0.2
 var legs_position = {}
-var charge_damage: int = 20
-var shield_recovery: int = 3 #(2 * shield_recovery) per second -> update is 0.5 sec
 var velocity: Vector2
 var in_control: bool = true
 var charging: bool = false
@@ -29,6 +27,16 @@ var current_shield: int
 var current_health: int
 var current_roll_speed: int
 signal shooting
+
+
+onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
+onready var roll_mode: bool = false
+onready var body_outline = $Body/Outline
+onready var body_texture = $Body/Texture
+onready var body_charge_effect = $Body/ChargeEffect
+onready var shield_bar = $Bars/Shield
+onready var health_bar = $Bars/Health
+onready var body_weapon_hatch = $Body/WeaponHatch
 
 
 func _ready() -> void:
@@ -68,11 +76,9 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 
-onready var body_outline = $Body/Outline
-onready var body_texture = $Body/Texture
-onready var body_charge_effect = $Body/ChargeEffect
 func set_up_body_graphics() -> void:
-	$Bars.position.y += bot_radius - DEFAULT_BOT_RADIUS
+	shield_bar.rect_position.y += bot_radius + BARS_OFFSET
+	health_bar.rect_position.y += shield_bar.rect_position.y + BARS_OFFSET
 	var circle_points = plot_circle_points(bot_radius)
 	body_texture.polygon = circle_points
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
@@ -120,8 +126,6 @@ func plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-onready var shield_bar = $Bars/Shield
-onready var health_bar = $Bars/Health
 func set_up_properties() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
@@ -136,7 +140,6 @@ func set_up_properties() -> void:
 	current_roll_speed = roll_speed
 
 
-onready var body_weapon_hatch = $Body/WeaponHatch
 func apply_charge_effects() -> void:
 	var hostile = Color(0.941406, 0.172836, 0.172836)
 	var non_hostile = Color(0.223529, 0.956863, 0.25098)
@@ -170,7 +173,7 @@ func apply_rolling_effects() -> void:
 
 
 func check_if_in_control() -> void:
-	if $Body/WeaponHatch/WeaponHatchAnimationPlayer.is_playing() == true:
+	if body_weapon_hatch.get_node("WeaponHatchTween").is_active() == true:
 		return
 	if linear_velocity.length() > control_velocity:
 		in_control = false
@@ -218,20 +221,28 @@ func _on_LegTween_tween_all_completed() -> void:
 
 func animate_weapon_hatch() -> void:
 	in_control = false
-	var weapon_hatch_animation = body_weapon_hatch.get_node("WeaponHatchAnimationPlayer")
+	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
+	var weapon_anim = $Weapon/AnimationPlayer
 	if roll_mode == true:
-		weapon_hatch_animation.play("change_mode")
+		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
+			TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		weapon_hatch_tween.start()
+		$Weapon.global_rotation = body_weapon_hatch.global_rotation
+		weapon_anim.play("change_mode")
 	if roll_mode == false:
+		body_weapon_hatch.global_rotation = $Weapon.global_rotation
 		body_weapon_hatch.show()
-		weapon_hatch_animation.play_backwards("change_mode")
+		$Weapon.show()
+		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
+			TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		weapon_hatch_tween.start()
+		weapon_anim.play_backwards("change_mode")
 
 
-func _on_WeaponHatchAnimationPlayer_animation_finished(anim_name: String) -> void:
+func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
 		$Weapon.hide()
-	if roll_mode == false:
-		$Weapon.show()
 	in_control = true
 
 
@@ -267,11 +278,11 @@ func take_damage(damage) -> void:
 func _on_Bot_body_entered(body: Node) -> void:
 	if charging == true:
 		if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-			body.take_damage(charge_damage)
+			body.take_damage(charge_roll_damage)
 		elif body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 			return
 		else:
-			body.take_damage(charge_damage)
+			body.take_damage(charge_roll_damage)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:
