@@ -43,12 +43,12 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 shield_capacity = 50
 health_capacity = 50
-roll_speed = 1250
+roll_speed = 1300
 is_hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 current = true
-zoom = Vector2( 1.7, 1.7 )
+zoom = Vector2( 1.8, 1.8 )
 
 [node name="Sprite" parent="Legs" index="0"]
 texture = ExtResource( 1 )
@@ -92,9 +92,6 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBars/ChargeLevel" index="1"]
 anims/charge_ready = SubResource( 2 )
-
-[node name="ChargeCooldown" parent="." index="6"]
-wait_time = 1.0
 
 [node name="Weapon" parent="." index="8" instance=ExtResource( 5 )]
 [connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]

@@ -3,22 +3,23 @@ extends RigidBody2D
 #default bot values
 export (int) var shield_capacity = 20
 export (int) var health_capacity = 20
-export (int) var roll_speed = 1000
+export (int) var roll_speed = 1000 #absolute max 2500
 export (bool) var is_destructible = true
-export (bool) var is_hostile = true
+export (bool) var is_hostile = true #projectiles pass through and charge has no effect on bot with same bool value
 export (int) var bot_radius = 32
-export (int) var charge_roll_damage: int = 20
-export (float) var shield_recovery: int = 3.0 #shield recovery per 0.5 sec -> x2 per sec
+export (int) var shield_recovery_per_second = 2 #absolute min is 2, no recovery if less than 2
+export (float) var transform_speed = 0.6 #absolute min is 0.1, recommended max is 0.6
+export (float) var charge_force_factor = 0.5 #absolute max is 1.0
+export (int) var charge_roll_damage = 50
+export (float) var charge_cooldown = 2.5 #absolute min is 0.5
 const BARS_OFFSET: int = 15
-const CHARGE_FORCE_FACTOR: float = 0.6
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
-const OUTLINE_SIZE: float = 3.0
+const OUTLINE_SIZE: float = 4.0
 const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 15.0
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-const TRANSFORM_ANIM_SPEED: float = 0.3 #absolute minimum is 0.2
 var legs_position = {}
 var velocity: Vector2
 var in_control: bool = true
@@ -40,43 +41,20 @@ onready var body_weapon_hatch = $Body/WeaponHatch
 
 
 func _ready() -> void:
-	set_up_body_graphics()
-	set_up_properties()
-
-
-func _physics_process(delta: float) -> void:
-	#charge roll graphical feedback/effects
-	apply_charge_effects()
+	#never changing stuff
+	set_up_constant_vars()
 	
-	#keeps shield and health bars in place
-	$Bars.global_rotation = 0
+	#might change on the course of the game
+	update_vars()
+
+
+func set_up_constant_vars() -> void:
+	$CollisionShape.shape.radius = bot_radius
+	linear_damp = SHOOT_MODE_DAMP
+	if is_destructible == false:
+		$Bars.hide()
 	
-	#rolling ball graphical effect
-	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
-	#because texture offset resets based on radius
-	apply_rolling_effects()
-	
-	#high speed means temporarily losing control
-	#makes charge roll an attack commitment, as a result it
-	#becomes a high risk high reward move
-	check_if_in_control()
-	if in_control == false:
-		return
-	
-	#velocity calculations
-	_control()
-	apply_force(delta)
-
-
-func _control() -> void:
-	pass
-
-
-func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
-	pass
-
-
-func set_up_body_graphics() -> void:
+	#graphics stuff
 	shield_bar.rect_position.y += bot_radius + BARS_OFFSET
 	health_bar.rect_position.y += shield_bar.rect_position.y + BARS_OFFSET
 	var circle_points = plot_circle_points(bot_radius)
@@ -126,18 +104,68 @@ func plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-func set_up_properties() -> void:
-	$CollisionShape.shape.radius = bot_radius
-	linear_damp = SHOOT_MODE_DAMP
-	if is_destructible == false:
-		$Bars.hide()
+func update_vars() -> void:
+	check_for_capped_vars()
 	current_shield = shield_capacity
 	current_health = health_capacity
+	current_roll_speed = roll_speed
 	shield_bar.max_value = shield_capacity
 	shield_bar.value = current_shield
 	health_bar.max_value = health_capacity
 	health_bar.value = current_health
-	current_roll_speed = roll_speed
+	$ChargeCooldown.wait_time = charge_cooldown
+
+
+func check_for_capped_vars() -> void:
+	if roll_speed > 2500:
+		roll_speed = 2500
+	if shield_recovery_per_second < 2.0:
+		shield_recovery_per_second = 2.0
+	if transform_speed < 0.1:
+		transform_speed = 0.1
+	if charge_force_factor > 1.0:
+		charge_force_factor = 1.0
+	if charge_cooldown < 0.5:
+		charge_cooldown = 0.5
+
+
+func _physics_process(delta: float) -> void:
+	#charge roll graphical feedback/effects
+	apply_charge_effects()
+	
+	#keeps shield and health bars in place
+	$Bars.global_rotation = 0
+	
+	#rolling ball graphical effect
+	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
+	#because texture offset resets based on radius
+	apply_rolling_effects()
+	
+	#high speed means temporarily losing control
+	#makes charge roll an attack commitment, as a result it
+	#becomes a high risk high reward move
+	check_if_in_control()
+	if in_control == false:
+		return
+	
+	#velocity calculations
+	_control()
+	apply_force(delta)
+
+
+func _control() -> void:
+	pass
+
+
+#?? if i should put this on integrate_forces func??
+func apply_force(delta) -> void:
+	if roll_mode == true:
+		velocity = (velocity * delta).normalized() * current_roll_speed
+	applied_force = velocity
+
+
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
+	pass
 
 
 func apply_charge_effects() -> void:
@@ -157,7 +185,7 @@ func apply_charge_effects() -> void:
 		charging = false
 
 
-#still looks flat, "bulge" texture effect shader??..
+#looks flat on bigger radius, idk hot to implement "bulge" texture effect shader??
 func apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -181,13 +209,6 @@ func check_if_in_control() -> void:
 		in_control = true
 
 
-func apply_force(delta) -> void:
-	if roll_mode == true:
-		velocity = velocity * delta
-		velocity = velocity.normalized() * current_roll_speed
-	applied_force = velocity
-
-
 func switch_mode() -> void:
 	roll_mode = !roll_mode
 	animate_legs()
@@ -206,12 +227,12 @@ func animate_legs() -> void:
 	if roll_mode == true:
 		for leg in legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
-				TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 	if roll_mode == false:
 		for leg in legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), legs_position[leg],
-				TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 
 
@@ -225,7 +246,7 @@ func animate_weapon_hatch() -> void:
 	var weapon_anim = $Weapon/AnimationPlayer
 	if roll_mode == true:
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
-			TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		weapon_hatch_tween.start()
 		$Weapon.global_rotation = body_weapon_hatch.global_rotation
 		weapon_anim.play("change_mode")
@@ -234,7 +255,7 @@ func animate_weapon_hatch() -> void:
 		body_weapon_hatch.show()
 		$Weapon.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
-			TRANSFORM_ANIM_SPEED, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		weapon_hatch_tween.start()
 		weapon_anim.play_backwards("change_mode")
 
@@ -256,11 +277,12 @@ func shoot_weapon() -> void:
 func charge_attack(charge_direction) -> void:
 	if $ChargeCooldown.is_stopped() == false || roll_mode == false:
 		return
-	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * CHARGE_FORCE_FACTOR)
+	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * charge_force_factor)
 	$ChargeCooldown.start()
 
 
-func take_damage(damage) -> void:
+func take_damage(damage, knockback) -> void:
+	apply_central_impulse(knockback)
 	if is_destructible == false:
 		return
 	if current_shield - damage >= 0:
@@ -278,16 +300,16 @@ func take_damage(damage) -> void:
 func _on_Bot_body_entered(body: Node) -> void:
 	if charging == true:
 		if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-			body.take_damage(charge_roll_damage)
+			body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
 		elif body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 			return
 		else:
-			body.take_damage(charge_roll_damage)
+			body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:
-	if current_shield + shield_recovery > shield_capacity:
+	if current_shield + shield_recovery_per_second/2 > shield_capacity:
 		current_shield = shield_capacity
-	elif current_shield + shield_recovery <= shield_capacity:
-		current_shield += shield_recovery
+	elif current_shield + shield_recovery_per_second/2 <= shield_capacity:
+		current_shield += shield_recovery_per_second/2
 	shield_bar.value = current_shield

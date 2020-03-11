@@ -4,9 +4,9 @@ extends Node2D
 #however you can name the scene as anything
 
 export (PackedScene) var Projectile
-export (float) var heat_per_shot = 1
-export (float) var heat_capacity = 20
-export (float) var heat_dissipation = 2
+export (float) var heat_per_shot = 2.5 #absolute minimum is 2.5
+export (float) var heat_capacity = 50
+export (float) var heat_dissipation_per_second = 5
 var current_heat: float
 
 
@@ -29,4 +29,4 @@ func _process(_delta: float) -> void:
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
-		current_heat -= heat_dissipation
+		current_heat -= heat_dissipation_per_second/2
