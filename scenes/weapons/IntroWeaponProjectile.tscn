@@ -9,8 +9,10 @@ radius = 8.0
 
 [node name="Projectile" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-speed = 800
-proj_range = 800.0
+speed = 1000
+damage = 10
+proj_range = 1000.0
+knockback = 0.1
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )

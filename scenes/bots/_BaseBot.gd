@@ -12,12 +12,13 @@ export (float) var transform_speed = 0.6 #absolute min is 0.1, recommended max i
 export (float) var charge_force_factor = 0.5 #absolute max is 1.0
 export (int) var charge_roll_damage = 50
 export (float) var charge_cooldown = 2.5 #absolute min is 0.5
+export (float) var knockback_resist = 0.5
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
 const OUTLINE_SIZE: float = 4.0
 const CONTROL_VELOCITY_FACTOR: float = 0.6
-const ROLLING_EFFECT_FACTOR: float = 15.0
+const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 var legs_position = {}
@@ -191,7 +192,7 @@ func apply_rolling_effects() -> void:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
 		return
 	if roll_mode == true:
-		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * ROLLING_EFFECT_FACTOR
+		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 	if body_texture.texture_offset.x < -bot_radius*2 || body_texture.texture_offset.x > bot_radius*2:
 		body_texture.texture_offset.x = 0
 	if body_texture.texture_offset.y < -bot_radius*2 || body_texture.texture_offset.y > bot_radius*2:
@@ -282,7 +283,7 @@ func charge_attack(charge_direction) -> void:
 
 
 func take_damage(damage, knockback) -> void:
-	apply_central_impulse(knockback)
+	apply_central_impulse(knockback * knockback_resist)
 	if is_destructible == false:
 		return
 	if current_shield - damage >= 0:

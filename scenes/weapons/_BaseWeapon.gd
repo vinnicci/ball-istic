@@ -12,6 +12,7 @@ var current_heat: float
 
 func get_projectile() -> Array:
 	$Cooldown.start()
+	$Muzzle/MuzzleParticles.emitting = true
 	current_heat += heat_per_shot
 	return _instantiate_projectile()
 
@@ -30,3 +31,7 @@ func _process(_delta: float) -> void:
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
 		current_heat -= heat_dissipation_per_second/2
+
+
+func _on_Cooldown_timeout() -> void:
+	$Muzzle/MuzzleParticles.emitting = false
