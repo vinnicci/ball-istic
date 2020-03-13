@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 
-export (bool) var is_destructible = false
+export (bool) var is_destructible: = false
 
 
 func take_damage(damage, knockback):

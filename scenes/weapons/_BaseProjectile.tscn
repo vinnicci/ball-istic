@@ -27,7 +27,6 @@ color_ramp = SubResource( 2 )
 [node name="Projectile" type="Area2D"]
 script = ExtResource( 1 )
 speed = 500
-knockback = 0.01
 
 [node name="Sprite" type="Sprite" parent="."]
 

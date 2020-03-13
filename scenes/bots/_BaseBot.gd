@@ -1,18 +1,18 @@
 extends RigidBody2D
 
 #default bot values
-export (int) var shield_capacity = 20
-export (int) var health_capacity = 20
-export (int) var roll_speed = 1000 #absolute max 2500
-export (bool) var is_destructible = true
-export (bool) var is_hostile = true #projectiles pass through and charge has no effect on bot with same bool value
-export (int) var bot_radius = 32
-export (int) var shield_recovery_per_second = 2 #absolute min is 2, no recovery if less than 2
-export (float) var transform_speed = 0.6 #absolute min is 0.1, recommended max is 0.6
-export (float) var charge_force_factor = 0.5 #absolute max is 1.0
-export (int) var charge_roll_damage = 50
-export (float) var charge_cooldown = 2.5 #absolute min is 0.5
-export (float) var knockback_resist = 0.5
+export (int) var shield_capacity: = 20
+export (int) var health_capacity: = 20
+export (int) var roll_speed: = 1000 #absolute max 2500
+export (bool) var is_destructible: = true
+export (bool) var is_hostile: = true #projectiles pass through and charge has no effect on bot with same bool value
+export (int) var bot_radius: = 32
+export (int) var shield_recovery_per_second: = 2 #absolute min is 2, no recovery if less than 2
+export (float) var transform_speed: = 0.6 #absolute min is 0.1, recommended max is 0.6
+export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max is 2.5
+export (float) var knockback_resist: = 0.25 #absolute max is 1.0
+export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
+export (int) var charge_roll_damage: = 50
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
@@ -21,7 +21,7 @@ const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-var legs_position = {}
+var legs_position: Dictionary = {}
 var velocity: Vector2
 var in_control: bool = true
 var charging: bool = false
@@ -128,6 +128,8 @@ func check_for_capped_vars() -> void:
 		charge_force_factor = 1.0
 	if charge_cooldown < 0.5:
 		charge_cooldown = 0.5
+	if knockback_resist > 1.0:
+		knockback_resist = 1.0
 
 
 func _physics_process(delta: float) -> void:
@@ -283,7 +285,7 @@ func charge_attack(charge_direction) -> void:
 
 
 func take_damage(damage, knockback) -> void:
-	apply_central_impulse(knockback * knockback_resist)
+	apply_central_impulse(knockback - (knockback*knockback_resist))
 	if is_destructible == false:
 		return
 	if current_shield - damage >= 0:

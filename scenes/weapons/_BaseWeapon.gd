@@ -4,10 +4,17 @@ extends Node2D
 #however you can name the scene as anything
 
 export (PackedScene) var Projectile
-export (float) var heat_per_shot = 2.5 #absolute minimum is 2.5
-export (float) var heat_capacity = 50
-export (float) var heat_dissipation_per_second = 5
-var current_heat: float
+export (int) var heat_per_shot: = 10 #absolute minimum is 3
+export (int) var heat_capacity: = 50
+export (int) var heat_dissipation_per_second: = 10 #absolute minimum is 2
+var current_heat: int
+
+
+func _ready() -> void:
+	if heat_per_shot < 3:
+		heat_per_shot = 3
+	if heat_dissipation_per_second < 2:
+		heat_dissipation_per_second = 2
 
 
 func get_projectile() -> Array:
