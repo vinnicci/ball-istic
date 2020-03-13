@@ -34,11 +34,11 @@ func _control():
 		switch_mode()
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-	if Input.is_action_pressed("move_down"):
+	elif Input.is_action_pressed("move_down"):
 		velocity.y += 1
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
-	if Input.is_action_pressed("move_right"):
+	elif Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_just_released("charge_roll"):
 		if $ChargeCooldown.is_stopped() == true && roll_mode == true:

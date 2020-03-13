@@ -179,8 +179,10 @@ func apply_charge_effects() -> void:
 		body_charge_effect.color.a = 255
 		charging = true
 	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+		#outline for hostiles becomes red
 		if is_hostile == true:
 			body_outline.color = lerp(body_outline.color, hostile, 0.8)
+		#outline for non-hostiles becomes green
 		elif is_hostile == false:
 			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
@@ -188,7 +190,7 @@ func apply_charge_effects() -> void:
 		charging = false
 
 
-#looks flat on bigger radius, idk hot to implement "bulge" texture effect shader??
+#looks flat on bigger radius, idk how to implement "bulge" texture effect shader??
 func apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -232,7 +234,7 @@ func animate_legs() -> void:
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
-	if roll_mode == false:
+	elif roll_mode == false:
 		for leg in legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), legs_position[leg],
 				transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -253,7 +255,7 @@ func animate_weapon_hatch() -> void:
 		weapon_hatch_tween.start()
 		$Weapon.global_rotation = body_weapon_hatch.global_rotation
 		weapon_anim.play("change_mode")
-	if roll_mode == false:
+	elif roll_mode == false:
 		body_weapon_hatch.global_rotation = $Weapon.global_rotation
 		body_weapon_hatch.show()
 		$Weapon.show()
@@ -301,13 +303,14 @@ func take_damage(damage, knockback) -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if charging == true:
-		if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-			body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
-		elif body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
-			return
-		else:
-			body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
+	if charging == false:
+		return
+	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
+		return
+	elif body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
+		body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
+	else:
+		body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:
