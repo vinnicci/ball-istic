@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 	animate_weapon_heat_bar()
 
 
-func _control():
+func _control(delta):
 	velocity = Vector2()
 	$Weapon.look_at(get_global_mouse_position())
 	if Input.is_action_pressed("shoot"):

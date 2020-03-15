@@ -12,7 +12,6 @@ export (float) var transform_speed: = 0.6 #absolute min is 0.1, recommended max 
 export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max is 2.5
 export (float) var knockback_resist: = 0.25 #absolute max is 1.0
 export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
-export (int) var charge_roll_damage: = 50
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
@@ -21,6 +20,7 @@ const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
+const CHARGE_DAMAGE_FACTOR: float = 0.03
 var legs_position: Dictionary = {}
 var velocity: Vector2
 var in_control: bool = true
@@ -166,18 +166,18 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	#velocity calculations
-	_control()
+	_control(delta)
 	apply_force(delta)
 
 
-func _control() -> void:
+func _control(delta) -> void:
 	pass
 
 
 #?? if i should put this on integrate_forces func??
 func apply_force(delta) -> void:
 	if roll_mode == true:
-		velocity = (velocity * delta).normalized() * current_roll_speed
+		velocity = (velocity*delta).normalized() * current_roll_speed
 	applied_force = velocity
 
 
@@ -317,12 +317,13 @@ func take_damage(damage, knockback) -> void:
 func _on_Bot_body_entered(body: Node) -> void:
 	if charging == false:
 		return
+	var damage = roll_speed * CHARGE_DAMAGE_FACTOR
 	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 		return
 	elif body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-		body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
+		body.take_damage(damage * charge_force_factor, Vector2(0,0))
 	else:
-		body.take_damage(charge_roll_damage * charge_force_factor, Vector2(0,0))
+		body.take_damage(damage * charge_force_factor, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:

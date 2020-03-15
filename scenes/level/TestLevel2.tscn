@@ -68,8 +68,6 @@ script = ExtResource( 7 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 3 )]
 position = Vector2( -559.961, -54.1898 )
-shield_capacity = 20
-health_capacity = 20
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 4 )]
 is_hostile = false

@@ -1,0 +1,176 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://addons/node_fsm_plugin/fsm_node.gd" type="Script" id=1]
+[ext_resource path="res://scenes/level/_BaseTileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level/_BaseLevel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bots/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/bots/Dummy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/terrain/tut_terrain.png" type="Texture" id=6]
+[ext_resource path="res://test_folder/test 1/Dummy.gd" type="Script" id=7]
+[ext_resource path="res://test_folder/test 1/Level.gd" type="Script" id=8]
+[ext_resource path="res://test_folder/test 1/TileMap.gd" type="Script" id=9]
+[ext_resource path="res://test_folder/test 1/Idle.gd" type="Script" id=10]
+[ext_resource path="res://test_folder/test 1/Navigate.gd" type="Script" id=11]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
+
+[sub_resource type="TileSet" id=3]
+0/name = "tut_terrain.png 0"
+0/texture = ExtResource( 6 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 128, 128 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/navigation = SubResource( 1 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "tut_terrain.png 1"
+1/texture = ExtResource( 6 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 128, 0, 128, 128 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape = SubResource( 2 )
+1/shape_one_way = false
+1/shape_one_way_margin = 1.0
+1/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+1/z_index = 0
+2/name = "tut_terrain.png 2"
+2/texture = ExtResource( 6 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 128, 128 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+
+[node name="Level" instance=ExtResource( 3 )]
+script = ExtResource( 8 )
+
+[node name="Navigation2D" type="Navigation2D" parent="." index="0"]
+
+[node name="TileMap" parent="Navigation2D" index="0" instance=ExtResource( 2 )]
+tile_set = SubResource( 3 )
+cell_size = Vector2( 128, 128 )
+script = ExtResource( 9 )
+
+[node name="Dummy" parent="Bots" index="0" instance=ExtResource( 5 )]
+position = Vector2( 2533.01, 5.2309 )
+script = ExtResource( 7 )
+is_destructible = true
+
+[node name="FSM" type="Node" parent="Bots/Dummy" index="7"]
+script = ExtResource( 1 )
+active = true
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="Bots/Dummy/FSM" index="0"]
+script = ExtResource( 10 )
+
+[node name="Navigate" type="Node" parent="Bots/Dummy/FSM" index="1"]
+script = ExtResource( 11 )
+
+[node name="Dummy2" parent="Bots" index="1" instance=ExtResource( 5 )]
+position = Vector2( 3781.59, 49.5968 )
+script = ExtResource( 7 )
+is_destructible = true
+
+[node name="FSM" type="Node" parent="Bots/Dummy2" index="7"]
+script = ExtResource( 1 )
+active = true
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="Bots/Dummy2/FSM" index="0"]
+script = ExtResource( 10 )
+
+[node name="Navigate" type="Node" parent="Bots/Dummy2/FSM" index="1"]
+script = ExtResource( 11 )
+
+[node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 5 )]
+position = Vector2( -439.503, 772.127 )
+script = ExtResource( 7 )
+is_destructible = true
+
+[node name="FSM" type="Node" parent="Bots/Dummy3" index="7"]
+script = ExtResource( 1 )
+active = true
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="Bots/Dummy3/FSM" index="0"]
+script = ExtResource( 10 )
+
+[node name="Navigate" type="Node" parent="Bots/Dummy3/FSM" index="1"]
+script = ExtResource( 11 )
+
+[node name="Dummy4" parent="Bots" index="3" instance=ExtResource( 5 )]
+position = Vector2( 1151.33, 543.959 )
+script = ExtResource( 7 )
+is_destructible = true
+
+[node name="FSM" type="Node" parent="Bots/Dummy4" index="7"]
+script = ExtResource( 1 )
+active = true
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="Bots/Dummy4/FSM" index="0"]
+script = ExtResource( 10 )
+
+[node name="Navigate" type="Node" parent="Bots/Dummy4/FSM" index="1"]
+script = ExtResource( 11 )
+
+[node name="Dummy5" parent="Bots" index="4" instance=ExtResource( 5 )]
+position = Vector2( 1905.55, 708.747 )
+script = ExtResource( 7 )
+is_destructible = true
+
+[node name="FSM" type="Node" parent="Bots/Dummy5" index="7"]
+script = ExtResource( 1 )
+active = true
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="Bots/Dummy5/FSM" index="0"]
+script = ExtResource( 10 )
+
+[node name="Navigate" type="Node" parent="Bots/Dummy5/FSM" index="1"]
+script = ExtResource( 11 )
+
+[node name="Player" parent="Bots" index="5" instance=ExtResource( 4 )]
+position = Vector2( 2737.67, 2950.9 )
+
+[editable path="Bots/Dummy"]
+
+[editable path="Bots/Dummy3"]
+
+[editable path="Bots/Dummy5"]
