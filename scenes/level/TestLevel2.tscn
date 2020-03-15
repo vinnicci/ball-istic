@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/terrain/tut_terrain.png" type="Texture" id=1]
 [ext_resource path="res://scenes/level/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -8,10 +8,14 @@
 [ext_resource path="res://scenes/bots/DestructibleDummy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/TestLevel2TileMap.gd" type="Script" id=7]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 
-[sub_resource type="TileSet" id=2]
+[sub_resource type="TileSet" id=3]
 0/name = "tut_terrain.png 0"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
@@ -20,6 +24,7 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
+0/navigation = SubResource( 1 )
 0/shape_offset = Vector2( 0, 0 )
 0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 0/shape_one_way = false
@@ -36,14 +41,14 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 1/navigation_offset = Vector2( 0, 0 )
 1/shape_offset = Vector2( 0, 0 )
 1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape = SubResource( 1 )
+1/shape = SubResource( 2 )
 1/shape_one_way = false
 1/shape_one_way_margin = 1.0
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 1 ),
+"shape": SubResource( 2 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
@@ -51,8 +56,10 @@ points = PoolVector2Array( 0, 0, 128, 0, 128, 128, 0, 128 )
 [node name="Level" instance=ExtResource( 2 )]
 script = ExtResource( 5 )
 
-[node name="TileMap" type="TileMap" parent="." index="0"]
-tile_set = SubResource( 2 )
+[node name="Navigation2D" type="Navigation2D" parent="." index="0"]
+
+[node name="TileMap" type="TileMap" parent="Navigation2D" index="0"]
+tile_set = SubResource( 3 )
 cell_size = Vector2( 128, 128 )
 centered_textures = true
 format = 1

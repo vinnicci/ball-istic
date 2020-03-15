@@ -49,9 +49,9 @@ func _control():
 func animate_charge_level_bar() -> void:
 	charge_level.value = 0
 	charge_level.modulate = Color(0.627451, 0.627451, 0.627451)
-	var tween = charge_level.get_node("Tween")
+	var tween = charge_level.get_node("ChargeTween")
 	tween.interpolate_property(charge_level, 'value', charge_level.value, charge_level.max_value,
-		$ChargeCooldown.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
 
@@ -61,5 +61,5 @@ func animate_weapon_heat_bar() -> void:
 	weapon_heat.value = $Weapon.current_heat
 
 
-func _on_ChargeCooldown_timeout() -> void:
-	charge_level.get_node("AnimationPlayer").play("charge_ready")
+func _on_ChargeTween_tween_all_completed() -> void:
+	charge_level.modulate = Color(0.117647, 1, 0.27451)

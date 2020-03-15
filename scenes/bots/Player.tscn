@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/player/player_leg.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/Player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/bots/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=4]
-[ext_resource path="res://scenes/weapons/Scattershot.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/weapons/IntroWeapon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/player/player_n_paint_job.png" type="Texture" id=7]
 
 [sub_resource type="Animation" id=1]
@@ -21,22 +21,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 0.913725, 0.639216, 0.0588235, 1 ), Color( 0.960784, 0.0901961, 0, 1 ), Color( 0.913725, 0.639216, 0.0588235, 1 ) ]
-}
-
-[sub_resource type="Animation" id=2]
-length = 0.06
-step = 0.02
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.02, 0.04, 0.06 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.117647, 1, 0.27451, 1 ) ]
 }
 
 [node name="Player" instance=ExtResource( 3 )]
@@ -87,10 +71,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="PlayerBars/ChargeLevel" index="0"]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBars/ChargeLevel" index="1"]
-anims/charge_ready = SubResource( 2 )
+[node name="ChargeTween" type="Tween" parent="PlayerBars/ChargeLevel" index="0"]
 
 [node name="Weapon" parent="." index="8" instance=ExtResource( 5 )]
-[connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]
+[connection signal="tween_all_completed" from="PlayerBars/ChargeLevel/ChargeTween" to="." method="_on_ChargeTween_tween_all_completed"]

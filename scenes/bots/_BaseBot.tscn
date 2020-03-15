@@ -40,7 +40,7 @@ color = Color( 0.223529, 0.956863, 0.25098, 1 )
 [node name="Texture" type="Polygon2D" parent="Body"]
 
 [node name="WeaponHatch" type="Polygon2D" parent="Body"]
-polygon = PoolVector2Array( 32, 0, 30.91, 8.282, 27.713, 16, -27.713, 16, -30.91, 8.282, -32, 0, -30.91, -8.282, -27.713, -16, 27.713, -16, 30.91, -8.282 )
+polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 
 [node name="WeaponHatchTween" type="Tween" parent="Body/WeaponHatch"]
 

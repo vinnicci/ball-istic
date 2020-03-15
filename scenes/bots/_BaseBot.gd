@@ -3,7 +3,7 @@ extends RigidBody2D
 #default bot values
 export (int) var shield_capacity: = 20
 export (int) var health_capacity: = 20
-export (int) var roll_speed: = 1000 #absolute max 2500
+export (int) var roll_speed: = 1300 #absolute max 2500
 export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true #projectiles pass through and charge has no effect on bot with same bool value
 export (int) var bot_radius: = 32
@@ -55,7 +55,7 @@ func set_up_constant_vars() -> void:
 	if is_destructible == false:
 		$Bars.hide()
 	
-	#graphics stuff
+	#bot's body set up
 	shield_bar.rect_position.y += bot_radius + BARS_OFFSET
 	health_bar.rect_position.y += shield_bar.rect_position.y + BARS_OFFSET
 	var circle_points = plot_circle_points(bot_radius)
@@ -70,6 +70,7 @@ func set_up_constant_vars() -> void:
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
 	set_up_legs([circle_points[4], circle_points[12], circle_points[20]])
+	set_up_hatch(circle_points)
 
 
 func set_up_legs(points) -> void:
@@ -96,6 +97,19 @@ func set_up_legs(points) -> void:
 				legs_position[leg3] = points[2]
 				leg3.rotation = deg2rad(15*20)
 	leg_sprite.hide()
+
+
+func set_up_hatch(circle_points: Array) -> void:
+	body_weapon_hatch.polygon[0] = circle_points[0]
+	body_weapon_hatch.polygon[1] = circle_points[1]
+	body_weapon_hatch.polygon[2] = circle_points[2]
+	body_weapon_hatch.polygon[3] = circle_points[10]
+	body_weapon_hatch.polygon[4] = circle_points[11]
+	body_weapon_hatch.polygon[5] = circle_points[12]
+	body_weapon_hatch.polygon[6] = circle_points[13]
+	body_weapon_hatch.polygon[7] = circle_points[14]
+	body_weapon_hatch.polygon[8] = circle_points[22]
+	body_weapon_hatch.polygon[9] = circle_points[23]
 
 
 func plot_circle_points(radius) -> Array:
@@ -190,7 +204,7 @@ func apply_charge_effects() -> void:
 		charging = false
 
 
-#looks flat on bigger radius, idk how to implement "bulge" texture effect shader??
+#looks flat on bigger radius, trying to figure out how to implement "bulge" texture effect shader
 func apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -252,7 +266,6 @@ func animate_weapon_hatch() -> void:
 	if roll_mode == true:
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		weapon_hatch_tween.start()
 		$Weapon.global_rotation = body_weapon_hatch.global_rotation
 		weapon_anim.play("change_mode")
 	elif roll_mode == false:
@@ -261,8 +274,8 @@ func animate_weapon_hatch() -> void:
 		$Weapon.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		weapon_hatch_tween.start()
 		weapon_anim.play_backwards("change_mode")
+	weapon_hatch_tween.start()
 
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
@@ -292,12 +305,11 @@ func take_damage(damage, knockback) -> void:
 		return
 	if current_shield - damage >= 0:
 		current_shield -= damage
-		shield_bar.value = current_shield
 	elif current_shield - damage < 0:
 		current_health += current_shield - damage
 		current_shield = 0
-		shield_bar.value = current_shield
-		health_bar.value = current_health
+	shield_bar.value = current_shield
+	health_bar.value = current_health
 	if current_health <= 0:
 		queue_free()
 
