@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/bots/_BaseBot.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=2]
@@ -9,6 +9,28 @@ bounce = 0.6
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 32.0
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 1, 0.871086, 0.523438, 1, 1, 0, 0, 0.501961 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+lifetime_randomness = 0.5
+emission_shape = 1
+emission_sphere_radius = 10.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 600.0
+initial_velocity_random = 0.8
+angular_velocity = 300.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+color_ramp = SubResource( 4 )
 
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
@@ -77,7 +99,24 @@ one_shot = true
 [node name="ShieldRecoveryTimer" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
+
+[node name="ExplodeDelay" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ExplodeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ExplosionParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 90
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 5 )
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Legs/LegTween" to="." method="_on_LegTween_tween_all_completed"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
+[connection signal="timeout" from="ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
+[connection signal="timeout" from="ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]

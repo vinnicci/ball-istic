@@ -1,6 +1,6 @@
 extends State
 
 
-func on_enter(target) -> void:
-	print("idle")
-	go_to("Navigate")
+func on_physics_process(target, delta : float) -> void:
+	if target.found == true:
+		go_to("Navigate")

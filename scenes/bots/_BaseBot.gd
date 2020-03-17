@@ -23,11 +23,12 @@ const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 var legs_position: Dictionary = {}
 var velocity: Vector2
-var in_control: bool = true
+var is_in_control: bool = true
 var charging: bool = false
 var current_shield: int
 var current_health: int
 var current_roll_speed: int
+var is_alive: bool = true
 signal shooting
 
 
@@ -162,7 +163,7 @@ func _physics_process(delta: float) -> void:
 	#makes charge roll an attack commitment, as a result it
 	#becomes a high risk high reward move
 	check_if_in_control()
-	if in_control == false:
+	if is_in_control == false:
 		return
 	
 	#velocity calculations
@@ -220,12 +221,12 @@ func apply_rolling_effects() -> void:
 
 
 func check_if_in_control() -> void:
-	if body_weapon_hatch.get_node("WeaponHatchTween").is_active() == true:
+	if body_weapon_hatch.get_node("WeaponHatchTween").is_active() == true || is_alive == false:
 		return
 	if linear_velocity.length() > control_velocity:
-		in_control = false
+		is_in_control = false
 	else:
-		in_control = true
+		is_in_control = true
 
 
 func switch_mode() -> void:
@@ -241,7 +242,7 @@ func switch_mode() -> void:
 
 
 func animate_legs() -> void:
-	in_control = false
+	is_in_control = false
 	var leg_tween = $Legs/LegTween
 	if roll_mode == true:
 		for leg in legs_position.keys():
@@ -256,11 +257,11 @@ func animate_legs() -> void:
 
 
 func _on_LegTween_tween_all_completed() -> void:
-	in_control = true
+	is_in_control = true
 
 
 func animate_weapon_hatch() -> void:
-	in_control = false
+	is_in_control = false
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
 	var weapon_anim = $Weapon/AnimationPlayer
 	if roll_mode == true:
@@ -282,7 +283,7 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
 		$Weapon.hide()
-	in_control = true
+	is_in_control = true
 
 
 func shoot_weapon() -> void:
@@ -311,7 +312,31 @@ func take_damage(damage, knockback) -> void:
 	shield_bar.value = current_shield
 	health_bar.value = current_health
 	if current_health <= 0:
-		queue_free()
+		explode()
+
+
+func explode() -> void:
+	is_alive = false
+	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
+	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
+	$Bars.modulate = Color(0.180392, 0.180392, 0.180392)
+	$ExplodeDelay.start()
+
+
+func _on_ExplodeDelay_timeout() -> void:
+	$Legs.hide()
+	$Body.hide()
+	$Bars.hide()
+	$Weapon.hide()
+	if has_node("PlayerBars") == true:
+		$PlayerBars.hide()
+	$CollisionShape.disabled = true
+	$ExplosionParticles.emitting = true
+	$ExplodeTimer.start()
+
+
+func _on_ExplodeTimer_timeout() -> void:
+	queue_free()
 
 
 func _on_Bot_body_entered(body: Node) -> void:

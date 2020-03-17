@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/node_fsm_plugin/fsm_node.gd" type="Script" id=1]
+[ext_resource path="res://test_folder/test 1/Idle.gd" type="Script" id=2]
+[ext_resource path="res://test_folder/test 1/Navigate.gd" type="Script" id=3]
+
+[node name="FSM" type="Node"]
+script = ExtResource( 1 )
+initial_state = "Idle"
+target = NodePath("..")
+
+[node name="Idle" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Navigate" type="Node" parent="."]
+script = ExtResource( 3 )
