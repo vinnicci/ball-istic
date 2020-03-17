@@ -14,8 +14,8 @@ func on_process(target, delta : float) -> void:
 	pass
 
 func on_physics_process(target, delta : float) -> void:
-	if target.target_bot == null || target.is_chasing == false:
+	if target.target_bot == null || target.in_detection_range == false:
 		go_to("Idle")
 	if target.is_backing_off == true:
 		go_to("BackOff")
-	target._control(delta)
+	target.chase_target(delta)

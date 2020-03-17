@@ -24,7 +24,6 @@ func _process(_delta: float) -> void:
 		weapon_heat.modulate = Color(0.913725, 0.639216, 0.058824)
 	animate_weapon_heat_bar()
 
-
 func _control(delta):
 	velocity = Vector2()
 	$Weapon.look_at(get_global_mouse_position())

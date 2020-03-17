@@ -4,10 +4,10 @@ extends "res://scenes/bots/DestructibleDummy.gd"
 onready var GPS = get_parent().get_parent()
 var points = []
 var next_point: Vector2
-onready var target_bot = get_parent().get_node("Player")
+var target_bot: Node
 var in_detection_range: bool = false
+var in_line_of_sight: bool = false
 var is_backing_off: bool = false
-var is_chasing: bool = false
 
 
 func get_new_points() -> void:
@@ -20,10 +20,9 @@ func _control(delta) -> void:
 		return
 	$TargetRay.look_at(target_bot.global_position)
 	if $TargetRay.get_collider() == target_bot:
-		is_chasing = true
-		get_new_points()
-	if is_chasing == true:
-		chase_target(delta)
+		in_line_of_sight = true
+	else:
+		in_line_of_sight = false
 
 
 func chase_target(delta) -> void:
@@ -38,16 +37,23 @@ func chase_target(delta) -> void:
 	velocity = Vector2(1,0).rotated($VelocityRay.global_rotation)
 
 
+func back_off(delta) -> void:
+	$VelocityRay.look_at(target_bot.global_position)
+	velocity = Vector2(0,0)
+	velocity += Vector2(1,0).rotated($VelocityRay.global_rotation - 180)
+
+
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body == target_bot:
+	if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
+		target_bot = body
 		$TargetRay.enabled = true
+		in_detection_range = true
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
 	if body == target_bot:
 		$TargetRay.enabled = false
 		in_detection_range = false
-		is_chasing = false
 
 
 func _on_ChargeRange_body_entered(body: Node) -> void:
@@ -55,6 +61,11 @@ func _on_ChargeRange_body_entered(body: Node) -> void:
 		if $ChargeCooldown.is_stopped() == true && is_backing_off == false:
 			charge_attack($TargetRay.global_rotation)
 		is_backing_off = true
+		$FSM/BackOff/BackOffTimer.start()
+
+
+func _on_BackOffTimer_timeout() -> void:
+	is_backing_off = false
 
 
 func _on_BackOffRange_body_exited(body: Node) -> void:

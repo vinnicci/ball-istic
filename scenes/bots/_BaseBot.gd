@@ -13,26 +13,24 @@ export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max 
 export (float) var knockback_resist: = 0.25 #absolute max is 1.0
 export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
 const BARS_OFFSET: int = 15
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
 const OUTLINE_SIZE: float = 4.0
-const CONTROL_VELOCITY_FACTOR: float = 0.6
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 var legs_position: Dictionary = {}
 var velocity: Vector2
-var is_in_control: bool = true
-var charging: bool = false
 var current_shield: int
 var current_health: int
 var current_roll_speed: int
 var is_alive: bool = true
+var is_charging: bool = false
+var is_transforming: bool = false
 signal shooting
 
 
-onready var control_velocity: int = roll_speed * CONTROL_VELOCITY_FACTOR
 onready var roll_mode: bool = false
 onready var body_outline = $Body/Outline
 onready var body_texture = $Body/Texture
@@ -162,8 +160,7 @@ func _physics_process(delta: float) -> void:
 	#high speed means temporarily losing control
 	#makes charge roll an attack commitment, as a result it
 	#becomes a high risk high reward move
-	check_if_in_control()
-	if is_in_control == false:
+	if check_if_in_control() == false:
 		return
 	
 	#velocity calculations
@@ -192,7 +189,7 @@ func apply_charge_effects() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
 		body_outline.color = Color(1, 0.2, 0.839216)
 		body_charge_effect.color.a = 255
-		charging = true
+		is_charging = true
 	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#outline for hostiles becomes red
 		if is_hostile == true:
@@ -202,7 +199,7 @@ func apply_charge_effects() -> void:
 			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
-		charging = false
+		is_charging = false
 
 
 #looks flat on bigger radius, trying to figure out how to implement "bulge" texture effect shader
@@ -220,13 +217,11 @@ func apply_rolling_effects() -> void:
 		body_texture.texture_rotation = 0
 
 
-func check_if_in_control() -> void:
-	if body_weapon_hatch.get_node("WeaponHatchTween").is_active() == true || is_alive == false:
-		return
-	if linear_velocity.length() > control_velocity:
-		is_in_control = false
+func check_if_in_control() -> bool:
+	if is_alive == true && is_charging == false && is_transforming == false:
+		return true
 	else:
-		is_in_control = true
+		return false
 
 
 func switch_mode() -> void:
@@ -242,7 +237,7 @@ func switch_mode() -> void:
 
 
 func animate_legs() -> void:
-	is_in_control = false
+	is_transforming = true
 	var leg_tween = $Legs/LegTween
 	if roll_mode == true:
 		for leg in legs_position.keys():
@@ -257,11 +252,11 @@ func animate_legs() -> void:
 
 
 func _on_LegTween_tween_all_completed() -> void:
-	is_in_control = true
+	is_transforming = false
 
 
 func animate_weapon_hatch() -> void:
-	is_in_control = false
+	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
 	var weapon_anim = $Weapon/AnimationPlayer
 	if roll_mode == true:
@@ -283,7 +278,7 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
 		$Weapon.hide()
-	is_in_control = true
+	is_transforming = false
 
 
 func shoot_weapon() -> void:
@@ -316,10 +311,13 @@ func take_damage(damage, knockback) -> void:
 
 
 func explode() -> void:
+	velocity = Vector2(0,0)
 	is_alive = false
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
-	$Bars.modulate = Color(0.180392, 0.180392, 0.180392)
+	$Bars.hide()
+	if has_node("PlayerBars") == true:
+		$PlayerBars.hide()
 	$ExplodeDelay.start()
 
 
@@ -328,8 +326,6 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Body.hide()
 	$Bars.hide()
 	$Weapon.hide()
-	if has_node("PlayerBars") == true:
-		$PlayerBars.hide()
 	$CollisionShape.disabled = true
 	$ExplosionParticles.emitting = true
 	$ExplodeTimer.start()
@@ -340,7 +336,7 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if charging == false:
+	if is_charging == false:
 		return
 	var damage = roll_speed * CHARGE_DAMAGE_FACTOR
 	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
