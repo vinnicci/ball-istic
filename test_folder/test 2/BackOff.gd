@@ -1,11 +1,8 @@
 extends State
 
 
-func _ready() -> void:
-	$BackOffTimer.wait_time = get_parent().get_parent().get_node("ChargeCooldown").wait_time
-
 func on_enter(target) -> void:
-	pass
+	target.get_node("Status").get_node("Label").text = state_name
 
 func on_exit(target) -> void:
 	pass

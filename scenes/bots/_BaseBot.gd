@@ -147,7 +147,7 @@ func check_for_capped_vars() -> void:
 
 func _physics_process(delta: float) -> void:
 	#charge roll graphical feedback/effects
-	apply_charge_effects()
+	apply_charging_effects()
 	
 	#keeps shield and health bars in place
 	$Bars.global_rotation = 0
@@ -183,14 +183,10 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	pass
 
 
-func apply_charge_effects() -> void:
+func apply_charging_effects() -> void:
 	var hostile = Color(0.941406, 0.172836, 0.172836)
 	var non_hostile = Color(0.223529, 0.956863, 0.25098)
-	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR && $ChargeCooldown.is_stopped() == false:
-		body_outline.color = Color(1, 0.2, 0.839216)
-		body_charge_effect.color.a = 255
-		is_charging = true
-	elif linear_velocity.length() < current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#outline for hostiles becomes red
 		if is_hostile == true:
 			body_outline.color = lerp(body_outline.color, hostile, 0.8)
@@ -200,6 +196,10 @@ func apply_charge_effects() -> void:
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
+	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+		body_outline.color = Color(1, 0.2, 0.839216)
+		body_charge_effect.color.a = 255
+		is_charging = true
 
 
 #looks flat on bigger radius, trying to figure out how to implement "bulge" texture effect shader
@@ -311,7 +311,6 @@ func take_damage(damage, knockback) -> void:
 
 
 func explode() -> void:
-	velocity = Vector2(0,0)
 	is_alive = false
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)

@@ -2,7 +2,7 @@ extends State
 
 
 func on_enter(target) -> void:
-	pass
+	target.get_node("Status").get_node("Label").text = state_name
 
 func on_exit(target) -> void:
 	pass

@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/bots/DestructibleDummy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/node_fsm_plugin/fsm_node.gd" type="Script" id=2]
 [ext_resource path="res://test_folder/test 2/Idle.gd" type="Script" id=3]
 [ext_resource path="res://test_folder/test 2/Chase.gd" type="Script" id=4]
+[ext_resource path="res://assets/ui elements/fonts/FRADM.TTF" type="DynamicFontData" id=5]
 [ext_resource path="res://test_folder/test 2/BackOff.gd" type="Script" id=6]
 [ext_resource path="res://test_folder/test 2/DestructibleDummy.gd" type="Script" id=7]
 
-[sub_resource type="CircleShape2D" id=4]
-radius = 250.0
+[sub_resource type="CircleShape2D" id=1]
+radius = 350.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 150.0
@@ -16,22 +17,22 @@ radius = 150.0
 [sub_resource type="CircleShape2D" id=3]
 radius = 1000.0
 
+[sub_resource type="DynamicFont" id=4]
+size = 35
+font_data = ExtResource( 5 )
+
 [node name="DestructibleDummy" instance=ExtResource( 1 )]
 script = ExtResource( 7 )
 
 [node name="BackOffRange" type="Area2D" parent="." index="7"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BackOffRange" index="0"]
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="ChargeRange" type="Area2D" parent="." index="8"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeRange" index="0"]
 shape = SubResource( 2 )
-
-[node name="ChargeRangeTimer" type="Timer" parent="ChargeRange" index="1"]
-wait_time = 0.2
-one_shot = true
 
 [node name="DetectionRange" type="Area2D" parent="." index="9"]
 
@@ -42,6 +43,7 @@ shape = SubResource( 3 )
 cast_to = Vector2( 1000, 0 )
 
 [node name="VelocityRay" type="RayCast2D" parent="." index="11"]
+enabled = true
 cast_to = Vector2( 35, 0 )
 
 [node name="FSM" type="Node" parent="." index="12"]
@@ -52,17 +54,31 @@ target = NodePath("..")
 
 [node name="Idle" type="Node" parent="FSM" index="0"]
 script = ExtResource( 3 )
+state_name = "Idle"
 
 [node name="Chase" type="Node" parent="FSM" index="1"]
 script = ExtResource( 4 )
+state_name = "Chase"
 
 [node name="BackOff" type="Node" parent="FSM" index="2"]
 script = ExtResource( 6 )
+state_name = "BackOff"
 
-[node name="BackOffTimer" type="Timer" parent="FSM/BackOff" index="0"]
-one_shot = true
+[node name="Status" type="Node2D" parent="." index="13"]
+
+[node name="Label" type="Label" parent="Status" index="0"]
+margin_left = -50.0
+margin_top = -70.0
+margin_right = 50.0
+margin_bottom = -46.0
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="body_entered" from="BackOffRange" to="." method="_on_BackOffRange_body_entered"]
 [connection signal="body_exited" from="BackOffRange" to="." method="_on_BackOffRange_body_exited"]
 [connection signal="body_entered" from="ChargeRange" to="." method="_on_ChargeRange_body_entered"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
-[connection signal="timeout" from="FSM/BackOff/BackOffTimer" to="." method="_on_BackOffTimer_timeout"]
