@@ -1,17 +1,21 @@
 extends RigidBody2D
 
+#make sure bot radius is half the texture size
+#ex. texture size = 64x64 -> bot radius = 32
+
 #default bot values
 export (int) var shield_capacity: = 20
 export (int) var health_capacity: = 20
 export (int) var roll_speed: = 1300 #absolute max 2500
 export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true #projectiles pass through and charge has no effect on bot with same bool value
-export (int) var bot_radius: = 32
+export (int) var bot_radius: = 32.0
 export (int) var shield_recovery_per_second: = 2 #absolute min is 2, no recovery if less than 2
 export (float) var transform_speed: = 0.6 #absolute min is 0.1, recommended max is 0.6
 export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max is 2.5
 export (float) var knockback_resist: = 0.25 #absolute max is 1.0
 export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
+const DEFAULT_BOT_RADIUS: = 32.0
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
@@ -55,12 +59,11 @@ func set_up_constant_vars() -> void:
 		$Bars.hide()
 	
 	#bot's body set up
+	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
+	body_texture.position = Vector2(-bot_radius, -bot_radius)
 	shield_bar.rect_position.y += bot_radius + BARS_OFFSET
 	health_bar.rect_position.y += shield_bar.rect_position.y + BARS_OFFSET
 	var circle_points = plot_circle_points(bot_radius)
-	body_texture.polygon = circle_points
-	body_texture.position = Vector2(-bot_radius, -bot_radius)
-	body_texture.offset = Vector2(bot_radius, bot_radius)
 	body_charge_effect.polygon = circle_points
 	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
 	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
@@ -68,7 +71,7 @@ func set_up_constant_vars() -> void:
 	body_outline.polygon = plot_circle_points(outline)
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
-	set_up_legs([circle_points[4], circle_points[12], circle_points[20]])
+	set_up_legs([circle_points[3], circle_points[8], circle_points[13]])
 	set_up_hatch(circle_points)
 
 
@@ -84,37 +87,33 @@ func set_up_legs(points) -> void:
 				leg1.add_child(leg)
 				leg1.position = points[0]
 				legs_position[leg1] = points[0]
-				leg1.rotation = deg2rad(15*4) #<-- 15 degrees times index from circle_points[index]
+				leg1.rotation = deg2rad(22.5*3) #<-- 15 degrees times index from circle_points[index]
 			1:
 				leg2.add_child(leg)
 				leg2.position = points[1]
 				legs_position[leg2] = points[1]
-				leg2.rotation = deg2rad(15*12)
+				leg2.rotation = deg2rad(22.5*8)
 			2:
 				leg3.add_child(leg)
 				leg3.position = points[2]
 				legs_position[leg3] = points[2]
-				leg3.rotation = deg2rad(15*20)
+				leg3.rotation = deg2rad(22.5*13)
 	leg_sprite.hide()
 
 
 func set_up_hatch(circle_points: Array) -> void:
 	body_weapon_hatch.polygon[0] = circle_points[0]
 	body_weapon_hatch.polygon[1] = circle_points[1]
-	body_weapon_hatch.polygon[2] = circle_points[2]
-	body_weapon_hatch.polygon[3] = circle_points[10]
-	body_weapon_hatch.polygon[4] = circle_points[11]
-	body_weapon_hatch.polygon[5] = circle_points[12]
-	body_weapon_hatch.polygon[6] = circle_points[13]
-	body_weapon_hatch.polygon[7] = circle_points[14]
-	body_weapon_hatch.polygon[8] = circle_points[22]
-	body_weapon_hatch.polygon[9] = circle_points[23]
+	body_weapon_hatch.polygon[2] = circle_points[7]
+	body_weapon_hatch.polygon[3] = circle_points[8]
+	body_weapon_hatch.polygon[4] = circle_points[9]
+	body_weapon_hatch.polygon[5] = circle_points[15]
 
 
 func plot_circle_points(radius) -> Array:
 	var circle_points = []
-	for i in range(24):
-		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*15.0)))
+	for i in range(16):
+		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*22.5)))
 	return circle_points
 
 
@@ -155,7 +154,7 @@ func _physics_process(delta: float) -> void:
 	#rolling ball graphical effect
 	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
 	#because texture offset resets based on radius
-	apply_rolling_effects()
+	apply_rolling_effects(delta)
 	
 	#high speed means temporarily losing control
 	#makes charge roll an attack commitment, as a result it
@@ -202,19 +201,12 @@ func apply_charging_effects() -> void:
 		is_charging = true
 
 
-#looks flat on bigger radius, trying to figure out how to implement "bulge" texture effect shader
-func apply_rolling_effects() -> void:
+func apply_rolling_effects(delta) -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
 		return
 	if roll_mode == true:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
-	if body_texture.texture_offset.x < -bot_radius*2 || body_texture.texture_offset.x > bot_radius*2:
-		body_texture.texture_offset.x = 0
-	if body_texture.texture_offset.y < -bot_radius*2 || body_texture.texture_offset.y > bot_radius*2:
-		body_texture.texture_offset.y = 0
-	if body_texture.texture_rotation < -360 || body_texture.texture_rotation > 360:
-		body_texture.texture_rotation = 0
 
 
 func check_if_in_control() -> bool:
