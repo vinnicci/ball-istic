@@ -2,7 +2,8 @@ extends TileMap
 
 
 export (bool) var is_destructible: = false
-export (int) var health_capacity: = 1000
+export (float) var health_capacity: = 1000.0
+var current_health: float
 
 
 func take_damage(damage, knockback):

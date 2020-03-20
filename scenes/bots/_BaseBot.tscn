@@ -9,6 +9,7 @@ friction = 0.5
 bounce = 0.8
 
 [sub_resource type="CircleShape2D" id=2]
+resource_local_to_scene = true
 
 [sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 0.871086, 0.523438, 1, 1, 0, 0, 0.501961 )

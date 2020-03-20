@@ -8,8 +8,9 @@
 [node name="Weapon" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
-heat_per_shot = 5
-heat_capacity = 100
+heat_per_shot = 2.0
+heat_capacity = 100.0
+heat_dissipation_per_second = 5.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )

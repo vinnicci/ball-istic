@@ -2,18 +2,18 @@ extends RigidBody2D
 
 #make sure to reimport texture as repeating
 
-export var bot_radius: float = 32.0
-export var shield_capacity: int = 20
-export var health_capacity: int = 20
-export var roll_speed: int = 1200 #absolute max 2500
-export var is_destructible: bool = true
-export var is_hostile: bool = true #projectiles pass through and charge has no effect on bot with same bool value
-export var shield_recovery_per_second: int = 2 #absolute min is 2, no recovery if less than 2
-export var transform_speed: float = 0.6 #absolute min is 0.1, recommended max is 0.6
-export var charge_cooldown: float = 2.5 #absolute min is 0.5, recommended max is 2.5
-export var knockback_resist: float = 0.1 #absolute max is 1.0
-export var charge_force_factor: float = 0.5 #absolute max is 1.0
-const DEFAULT_BOT_RADIUS: float = 32.0
+export (float) var bot_radius: = 32.0
+export (float) var shield_capacity: = 20
+export (float) var health_capacity: = 20
+export (int) var roll_speed: = 1200 #absolute max 2500
+export (bool) var is_destructible: = true
+export (bool) var is_hostile: = true #projectiles pass through and charge has no effect on bot with same bool value
+export (float) var shield_recovery_per_second: = 1.0 #absolute min is 2, no recovery if less than 2
+export (float) var transform_speed: = 0.6 #absolute min is 0.1, recommended max is 0.6
+export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max is 2.5
+export (float) var knockback_resist: = 0.1 #absolute max is 1.0
+export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
+const AVERAGE_BOT_RADIUS: float = 32.0
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
@@ -25,8 +25,8 @@ const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLYGON_SIDES: int = 24
 var legs_position: Dictionary = {}
 var velocity: Vector2
-var current_shield: int
-var current_health: int
+var current_shield: float
+var current_health: float
 var current_roll_speed: int
 var is_alive: bool = true
 var is_charging: bool = false
@@ -59,7 +59,7 @@ func set_up_constant_vars() -> void:
 		$Bars.hide()
 	
 	#bot's body set up
-	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
+	body_texture.scale = Vector2(bot_radius/AVERAGE_BOT_RADIUS, bot_radius/AVERAGE_BOT_RADIUS)
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
 	bar_shield.rect_position.y += bot_radius + BARS_OFFSET
 	bar_health.rect_position.y += bar_shield.rect_position.y + BARS_OFFSET

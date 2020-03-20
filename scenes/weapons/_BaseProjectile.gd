@@ -4,7 +4,7 @@ extends Area2D
 #be sure to name root node as Projectile
 #however you can name the scene as anything
 export (int) var speed: = 1000
-export (int) var damage: = 5
+export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 0.01
 var proj_origin: bool

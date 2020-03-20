@@ -1,13 +1,9 @@
 extends RigidBody2D
 
 
-export (int) var health_capacity: = 1000
+export (float) var health_capacity: = 1000.0
 export (bool) var destructible: = false
-var current_health: int
-
-
-func _ready() -> void:
-	current_health = health_capacity
+var current_health: float
 
 
 func take_damage(damage, knockback) -> void:
