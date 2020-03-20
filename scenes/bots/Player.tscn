@@ -24,7 +24,6 @@ tracks/0/keys = {
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-is_hostile = false
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
 current = true

@@ -6,6 +6,6 @@ export (int) var health_capacity: = 1000
 
 
 func take_damage(damage, knockback):
-	knockback = 0
+	knockback = Vector2(0,0)
 	if is_destructible == false:
 		return

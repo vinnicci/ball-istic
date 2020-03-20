@@ -29,7 +29,7 @@ func _travel(pos, dir):
 	pass
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
 

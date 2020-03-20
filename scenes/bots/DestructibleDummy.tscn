@@ -7,8 +7,6 @@
 
 [node name="DestructibleDummy" instance=ExtResource( 4 )]
 script = ExtResource( 2 )
-shield_capacity = 20
-health_capacity = 20
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 3 )

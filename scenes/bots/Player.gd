@@ -24,6 +24,7 @@ func _process(_delta: float) -> void:
 		weapon_heat.modulate = Color(0.913725, 0.639216, 0.058824)
 	animate_weapon_heat_bar()
 
+
 func _control(delta):
 	velocity = Vector2()
 	$Weapon.look_at(get_global_mouse_position())
@@ -40,9 +41,10 @@ func _control(delta):
 	elif Input.is_action_pressed("move_right"):
 		velocity.x += 1
 	if Input.is_action_just_released("charge_roll"):
-		if $ChargeCooldown.is_stopped() == true && roll_mode == true:
+		if $Timers/ChargeCooldown.is_stopped() == true && roll_mode == true:
 			animate_charge_level_bar()
 		charge_attack($Weapon.global_rotation)
+	velocity = velocity * delta
 
 
 func animate_charge_level_bar() -> void:
