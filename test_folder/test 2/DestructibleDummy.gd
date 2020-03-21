@@ -5,6 +5,7 @@ onready var GPS = get_parent().get_parent()
 var points: Array = []
 var next_point: Vector2
 var target_bot: Node
+
 var in_detection_range: bool = false
 var in_line_of_sight: bool = false
 var is_backing_off: bool = false
@@ -21,6 +22,8 @@ func get_new_points() -> void:
 
 
 func _control(delta) -> void:
+	#all behavior not in a specific state here
+	
 	$Status.global_rotation = 0
 	if is_instance_valid(target_bot) == false:
 		return

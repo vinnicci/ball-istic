@@ -49,5 +49,8 @@ position = Vector2( 235.971, 562.7 )
 [node name="DestructibleDummy8" parent="Bots" index="8" instance=ExtResource( 4 )]
 position = Vector2( 280.528, 244.541 )
 bot_radius = 45.0
+shield_capacity = 50.0
+health_capacity = 50.0
+roll_speed = 1300
 
 [editable path="Bots/Player"]

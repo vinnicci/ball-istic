@@ -22,7 +22,7 @@ const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
-const POLYGON_SIDES: int = 24
+const POLYGON_SIDES = 24
 var legs_position: Dictionary = {}
 var velocity: Vector2
 var current_shield: float
@@ -84,7 +84,7 @@ func set_up_legs(circle_points) -> void:
 	var leg1 = $Legs/Leg1
 	var leg2 = $Legs/Leg2
 	var leg3 = $Legs/Leg3
-	var deg = 360/POLYGON_SIDES
+	var deg = 360.0/POLYGON_SIDES as float
 	for i in circle_points.size():
 		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
 		match i:
@@ -113,7 +113,7 @@ func set_up_hatch(circle_points: Array) -> void:
 func plot_circle_points(radius) -> Array:
 	var circle_points = []
 	for i in range(POLYGON_SIDES):
-		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*(360/POLYGON_SIDES))))
+		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*(360.0/POLYGON_SIDES))))
 	return circle_points
 
 
@@ -149,6 +149,13 @@ func _process(delta: float) -> void:
 	#keeps shield and health bars in place
 	$Bars.global_rotation = 0
 	
+	#everything charge roll related
+	#charge roll graphical feedback/effects
+	apply_charging_effects()
+	
+	#rolling ball graphical effect
+	apply_rolling_effects()
+	
 	#high speed, transforming, and dying means losing control
 	#makes charge roll an attack commitment
 	check_if_in_control()
@@ -160,13 +167,7 @@ func _process(delta: float) -> void:
 
 #capped to 60 fps
 func _physics_process(delta: float) -> void:
-	#charge roll graphical feedback/effects
-	apply_charging_effects()
-	
-	#rolling ball graphical effect
-	#bodytexture size must be the same as bot's rect size(radius*2 by radius*2)
-	#because texture offset resets based on radius
-	apply_rolling_effects()
+	pass
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
@@ -304,7 +305,7 @@ func take_damage(damage, knockback) -> void:
 
 
 func explode() -> void:
-	is_alive = !is_alive
+	is_alive = false
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Bars.hide()
@@ -320,7 +321,7 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Weapon.hide()
 	$CollisionShape.disabled = true
 	
-	#explosion graphics here
+	#explosion graphical effect here
 	$ExplosionParticles.emitting = true
 	$Timers/ExplodeTimer.start()
 
