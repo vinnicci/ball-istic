@@ -1,9 +1,9 @@
 extends Area2D
 
 
-#be sure to name root node as Projectile
-#however you can name the scene as anything
-export (int) var speed: = 1000
+#can name the scene as anything
+#but be sure to name root node as Projectile
+export (int) var speed: = 500
 export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 0.01
@@ -33,14 +33,18 @@ func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
 
-func _on_Projectile_body_entered(_body: Node) -> void:
-	if _body.get_parent().name == "Bots" && _body.is_hostile == proj_origin:
+func _on_Projectile_body_entered(body: Node) -> void:
+	if body.get_parent().name == "Bots" && body.is_hostile == proj_origin:
 		return
-	elif _body.get_parent().name == "Bots" && _body.is_hostile != proj_origin:
-		_body.take_damage(damage, velocity*knockback)
+	elif body.get_parent().name == "Bots" && body.is_hostile != proj_origin:
+		#projectile effects here
+		#body.take_projectile_effect(some params)
+		
+		#normal damage
+		body.take_damage(damage, velocity*knockback)
 		velocity = Vector2(0,0)
 	else:
-		_body.take_damage(damage, velocity*knockback)
+		body.take_damage(damage, velocity*knockback)
 		velocity = Vector2(0,0)
 	$Sprite.hide()
 	$OnHitParticles.emitting = true

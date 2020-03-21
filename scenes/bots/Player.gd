@@ -8,6 +8,11 @@ const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 
 
 func _ready() -> void:
+	update_player_vars()
+
+
+#player specific stats update
+func update_player_vars() -> void:
 	weapon_heat.rect_position.x -= weapon_heat.rect_size.y + bot_radius + PLAYER_BARS_OFFSET
 	charge_level.rect_position.x += bot_radius + PLAYER_BARS_OFFSET
 	weapon_heat.max_value = $Weapon.heat_capacity
@@ -26,8 +31,8 @@ func _process(_delta: float) -> void:
 
 
 func _control(delta):
-	velocity = Vector2()
 	$Weapon.look_at(get_global_mouse_position())
+	velocity = Vector2()
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 	if Input.is_action_just_released("change_mode"):

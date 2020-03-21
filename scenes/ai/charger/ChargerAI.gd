@@ -1,7 +1,8 @@
-extends "res://scenes/bots/DestructibleDummy.gd"
+extends "res://scenes/ai/_BaseAI.gd"
 
 
-onready var GPS = get_parent().get_parent()
+onready var level_node = get_parent().get_parent().get_parent()
+onready var bot_node = get_parent()
 var points: Array = []
 var next_point: Vector2
 var target_bot: Node
@@ -17,14 +18,13 @@ func _ready() -> void:
 
 
 func get_new_points() -> void:
-	points = GPS.get_points(self, target_bot)
+	points = level_node.get_points(self, target_bot)
 	next_point = points.pop_front()
 
 
 func _control(delta) -> void:
 	#all behavior not in a specific state here
-	
-	$Status.global_rotation = 0
+	global_rotation = 0
 	if is_instance_valid(target_bot) == false:
 		return
 	$TargetRay.look_at(target_bot.global_position)
@@ -35,28 +35,28 @@ func _control(delta) -> void:
 
 
 func chase_target(delta) -> void:
-	if is_in_control == false:
+	if bot_node.is_in_control == false:
 		return
 	if points.size() == 0 || (target_bot.global_position - points.back()).length() < 1000:
 		get_new_points()
 	if (global_position - next_point).length() < 100:
 		next_point = points.pop_front()
 		$VelocityRay.look_at(next_point)
-	velocity = Vector2(0,0)
-	velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
+	bot_node.velocity = Vector2(0,0)
+	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
 
 
 func back_off(delta) -> void:
 	#wip!!
-	if is_in_control == false:
+	if bot_node.is_in_control == false:
 		return
 	$VelocityRay.look_at(target_bot.global_position)
-	velocity = Vector2(0,0)
-	velocity += Vector2(1,0).rotated($VelocityRay.global_rotation - 180) * delta
+	bot_node.velocity = Vector2(0,0)
+	bot_node.velocity += Vector2(1,0).rotated($VelocityRay.global_rotation - 180) * delta
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
+	if body.get_parent().name == "Bots" && bot_node.is_hostile != body.is_hostile:
 		target_bot = body
 		get_new_points()
 		$TargetRay.enabled = true
@@ -71,8 +71,8 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 
 func _on_ChargeRange_body_entered(body: Node) -> void:
 	if body == target_bot:
-		if timer_charge_cooldown.is_stopped() == true && is_backing_off == false:
-			charge_attack($TargetRay.global_rotation)
+		if bot_node.timer_charge_cooldown.is_stopped() == true && is_backing_off == false:
+			bot_node.charge_attack($TargetRay.global_rotation)
 			is_backing_off = true
 
 
@@ -83,5 +83,5 @@ func _on_BackOffRange_body_exited(body: Node) -> void:
 
 func _on_BackOffRange_body_entered(body: Node) -> void:
 	if body == target_bot:
-		if timer_charge_cooldown.is_stopped() == false:
+		if bot_node.timer_charge_cooldown.is_stopped() == false:
 			is_backing_off = true

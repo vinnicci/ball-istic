@@ -1,6 +1,7 @@
 extends Node2D
 
-
+#Nav node: attach base tilemap or base static body
+#Bots node: attach bot
 #add bot instances in Bots node
 func _ready() -> void:
 	for child_node in $Bots.get_children():

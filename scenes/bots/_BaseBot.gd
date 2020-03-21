@@ -1,18 +1,20 @@
 extends RigidBody2D
 
-#make sure to reimport texture as repeating
+#make sure to import body texture with repeating enabled
+#mandatory attachment: Weapon node
+#op
 
-export (float) var bot_radius: = 32.0
+export (float, 25.0, 100.0) var bot_radius: = 32.0
 export (float) var shield_capacity: = 20
 export (float) var health_capacity: = 20
-export (int) var roll_speed: = 1200 #absolute max 2500
+export (int, 0, 3000) var roll_speed: = 1200
+export (float) var shield_recovery_per_second: = 1.0
+export (float, 0.1, 0.8) var transform_speed: = 0.6
+export (float, 0.5, 3.0) var charge_cooldown: = 2.5
+export (float, 0, 1.0) var knockback_resist: = 0.1
+export (float, 0, 1.0) var charge_force_factor: = 0.5
 export (bool) var is_destructible: = true
-export (bool) var is_hostile: = true #projectiles pass through and charge has no effect on bot with same bool value
-export (float) var shield_recovery_per_second: = 1.0 #absolute min is 2, no recovery if less than 2
-export (float) var transform_speed: = 0.6 #absolute min is 0.1, recommended max is 0.6
-export (float) var charge_cooldown: = 2.5 #absolute min is 0.5, recommended max is 2.5
-export (float) var knockback_resist: = 0.1 #absolute max is 1.0
-export (float) var charge_force_factor: = 0.5 #absolute max is 1.0
+export (bool) var is_hostile: = true
 const AVERAGE_BOT_RADIUS: float = 32.0
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
@@ -22,12 +24,13 @@ const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
-const POLYGON_SIDES = 24
+const POLY_SIDES = 24
 var legs_position: Dictionary = {}
 var velocity: Vector2
 var current_shield: float
 var current_health: float
 var current_roll_speed: int
+var current_shield_recovery: float
 var is_alive: bool = true
 var is_charging: bool = false
 var is_transforming: bool = false
@@ -47,14 +50,17 @@ onready var timer_charge_cooldown = $Timers/ChargeCooldown
 
 func _ready() -> void:
 	#never changing stuff
-	set_up_constant_vars()
+	set_up_default_vars()
 	
 	#might change on the course of the game
 	update_vars()
 
 
-func set_up_constant_vars() -> void:
+func set_up_default_vars() -> void:
+	#bot properties
+	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
+	
 	if is_destructible == false:
 		$Bars.hide()
 	
@@ -84,7 +90,7 @@ func set_up_legs(circle_points) -> void:
 	var leg1 = $Legs/Leg1
 	var leg2 = $Legs/Leg2
 	var leg3 = $Legs/Leg3
-	var deg = 360.0/POLYGON_SIDES as float
+	var deg = 360.0/POLY_SIDES as float
 	for i in circle_points.size():
 		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
 		match i:
@@ -112,14 +118,13 @@ func set_up_hatch(circle_points: Array) -> void:
 
 func plot_circle_points(radius) -> Array:
 	var circle_points = []
-	for i in range(POLYGON_SIDES):
-		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*(360.0/POLYGON_SIDES))))
+	for i in range(POLY_SIDES):
+		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*(360.0/POLY_SIDES))))
 	return circle_points
 
 
 func update_vars() -> void:
 	check_for_capped_vars()
-	$CollisionShape.shape.radius = bot_radius
 	current_shield = shield_capacity
 	current_health = health_capacity
 	current_roll_speed = roll_speed
@@ -146,7 +151,6 @@ func check_for_capped_vars() -> void:
 
 
 func _process(delta: float) -> void:
-	#keeps shield and health bars in place
 	$Bars.global_rotation = 0
 	
 	#everything charge roll related
@@ -165,7 +169,7 @@ func _process(delta: float) -> void:
 		_control(delta)
 
 
-#capped to 60 fps
+#60 fps cap
 func _physics_process(delta: float) -> void:
 	pass
 
@@ -175,7 +179,8 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 
 func _control(delta) -> void:
-	pass
+	if has_node("AI") == true:
+		$AI._control(delta)
 
 
 func apply_force() -> void:
@@ -252,26 +257,31 @@ func _on_LegTween_tween_all_completed() -> void:
 func animate_weapon_hatch() -> void:
 	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
-	var weapon_anim = $Weapon/AnimationPlayer
+	var weapon_anim: AnimationPlayer
+	if has_node("Weapon"):
+		weapon_anim = $Weapon/AnimationPlayer
 	if roll_mode == true:
+		if has_node("Weapon"):
+			$Weapon.global_rotation = body_weapon_hatch.global_rotation
+			weapon_anim.play("change_mode")
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		$Weapon.global_rotation = body_weapon_hatch.global_rotation
-		weapon_anim.play("change_mode")
 	elif roll_mode == false:
-		body_weapon_hatch.global_rotation = $Weapon.global_rotation
+		if has_node("Weapon"):
+			body_weapon_hatch.global_rotation = $Weapon.global_rotation
+			$Weapon.show()
+			weapon_anim.play_backwards("change_mode")
 		body_weapon_hatch.show()
-		$Weapon.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		weapon_anim.play_backwards("change_mode")
 	weapon_hatch_tween.start()
 
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
+		if has_node("Weapon"):
+			$Weapon.hide()
 		body_weapon_hatch.hide()
-		$Weapon.hide()
 	is_transforming = false
 
 
@@ -315,10 +325,11 @@ func explode() -> void:
 
 
 func _on_ExplodeDelay_timeout() -> void:
+	if has_node("Weapon"):
+		$Weapon.hide()
 	$Legs.hide()
 	$Body.hide()
 	$Bars.hide()
-	$Weapon.hide()
 	$CollisionShape.disabled = true
 	
 	#explosion graphical effect here
