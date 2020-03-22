@@ -2,20 +2,25 @@ extends State
 
 
 func on_enter(target) -> void:
-	pass
+	target.get_node("AI").points = []
+
 
 func on_exit(target) -> void:
 	pass
 
+
 func on_input(target, event : InputEvent) -> void:
 	pass
 
+
 func on_process(target, delta : float) -> void:
-	if target.get_node("AI").targeting == null || target.get_node("AI").in_detection_range == false:
+	var ai_node = target.get_node("AI")
+	if is_instance_valid(ai_node.target) == false || ai_node.in_detection_range == false:
 		go_to("Idle")
-	if target.get_node("AI").is_backing_off == true:
+	if ai_node.is_backing_off == true:
 		go_to("BackOff")
-	target.get_node("AI").chase_target(delta)
+	ai_node.chase_target(delta)
+
 
 func on_physics_process(target, delta : float) -> void:
 	pass

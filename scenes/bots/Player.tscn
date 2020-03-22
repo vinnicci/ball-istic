@@ -46,7 +46,7 @@ texture = ExtResource( 7 )
 [node name="PlayerBars" type="Node2D" parent="." index="5"]
 
 [node name="WeaponHeat" type="TextureProgress" parent="PlayerBars" index="0"]
-modulate = Color( 0.913725, 0.639216, 0.0588235, 1 )
+modulate = Color( 1, 0.729412, 0.156863, 1 )
 margin_top = 25.0
 margin_right = 50.0
 margin_bottom = 30.0

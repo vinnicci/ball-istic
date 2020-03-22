@@ -188,8 +188,8 @@ func apply_force() -> void:
 
 
 func apply_charging_effects() -> void:
-	var hostile = Color(1, 0.137255, 0.137255)
-	var non_hostile = Color(0.435294, 1, 0.388235)
+	var hostile = Color(1, 0.13, 0.13) #red
+	var non_hostile = Color(0.4, 1, 0.4) #green
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#outline for hostiles becomes red
 		if is_hostile == true:
@@ -201,7 +201,7 @@ func apply_charging_effects() -> void:
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
 	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = Color(1, 0.2, 0.839216)
+		body_outline.color = Color(1, 0.2, 0.8)
 		body_charge_effect.color.a = 255
 		is_charging = true
 

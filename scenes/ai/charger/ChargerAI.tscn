@@ -10,6 +10,7 @@
 radius = 350.0
 
 [sub_resource type="CircleShape2D" id=2]
+resource_local_to_scene = true
 radius = 150.0
 
 [node name="AI" instance=ExtResource( 1 )]

@@ -14,7 +14,6 @@ func _on_shoot(projectiles, proj_position, proj_direction, hostile_proj) -> void
 		projectile.ready_travel(proj_position, proj_direction, hostile_proj)
 
 
-func get_points(start: Node, end: Node) -> Array:
-	
-	var points: Array = $Nav.get_simple_path(start.global_position, end.global_position)
+func get_points(start: Vector2, end: Vector2) -> Array:
+	var points: Array = $Nav.get_simple_path(start, end)
 	return points

@@ -24,9 +24,9 @@ func _process(_delta: float) -> void:
 	
 	#weapon heat bar
 	if $Weapon.is_overheating == true:
-		weapon_heat.modulate = Color(0.960784, 0.090196, 0)
+		weapon_heat.modulate = Color(0.9, 0, 0)
 	if $Weapon.is_overheating == false && weapon_heat.get_node("AnimationPlayer").is_playing() == false:
-		weapon_heat.modulate = Color(0.913725, 0.639216, 0.058824)
+		weapon_heat.modulate = Color(1, 0.7, 0.15)
 	animate_weapon_heat_bar()
 
 
@@ -54,7 +54,7 @@ func _control(delta):
 
 func animate_charge_level_bar() -> void:
 	charge_level.value = 0
-	charge_level.modulate = Color(0.627451, 0.627451, 0.627451)
+	charge_level.modulate = Color(0.6, 0.6, 0.6)
 	var tween = charge_level.get_node("ChargeTween")
 	tween.interpolate_property(charge_level, 'value', charge_level.value, charge_level.max_value,
 		charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -68,4 +68,4 @@ func animate_weapon_heat_bar() -> void:
 
 
 func _on_ChargeTween_tween_all_completed() -> void:
-	charge_level.modulate = Color(0.117647, 1, 0.27451)
+	charge_level.modulate = Color(0.4, 1, 0.4)
