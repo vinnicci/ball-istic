@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/ai/charger/ChargerAI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://test_folder/test ai/ChargerDummy.gd" type="Script" id=7]
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
 bounce = 0.8
 
@@ -12,25 +12,15 @@ bounce = 0.8
 resource_local_to_scene = true
 
 [node name="ChargerDummy" instance=ExtResource( 1 )]
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 script = ExtResource( 7 )
 
 [node name="CollisionShape" parent="." index="4"]
 shape = SubResource( 2 )
 
-[node name="AI" parent="." index="7" instance=ExtResource( 2 )]
+[node name="AI" parent="." index="6" instance=ExtResource( 2 )]
 
-[node name="FSM" parent="AI" index="5"]
-active = true
+[node name="FSM" parent="AI" index="0"]
 target = NodePath("../..")
-
-[node name="Idle" parent="AI/FSM" index="0"]
-state_name = "Idle"
-
-[node name="Chase" parent="AI/FSM" index="1"]
-state_name = "Chase"
-
-[node name="BackOff" parent="AI/FSM" index="2"]
-state_name = "BackOff"
 
 [editable path="AI"]

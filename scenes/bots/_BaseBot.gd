@@ -1,8 +1,6 @@
 extends RigidBody2D
 
 #make sure to import body texture with repeating enabled
-#mandatory attachment: Weapon node
-#op
 
 export (float, 25.0, 100.0) var bot_radius: = 32.0
 export (float) var shield_capacity: = 20
@@ -190,8 +188,8 @@ func apply_force() -> void:
 
 
 func apply_charging_effects() -> void:
-	var hostile = Color(0.941406, 0.172836, 0.172836)
-	var non_hostile = Color(0.223529, 0.956863, 0.25098)
+	var hostile = Color(1, 0.137255, 0.137255)
+	var non_hostile = Color(0.435294, 1, 0.388235)
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#outline for hostiles becomes red
 		if is_hostile == true:
@@ -316,11 +314,11 @@ func take_damage(damage, knockback) -> void:
 
 func explode() -> void:
 	is_alive = false
+	if has_node("PlayerBars") == true:
+		$PlayerBars.hide()
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Bars.hide()
-	if has_node("PlayerBars") == true:
-		$PlayerBars.hide()
 	$Timers/ExplodeDelay.start()
 
 

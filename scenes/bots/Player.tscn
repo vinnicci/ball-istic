@@ -73,10 +73,8 @@ __meta__ = {
 
 [node name="ChargeTween" type="Tween" parent="PlayerBars/ChargeLevel" index="0"]
 
-[node name="Passives" type="Node2D" parent="." index="6"]
-
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="6"]
 shape = SubResource( 2 )
 
-[node name="Weapon" parent="." index="9" instance=ExtResource( 5 )]
+[node name="Weapon" parent="." index="8" instance=ExtResource( 5 )]
 [connection signal="tween_all_completed" from="PlayerBars/ChargeLevel/ChargeTween" to="." method="_on_ChargeTween_tween_all_completed"]

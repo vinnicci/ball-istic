@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/ai/_BaseAI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ai/steady gunner/SteadyGunnerAI.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ai/steady gunner/Idle.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ai/steady gunner/Follow.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ai/steady gunner/Shoot.gd" type="Script" id=5]
+[ext_resource path="res://scenes/ai/steady gunner/Flee.gd" type="Script" id=6]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="AI" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="FSM" parent="." index="0"]
+initial_state = "Idle"
+
+[node name="Idle" type="Node" parent="FSM" index="0"]
+script = ExtResource( 3 )
+state_name = "Idle"
+
+[node name="Follow" type="Node" parent="FSM" index="1"]
+script = ExtResource( 4 )
+state_name = "Follow"
+
+[node name="Shoot" type="Node" parent="FSM" index="2"]
+script = ExtResource( 5 )
+state_name = "Shoot"
+
+[node name="Flee" type="Node" parent="FSM" index="3"]
+script = ExtResource( 6 )
+state_name = "Flee"
+
+[node name="WeaponRange" type="Area2D" parent="." index="1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponRange" index="0"]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="WeaponRange" to="." method="_on_WeaponRange_body_entered"]
+[connection signal="body_exited" from="WeaponRange" to="." method="_on_WeaponRange_body_exited"]

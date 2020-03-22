@@ -15,5 +15,6 @@ func _on_shoot(projectiles, proj_position, proj_direction, hostile_proj) -> void
 
 
 func get_points(start: Node, end: Node) -> Array:
+	
 	var points: Array = $Nav.get_simple_path(start.global_position, end.global_position)
 	return points
