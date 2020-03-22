@@ -286,7 +286,7 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 
 
 func shoot_weapon() -> void:
-	if $Weapon/Cooldown.is_stopped() == false || $Weapon/OverheatCooldown.is_stopped() == false || roll_mode == true:
+	if $Weapon/Cooldown.is_stopped() == false || $Weapon.is_overheating == true || roll_mode == true:
 		return
 	emit_signal("shooting", $Weapon.get_projectile(),
 		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, is_hostile)

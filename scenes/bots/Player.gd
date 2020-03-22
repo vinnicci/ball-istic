@@ -23,9 +23,9 @@ func _process(_delta: float) -> void:
 	$PlayerBars.global_rotation = 0
 	
 	#weapon heat bar
-	if $Weapon/OverheatCooldown.is_stopped() == false:
+	if $Weapon.is_overheating == true:
 		weapon_heat.modulate = Color(0.960784, 0.090196, 0)
-	if $Weapon/OverheatCooldown.is_stopped() == true && weapon_heat.get_node("AnimationPlayer").is_playing() == false:
+	if $Weapon.is_overheating == false && weapon_heat.get_node("AnimationPlayer").is_playing() == false:
 		weapon_heat.modulate = Color(0.913725, 0.639216, 0.058824)
 	animate_weapon_heat_bar()
 

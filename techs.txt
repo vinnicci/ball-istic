@@ -1,0 +1,20 @@
+standard:
+no special, balanced overall
+
+superheat tech:
+deal heat damage -> increase enemy weapon heat, suppress weapon heat dissipation
+
+freeze tech:
+deal freeze damage -> reduce enemy speed, suppress charge attack
+
+electro tech:
+deal electro damage -> massive shield damage, suppress shield regen
+
+heavy tech:
+no shields, massive hp capacity, slow, increased weapon overall power, explosives, mobile repair tech
+
+covert tech:
+balanced shield and hp, high mobility, long range weapons, strong charge attacks, cloaking, and disguise tech
+
+high tech:
+massive shield, low hp, phase tech

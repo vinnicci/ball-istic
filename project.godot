@@ -29,6 +29,10 @@ _global_script_class_icons={
 config/name="Project Ball-istic"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://scenes/globals/Global.gd"
+
 [display]
 
 window/size/width=1280

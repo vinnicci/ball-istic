@@ -4,10 +4,12 @@ extends Node2D
 #however you can name the scene as anything
 
 export (PackedScene) var Projectile
-export (float) var heat_per_shot: = 10.0 #absolute minimum is 3
+export (float) var heat_per_shot: = 10.0
 export (float) var heat_capacity: = 50
-export (float) var heat_dissipation_per_second: = 10.0 #absolute minimum is 2
+export (float) var heat_dissipation_per_second: = 10.0
+const OVERHEAT_STOPPED_FACTOR: float = 0.5 #heat must be below 50% to return firing
 var current_heat: float
+var is_overheating: bool = false
 
 
 func _ready() -> void:
@@ -32,7 +34,9 @@ func _instantiate_projectile() -> Array:
 
 func _process(_delta: float) -> void:
 	if current_heat > heat_capacity:
-		$OverheatCooldown.start()
+		is_overheating = true
+	if is_overheating == true && current_heat < heat_capacity*OVERHEAT_STOPPED_FACTOR:
+		is_overheating = false
 
 
 func _on_DissipationCooldown_timeout() -> void:

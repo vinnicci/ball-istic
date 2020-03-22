@@ -60,10 +60,6 @@ process_material = SubResource( 3 )
 [node name="Cooldown" type="Timer" parent="."]
 one_shot = true
 
-[node name="OverheatCooldown" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
 [node name="DissipationCooldown" type="Timer" parent="."]
 wait_time = 0.5
 autostart = true
