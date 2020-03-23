@@ -11,6 +11,8 @@ resource_local_to_scene = true
 
 [node name="ShooterDummy" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
+shield_capacity = 30.0
+health_capacity = 30.0
 is_destructible = true
 
 [node name="Sprite" parent="Legs" index="0"]

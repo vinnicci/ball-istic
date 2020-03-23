@@ -2,7 +2,6 @@ extends "res://scenes/ai/_BaseAI.gd"
 
 
 var is_backing_off: bool = false
-var is_stuck: bool = false
 
 
 func _ready() -> void:
@@ -19,20 +18,6 @@ func chase_target(delta) -> void:
 	if global_position.distance_to(next_point) < 100:
 		next_point = points.pop_front()
 		$VelocityRay.look_at(next_point)
-	bot_node.velocity = Vector2(0,0)
-	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
-
-
-func back_off(delta) -> void:
-	if bot_node.is_in_control == false:
-		return
-	$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
-	if is_stuck == true:
-		$VelocityRay.global_rotation += $VelocityRay.get_collision_normal().angle()
-	if is_stuck == true && bot_node.linear_velocity.length() > 400:
-		is_stuck = false
-	if bot_node.linear_velocity.length() < 100 && is_stuck == false:
-		is_stuck = true
 	bot_node.velocity = Vector2(0,0)
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
 

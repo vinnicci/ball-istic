@@ -4,12 +4,12 @@ extends Node2D
 #recommended to set state names
 onready var level_node: = get_parent().get_parent().get_parent()
 onready var bot_node: = get_parent()
-var targets = []
 var target = null
 var points: Array
 var next_point: Vector2
 var in_detection_range: bool = false
 var in_line_of_sight: bool = false
+var is_stuck: bool = false
 
 
 func get_points(start: Vector2, end: Vector2) -> void:
@@ -20,14 +20,8 @@ func get_points(start: Vector2, end: Vector2) -> void:
 	next_point = points.pop_front()
 
 
-func get_new_target() -> void:
-	if targets.size() != 0:
-		target = targets.pop_front()
-
-
 func _control(delta) -> void:
 	if is_instance_valid(target) == false:
-		get_new_target()
 		return
 	$TargetRay.look_at(target.global_position)
 	if $TargetRay.get_collider() == target:
@@ -36,13 +30,41 @@ func _control(delta) -> void:
 		in_line_of_sight = false
 
 
+func seek_target(delta) -> void:
+	if bot_node.is_in_control == false:
+		return
+	if bot_node.roll_mode == false:
+		bot_node.switch_mode()
+	if points.size() == 0 || target.global_position.distance_to(points.back()) < 800:
+		get_points(self.global_position, target.global_position)
+	if global_position.distance_to(next_point) < 100:
+		next_point = points.pop_front()
+		$VelocityRay.look_at(next_point)
+	bot_node.velocity = Vector2(0,0)
+	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
+
+
+func flee(delta) -> void:
+	if bot_node.is_in_control == false:
+		return
+	if bot_node.roll_mode == false:
+		bot_node.switch_mode()
+	$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
+	if is_stuck == true:
+		$VelocityRay.global_rotation += $VelocityRay.get_collision_normal().angle()
+	if is_stuck == true && bot_node.linear_velocity.length() > 400:
+		is_stuck = false
+	if bot_node.linear_velocity.length() < 100 && is_stuck == false:
+		is_stuck = true
+	bot_node.velocity = Vector2(0,0)
+	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
+
+
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body.get_parent().name == "Bots" && bot_node.is_hostile != body.is_hostile:
-		targets.append(body)
+		target = body
 		$TargetRay.enabled = true
 		in_detection_range = true
-		if target == null:
-			target = targets.pop_front()
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:

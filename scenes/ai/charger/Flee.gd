@@ -14,11 +14,11 @@ extends State
 
 
 func on_process(target, delta : float) -> void:
-	target.velocity = Vector2(0,0)
 	var ai_node = target.get_node("AI")
-	if ai_node.in_line_of_sight == true && ai_node.in_detection_range == true:
+	if is_instance_valid(ai_node.target) == false || ai_node.is_backing_off == false:
 		go_to("Seek")
+	ai_node.flee(delta)
 
 
-func on_physics_process(target, delta : float) -> void:
-	pass
+#func on_physics_process(target, delta : float) -> void:
+#	pass
