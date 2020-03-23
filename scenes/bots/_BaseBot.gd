@@ -25,14 +25,14 @@ const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLY_SIDES = 24
 var _legs_position: Dictionary = {} #private vars but accessible by globals
-var _current_shield: float
-var _current_health: float
-var _current_roll_speed: int
-var _current_shield_recovery: float
-var _current_transform_speed: float
-var _current_charge_cooldown: float
-var _current_knockback_resist: float
-var _current_charge_force_factor: float
+var current_shield: float
+var current_health: float
+var current_roll_speed: int
+var current_shield_recovery: float
+var current_transform_speed: float
+var current_charge_cooldown: float
+var current_knockback_resist: float
+var current_charge_force_factor: float
 var velocity: Vector2 #public vars
 var is_alive: bool = true
 var is_charging: bool = false
@@ -126,19 +126,19 @@ func _plot_circle_points(radius) -> Array:
 
 
 func update_vars() -> void:
-	_current_shield = shield_capacity
-	_current_health = health_capacity
-	_current_roll_speed = roll_speed
-	_current_shield_recovery = shield_recovery_per_second
-	_current_transform_speed = transform_speed
-	_current_charge_cooldown = charge_cooldown
-	_current_knockback_resist = knockback_resist
-	_current_charge_force_factor = charge_force_factor
+	current_shield = shield_capacity
+	current_health = health_capacity
+	current_roll_speed = roll_speed
+	current_shield_recovery = shield_recovery_per_second
+	current_transform_speed = transform_speed
+	current_charge_cooldown = charge_cooldown
+	current_knockback_resist = knockback_resist
+	current_charge_force_factor = charge_force_factor
 	bar_shield.max_value = shield_capacity
-	bar_shield.value = _current_shield
+	bar_shield.value = current_shield
 	bar_health.max_value = health_capacity
-	bar_health.value = _current_health
-	timer_charge_cooldown.wait_time = _current_charge_cooldown
+	bar_health.value = current_health
+	timer_charge_cooldown.wait_time = current_charge_cooldown
 
 
 func _process(delta: float) -> void:
@@ -178,16 +178,18 @@ func _apply_force() -> void:
 	if roll_mode == true:
 		#some ai velocities are already normalized
 		if velocity.is_normalized() == false:
-			velocity = velocity.normalized() * _current_roll_speed
+			velocity = velocity.normalized() * current_roll_speed
 		else:
-			velocity *= _current_roll_speed
-	applied_force = velocity
+			velocity *= current_roll_speed
+		applied_force = velocity
+	elif roll_mode == false:
+		applied_force = Vector2(0,0)
 
 
 func _apply_charging_effects() -> void:
 	var hostile = Color(1, 0.13, 0.13) #red
 	var non_hostile = Color(0.4, 1, 0.4) #green
-	if linear_velocity.length() <= _current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#outline for hostiles becomes red
 		if is_hostile == true:
 			body_outline.color = lerp(body_outline.color, hostile, 0.8)
@@ -197,7 +199,7 @@ func _apply_charging_effects() -> void:
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
-	elif linear_velocity.length() > _current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		body_outline.color = Color(1, 0.2, 0.8)
 		body_charge_effect.color.a = 255
 		is_charging = true
@@ -208,7 +210,7 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
 		return
 	if roll_mode == true:
-		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/_current_roll_speed) * (_current_roll_speed * ROLLING_EFFECT_FACTOR)
+		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
 func _check_if_in_control() -> void:
@@ -219,9 +221,10 @@ func _check_if_in_control() -> void:
 
 
 func switch_mode() -> void:
-	roll_mode = !roll_mode
+	is_in_control = false
 	_animate_legs()
 	_animate_weapon_hatch()
+	roll_mode = !roll_mode
 	if roll_mode == true:
 		linear_damp = ROLL_MODE_DAMP
 		mode = RigidBody2D.MODE_RIGID
@@ -233,15 +236,15 @@ func switch_mode() -> void:
 func _animate_legs() -> void:
 	is_transforming = true
 	var leg_tween = $Legs/LegTween
-	if roll_mode == true:
+	if roll_mode == false:
 		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
-				_current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
-	elif roll_mode == false:
+	elif roll_mode == true:
 		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
-				_current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 
 
@@ -255,20 +258,20 @@ func _animate_weapon_hatch() -> void:
 	var weapon_anim: AnimationPlayer
 	if has_node("Weapon"):
 		weapon_anim = $Weapon/AnimationPlayer
-	if roll_mode == true:
+	if roll_mode == false:
 		if has_node("Weapon"):
 			$Weapon.global_rotation = body_weapon_hatch.global_rotation
 			weapon_anim.play("change_mode")
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
-			_current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	elif roll_mode == false:
+			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	elif roll_mode == true:
 		if has_node("Weapon"):
 			body_weapon_hatch.global_rotation = $Weapon.global_rotation
 			$Weapon.show()
 			weapon_anim.play_backwards("change_mode")
 		body_weapon_hatch.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
-			_current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	weapon_hatch_tween.start()
 
 
@@ -290,22 +293,24 @@ func shoot_weapon() -> void:
 func charge_attack(charge_direction) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
-	apply_central_impulse(Vector2(_current_roll_speed,0).rotated(charge_direction) * _current_charge_force_factor)
+	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
 	timer_charge_cooldown.start()
 
 
 func take_damage(damage, knockback) -> void:
-	apply_central_impulse(knockback - (knockback*_current_knockback_resist))
+	if is_alive == false:
+		return
+	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 	if is_destructible == false:
 		return
-	if _current_shield - damage >= 0:
-		_current_shield -= damage
-	elif _current_shield - damage < 0:
-		_current_health += _current_shield - damage
-		_current_shield = 0
-	bar_shield.value = _current_shield
-	bar_health.value = _current_health
-	if _current_health <= 0:
+	if current_shield - damage >= 0:
+		current_shield -= damage
+	elif current_shield - damage < 0:
+		current_health += current_shield - damage
+		current_shield = 0
+	bar_shield.value = current_shield
+	bar_health.value = current_health
+	if current_health <= 0:
 		_explode()
 
 
@@ -339,18 +344,18 @@ func _on_ExplodeTimer_timeout() -> void:
 func _on_Bot_body_entered(body: Node) -> void:
 	if is_charging == false:
 		return
-	var damage = _current_roll_speed * CHARGE_DAMAGE_FACTOR
+	var damage = current_roll_speed * CHARGE_DAMAGE_FACTOR
 	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 		return
 	elif body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-		body.take_damage(damage * _current_charge_force_factor, Vector2(0,0))
+		body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
 	else:
-		body.take_damage(damage * _current_charge_force_factor, Vector2(0,0))
+		body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:
-	if _current_shield + _current_shield_recovery/2 > shield_capacity:
-		_current_shield = shield_capacity
-	elif _current_shield + _current_shield_recovery/2 <= shield_capacity:
-		_current_shield += _current_shield_recovery/2
-	bar_shield.value = _current_shield
+	if current_shield + current_shield_recovery/2 > shield_capacity:
+		current_shield = shield_capacity
+	elif current_shield + current_shield_recovery/2 <= shield_capacity:
+		current_shield += current_shield_recovery/2
+	bar_shield.value = current_shield

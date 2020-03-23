@@ -2,7 +2,7 @@ extends State
 
 
 func on_enter(target) -> void:
-	target.get_node("AI").points = []
+	pass
 
 
 func on_exit(target) -> void:

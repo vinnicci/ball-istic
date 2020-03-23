@@ -7,7 +7,7 @@
 [ext_resource path="res://scenes/ai/charger/BackOff.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 350.0
+radius = 240.0
 
 [sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
@@ -34,8 +34,14 @@ state_name = "BackOff"
 [node name="DetectionRange" parent="." index="1"]
 visible = false
 
-[node name="BackOffRange" type="Area2D" parent="." index="4"]
+[node name="TargetRay" parent="." index="2"]
 visible = false
+
+[node name="VelocityRay" parent="." index="3"]
+enabled = true
+cast_to = Vector2( 20, 0 )
+
+[node name="BackOffRange" type="Area2D" parent="." index="4"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BackOffRange" index="0"]
 shape = SubResource( 1 )

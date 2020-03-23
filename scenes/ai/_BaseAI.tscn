@@ -24,6 +24,6 @@ shape = SubResource( 1 )
 cast_to = Vector2( 1000, 0 )
 
 [node name="VelocityRay" type="RayCast2D" parent="."]
-cast_to = Vector2( 1, 0 )
+cast_to = Vector2( 60, 0 )
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
