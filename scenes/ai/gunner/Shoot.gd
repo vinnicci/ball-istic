@@ -15,9 +15,10 @@ extends State
 
 func on_process(target, delta : float) -> void:
 	var ai_node = target.get_node("AI")
+	var weapon_node = target.get_node("Weapon")
 	if ai_node.in_weapon_range == false:
 		go_to("Seek")
-	if target.get_node("Weapon").is_overheating == true || target.current_shield < target.shield_capacity * 0.05 == true:
+	if weapon_node.is_overheating == true || target.current_shield < target.shield_capacity * 0.05:
 		go_to("Flee")
 	ai_node.shoot_target(delta)
 

@@ -29,4 +29,7 @@ shape = SubResource( 1 )
 [node name="FSM" parent="AI" index="0"]
 target = NodePath("../..")
 
+[node name="TargetRay" parent="AI" index="3"]
+visible = false
+
 [editable path="AI"]

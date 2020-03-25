@@ -10,6 +10,11 @@ var next_point: Vector2
 var in_detection_range: bool = false
 var in_line_of_sight: bool = false
 var is_stuck: bool = false
+var is_idle: bool = true
+
+
+func _ready() -> void:
+	$VelocityRay.cast_to.x += bot_node.bot_radius
 
 
 func get_points(start: Vector2, end: Vector2) -> void:
@@ -25,12 +30,15 @@ func _control(delta) -> void:
 		return
 	$TargetRay.look_at(target.global_position)
 	if $TargetRay.get_collider() == target:
+		if in_line_of_sight == false && is_idle == true:
+			$Detect.play()
+			is_idle = false
 		in_line_of_sight = true
 	else:
 		in_line_of_sight = false
 
 
-func seek_target(delta) -> void:
+func _seek_target(delta) -> void:
 	if bot_node.is_in_control == false:
 		return
 	if bot_node.roll_mode == false:
@@ -44,7 +52,7 @@ func seek_target(delta) -> void:
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
 
 
-func flee(delta) -> void:
+func _flee(delta) -> void:
 	if bot_node.is_in_control == false:
 		return
 	if bot_node.roll_mode == false:
@@ -54,7 +62,7 @@ func flee(delta) -> void:
 		$VelocityRay.global_rotation += $VelocityRay.get_collision_normal().angle()
 	if is_stuck == true && bot_node.linear_velocity.length() > 400:
 		is_stuck = false
-	if bot_node.linear_velocity.length() < 100 && is_stuck == false:
+	elif is_stuck == false && bot_node.linear_velocity.length() < 70:
 		is_stuck = true
 	bot_node.velocity = Vector2(0,0)
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
@@ -71,3 +79,4 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 	if body == target:
 		$TargetRay.enabled = false
 		in_detection_range = false
+		is_idle = true

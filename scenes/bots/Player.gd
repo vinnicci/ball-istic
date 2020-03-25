@@ -67,5 +67,11 @@ func animate_weapon_heat_bar() -> void:
 	weapon_heat.value = $Weapon.current_heat
 
 
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	if $Weapon.is_overheating == false:
+		$Sounds/CloseToOverheating.play()
+
+
 func _on_ChargeTween_tween_all_completed() -> void:
+	$Sounds/ChargeReady.play()
 	charge_level.modulate = Color(0.4, 1, 0.4)

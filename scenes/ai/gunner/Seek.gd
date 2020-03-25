@@ -1,12 +1,12 @@
 extends State
 
 
-#func on_enter(target) -> void:
-#	pass
+func on_enter(target) -> void:
+	target.get_node("AI").points = []
 #
 #
 #func on_exit(target) -> void:
-#	target.get_node("AI").points = []
+#	pass
 #
 #
 #func on_input(target, event : InputEvent) -> void:
@@ -19,7 +19,7 @@ func on_process(target, delta : float) -> void:
 		go_to("Shoot")
 	if ai_node.in_detection_range == false:
 		go_to("Idle")
-	ai_node.seek_target(delta)
+	ai_node._seek_target(delta)
 
 
 #func on_physics_process(target, delta : float) -> void:

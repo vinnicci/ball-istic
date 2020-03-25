@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Weap_IntroWeapon.wav-27f1347320ba2877169f68d8b54cbbac.sample"
+
+[deps]
+
+source_file="res://assets/audio/Weap_IntroWeapon.wav"
+dest_files=[ "res://.import/Weap_IntroWeapon.wav-27f1347320ba2877169f68d8b54cbbac.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

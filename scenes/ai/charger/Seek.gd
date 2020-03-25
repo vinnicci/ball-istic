@@ -19,7 +19,7 @@ func on_process(target, delta : float) -> void:
 		go_to("Idle")
 	if ai_node.is_backing_off == true:
 		go_to("Flee")
-	ai_node.seek_target(delta)
+	ai_node._seek_target(delta)
 
 
 #func on_physics_process(target, delta : float) -> void:

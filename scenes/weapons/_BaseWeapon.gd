@@ -7,7 +7,7 @@ export (PackedScene) var Projectile
 export (float) var heat_per_shot: = 10.0
 export (float) var heat_capacity: = 50
 export (float) var heat_dissipation_per_second: = 10.0
-const OVERHEAT_STOPPED_FACTOR: float = 0.5 #heat must be below 50% to return firing
+const OVERHEAT_STOPPED_FACTOR: float = 0.7 #heat must be below 50% to return firing
 var current_heat: float
 var is_overheating: bool = false
 

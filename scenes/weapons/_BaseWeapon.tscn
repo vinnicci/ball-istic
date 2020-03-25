@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/weapons/_BaseWeapon.gd" type="Script" id=1]
+[ext_resource path="res://assets/audio/Weap_IntroWeapon.wav" type="AudioStream" id=2]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 0.930176, 0.352691, 0.043602, 1, 0.678431, 0.678431, 0.678431, 0 )
@@ -66,5 +67,8 @@ autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/change_mode = SubResource( 4 )
+
+[node name="ShootingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 2 )
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]

@@ -24,7 +24,8 @@ const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLY_SIDES = 24
-var _legs_position: Dictionary = {} #private vars but accessible by globals
+var legs_position: Dictionary = {}
+
 var current_shield: float
 var current_health: float
 var current_roll_speed: int
@@ -99,17 +100,17 @@ func _set_up_legs(circle_points) -> void:
 			0:
 				leg1.add_child(leg)
 				leg1.position = circle_points[0]
-				_legs_position[leg1] = circle_points[0]
+				legs_position[leg1] = circle_points[0]
 				leg1.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
 			1:
 				leg2.add_child(leg)
 				leg2.position = circle_points[1]
-				_legs_position[leg2] = circle_points[1]
+				legs_position[leg2] = circle_points[1]
 				leg2.rotation = deg2rad(12*deg)
 			2:
 				leg3.add_child(leg)
 				leg3.position = circle_points[2]
-				_legs_position[leg3] = circle_points[2]
+				legs_position[leg3] = circle_points[2]
 				leg3.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
 
@@ -222,6 +223,7 @@ func _check_if_in_control() -> void:
 
 func switch_mode() -> void:
 	is_in_control = false
+	$Sounds/ChangeMode.play()
 	_animate_legs()
 	_animate_weapon_hatch()
 	roll_mode = !roll_mode
@@ -237,13 +239,13 @@ func _animate_legs() -> void:
 	is_transforming = true
 	var leg_tween = $Legs/LegTween
 	if roll_mode == false:
-		for leg in _legs_position.keys():
+		for leg in legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 	elif roll_mode == true:
-		for leg in _legs_position.keys():
-			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
+		for leg in legs_position.keys():
+			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), legs_position[leg],
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 
@@ -286,26 +288,31 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 func shoot_weapon() -> void:
 	if is_in_control == false || $Weapon/Cooldown.is_stopped() == false || $Weapon.is_overheating == true || roll_mode == true:
 		return
-	emit_signal("shooting", $Weapon.get_projectile(),
-		$Weapon/Muzzle.global_position, $Weapon/Muzzle.global_rotation, is_hostile)
+	$Weapon/ShootingSound.play()
+	emit_signal("shooting", $Weapon.get_projectile(), $Weapon/Muzzle.global_position,
+		$Weapon/Muzzle.global_rotation, is_hostile)
 
 
 func charge_attack(charge_direction) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
+	$Sounds/ChargeAttack.play()
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
 	timer_charge_cooldown.start()
 
 
 func take_damage(damage, knockback) -> void:
 	if is_alive == false:
+		$Sounds/HealthDamage.play()
 		return
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 	if is_destructible == false:
 		return
 	if current_shield - damage >= 0:
+		$Sounds/ShieldDamage.play()
 		current_shield -= damage
 	elif current_shield - damage < 0:
+		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
 	bar_shield.value = current_shield
@@ -332,6 +339,8 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Bars.hide()
 	$CollisionShape.disabled = true
 	
+	$Sounds/Explode.play()
+	
 	#explosion graphical effect here
 	$ExplosionParticles.emitting = true
 	$Timers/ExplodeTimer.start()
@@ -343,7 +352,9 @@ func _on_ExplodeTimer_timeout() -> void:
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if is_charging == false:
+		$Sounds/Bump.play()
 		return
+	$Sounds/ChargeAttackHit.play()
 	var damage = current_roll_speed * CHARGE_DAMAGE_FACTOR
 	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 		return
