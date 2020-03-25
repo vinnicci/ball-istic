@@ -145,6 +145,9 @@ func update_vars() -> void:
 func _process(delta: float) -> void:
 	$Bars.global_rotation = 0
 	
+	#audio rolling
+	_apply_rolling_audio()
+	
 	#everything charge roll related
 	#graphical feedback/effects
 	_apply_charging_effects()
@@ -173,6 +176,15 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 func _control(delta) -> void:
 	if has_node("AI") == true:
 		$AI._control(delta)
+
+
+func _apply_rolling_audio() -> void:
+	if $Sounds/Roll.playing == false && linear_velocity.length() > 150:
+		$Sounds/Roll.play()
+
+
+func _on_Roll_finished() -> void:
+	pass # Replace with function body.
 
 
 func _apply_force() -> void:
@@ -352,7 +364,8 @@ func _on_ExplodeTimer_timeout() -> void:
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if is_charging == false:
-		$Sounds/Bump.play()
+		if $Sounds/Bump.playing == false:
+			$Sounds/Bump.play()
 		return
 	$Sounds/ChargeAttackHit.play()
 	var damage = current_roll_speed * CHARGE_DAMAGE_FACTOR

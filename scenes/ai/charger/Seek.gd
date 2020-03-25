@@ -2,7 +2,9 @@ extends State
 
 
 func on_enter(target) -> void:
-	target.get_node("AI").points = []
+	var ai_node = target.get_node("AI")
+	ai_node.points = []
+	ai_node.state = state_name
 
 
 #func on_exit(target) -> void:
@@ -19,7 +21,6 @@ func on_process(target, delta : float) -> void:
 		go_to("Idle")
 	if ai_node.is_backing_off == true:
 		go_to("Flee")
-	ai_node._seek_target(delta)
 
 
 #func on_physics_process(target, delta : float) -> void:

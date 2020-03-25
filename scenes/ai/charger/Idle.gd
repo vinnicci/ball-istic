@@ -1,8 +1,8 @@
 extends State
 
 
-#func on_enter(target) -> void:
-#	pass
+func on_enter(target) -> void:
+	target.get_node("AI").state = state_name
 #
 #
 #func on_exit(target) -> void:

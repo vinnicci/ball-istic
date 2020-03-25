@@ -1,8 +1,8 @@
 extends State
 
 
-#func on_enter(target) -> void:
-#	pass
+func on_enter(target) -> void:
+	target.get_node("AI").state = state_name
 #
 #
 #func on_exit(target) -> void:
@@ -20,7 +20,6 @@ func on_process(target, delta : float) -> void:
 		go_to("Seek")
 	if weapon_node.is_overheating == true || target.current_shield < target.shield_capacity * 0.05:
 		go_to("Flee")
-	ai_node.shoot_target(delta)
 
 
 #func on_physics_process(target, delta : float) -> void:

@@ -4,6 +4,7 @@ extends Node2D
 #recommended to set state names
 onready var level_node: = get_parent().get_parent().get_parent()
 onready var bot_node: = get_parent()
+onready var state: String = $FSM.initial_state
 var target = null
 var points: Array
 var next_point: Vector2
@@ -25,8 +26,10 @@ func get_points(start: Vector2, end: Vector2) -> void:
 	next_point = points.pop_front()
 
 
+#for all states
 func _control(delta) -> void:
 	if is_instance_valid(target) == false:
+		in_detection_range = false
 		return
 	$TargetRay.look_at(target.global_position)
 	if $TargetRay.get_collider() == target:
@@ -36,11 +39,18 @@ func _control(delta) -> void:
 		in_line_of_sight = true
 	else:
 		in_line_of_sight = false
-
-
-func _seek_target(delta) -> void:
 	if bot_node.is_in_control == false:
 		return
+	_state_control(delta)
+
+
+#for specific states
+func _state_control(delta):
+	pass
+
+
+#default seek func
+func _seek_target(delta) -> void:
 	if bot_node.roll_mode == false:
 		bot_node.switch_mode()
 	if points.size() == 0 || target.global_position.distance_to(points.back()) < 800:
@@ -52,9 +62,8 @@ func _seek_target(delta) -> void:
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
 
 
+#default flee func -- still bad btw
 func _flee(delta) -> void:
-	if bot_node.is_in_control == false:
-		return
 	if bot_node.roll_mode == false:
 		bot_node.switch_mode()
 	$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
@@ -62,7 +71,7 @@ func _flee(delta) -> void:
 		$VelocityRay.global_rotation += $VelocityRay.get_collision_normal().angle()
 	if is_stuck == true && bot_node.linear_velocity.length() > 400:
 		is_stuck = false
-	elif is_stuck == false && bot_node.linear_velocity.length() < 70:
+	if is_stuck == false && bot_node.linear_velocity.length() < 70:
 		is_stuck = true
 	bot_node.velocity = Vector2(0,0)
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
@@ -76,7 +85,8 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	if body == target:
-		$TargetRay.enabled = false
-		in_detection_range = false
-		is_idle = true
+	pass
+#	if body == target:
+#		$TargetRay.enabled = false
+#		in_detection_range = false
+#		is_idle = true

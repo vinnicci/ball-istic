@@ -4,9 +4,15 @@ extends "res://scenes/ai/_BaseAI.gd"
 var in_weapon_range: bool = false
 
 
+func _state_control(delta):
+	match(state):
+		"Idle": return
+		"Seek": _seek_target(delta)
+		"Shoot": shoot_target(delta)
+		"Flee": _flee(delta)
+
+
 func _seek_target(delta) -> void:
-	if bot_node.is_in_control == false:
-		return
 	if bot_node.roll_mode == false:
 		bot_node.switch_mode()
 	if points.size() == 0 || target.global_position.distance_to(points.back()) < 800:
@@ -15,14 +21,12 @@ func _seek_target(delta) -> void:
 		next_point = points.pop_front()
 		$VelocityRay.look_at(next_point)
 	if bot_node.timer_charge_cooldown.is_stopped() == true && in_line_of_sight == true:
-		bot_node.charge_attack($VelocityRay.global_rotation)
+		bot_node.charge_attack($TargetRay.global_rotation)
 	bot_node.velocity = Vector2(0,0)
 	bot_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * delta
 
 
 func shoot_target(delta) -> void:
-	if bot_node.is_in_control == false:
-		return
 	if bot_node.roll_mode == true:
 		bot_node.switch_mode()
 	bot_node.get_node("Weapon").look_at(target.global_position)

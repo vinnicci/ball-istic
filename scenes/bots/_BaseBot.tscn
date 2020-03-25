@@ -43,7 +43,7 @@ color_ramp = SubResource( 4 )
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-contacts_reported = 1
+contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 1 )
 
@@ -142,6 +142,8 @@ stream = ExtResource( 9 )
 
 [node name="Explode" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 10 )
+
+[node name="Roll" type="AudioStreamPlayer2D" parent="Sounds"]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
