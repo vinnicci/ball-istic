@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/levels/_BaseTileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/levels/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://test_folder/test equip system/TestTileSet.tres" type="TileSet" id=4]
 [ext_resource path="res://test_folder/test equip system/Level.gd" type="Script" id=5]
 [ext_resource path="res://test_folder/test equip system/TileMap.gd" type="Script" id=6]
+[ext_resource path="res://scenes/bots/ChargerDummy.tscn" type="PackedScene" id=7]
 
 [node name="Level" instance=ExtResource( 2 )]
 script = ExtResource( 5 )
@@ -17,3 +18,21 @@ script = ExtResource( 6 )
 
 [node name="PlayerT" parent="Bots" index="0" instance=ExtResource( 3 )]
 position = Vector2( -74.8318, 74.8318 )
+
+[node name="ChargerDummy" parent="Bots" index="1" instance=ExtResource( 7 )]
+position = Vector2( 1132.24, 559.612 )
+
+[node name="ChargerDummy2" parent="Bots" index="2" instance=ExtResource( 7 )]
+position = Vector2( 1054.15, 335.116 )
+
+[node name="ChargerDummy3" parent="Bots" index="3" instance=ExtResource( 7 )]
+position = Vector2( 1102.96, 432.723 )
+
+[node name="ChargerDummy4" parent="Bots" index="4" instance=ExtResource( 7 )]
+position = Vector2( 1161.52, 338.37 )
+
+[node name="ChargerDummy5" parent="Bots" index="5" instance=ExtResource( 7 )]
+position = Vector2( 1138.74, 221.242 )
+
+[node name="ChargerDummy6" parent="Bots" index="6" instance=ExtResource( 7 )]
+position = Vector2( 1177.79, 126.889 )

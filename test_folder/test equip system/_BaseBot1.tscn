@@ -159,19 +159,14 @@ process_material = SubResource( 5 )
 [node name="Weapons" type="Node2D" parent="."]
 
 [node name="Slot0" type="Node2D" parent="Weapons"]
-visible = false
 
 [node name="Slot1" type="Node2D" parent="Weapons"]
-visible = false
 
 [node name="Slot2" type="Node2D" parent="Weapons"]
-visible = false
 
 [node name="Slot3" type="Node2D" parent="Weapons"]
-visible = false
 
 [node name="Slot4" type="Node2D" parent="Weapons"]
-visible = false
 
 [node name="Passives" type="Node2D" parent="."]
 visible = false

@@ -20,7 +20,6 @@ func update_player_vars() -> void:
 
 
 func _process(_delta: float) -> void:
-	
 	#weapon heat bar
 	if current_weapon.is_overheating == true:
 		weapon_heat.modulate = Color(0.9, 0, 0)

@@ -20,7 +20,7 @@ func _ready() -> void:
 		heat_dissipation_per_second = 2
 
 
-func get_projectile() -> Array:
+func get_projectiles() -> Array:
 	$Cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
 	current_heat += heat_per_shot
@@ -28,9 +28,8 @@ func get_projectile() -> Array:
 
 
 #overridable function to bundle projectiles
-#useful especially for shotgun type weapons
 func _instantiate_projectile() -> Array:
-	return []
+	return [Projectile.instance()]
 
 
 func _process(_delta: float) -> void:
