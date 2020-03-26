@@ -43,7 +43,7 @@ color_ramp = SubResource( 4 )
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-contacts_reported = 2
+contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 1 )
 
@@ -155,6 +155,31 @@ one_shot = true
 explosiveness = 1.0
 local_coords = false
 process_material = SubResource( 5 )
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="Slot0" type="Node2D" parent="Weapons"]
+
+[node name="Slot1" type="Node2D" parent="Weapons"]
+
+[node name="Slot2" type="Node2D" parent="Weapons"]
+
+[node name="Slot3" type="Node2D" parent="Weapons"]
+
+[node name="Slot4" type="Node2D" parent="Weapons"]
+
+[node name="Passives" type="Node2D" parent="."]
+visible = false
+
+[node name="Slot0" type="Node2D" parent="Passives"]
+
+[node name="Slot1" type="Node2D" parent="Passives"]
+
+[node name="Slot2" type="Node2D" parent="Passives"]
+
+[node name="Slot3" type="Node2D" parent="Passives"]
+
+[node name="Slot4" type="Node2D" parent="Passives"]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Legs/LegTween" to="." method="_on_LegTween_tween_all_completed"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]

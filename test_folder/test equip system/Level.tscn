@@ -18,6 +18,8 @@ script = ExtResource( 6 )
 
 [node name="PlayerT" parent="Bots" index="0" instance=ExtResource( 3 )]
 position = Vector2( -74.8318, 74.8318 )
+transform_speed = 0.1
+charge_cooldown = 1.5
 
 [node name="ChargerDummy" parent="Bots" index="1" instance=ExtResource( 7 )]
 position = Vector2( 1132.24, 559.612 )

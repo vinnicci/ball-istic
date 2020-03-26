@@ -8,13 +8,17 @@ const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 
 
 func _ready() -> void:
+	#player specific stats update
+	_set_up_player_default_vars()
 	update_player_vars()
 
 
-#player specific stats update
-func update_player_vars() -> void:
+func _set_up_player_default_vars() -> void:
 	weapon_heat.rect_position.x -= weapon_heat.rect_size.y + bot_radius + PLAYER_BARS_OFFSET
 	charge_level.rect_position.x += bot_radius + PLAYER_BARS_OFFSET
+
+
+func update_player_vars() -> void:
 	weapon_heat.max_value = current_weapon.heat_capacity
 	weapon_heat.value = 0
 
@@ -49,14 +53,19 @@ func _control(delta):
 		charge_attack(current_weapon.global_rotation)
 	if Input.is_action_just_pressed("weap_slot_0"):
 		change_weapon(0)
+		update_player_vars()
 	elif Input.is_action_just_pressed("weap_slot_1"):
 		change_weapon(1)
+		update_player_vars()
 	elif Input.is_action_just_pressed("weap_slot_2"):
 		change_weapon(2)
+		update_player_vars()
 	elif Input.is_action_just_pressed("weap_slot_3"):
 		change_weapon(3)
+		update_player_vars()
 	elif Input.is_action_just_pressed("weap_slot_4"):
 		change_weapon(4)
+		update_player_vars()
 	velocity = velocity * delta
 
 

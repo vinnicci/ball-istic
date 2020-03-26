@@ -195,12 +195,16 @@ func _control(delta) -> void:
 
 
 func _apply_rolling_audio() -> void:
-	if $Sounds/Roll.playing == false && linear_velocity.length() > 150:
+	if linear_velocity.length() < 50:
+		return
+	if $Sounds/Roll.playing == false:
+		if linear_velocity.length() > 150:
+			$Sounds/Roll.pitch_scale = 0.5
+		elif linear_velocity.length() > 300:
+			$Sounds/Roll.pitch_scale = 1
+		elif linear_velocity.length() > 500:
+			$Sounds/Roll.pitch_scale = 2
 		$Sounds/Roll.play()
-
-
-func _on_Roll_finished() -> void:
-	pass # Replace with function body.
 
 
 func _apply_force() -> void:
@@ -230,8 +234,6 @@ func _apply_charging_effects() -> void:
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
 	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		if $Sounds/ChargeAttack.playing == false:
-			$Sounds/ChargeAttack.play()
 		body_outline.color = Color(1, 0.2, 0.8)
 		body_charge_effect.color.a = 255
 		is_charging = true
@@ -341,6 +343,7 @@ func charge_attack(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
+	$Sounds/ChargeAttack.play()
 	timer_charge_cooldown.start()
 
 

@@ -18,3 +18,6 @@ balanced shield and hp, high mobility, long range weapons, strong charge attacks
 
 high tech:
 massive shield, low hp, phase tech
+
+experimental tech:
+niche, high risk high reward mechanics for weapons and passives

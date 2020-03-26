@@ -17,39 +17,30 @@ tile_data = PoolIntArray( -196608, 1, 0, -196607, 1, 0, -196606, 1, 0, -196605, 
 
 [node name="ChargerDummy" parent="Bots" index="0" instance=ExtResource( 6 )]
 position = Vector2( 3698.85, 2474.52 )
-contacts_reported = 1
 
 [node name="ChargerDummy2" parent="Bots" index="1" instance=ExtResource( 6 )]
 position = Vector2( 1784.76, 2129.64 )
-contacts_reported = 1
 
 [node name="ChargerDummy3" parent="Bots" index="2" instance=ExtResource( 6 )]
 position = Vector2( 957.045, 1655.43 )
-contacts_reported = 1
 
 [node name="ChargerDummy4" parent="Bots" index="3" instance=ExtResource( 6 )]
 position = Vector2( 1055.61, 1625.85 )
-contacts_reported = 1
 
 [node name="ChargerDummy5" parent="Bots" index="4" instance=ExtResource( 6 )]
 position = Vector2( 3143.6, 1623.29 )
-contacts_reported = 1
 
 [node name="ChargerDummy6" parent="Bots" index="5" instance=ExtResource( 6 )]
 position = Vector2( 3550.65, 730.727 )
-contacts_reported = 1
 
 [node name="ChargerDummy7" parent="Bots" index="6" instance=ExtResource( 6 )]
 position = Vector2( 3634.02, 681.685 )
-contacts_reported = 1
 
 [node name="ChargerDummy8" parent="Bots" index="7" instance=ExtResource( 6 )]
 position = Vector2( 288.928, 23.0286 )
-contacts_reported = 1
 
 [node name="ChargerDummy9" parent="Bots" index="8" instance=ExtResource( 6 )]
 position = Vector2( 294.253, 647.356 )
-contacts_reported = 1
 bot_radius = 50.0
 shield_capacity = 25.0
 health_capacity = 80.0
@@ -58,12 +49,9 @@ charge_force_factor = 0.7
 
 [node name="ShooterDummy" parent="Bots" index="9" instance=ExtResource( 5 )]
 position = Vector2( 216.132, 556.729 )
-contacts_reported = 1
 
 [node name="ShooterDummy2" parent="Bots" index="10" instance=ExtResource( 5 )]
 position = Vector2( 345.348, 72.1363 )
-contacts_reported = 1
 
 [node name="Player" parent="Bots" index="11" instance=ExtResource( 7 )]
 position = Vector2( 593.322, 2976.67 )
-contacts_reported = 1

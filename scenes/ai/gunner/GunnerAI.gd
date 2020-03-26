@@ -29,7 +29,7 @@ func _seek_target(delta) -> void:
 func shoot_target(delta) -> void:
 	if bot_node.roll_mode == true:
 		bot_node.switch_mode()
-	bot_node.get_node("Weapon").look_at(target.global_position)
+	bot_node.current_weapon.look_at(target.global_position)
 	if in_line_of_sight == true:
 		bot_node.shoot_weapon()
 

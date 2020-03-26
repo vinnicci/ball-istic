@@ -6,7 +6,7 @@ export (float, 25.0, 100.0) var bot_radius: = 32.0
 export (float) var shield_capacity: = 20
 export (float) var health_capacity: = 20
 export (int, 0, 3000) var roll_speed: = 1200
-export (float) var shield_recovery_per_second: = 1.0
+export (float) var shield_recovery_per_sec: = 1.0
 export (float, 0.1, 0.8) var transform_speed: = 0.6
 export (float, 0.5, 3.0) var charge_cooldown: = 2.5
 export (float, 0, 1.0) var knockback_resist: = 0.25
@@ -24,8 +24,8 @@ const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLY_SIDES = 24
-var legs_position: Dictionary = {}
 
+var legs_position: Dictionary = {}
 var current_shield: float
 var current_health: float
 var current_roll_speed: int
@@ -34,14 +34,17 @@ var current_transform_speed: float
 var current_charge_cooldown: float
 var current_knockback_resist: float
 var current_charge_force_factor: float
-var velocity: Vector2 #public vars
+var current_weapon: Node2D
+var roll_mode: bool = false
+var velocity: Vector2
+
+#bot control vars
 var is_alive: bool = true
 var is_charging: bool = false
 var is_transforming: bool = false
 var is_in_control: bool = true
 signal shooting
 
-onready var roll_mode: bool = false
 onready var body_outline = $Body/Outline
 onready var body_texture = $Body/Texture
 onready var body_charge_effect = $Body/ChargeEffect
@@ -60,10 +63,23 @@ func _ready() -> void:
 
 
 func _set_up_default_vars() -> void:
-	#bot properties
+	#weapons
+	for child in $Weapons.get_children():
+		var weap_slot = "Weapons/" + child.name + "/Weapon"
+		if has_node(weap_slot) == true:
+			get_node(weap_slot).hide()
+	#by default equip first slot
+	for child in $Weapons.get_children():
+		var slot_node = "Weapons/" + child.name + "/Weapon"
+		if has_node(slot_node) == true:
+			current_weapon = get_node(slot_node)
+			current_weapon.is_active = true
+			get_node(slot_node).show()
+			break
+	
+	#bot physics and properties
 	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
-	
 	if is_destructible == false:
 		$Bars.hide()
 	
@@ -81,7 +97,7 @@ func _set_up_default_vars() -> void:
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
 	
-	#other set ups
+	#other body set ups
 	_set_up_legs([circle_points[4], circle_points[12], circle_points[20]])
 	_set_up_hatch([circle_points[0], circle_points[1], circle_points[2], circle_points[10],
 		circle_points[11], circle_points[12], circle_points[13], circle_points[14],
@@ -130,7 +146,7 @@ func update_vars() -> void:
 	current_shield = shield_capacity
 	current_health = health_capacity
 	current_roll_speed = roll_speed
-	current_shield_recovery = shield_recovery_per_second
+	current_shield_recovery = shield_recovery_per_sec
 	current_transform_speed = transform_speed
 	current_charge_cooldown = charge_cooldown
 	current_knockback_resist = knockback_resist
@@ -145,10 +161,10 @@ func update_vars() -> void:
 func _process(delta: float) -> void:
 	$Bars.global_rotation = 0
 	
-	#audio rolling
+	#rolling sound effect
 	_apply_rolling_audio()
 	
-	#everything charge roll related
+	#everything charge roll
 	#graphical feedback/effects
 	_apply_charging_effects()
 	
@@ -179,24 +195,29 @@ func _control(delta) -> void:
 
 
 func _apply_rolling_audio() -> void:
-	if $Sounds/Roll.playing == false && linear_velocity.length() > 150:
+	if linear_velocity.length() < 50:
+		return
+	if $Sounds/Roll.playing == false:
+		if linear_velocity.length() > 150:
+			$Sounds/Roll.pitch_scale = 0.5
+		elif linear_velocity.length() > 300:
+			$Sounds/Roll.pitch_scale = 1
+		elif linear_velocity.length() > 500:
+			$Sounds/Roll.pitch_scale = 2
 		$Sounds/Roll.play()
 
 
-func _on_Roll_finished() -> void:
-	pass # Replace with function body.
-
-
 func _apply_force() -> void:
-	if roll_mode == true:
-		#some ai velocities are already normalized
+	if roll_mode == false:
+		velocity = Vector2(0,0)
+		applied_force = velocity
+	elif roll_mode == true:
+		#if for some reason velocities don't get normalized
 		if velocity.is_normalized() == false:
 			velocity = velocity.normalized() * current_roll_speed
 		else:
 			velocity *= current_roll_speed
 		applied_force = velocity
-	elif roll_mode == false:
-		applied_force = Vector2(0,0)
 
 
 func _apply_charging_effects() -> void:
@@ -270,18 +291,18 @@ func _animate_weapon_hatch() -> void:
 	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
 	var weapon_anim: AnimationPlayer
-	if has_node("Weapon"):
-		weapon_anim = $Weapon/AnimationPlayer
+	if current_weapon != null:
+		weapon_anim = current_weapon.get_node("AnimationPlayer")
 	if roll_mode == false:
-		if has_node("Weapon"):
-			$Weapon.global_rotation = body_weapon_hatch.global_rotation
+		if current_weapon != null:
+			current_weapon.global_rotation = body_weapon_hatch.global_rotation
 			weapon_anim.play("change_mode")
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif roll_mode == true:
-		if has_node("Weapon"):
-			body_weapon_hatch.global_rotation = $Weapon.global_rotation
-			$Weapon.show()
+		if current_weapon != null:
+			body_weapon_hatch.global_rotation = current_weapon.global_rotation
+			current_weapon.show()
 			weapon_anim.play_backwards("change_mode")
 		body_weapon_hatch.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
@@ -291,25 +312,38 @@ func _animate_weapon_hatch() -> void:
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
-		if has_node("Weapon"):
-			$Weapon.hide()
+		if current_weapon != null:
+			current_weapon.hide()
 		body_weapon_hatch.hide()
 	is_transforming = false
 
 
 func shoot_weapon() -> void:
-	if is_in_control == false || $Weapon/Cooldown.is_stopped() == false || $Weapon.is_overheating == true || roll_mode == true:
+	if is_in_control == false || current_weapon.get_node("Cooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
-	$Weapon/ShootingSound.play()
-	emit_signal("shooting", $Weapon.get_projectile(), $Weapon/Muzzle.global_position,
-		$Weapon/Muzzle.global_rotation, is_hostile)
+	current_weapon.get_node("ShootingSound").play()
+	var muzzle = current_weapon.get_node("Muzzle")
+	emit_signal("shooting", current_weapon.get_projectiles(), muzzle.global_position,
+		muzzle.global_rotation, is_hostile)
 
 
-func charge_attack(charge_direction) -> void:
+func change_weapon(slot_num: int) -> void:
+	if roll_mode == true || is_in_control == false:
+		return
+	var weap_slot = "Weapons/Slot" + slot_num as String + "/Weapon"
+	if has_node(weap_slot) == true:
+		current_weapon.hide()
+		current_weapon.is_active = false
+		current_weapon = get_node(weap_slot)
+		current_weapon.show()
+		current_weapon.is_active = true
+
+
+func charge_attack(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
-	$Sounds/ChargeAttack.play()
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
+	$Sounds/ChargeAttack.play()
 	timer_charge_cooldown.start()
 
 
@@ -335,8 +369,6 @@ func take_damage(damage, knockback) -> void:
 
 func _explode() -> void:
 	is_alive = false
-	if has_node("PlayerBars") == true:
-		$PlayerBars.hide()
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Bars.hide()
@@ -344,17 +376,16 @@ func _explode() -> void:
 
 
 func _on_ExplodeDelay_timeout() -> void:
-	if has_node("Weapon"):
-		$Weapon.hide()
+	if current_weapon != null:
+		current_weapon.hide()
 	$Legs.hide()
 	$Body.hide()
 	$Bars.hide()
 	$CollisionShape.disabled = true
 	
-	$Sounds/Explode.play()
-	
-	#explosion graphical effect here
+	#explosion effects here
 	$ExplosionParticles.emitting = true
+	$Sounds/Explode.play()
 	$Timers/ExplodeTimer.start()
 
 

@@ -16,12 +16,16 @@ tile_data = PoolIntArray( -131073, 1, 0, -196608, 1, 0, -196607, 1, 0, -196606, 
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 6 )]
 position = Vector2( 690.12, 1793.22 )
+contacts_reported = 2
 
 [node name="ShooterDummy" parent="Bots" index="1" instance=ExtResource( 5 )]
 position = Vector2( 85.8, -160.16 )
+contacts_reported = 2
 
 [node name="ShooterDummy2" parent="Bots" index="2" instance=ExtResource( 5 )]
 position = Vector2( 737.879, -125.84 )
+contacts_reported = 2
 
 [node name="ShooterDummy3" parent="Bots" index="3" instance=ExtResource( 5 )]
 position = Vector2( 1315.6, -91.52 )
+contacts_reported = 2
