@@ -34,8 +34,10 @@ var current_transform_speed: float
 var current_charge_cooldown: float
 var current_knockback_resist: float
 var current_charge_force_factor: float
+var current_weapon: Node2D
 var velocity: Vector2 #public vars
 var is_alive: bool = true
+
 var is_charging: bool = false
 var is_transforming: bool = false
 var is_in_control: bool = true
@@ -60,10 +62,18 @@ func _ready() -> void:
 
 
 func _set_up_default_vars() -> void:
+	#weapon
+	for child in $Weapons.get_children():
+		var slot_node = "Weapons/" + child.name + "/Weapon"
+		if has_node(slot_node) == true:
+			current_weapon = get_node(slot_node)
+			current_weapon.is_active = true
+			get_node(slot_node).get_parent().show()
+			break
+	
 	#bot properties
 	$CollisionShape.shape.radius = bot_radius
 	linear_damp = SHOOT_MODE_DAMP
-	
 	if is_destructible == false:
 		$Bars.hide()
 	
@@ -270,18 +280,18 @@ func _animate_weapon_hatch() -> void:
 	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
 	var weapon_anim: AnimationPlayer
-	if has_node("Weapon"):
-		weapon_anim = $Weapon/AnimationPlayer
+	if current_weapon != null:
+		weapon_anim = current_weapon.get_node("AnimationPlayer")
 	if roll_mode == false:
-		if has_node("Weapon"):
-			$Weapon.global_rotation = body_weapon_hatch.global_rotation
+		if current_weapon != null:
+			current_weapon.global_rotation = body_weapon_hatch.global_rotation
 			weapon_anim.play("change_mode")
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif roll_mode == true:
-		if has_node("Weapon"):
-			body_weapon_hatch.global_rotation = $Weapon.global_rotation
-			$Weapon.show()
+		if current_weapon != null:
+			body_weapon_hatch.global_rotation = current_weapon.global_rotation
+			current_weapon.show()
 			weapon_anim.play_backwards("change_mode")
 		body_weapon_hatch.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
@@ -291,21 +301,34 @@ func _animate_weapon_hatch() -> void:
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
-		if has_node("Weapon"):
-			$Weapon.hide()
+		if current_weapon != null:
+			current_weapon.hide()
 		body_weapon_hatch.hide()
 	is_transforming = false
 
 
 func shoot_weapon() -> void:
-	if is_in_control == false || $Weapon/Cooldown.is_stopped() == false || $Weapon.is_overheating == true || roll_mode == true:
+	if is_in_control == false || current_weapon.get_node("Cooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
-	$Weapon/ShootingSound.play()
-	emit_signal("shooting", $Weapon.get_projectile(), $Weapon/Muzzle.global_position,
-		$Weapon/Muzzle.global_rotation, is_hostile)
+	current_weapon.get_node("ShootingSound").play()
+	var muzzle = current_weapon.get_node("Muzzle")
+	emit_signal("shooting", current_weapon.get_projectile(), muzzle.global_position,
+		muzzle.global_rotation, is_hostile)
 
 
-func charge_attack(charge_direction) -> void:
+func change_weapon(slot_num: int) -> void:
+	if roll_mode == true:
+		return
+	var weap_slot = "Weapons/Slot" + slot_num as String + "/Weapon"
+	if has_node(weap_slot) == true:
+		current_weapon.get_parent().hide()
+		current_weapon.is_active = false
+		current_weapon = get_node(weap_slot)
+		current_weapon.is_active = true
+		current_weapon.get_parent().show()
+
+
+func charge_attack(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
 	$Sounds/ChargeAttack.play()
@@ -344,8 +367,8 @@ func _explode() -> void:
 
 
 func _on_ExplodeDelay_timeout() -> void:
-	if has_node("Weapon"):
-		$Weapon.hide()
+	if current_weapon != null:
+		current_weapon.hide()
 	$Legs.hide()
 	$Body.hide()
 	$Bars.hide()

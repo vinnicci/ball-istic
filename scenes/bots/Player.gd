@@ -1,8 +1,8 @@
 extends "res://scenes/bots/_BaseBot.gd"
 
 #eventually ??
-onready var weapon_heat = $PlayerBars/WeaponHeat
-onready var charge_level = $PlayerBars/ChargeLevel
+onready var weapon_heat = $Bars/WeaponHeat
+onready var charge_level = $Bars/ChargeLevel
 const PLAYER_BARS_OFFSET: int = 15
 const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 
@@ -20,7 +20,6 @@ func update_player_vars() -> void:
 
 
 func _process(_delta: float) -> void:
-	$PlayerBars.global_rotation = 0
 	
 	#weapon heat bar
 	if $Weapon.is_overheating == true:
