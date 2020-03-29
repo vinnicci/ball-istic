@@ -1,8 +1,12 @@
 extends State
 
 
+var ai_node: Node
+
+
 func on_enter(target) -> void:
-	target.get_node("AI").state = state_name
+	ai_node = target.get_node("AI")
+	ai_node.state = state_name
 #
 #
 #func on_exit(target) -> void:
@@ -14,8 +18,6 @@ func on_enter(target) -> void:
 
 
 func on_process(target, delta : float) -> void:
-	target.velocity = Vector2(0,0)
-	var ai_node = target.get_node("AI")
 	if ai_node.in_line_of_sight == true && ai_node.in_detection_range == true:
 		go_to("Seek")
 

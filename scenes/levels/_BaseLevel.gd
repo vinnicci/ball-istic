@@ -1,8 +1,7 @@
 extends Node2D
 
-#Nav node: attach base tilemap or base static body
-#Bots node: attach bot
-#add bot instances in Bots node
+#Nav node: attach tilemaps/static bodies with nav mesh and collision
+#Bots node: attach bots
 func _ready() -> void:
 	for child_node in $Bots.get_children():
 		child_node.connect("shooting", self, "_on_shoot")

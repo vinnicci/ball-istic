@@ -9,6 +9,7 @@
 [node name="Projectile" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 900
+proj_range = 300
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )

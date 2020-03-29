@@ -177,6 +177,7 @@ func _process(delta: float) -> void:
 	
 	#velocity calculations
 	if is_in_control == true:
+		velocity = Vector2(0,0)
 		_control(delta)
 
 
@@ -208,16 +209,15 @@ func _apply_rolling_audio() -> void:
 
 
 func _apply_force() -> void:
+	applied_force = Vector2(0,0)
 	if roll_mode == false:
-		velocity = Vector2(0,0)
-		applied_force = velocity
-	elif roll_mode == true:
-		#if for some reason velocities don't get normalized
-		if velocity.is_normalized() == false:
-			velocity = velocity.normalized() * current_roll_speed
-		else:
-			velocity *= current_roll_speed
-		applied_force = velocity
+		return
+	#if for some reason velocities don't get normalized
+	if velocity.is_normalized() == false:
+		velocity = velocity.normalized() * current_roll_speed
+	else:
+		velocity *= current_roll_speed
+	applied_force = velocity
 
 
 func _apply_charging_effects() -> void:
@@ -290,20 +290,16 @@ func _on_LegTween_tween_all_completed() -> void:
 func _animate_weapon_hatch() -> void:
 	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
-	var weapon_anim: AnimationPlayer
-	if current_weapon != null:
-		weapon_anim = current_weapon.get_node("AnimationPlayer")
 	if roll_mode == false:
 		if current_weapon != null:
 			current_weapon.global_rotation = body_weapon_hatch.global_rotation
-			weapon_anim.play("change_mode")
+			current_weapon.visible = !current_weapon.visible
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif roll_mode == true:
 		if current_weapon != null:
 			body_weapon_hatch.global_rotation = current_weapon.global_rotation
-			current_weapon.show()
-			weapon_anim.play_backwards("change_mode")
+			current_weapon.visible = !current_weapon.visible
 		body_weapon_hatch.show()
 		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -312,8 +308,6 @@ func _animate_weapon_hatch() -> void:
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
-		if current_weapon != null:
-			current_weapon.hide()
 		body_weapon_hatch.hide()
 	is_transforming = false
 
@@ -328,14 +322,14 @@ func shoot_weapon() -> void:
 
 
 func change_weapon(slot_num: int) -> void:
-	if roll_mode == true || is_in_control == false:
-		return
 	var weap_slot = "Weapons/Slot" + slot_num as String + "/Weapon"
 	if has_node(weap_slot) == true:
-		current_weapon.hide()
+		if roll_mode == false:
+			current_weapon.visible = !current_weapon.visible
 		current_weapon.is_active = false
 		current_weapon = get_node(weap_slot)
-		current_weapon.show()
+		if roll_mode == false:
+			current_weapon.visible = !current_weapon.visible
 		current_weapon.is_active = true
 
 

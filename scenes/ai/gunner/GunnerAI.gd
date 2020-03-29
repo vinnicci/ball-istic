@@ -6,7 +6,7 @@ var in_weapon_range: bool = false
 
 func _state_control(delta):
 	match(state):
-		"Idle": return
+		"Idle": _idle(delta)
 		"Seek": _seek_target(delta)
 		"Shoot": shoot_target(delta)
 		"Flee": _flee(delta)

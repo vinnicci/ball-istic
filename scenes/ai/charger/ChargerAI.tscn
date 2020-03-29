@@ -7,11 +7,10 @@
 [ext_resource path="res://scenes/ai/charger/Flee.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 240.0
 
 [sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
-radius = 150.0
+radius = 1000.0
 
 [node name="AI" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -31,27 +30,13 @@ state_name = "Seek"
 script = ExtResource( 5 )
 state_name = "Flee"
 
-[node name="DetectionRange" parent="." index="1"]
-visible = false
-
-[node name="TargetRay" parent="." index="2"]
-visible = false
-
-[node name="VelocityRay" parent="." index="3"]
-enabled = true
-cast_to = Vector2( 20, 0 )
-
-[node name="BackOffRange" type="Area2D" parent="." index="4"]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BackOffRange" index="0"]
-shape = SubResource( 1 )
-
-[node name="ChargeRange" type="Area2D" parent="." index="5"]
+[node name="ChargeRange" type="Area2D" parent="." index="1"]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeRange" index="0"]
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="DetectionRange" index="0"]
 shape = SubResource( 2 )
-[connection signal="body_entered" from="BackOffRange" to="." method="_on_BackOffRange_body_entered"]
-[connection signal="body_exited" from="BackOffRange" to="." method="_on_BackOffRange_body_exited"]
 [connection signal="body_entered" from="ChargeRange" to="." method="_on_ChargeRange_body_entered"]
+[connection signal="body_exited" from="FleeChargeRange" to="." method="_on_FleeChargeRange_body_exited"]

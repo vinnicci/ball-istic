@@ -3,6 +3,7 @@ extends RigidBody2D
 
 export (float) var health_capacity: = 1000.0
 export (bool) var destructible: = false
+export (float) var knockback_resist: = 0.2
 var current_health: float
 
 

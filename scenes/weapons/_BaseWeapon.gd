@@ -27,7 +27,7 @@ func get_projectiles() -> Array:
 	return _instantiate_projectile()
 
 
-#overridable function to bundle projectiles
+#bundle projectiles
 func _instantiate_projectile() -> Array:
 	return [Projectile.instance()]
 
