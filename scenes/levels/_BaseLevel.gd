@@ -4,7 +4,8 @@ extends Node2D
 #Bots node: attach bots
 func _ready() -> void:
 	for child_node in $Bots.get_children():
-		child_node.connect("shooting", self, "_on_shoot")
+		if child_node.current_weapon != null:
+			child_node.connect("shooting", self, "_on_shoot")
 
 
 func _on_shoot(projectiles, proj_position, proj_direction, hostile_proj) -> void:

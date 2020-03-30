@@ -25,7 +25,7 @@ const SHOOT_MODE_DAMP: int = 5
 const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLY_SIDES = 24
 
-var legs_position: Dictionary = {}
+var _legs_position: Dictionary = {}
 var current_shield: float
 var current_health: float
 var current_roll_speed: int
@@ -37,11 +37,9 @@ var current_charge_force_factor: float
 var current_weapon: Node2D
 var roll_mode: bool = false
 var velocity: Vector2
-
-#bot control vars
-var is_alive: bool = true
-var is_charging: bool = false
-var is_transforming: bool = false
+var _is_alive: bool = true #bot control vars
+var _is_charging: bool = false
+var _is_transforming: bool = false
 var is_in_control: bool = true
 signal shooting
 
@@ -73,7 +71,6 @@ func _set_up_default_vars() -> void:
 		var slot_node = "Weapons/" + child.name + "/Weapon"
 		if has_node(slot_node) == true:
 			current_weapon = get_node(slot_node)
-			current_weapon.is_active = true
 			get_node(slot_node).show()
 			break
 	
@@ -116,17 +113,17 @@ func _set_up_legs(circle_points) -> void:
 			0:
 				leg1.add_child(leg)
 				leg1.position = circle_points[0]
-				legs_position[leg1] = circle_points[0]
+				_legs_position[leg1] = circle_points[0]
 				leg1.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
 			1:
 				leg2.add_child(leg)
 				leg2.position = circle_points[1]
-				legs_position[leg2] = circle_points[1]
+				_legs_position[leg2] = circle_points[1]
 				leg2.rotation = deg2rad(12*deg)
 			2:
 				leg3.add_child(leg)
 				leg3.position = circle_points[2]
-				legs_position[leg3] = circle_points[2]
+				_legs_position[leg3] = circle_points[2]
 				leg3.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
 
@@ -144,25 +141,25 @@ func _plot_circle_points(radius) -> Array:
 
 func update_vars() -> void:
 	current_shield = shield_capacity
+	bar_shield.max_value = shield_capacity
+	bar_shield.value = current_shield
 	current_health = health_capacity
+	bar_health.max_value = health_capacity
+	bar_health.value = current_health
 	current_roll_speed = roll_speed
 	current_shield_recovery = shield_recovery_per_sec
 	current_transform_speed = transform_speed
 	current_charge_cooldown = charge_cooldown
+	timer_charge_cooldown.wait_time = current_charge_cooldown
 	current_knockback_resist = knockback_resist
 	current_charge_force_factor = charge_force_factor
-	bar_shield.max_value = shield_capacity
-	bar_shield.value = current_shield
-	bar_health.max_value = health_capacity
-	bar_health.value = current_health
-	timer_charge_cooldown.wait_time = current_charge_cooldown
 
 
 func _process(delta: float) -> void:
 	$Bars.global_rotation = 0
 	
 	#rolling sound effect
-	_apply_rolling_audio()
+#	_apply_rolling_audio()
 	
 	#everything charge roll
 	#graphical feedback/effects
@@ -181,7 +178,7 @@ func _process(delta: float) -> void:
 		_control(delta)
 
 
-#60 fps cap
+#60 fps
 func _physics_process(delta: float) -> void:
 	pass
 
@@ -198,21 +195,14 @@ func _control(delta) -> void:
 func _apply_rolling_audio() -> void:
 	if linear_velocity.length() < 50:
 		return
-	if $Sounds/Roll.playing == false:
-		if linear_velocity.length() > 150:
-			$Sounds/Roll.pitch_scale = 0.5
-		elif linear_velocity.length() > 300:
-			$Sounds/Roll.pitch_scale = 1
-		elif linear_velocity.length() > 500:
-			$Sounds/Roll.pitch_scale = 2
-		$Sounds/Roll.play()
+	$Sounds/Roll.play()
 
 
 func _apply_force() -> void:
 	applied_force = Vector2(0,0)
 	if roll_mode == false:
 		return
-	#if for some reason velocities don't get normalized
+	#if for some reason velocities aren't normalized
 	if velocity.is_normalized() == false:
 		velocity = velocity.normalized() * current_roll_speed
 	else:
@@ -224,19 +214,17 @@ func _apply_charging_effects() -> void:
 	var hostile = Color(1, 0.13, 0.13) #red
 	var non_hostile = Color(0.4, 1, 0.4) #green
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		#outline for hostiles becomes red
-		if is_hostile == true:
+		if is_hostile == true: #outline for hostiles becomes red
 			body_outline.color = lerp(body_outline.color, hostile, 0.8)
-		#outline for non-hostiles becomes green
-		elif is_hostile == false:
+		elif is_hostile == false: #outline for non-hostiles becomes green
 			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
-		is_charging = false
+		_is_charging = false
 	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		body_outline.color = Color(1, 0.2, 0.8)
 		body_charge_effect.color.a = 255
-		is_charging = true
+		_is_charging = true
 
 
 func _apply_rolling_effects() -> void:
@@ -247,8 +235,9 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
+#controls include weapon shooting
 func _check_if_in_control() -> void:
-	if is_alive == true && is_charging == false && is_transforming == false:
+	if _is_alive == true && _is_charging == false && _is_transforming == false:
 		is_in_control = true
 	else:
 		is_in_control = false
@@ -256,6 +245,7 @@ func _check_if_in_control() -> void:
 
 func switch_mode() -> void:
 	is_in_control = false
+	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
 	_animate_weapon_hatch()
@@ -269,26 +259,20 @@ func switch_mode() -> void:
 
 
 func _animate_legs() -> void:
-	is_transforming = true
 	var leg_tween = $Legs/LegTween
 	if roll_mode == false:
-		for leg in legs_position.keys():
+		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 	elif roll_mode == true:
-		for leg in legs_position.keys():
-			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), legs_position[leg],
+		for leg in _legs_position.keys():
+			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
 
 
-func _on_LegTween_tween_all_completed() -> void:
-	is_transforming = false
-
-
 func _animate_weapon_hatch() -> void:
-	is_transforming = true
 	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
 	if roll_mode == false:
 		if current_weapon != null:
@@ -309,7 +293,7 @@ func _animate_weapon_hatch() -> void:
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
-	is_transforming = false
+	_is_transforming = false
 
 
 func shoot_weapon() -> void:
@@ -326,11 +310,9 @@ func change_weapon(slot_num: int) -> void:
 	if has_node(weap_slot) == true:
 		if roll_mode == false:
 			current_weapon.visible = !current_weapon.visible
-		current_weapon.is_active = false
 		current_weapon = get_node(weap_slot)
 		if roll_mode == false:
 			current_weapon.visible = !current_weapon.visible
-		current_weapon.is_active = true
 
 
 func charge_attack(charge_direction: float) -> void:
@@ -342,7 +324,7 @@ func charge_attack(charge_direction: float) -> void:
 
 
 func take_damage(damage, knockback) -> void:
-	if is_alive == false:
+	if _is_alive == false:
 		$Sounds/HealthDamage.play()
 		return
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
@@ -362,7 +344,7 @@ func take_damage(damage, knockback) -> void:
 
 
 func _explode() -> void:
-	is_alive = false
+	_is_alive = false
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Bars.hide()
@@ -388,16 +370,17 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if is_charging == false:
+	if _is_charging == false:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
 	$Sounds/ChargeAttackHit.play()
 	var damage = current_roll_speed * CHARGE_DAMAGE_FACTOR
-	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
-		return
-	elif body.get_parent().name == "Bots" && is_hostile != body.is_hostile:
-		body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
+	if body.get_parent().name == "Bots":
+		if is_hostile == body.is_hostile:
+			return
+		elif is_hostile != body.is_hostile:
+			body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
 	else:
 		body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
 

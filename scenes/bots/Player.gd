@@ -1,11 +1,14 @@
 extends "res://scenes/bots/_BaseBot.gd"
 
 
-onready var bar_weapon_heat = $Bars/WeaponHeat
-onready var bar_charge_level = $Bars/ChargeLevel
+onready var bar_weapon_heat: = $Bars/WeaponHeat
+onready var bar_charge_level: = $Bars/ChargeLevel
+onready var hud_weapon: = $PlayerHUD/WeaponSlots
 const PLAYER_BARS_OFFSET: int = 15
 const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
-const SLOT_LABEL_COLOR: = Color(0.13, 0.27, 0.15)
+const SLOT_LABEL_COLOR: = Color(0.13, 0.27, 0.15) #low value green
+const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
+const WEAP_HEAT_COLOR = Color(1, 0.7, 0.15) #orange
 var dict_weapon_hud: Dictionary = {}
 var current_slot_selected: int
 
@@ -19,7 +22,6 @@ func _ready() -> void:
 
 func _set_up_player_hud() -> void:
 	var selected_slot_initialized: = false
-	var weap_hud: = $PlayerHUD/WeaponSlots
 	var i: = -1
 	for slot in $Weapons.get_children():
 		i += 1
@@ -29,9 +31,9 @@ func _set_up_player_hud() -> void:
 			_change_slot_selected(i)
 			selected_slot_initialized = true
 		var weap = slot.get_node("Weapon")
-		weap_hud.get_node("Slot" + i as String + "/Sprite").texture = weap.get_node("Sprite").texture
-		weap_hud.get_node("Slot" + i as String + "/SlotHeat").max_value = weap.heat_capacity
-		dict_weapon_hud[weap] = weap_hud.get_node("Slot" + i as String)
+		hud_weapon.get_node("Slot" + i as String + "/Sprite").texture = weap.get_node("Sprite").texture
+		hud_weapon.get_node("Slot" + i as String + "/SlotHeat").max_value = weap.heat_capacity
+		dict_weapon_hud[weap] = hud_weapon.get_node("Slot" + i as String)
 
 
 func _set_up_player_default_vars() -> void:
@@ -60,8 +62,12 @@ func _update_hud_elements() -> void:
 		if slot.has_node("Weapon") == false:
 			continue
 		var weap = slot.get_node("Weapon")
-		var weap_hud = dict_weapon_hud[weap].get_node("SlotHeat")
-		weap_hud.value = weap.current_heat
+		var hud_weap_heat = dict_weapon_hud[weap].get_node("SlotHeat")
+		if weap.is_overheating == true:
+			hud_weap_heat.modulate = WEAP_OVERHEAT_COLOR
+		else:
+			hud_weap_heat.modulate = WEAP_HEAT_COLOR
+		hud_weap_heat.value = weap.current_heat
 
 
 func _control_player_weapon_hotkeys() -> void:
@@ -93,13 +99,12 @@ func _control_player_weapon_hotkeys() -> void:
 func _change_slot_selected(slot_num: int) -> void:
 	if has_node("Weapons/Slot" + slot_num as String + "/Weapon") == false:
 		return
-	var weap_hud: = $PlayerHUD/WeaponSlots
-	weap_hud.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
-	var selected_slot_sprite = weap_hud.get_node("SelectSprite")
-	var selected_slot_pos = weap_hud.get_node("Slot" + slot_num as String + "/SelectPos")
+	hud_weapon.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
+	var selected_slot_sprite = hud_weapon.get_node("SelectSprite")
+	var selected_slot_pos = hud_weapon.get_node("Slot" + slot_num as String + "/SelectPos")
 	selected_slot_sprite.position = selected_slot_pos.position
-	weap_hud.get_node("SelectSprite").position = selected_slot_pos.position
-	weap_hud.get_node("Slot" + slot_num as String + "/SlotLabel").add_color_override("font_color", selected_slot_sprite.modulate)
+	hud_weapon.get_node("SelectSprite").position = selected_slot_pos.position
+	hud_weapon.get_node("Slot" + slot_num as String + "/SlotLabel").add_color_override("font_color", selected_slot_sprite.modulate)
 	current_slot_selected = slot_num
 
 
@@ -141,11 +146,11 @@ func _on_ChargeTween_tween_all_completed() -> void:
 func _animate_bar_weapon_heat_bar() -> void:
 	var bar_weapon_heat_anim = bar_weapon_heat.get_node("WeaponHeatAnimation")
 	if current_weapon.is_overheating == true:
-		bar_weapon_heat.modulate = Color(0.9, 0, 0)
+		bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
 	elif current_weapon.is_overheating == false && bar_weapon_heat_anim.is_playing() == false:
-		bar_weapon_heat.modulate = Color(1, 0.7, 0.15)
+		bar_weapon_heat.modulate = WEAP_HEAT_COLOR
 	if current_weapon.current_heat > current_weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
-		if bar_weapon_heat_anim.is_playing() == false:
+		if bar_weapon_heat_anim.is_playing() == false && current_weapon.is_overheating == false:
 			bar_weapon_heat_anim.play("too_much_heat")
 			$Sounds/CloseToOverheating.play()
 	bar_weapon_heat.value = current_weapon.current_heat
