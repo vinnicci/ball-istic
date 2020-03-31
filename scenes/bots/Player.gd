@@ -10,7 +10,7 @@ const SLOT_LABEL_COLOR: = Color(0.13, 0.27, 0.15) #low value green
 const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
 const WEAP_HEAT_COLOR = Color(1, 0.7, 0.15) #orange
 var dict_weapon_hud: Dictionary = {}
-var current_slot_selected: int
+var current_slot_selected: int = -1
 
 
 func _ready() -> void:
@@ -27,9 +27,11 @@ func _set_up_player_hud() -> void:
 		i += 1
 		if slot.has_node("Weapon") == false:
 			continue
+		#initialize first selected slot
 		if selected_slot_initialized == false:
 			_change_slot_selected(i)
 			selected_slot_initialized = true
+		#initialize hud
 		var weap = slot.get_node("Weapon")
 		hud_weapon.get_node("Slot" + i as String + "/Sprite").texture = weap.get_node("Sprite").texture
 		hud_weapon.get_node("Slot" + i as String + "/SlotHeat").max_value = weap.heat_capacity
@@ -97,9 +99,10 @@ func _control_player_weapon_hotkeys() -> void:
 
 
 func _change_slot_selected(slot_num: int) -> void:
-	if has_node("Weapons/Slot" + slot_num as String + "/Weapon") == false:
+	if has_node("Weapons/Slot" + slot_num as String + "/Weapon") == false || current_slot_selected == slot_num:
 		return
-	hud_weapon.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
+	if current_slot_selected != -1:
+		hud_weapon.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
 	var selected_slot_sprite = hud_weapon.get_node("SelectSprite")
 	var selected_slot_pos = hud_weapon.get_node("Slot" + slot_num as String + "/SelectPos")
 	selected_slot_sprite.position = selected_slot_pos.position

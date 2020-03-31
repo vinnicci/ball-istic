@@ -1,0 +1,297 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=1]
+[ext_resource path="res://test_folder/test btree/_BaseAIBTree.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 1000.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 200.0
+
+[node name="AI" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="BTREE" type="Node" parent="."]
+script = ExtResource( 1 )
+tree = {
+"connection": [ {
+"from": "sequence",
+"from_port": 0,
+"to": "task",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 1,
+"to": "task2",
+"to_port": 0
+}, {
+"from": "root",
+"from_port": 0,
+"to": "selector",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 1,
+"to": "sequence",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 0,
+"to": "task3",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_idle",
+"offset": Vector2( 260, -330 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_enemy_detected",
+"offset": Vector2( 480, -230 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_seek_enemy",
+"offset": Vector2( 470, -130 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 280, -160 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 110, -160 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_idle",
+"offset": Vector2( 260, -330 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_enemy_detected",
+"offset": Vector2( 480, -230 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_seek_enemy",
+"offset": Vector2( 470, -130 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 280, -160 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 110, -160 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [  ],
+"data": {
+"fn": "task_idle",
+"offset": Vector2( 260, -330 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_enemy_detected",
+"offset": Vector2( 480, -230 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_seek_enemy",
+"offset": Vector2( 470, -130 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_enemy_detected",
+"offset": Vector2( 480, -230 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_seek_enemy",
+"offset": Vector2( 470, -130 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 280, -160 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+} ],
+"root": {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_idle",
+"offset": Vector2( 260, -330 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_enemy_detected",
+"offset": Vector2( 480, -230 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_seek_enemy",
+"offset": Vector2( 470, -130 ),
+"params": [  ],
+"size": Vector2( 281, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 280, -160 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 110, -160 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}
+}
+
+[node name="DetectionRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+shape = SubResource( 1 )
+
+[node name="TargetRay" type="RayCast2D" parent="."]
+cast_to = Vector2( 1000, 0 )
+
+[node name="VelocityRay" type="RayCast2D" parent="."]
+cast_to = Vector2( 1, 0 )
+
+[node name="FleeRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FleeRange"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
+[connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]

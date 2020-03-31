@@ -1,7 +1,7 @@
 extends RigidBody2D
 
-#make sure to import body texture with repeating enabled
 
+#make sure to import body texture with repeating enabled
 export (float, 25.0, 100.0) var bot_radius: = 32.0
 export (float) var shield_capacity: = 20
 export (float) var health_capacity: = 20
@@ -53,26 +53,27 @@ onready var timer_charge_cooldown = $Timers/ChargeCooldown
 
 
 func _ready() -> void:
-	#never changing stuff
+	#initialize bot
 	_set_up_default_vars()
 	
-	#might change on the course of the game
+	#stuff that changes
 	update_vars()
 
 
 func _set_up_default_vars() -> void:
 	#weapons
-	for child in $Weapons.get_children():
-		var weap_slot = "Weapons/" + child.name + "/Weapon"
-		if has_node(weap_slot) == true:
-			get_node(weap_slot).hide()
-	#by default equip first slot
-	for child in $Weapons.get_children():
-		var slot_node = "Weapons/" + child.name + "/Weapon"
-		if has_node(slot_node) == true:
-			current_weapon = get_node(slot_node)
-			get_node(slot_node).show()
-			break
+	var initialized_selected_weap: bool = false
+	for slot in $Weapons.get_children():
+		if slot.has_node("Weapon") == false:
+			continue
+		var weap_node = slot.get_node("Weapon")
+		#initialize first weapon
+		if initialized_selected_weap == false:
+			current_weapon = weap_node
+			initialized_selected_weap = true
+			continue
+		#hide every weapons
+		weap_node.hide()
 	
 	#bot physics and properties
 	$CollisionShape.shape.radius = bot_radius
@@ -306,13 +307,14 @@ func shoot_weapon() -> void:
 
 
 func change_weapon(slot_num: int) -> void:
-	var weap_slot = "Weapons/Slot" + slot_num as String + "/Weapon"
-	if has_node(weap_slot) == true:
-		if roll_mode == false:
-			current_weapon.visible = !current_weapon.visible
-		current_weapon = get_node(weap_slot)
-		if roll_mode == false:
-			current_weapon.visible = !current_weapon.visible
+	var weap = "Weapons/Slot" + slot_num as String + "/Weapon"
+	if has_node(weap) == false || current_weapon == get_node(weap):
+		return
+	if roll_mode == false:
+		current_weapon.visible = !current_weapon.visible
+	current_weapon = get_node(weap)
+	if roll_mode == false:
+		current_weapon.visible = !current_weapon.visible
 
 
 func charge_attack(charge_direction: float) -> void:

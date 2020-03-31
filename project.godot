@@ -43,7 +43,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "node_fsm_plugin" )
+enabled=PoolStringArray( "btree", "node_fsm_plugin" )
 
 [importer_defaults]
 

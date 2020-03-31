@@ -13,6 +13,7 @@ font_data = ExtResource( 2 )
 [node name="PlayerHUD" type="CanvasLayer"]
 
 [node name="WeaponSlots" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.862745 )
 position = Vector2( 640, 670 )
 texture = ExtResource( 1 )
 
@@ -20,6 +21,7 @@ texture = ExtResource( 1 )
 modulate = Color( 0.0352941, 0.992157, 0.00392157, 1 )
 texture = ExtResource( 4 )
 centered = false
+offset = Vector2( 0, -22 )
 
 [node name="Slot0" type="Node2D" parent="WeaponSlots"]
 
