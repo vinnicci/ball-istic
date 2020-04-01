@@ -4,23 +4,22 @@ extends Node2D
 #be sure to name root node as Weapon
 #however you can name the scene as anything
 export (PackedScene) var Projectile
-export (float) var heat_per_shot: = 10.0
-export (float) var heat_capacity: = 50
-export (float) var heat_dissipation_per_second: = 10.0
-export (float) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
+export (float) var heat_per_shot: float = 10.0
+export (float) var heat_capacity: float = 50.0
+export (float) var heat_dissipation_per_second: float = 10.0
+export (float, 0.01, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
+export (float) var shoot_cooldown: float = 1.0
 var current_heat: float
 var is_overheating: bool = false
+var transform_speed: float
 
 
 func _ready() -> void:
-	if heat_per_shot < 3:
-		heat_per_shot = 3
-	if heat_dissipation_per_second < 2:
-		heat_dissipation_per_second = 2
+	$ShootCooldown.wait_time = shoot_cooldown
 
 
 func get_projectiles() -> Array:
-	$Cooldown.start()
+	$ShootCooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
 	current_heat += heat_per_shot
 	return _instantiate_projectile()

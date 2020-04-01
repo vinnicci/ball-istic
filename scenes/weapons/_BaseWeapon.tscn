@@ -58,7 +58,7 @@ process_material = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 
-[node name="Cooldown" type="Timer" parent="."]
+[node name="ShootCooldown" type="Timer" parent="."]
 one_shot = true
 
 [node name="DissipationCooldown" type="Timer" parent="."]
@@ -70,5 +70,5 @@ anims/change_mode = SubResource( 4 )
 
 [node name="ShootingSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
-[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="ShootCooldown" to="." method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]

@@ -48,6 +48,13 @@ func task_idle(task):
 		return task.failed()
 
 
+func task_enemy_is_far(task):
+	if global_position.distance_to(enemy.get_ref().global_position) > 200:
+		return task.succeed()
+	else:
+		return task.failed()
+
+
 func task_enemy_detected(task):
 	if (target_in_range && target_in_sight) == true:
 		return task.succeed()
@@ -63,5 +70,5 @@ func task_seek_enemy(task):
 	if global_position.distance_to(next_path_point) < 100:
 		next_path_point = path_points.pop_front()
 		$VelocityRay.look_at(next_path_point)
-	parent_node.velocity = Vector2(0,0)
+#	parent_node.velocity = Vector2(0,0)
 	parent_node.velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) * pass_delta

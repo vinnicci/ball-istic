@@ -9,13 +9,11 @@
 script = ExtResource( 1 )
 Projectile = ExtResource( 4 )
 heat_dissipation_per_second = 5.0
+shoot_cooldown = 0.5
 
-[node name="Sprite" parent="." index="0"]
-texture = ExtResource( 3 )
-offset = Vector2( 8, 0 )
-
-[node name="Muzzle" parent="." index="1"]
+[node name="Muzzle" parent="." index="0"]
 position = Vector2( 31, 0 )
 
-[node name="Cooldown" parent="." index="2"]
-wait_time = 0.5
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 3 )
+offset = Vector2( 8, 0 )

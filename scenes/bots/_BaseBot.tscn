@@ -180,6 +180,12 @@ visible = false
 [node name="Slot3" type="Node2D" parent="Passives"]
 
 [node name="Slot4" type="Node2D" parent="Passives"]
+
+[node name="SpecialSlot0" type="Node2D" parent="Passives"]
+
+[node name="SpecialSlot1" type="Node2D" parent="Passives"]
+
+[node name="SpecialSlot2" type="Node2D" parent="Passives"]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

@@ -10,3 +10,5 @@ script = ExtResource( 1 )
 [node name="EscapePoints" type="Node2D" parent="Nav"]
 
 [node name="Bots" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]

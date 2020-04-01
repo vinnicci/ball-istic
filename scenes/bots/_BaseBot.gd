@@ -7,8 +7,8 @@ export (float) var shield_capacity: = 20
 export (float) var health_capacity: = 20
 export (int, 0, 3000) var roll_speed: = 1200
 export (float) var shield_recovery_per_sec: = 1.0
-export (float, 0.1, 0.8) var transform_speed: = 0.6
-export (float, 0.5, 3.0) var charge_cooldown: = 2.5
+export (float, 0.1, 0.8) var transform_speed: = 0.5
+export (float, 0.5, 5.0) var charge_cooldown: = 2.5
 export (float, 0, 1.0) var knockback_resist: = 0.25
 export (float, 0, 1.0) var charge_force_factor: = 0.5
 export (bool) var is_destructible: = true
@@ -37,9 +37,9 @@ var current_charge_force_factor: float
 var current_weapon: Node2D
 var roll_mode: bool = false
 var velocity: Vector2
-var _is_alive: bool = true #bot control vars
-var _is_charging: bool = false
-var _is_transforming: bool = false
+var is_alive: bool = true #bot control vars
+var is_charging: bool = false
+var is_transforming: bool = false
 var is_in_control: bool = true
 signal shooting
 
@@ -144,14 +144,20 @@ func update_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
 	bar_shield.value = current_shield
+	current_shield_recovery = shield_recovery_per_sec
+	
 	current_health = health_capacity
 	bar_health.max_value = health_capacity
 	bar_health.value = current_health
-	current_roll_speed = roll_speed
-	current_shield_recovery = shield_recovery_per_sec
+	
 	current_transform_speed = transform_speed
+	if current_weapon != null:
+		current_weapon.transform_speed = current_transform_speed
+	
 	current_charge_cooldown = charge_cooldown
 	timer_charge_cooldown.wait_time = current_charge_cooldown
+	
+	current_roll_speed = roll_speed
 	current_knockback_resist = knockback_resist
 	current_charge_force_factor = charge_force_factor
 
@@ -221,11 +227,11 @@ func _apply_charging_effects() -> void:
 			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
-		_is_charging = false
+		is_charging = false
 	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = Color(1, 0.2, 0.8)
+		body_outline.color = Color(1, 0.24, 0.88)
 		body_charge_effect.color.a = 255
-		_is_charging = true
+		is_charging = true
 
 
 func _apply_rolling_effects() -> void:
@@ -238,7 +244,7 @@ func _apply_rolling_effects() -> void:
 
 #controls include weapon shooting
 func _check_if_in_control() -> void:
-	if _is_alive == true && _is_charging == false && _is_transforming == false:
+	if is_alive == true && is_charging == false && is_transforming == false:
 		is_in_control = true
 	else:
 		is_in_control = false
@@ -246,7 +252,7 @@ func _check_if_in_control() -> void:
 
 func switch_mode() -> void:
 	is_in_control = false
-	_is_transforming = true
+	is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
 	_animate_weapon_hatch()
@@ -294,11 +300,11 @@ func _animate_weapon_hatch() -> void:
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
-	_is_transforming = false
+	is_transforming = false
 
 
 func shoot_weapon() -> void:
-	if is_in_control == false || current_weapon.get_node("Cooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
+	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
 	current_weapon.get_node("ShootingSound").play()
 	var muzzle = current_weapon.get_node("Muzzle")
@@ -326,7 +332,7 @@ func charge_attack(charge_direction: float) -> void:
 
 
 func take_damage(damage, knockback) -> void:
-	if _is_alive == false:
+	if is_alive == false:
 		$Sounds/HealthDamage.play()
 		return
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
@@ -346,7 +352,7 @@ func take_damage(damage, knockback) -> void:
 
 
 func _explode() -> void:
-	_is_alive = false
+	is_alive = false
 	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
 	$Bars.hide()
@@ -372,7 +378,7 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if _is_charging == false:
+	if is_charging == false:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
