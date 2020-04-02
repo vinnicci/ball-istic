@@ -3,7 +3,9 @@ extends Node2D
 
 onready var parent_node: = get_parent()
 onready var level_node: = get_parent().get_parent().get_parent()
+var enemies: Dictionary = {}
 var enemy: WeakRef #something to attack
+var allies: Dictionary = {}
 var ally: WeakRef #something to run to
 var target_in_range: bool = false
 var target_in_sight: bool = false
@@ -14,13 +16,17 @@ var pass_delta: float
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body.get_parent().name == "Bots" && body.is_hostile != parent_node.is_hostile:
-		enemy = weakref(body)
+		if enemy == null:
+			enemy = weakref(body)
+		enemies[body] = body
 		target_in_range = true
 		$TargetRay.enabled = true
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	pass # Replace with function body.
+	if body.get_parent().name == "Bots" && enemy.get_ref() != null:
+		if enemy.get_ref() != body:
+			enemies.erase(body)
 
 
 func get_path_points(start, end) -> void:
@@ -42,14 +48,11 @@ func _control(delta):
 
 func task_idle(task):
 	parent_node.velocity = Vector2(0,0)
-	if enemy == null:
-		return task.succeed()
-	elif target_in_range == true && target_in_sight == true:
-		return task.failed()
+	return task.succeed()
 
 
-func task_enemy_is_far(task):
-	if global_position.distance_to(enemy.get_ref().global_position) > 200:
+func task_enemy_is_close(task):
+	if global_position.distance_to(enemy.get_ref().global_position) < 200:
 		return task.succeed()
 	else:
 		return task.failed()

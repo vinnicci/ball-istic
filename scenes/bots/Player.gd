@@ -4,7 +4,8 @@ extends "res://scenes/bots/_BaseBot.gd"
 onready var bar_weapon_heat: = $Bars/WeaponHeat
 onready var bar_charge_level: = $Bars/ChargeLevel
 #onready var bar_shoot_cooldown = $Bars/ShootCooldown
-onready var hud_weapon: = $PlayerHUD/WeaponSlots
+onready var hud_weapon_slots: = $PlayerUI/WeaponSlots
+onready var ui_inventory: = $PlayerUI/Inventory
 
 const PLAYER_BARS_OFFSET: int = 15
 const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
@@ -14,6 +15,7 @@ const WEAP_HEAT_COLOR = Color(1, 0.7, 0.15) #orange
 
 var dict_weapon_hud: Dictionary = {}
 var current_slot_selected: int = -1
+var is_inventory_open: bool = false
 
 
 func _ready() -> void:
@@ -36,9 +38,9 @@ func _set_up_player_hud() -> void:
 			selected_slot_initialized = true
 		#initialize hud
 		var weap = slot.get_node("Weapon")
-		hud_weapon.get_node("Slot" + i as String + "/Sprite").texture = weap.get_node("Sprite").texture
-		hud_weapon.get_node("Slot" + i as String + "/SlotHeat").max_value = weap.heat_capacity
-		dict_weapon_hud[weap] = hud_weapon.get_node("Slot" + i as String)
+		hud_weapon_slots.get_node("Slot" + i as String + "/WeaponSprite").texture = weap.get_node("Sprite").texture
+		hud_weapon_slots.get_node("Slot" + i as String + "/SlotHeat").max_value = weap.heat_capacity
+		dict_weapon_hud[weap] = hud_weapon_slots.get_node("Slot" + i as String)
 
 
 func _set_up_player_default_vars() -> void:
@@ -56,21 +58,16 @@ func _change_slot_selected(slot_num: int) -> void:
 	if has_node("Weapons/Slot" + slot_num as String + "/Weapon") == false || current_slot_selected == slot_num:
 		return
 	if current_slot_selected != -1:
-		hud_weapon.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
-	var selected_slot_sprite = hud_weapon.get_node("SelectSprite")
-	var selected_slot_pos = hud_weapon.get_node("Slot" + slot_num as String + "/SelectPos")
-	selected_slot_sprite.position = selected_slot_pos.position
-	hud_weapon.get_node("SelectSprite").position = selected_slot_pos.position
-	hud_weapon.get_node("Slot" + slot_num as String + "/SlotLabel").add_color_override("font_color", selected_slot_sprite.modulate)
+		hud_weapon_slots.get_node("Slot" + current_slot_selected as String + "/SlotLabel").add_color_override("font_color", SLOT_LABEL_COLOR)
+	var selected_slot_pos = hud_weapon_slots.get_node("Slot" + slot_num as String + "/SelectPos")
+	var slot_selected = hud_weapon_slots.get_node("SlotSelected")
+	slot_selected.position.x = selected_slot_pos.get_parent().position.x + selected_slot_pos.position.x
+	hud_weapon_slots.get_node("Slot" + slot_num as String + "/SlotLabel").add_color_override("font_color", slot_selected.modulate)
 	current_slot_selected = slot_num
 
 
 func _control(delta):
 	current_weapon.look_at(get_global_mouse_position())
-	if Input.is_action_pressed("shoot"):
-#		if current_weapon.get_node("ShootCooldown").is_stopped() == true && roll_mode == false:
-#			_update_bar_weapon_shoot_cooldown()
-		shoot_weapon()
 	if Input.is_action_just_released("change_mode"):
 		switch_mode()
 	if Input.is_action_pressed("move_up"):
@@ -81,11 +78,17 @@ func _control(delta):
 		velocity.x = -1
 	elif Input.is_action_pressed("move_right"):
 		velocity.x = 1
+	velocity = velocity * delta
+	if is_inventory_open == true:
+		return
 	if Input.is_action_just_released("charge_roll"):
 		if $Timers/ChargeCooldown.is_stopped() == true && roll_mode == true:
 			_update_bar_charge_level()
 		charge_attack(current_weapon.global_rotation)
-	velocity = velocity * delta
+	if Input.is_action_pressed("shoot"):
+#		if current_weapon.get_node("ShootCooldown").is_stopped() == true && roll_mode == false:
+#			_update_bar_weapon_shoot_cooldown()
+		shoot_weapon()
 
 
 func _process(delta: float) -> void:
@@ -100,6 +103,11 @@ func _process(delta: float) -> void:
 	
 	#camera
 	_control_camera()
+	
+	#show inventory
+	if Input.is_action_just_pressed("ui_inventory"):
+		is_inventory_open = !is_inventory_open
+		ui_inventory.visible = !ui_inventory.visible
 
 
 func _update_hud_elements() -> void:
@@ -181,3 +189,23 @@ func _update_bar_weapon_heat() -> void:
 			bar_weapon_heat_anim.play("too_much_heat")
 			$Sounds/CloseToOverheating.play()
 	bar_weapon_heat.value = current_weapon.current_heat
+
+
+func _on_WeaponSlot0_pressed() -> void:
+	print("weap1")
+
+
+func _on_WeaponSlot1_pressed() -> void:
+	print("weap2")
+
+
+func _on_WeaponSlot2_pressed() -> void:
+	print("weap3")
+
+
+func _on_WeaponSlot3_pressed() -> void:
+	print("weap4")
+
+
+func _on_WeaponSlot4_pressed() -> void:
+	print("weap5")

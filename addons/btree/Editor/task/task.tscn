@@ -1,12 +1,13 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/btree/Editor/general_fcall/general_fcall.gd" type="Script" id=1]
+[ext_resource path="res://addons/btree/Editor/task/task.gd" type="Script" id=1]
 
-[node name="general_fcall" type="GraphNode"]
+[node name="task" type="GraphNode"]
 margin_right = 127.0
 margin_bottom = 85.0
+hint_tooltip = "execute the function in tree order. the function name must begin with \"task_\" and accept one argument"
 mouse_filter = 1
-title = "general_fcall"
+title = "task"
 show_close = true
 resizable = true
 slot/0/left_enabled = true
@@ -78,3 +79,6 @@ margin_left = 16.0
 margin_top = 65.0
 margin_right = 170.0
 margin_bottom = 65.0
+[connection signal="close_request" from="." to="." method="_on_GraphNode_close_request"]
+[connection signal="resize_request" from="." to="." method="_on_GraphNode_resize_request"]
+[connection signal="pressed" from="Input/Add" to="." method="_on_Add_pressed"]

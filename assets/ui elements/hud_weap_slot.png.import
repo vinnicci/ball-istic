@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/hud_weap_slots.png-0f50becaa5c3126c03adbd9a3b73615d.s3tc.stex"
-path.etc2="res://.import/hud_weap_slots.png-0f50becaa5c3126c03adbd9a3b73615d.etc2.stex"
+path.s3tc="res://.import/hud_weap_slot.png-d081ae3a97a7d66459a23c8fa1704e4e.s3tc.stex"
+path.etc2="res://.import/hud_weap_slot.png-d081ae3a97a7d66459a23c8fa1704e4e.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/ui elements/hud_weap_slots.png"
-dest_files=[ "res://.import/hud_weap_slots.png-0f50becaa5c3126c03adbd9a3b73615d.s3tc.stex", "res://.import/hud_weap_slots.png-0f50becaa5c3126c03adbd9a3b73615d.etc2.stex" ]
+source_file="res://assets/ui elements/hud_weap_slot.png"
+dest_files=[ "res://.import/hud_weap_slot.png-d081ae3a97a7d66459a23c8fa1704e4e.s3tc.stex", "res://.import/hud_weap_slot.png-d081ae3a97a7d66459a23c8fa1704e4e.etc2.stex" ]
 
 [params]
 

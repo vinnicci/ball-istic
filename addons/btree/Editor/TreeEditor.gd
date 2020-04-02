@@ -24,6 +24,7 @@ func clear_data():
 	root_object = null
 	return
 
+
 func load_data(ndata, ncontrol):
 	data = ndata
 	control = ncontrol
@@ -40,14 +41,17 @@ func clear_editor():
 			i.queue_free()
 	return
 
+var task_scene = preload("res://addons/btree/Editor/task/task.tscn")
+var sequence_scene = preload("res://addons/btree/Editor/sequence/sequence.tscn")
+var selector_scene = preload("res://addons/btree/Editor/selector/selector.tscn")
 var pselector_scene = preload("res://addons/btree/Editor/pselector/pselector.tscn")
+var priority_condition = preload("res://addons/btree/Editor/pselector/priority_condition.tscn")
+var paralel_scene = preload("res://addons/btree/Editor/paralel/parallel.tscn")
 var mute_scene = preload("res://addons/btree/Editor/mute/mute.tscn")
 var repeat_scene = preload("res://addons/btree/Editor/repeat/repeat.tscn")
+var while_node_scene = preload("res://addons/btree/Editor/while_node/while_node.tscn")
 var wait_scene = preload("res://addons/btree/Editor/wait_node/wait_node.tscn")
-var general_fcall_scene = preload("res://addons/btree/Editor/general_fcall/general_fcall.tscn")
-var general_decorator_scene = preload("res://addons/btree/Editor/general_decorator/general_decorator.tscn")
-var general_fcall_class = preload("res://addons/btree/Editor/general_fcall/general_fcall.gd")
-var minim_scene = preload("res://addons/btree/Editor/minim_node/minim_node.tscn")
+var race_scene = preload("res://addons/btree/Editor/race/race.tscn")
 
 func build_tree_from_data():
 	if  not data:
@@ -72,20 +76,17 @@ func build_tree_from_data():
 
 func create_node(n):
 	if  n.type == 1:
-		var task = general_fcall_scene.instance()
-		task.as_task()
+		var task = task_scene.instance()
 		task.name = n.name
 		task.set_data(n.data)
 		return task
 	elif n.type == 2:
-		var seq = general_decorator_scene.instance()
-		seq.as_sequence()
+		var seq = sequence_scene.instance()
 		seq.name = n.name
 		seq.set_data(n.data)
 		return seq
 	elif n.type == 3:
-		var sel = general_decorator_scene.instance()
-		sel.as_selector()
+		var sel = selector_scene.instance()
 		sel.name = n.name
 		sel.set_data(n.data)
 		return sel
@@ -95,14 +96,12 @@ func create_node(n):
 		pse.set_data(n.data)
 		return pse
 	elif n.type == 5:
-		var inst = general_fcall_scene.instance()
-		inst.as_priority_condition()
-		inst.name = n.name
-		inst.set_data(n.data)
-		return inst
+		var pc = priority_condition.instance()
+		pc.name = n.name
+		pc.set_data(n.data)
+		return pc
 	elif n.type == 6:
-		var par = general_decorator_scene.instance()
-		par.as_paralel()
+		var par = paralel_scene.instance()
 		par.name = n.name
 		par.set_data(n.data)
 		return par
@@ -117,8 +116,7 @@ func create_node(n):
 		rep.set_data(n.data)
 		return rep
 	elif n.type == 9:
-		var whi = general_fcall_scene.instance()
-		whi.as_while()
+		var whi = while_node_scene.instance()
 		whi.name = n.name
 		whi.set_data(n.data)
 		return whi
@@ -128,33 +126,13 @@ func create_node(n):
 		w.set_data(n.data)
 		return w
 	elif n.type == 11:
-		var r = general_decorator_scene.instance()
-		r.as_race()
+		var r = race_scene.instance()
 		r.name = n.name
 		r.set_data(n.data)
 		return r
-	elif  n.type == 12:
-		var r = general_decorator_scene.instance()
-		r.as_random_selector()
-		r.name = n.name
-		r.set_data(n.data)
-		return r
-	elif  n.type == 13:
-		var r = general_decorator_scene.instance()
-		r.as_random_sequence()
-		r.name = n.name
-		r.set_data(n.data)
-		return r
-	elif  n.type == 99:
-		var m = minim_scene.instance()
-		m.name = n.name
-		m.set_data(n.data)
-		return m
 	return null
 
-func connection_request(from, from_slot, to, to_slot):
-	if  from == to:
-		return
+func _on_TreeEditor_connection_request(from, from_slot, to, to_slot):
 	for i in get_connection_list():
 		if  from == i.from and from_slot == i.from_port:
 			disconnect_node(i.from, i.from_port, i.to, i.to_port)
@@ -176,7 +154,7 @@ func _on_save_pressed():
 	if  not data:
 		get_parent().hint("No BTREE selected !")
 		return
-	get_parent().hint("Saving Data")
+	get_parent().hint("SAVING CHANGES")
 	data.tree = {}
 	var info = data.tree
 	info.nodes = []
@@ -224,7 +202,7 @@ func find(name, nodes):
 			return i
 	return null
 
-func disconnection_request(from, from_slot, to, to_slot):
+func _on_TreeEditor_disconnection_request(from, from_slot, to, to_slot):
 	disconnect_node(from, from_slot, to, to_slot)
 	return
 
@@ -251,10 +229,6 @@ func _input(event):
 		elif event.scancode == KEY_SHIFT and not event.pressed:
 			shift = false
 		
-		if  event.scancode == KEY_M and not event.pressed and ctrl and shift:
-			minimize_node()
-			get_parent().hint("Node Minimized")
-		
 		if  event.scancode == KEY_C and not event.pressed and ctrl and shift:
 			copy_node()
 			get_parent().hint("Recursive Duplicate Node")
@@ -272,6 +246,7 @@ func _input(event):
 		
 		if  event.scancode == KEY_F  and not event.pressed and ctrl:
 			focus_selected()
+	
 		return
 	
 	if  event is InputEventMouseButton:
@@ -279,12 +254,11 @@ func _input(event):
 			zoom += 0.1
 			accept_event()
 			get_parent().hint("Zoom In")
-			return
 		if  event.pressed and event.button_index == 5 and ctrl and shift:
 			zoom -= 0.1
 			accept_event()
 			get_parent().hint("Zoom Out")
-			return
+		return
 	return
 
 var selected:Node
@@ -317,6 +291,9 @@ func copy_node():
 	nodes.clear()
 	rec_populate(cp, nodes)
 	
+	for i in nodes:
+		print(i)
+	
 	var inst_node = []
 	var mapping = {}
 	for i in nodes:
@@ -342,132 +319,6 @@ func copy_node():
 		for j in get_connection_list():
 			if  i.name == j.from:
 				connect_node(mapping[j.from], j.from_port, mapping[j.to], j.to_port)
-	return
-
-var minim_class = preload("res://addons/btree/Editor/minim_node/minim_node.gd")
-
-func minimize_node():
-	if  not selected:
-		get_parent().hint("No Node Selected")
-		return
-	if  not selected.selected:
-		get_parent().hint("No Node Selected")
-		return
-	if  selected is minim_class:
-		get_parent().hint("Cannot Minimize \"Minimize\" Node !")
-		return
-	if  selected.name == "root":
-		get_parent().hint("Cannot Minimize \"root\" Node !")
-		return
-	var soffset = selected.offset
-	var m_inst = minim_scene.instance()
-	m_inst.offset = soffset
-	add_child(m_inst)
-	
-	var nodes = []
-	for i in get_children():
-		if  i is GraphNode:
-			var node = {
-				"name": i.name,
-				"type": i.type,
-				"data":i.get_data()
-			}
-			nodes.append(node)
-	
-	var cp = find(selected.name, nodes)
-	build_tree(cp, get_connection_list(), nodes)
-	nodes.clear()
-	rec_populate(cp, nodes)
-	
-	var connection = []
-	for i in nodes:
-		for j in get_connection_list():
-			if  i.name == j.from:
-				connection.append(j)
-	
-	var current_connection = null
-	for i in get_connection_list():
-		if  i.to == cp.name:
-			current_connection = i
-			break
-	
-	m_inst.data = {}
-	m_inst.data["connection"] = connection
-	m_inst.data["nodes"] = nodes
-	
-	nodes = []
-	for i in get_children():
-		if  i is GraphNode:
-			var node = {
-				"name": i.name,
-				"type": i.type,
-				"data":i.get_data()
-			}
-			nodes.append(node)
-	
-	var mroot = find(selected.name, nodes)
-	build_tree(mroot, get_connection_list(), nodes)
-	m_inst.data["root"] = mroot
-	
-	for i in get_connection_list():
-		if  i.to == selected.name:
-			disconnect_node(i.from, i.from_port, i.to, i.to_port)
-	
-	if  current_connection:
-		connect_node(current_connection.from, current_connection.from_port, m_inst.name, 0)
-	
-	for i in m_inst.data["connection"]:
-		disconnect_node(i.from, i.from_port, i.to, i.to_port)
-	
-	for i in m_inst.data["nodes"]:
-		if  has_node(i.name):
-			var n = get_node(i.name)
-			n.queue_free()
-	selected = m_inst
-	set_selected(m_inst)
-	return
-
-func maximize_node(minim):
-	var data  = minim.data
-	
-	var connection = data.connection
-	var nodes = data.nodes
-	var root = data.root
-	
-	var inst_node = []
-	var mapping = {}
-	for i in nodes:
-		var inst = create_node(i)
-		var ori_name = inst.name
-		add_child(inst)
-		inst_node.append(inst)
-		var mapping_name = inst.name
-		mapping[ori_name] = mapping_name
-	
-	var rinst = null
-	for i in inst_node:
-		if  i.name == mapping[root.name]:
-			rinst = i
-			break
-	
-	if  rinst:
-		var shifted = minim.offset - rinst.offset
-		for i in inst_node:
-			i.offset += shifted
-	
-	for i in nodes:
-		for j in connection:
-			if  i.name == j.from or i.name == j.to:
-				connect_node(mapping[j.from], j.from_port, mapping[j.to], j.to_port)
-	
-	for i in get_connection_list():
-		if  i.to == minim.name:
-			disconnect_node(i.from, i.from_port, i.to, i.to_port)
-			connect_node(i.from, i.from_port, rinst.name, 0)
-	
-	minim.queue_free()
-	selected = rinst
-	set_selected(rinst)
 	return
 
 func rdelete_node():
@@ -498,13 +349,13 @@ func rdelete_node():
 	
 	for i in nodes:
 		for j in get_connection_list():
-			if  i.name == j.from or i.name == j.to:
+			if  i.name == j.from:
 				disconnect_node(j.from, j.from_port, j.to, j.to_port)
 	
 	for i in nodes:
 		if  has_node(i.name):
 			var n = get_node(i.name)
-			n.free()
+			remove_child(n)
 	selected = null
 	return
 
@@ -551,7 +402,7 @@ func rec_populate(root, nodes:Array):
 	root.child.clear()
 	return
 
-func node_selected(node):
+func _on_TreeEditor_node_selected(node):
 	selected = node
 	return
 
@@ -573,19 +424,8 @@ func _on_search_bar_text_changed(new_text):
 		if  i is GraphNode:
 			if  most_similar == null:
 				most_similar = i
-			else:
-				var itoken = i.name
-				var mtoken = most_similar.name
-				if  i is general_fcall_class or i is minim_class:
-					itoken = i.search_token()
-				if  most_similar is general_fcall_class:
-					mtoken = most_similar.search_token()
-				if  mtoken.similarity(new_text) < itoken.similarity(new_text): 
-					most_similar = i
+			elif most_similar.name.similarity(new_text) < i.name.similarity(new_text) :
+				most_similar = i
 	if  most_similar:
 		scroll_offset = most_similar.offset * zoom - ((rect_size / 2) - (most_similar.rect_size / 2))
-	return
-
-func popup_request(position):
-	$group/Create.get_popup().popup(Rect2(position, Vector2(1, 1)))
 	return
