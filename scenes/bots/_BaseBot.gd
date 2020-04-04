@@ -62,8 +62,6 @@ onready var timer_charge_cooldown: = $Timers/ChargeCooldown
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
-	
-	#stuff that changes
 	update_bot()
 
 

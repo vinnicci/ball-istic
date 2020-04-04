@@ -15,7 +15,7 @@ var is_inventory_open: bool = false
 
 
 func _ready() -> void:
-	#player specific
+	#player specific initialization
 	_init_player()
 
 
@@ -46,7 +46,7 @@ func update_ui_weapons() -> void:
 		var inv_weap_sprite: = ui_inventory.get_node("Slots/SlotsContainer/WeaponSlots/WeaponSlot" + i_str + "/WeaponSprite")
 		var inv_swap_label: = ui_inventory.get_node("Slots/SlotsContainer/WeaponSlots/WeaponSlot" + i_str + "/SwapPromptLabel")
 		inv_swap_label.hide()
-		if weap == null: #wipe sprite textures
+		if weap == null: #wipe weapon inventory slot
 			hud_weap_sprite.texture = null
 			hud_weap_heat.value = 0
 			inv_weap_sprite.texture = null
@@ -132,28 +132,20 @@ func _control_camera() -> void:
 
 
 func _control_player_weapon_hotkeys() -> void:
-	var changed: bool = false
+	var slot_num: int = -1
 	if Input.is_action_just_pressed("weap_slot_0"):
-		change_weapon(0)
-		_change_slot_selected(0)
-		changed = true
+		slot_num = 0
 	elif Input.is_action_just_pressed("weap_slot_1"):
-		change_weapon(1)
-		_change_slot_selected(1)
-		changed = true
+		slot_num = 1
 	elif Input.is_action_just_pressed("weap_slot_2"):
-		change_weapon(2)
-		_change_slot_selected(2)
-		changed = true
+		slot_num = 2
 	elif Input.is_action_just_pressed("weap_slot_3"):
-		change_weapon(3)
-		_change_slot_selected(3)
-		changed = true
+		slot_num = 3
 	elif Input.is_action_just_pressed("weap_slot_4"):
-		change_weapon(4)
-		_change_slot_selected(4)
-		changed = true
-	if changed == true:
+		slot_num = 4
+	if slot_num != -1:
+		change_weapon(slot_num)
+		_change_slot_selected(slot_num)
 		update_player_vars()
 
 
@@ -199,8 +191,8 @@ func _on_WeaponSlot3_pressed() -> void:
 func _on_WeaponSlot4_pressed() -> void:
 	_manage_inventory_weapons(4)
 
-var temp_weapon_slot_held: int = -1
 
+var temp_weapon_slot_held: int = -1
 func _manage_inventory_weapons(slot_num: int) -> void:
 	var node: = ui_inventory.get_node("Slots/SlotsContainer/WeaponSlots/WeaponSlot" + slot_num as String)
 	var weap_sprite: = node.get_node("WeaponSprite")
