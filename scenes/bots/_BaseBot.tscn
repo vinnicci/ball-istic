@@ -156,36 +156,13 @@ explosiveness = 1.0
 local_coords = false
 process_material = SubResource( 5 )
 
+[node name="TechMod" type="Node2D" parent="."]
+visible = false
+
 [node name="Weapons" type="Node2D" parent="."]
-
-[node name="Slot0" type="Node2D" parent="Weapons"]
-
-[node name="Slot1" type="Node2D" parent="Weapons"]
-
-[node name="Slot2" type="Node2D" parent="Weapons"]
-
-[node name="Slot3" type="Node2D" parent="Weapons"]
-
-[node name="Slot4" type="Node2D" parent="Weapons"]
 
 [node name="Passives" type="Node2D" parent="."]
 visible = false
-
-[node name="Slot0" type="Node2D" parent="Passives"]
-
-[node name="Slot1" type="Node2D" parent="Passives"]
-
-[node name="Slot2" type="Node2D" parent="Passives"]
-
-[node name="Slot3" type="Node2D" parent="Passives"]
-
-[node name="Slot4" type="Node2D" parent="Passives"]
-
-[node name="SpecialSlot0" type="Node2D" parent="Passives"]
-
-[node name="SpecialSlot1" type="Node2D" parent="Passives"]
-
-[node name="SpecialSlot2" type="Node2D" parent="Passives"]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

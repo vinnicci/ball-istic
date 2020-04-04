@@ -14,7 +14,7 @@ export (float, 0, 1.0) var charge_force_factor: = 0.5
 export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
-const AVERAGE_BOT_RADIUS: float = 32.0
+const DEFAULT_BOT_RADIUS: float = 32.0
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
@@ -34,46 +34,51 @@ var current_transform_speed: float
 var current_charge_cooldown: float
 var current_knockback_resist: float
 var current_charge_force_factor: float
-var current_weapon: Node2D
 var roll_mode: bool = false
 var velocity: Vector2
-var is_alive: bool = true #bot control vars
+var is_alive: bool = true #bot control states
 var is_charging: bool = false
 var is_transforming: bool = false
 var is_in_control: bool = true
+var current_weapon: Node
+var dict_weapons: Dictionary = {
+	0: null,
+	1: null,
+	2: null,
+	3: null,
+	4: null
+}
 signal shooting
 
-onready var body_outline = $Body/Outline
-onready var body_texture = $Body/Texture
-onready var body_charge_effect = $Body/ChargeEffect
-onready var body_weapon_hatch = $Body/WeaponHatch
-onready var bar_shield = $Bars/Shield
-onready var bar_health = $Bars/Health
-onready var timer_charge_cooldown = $Timers/ChargeCooldown
+onready var body_outline: = $Body/Outline
+onready var body_texture: = $Body/Texture
+onready var body_charge_effect: = $Body/ChargeEffect
+onready var body_weapon_hatch: = $Body/WeaponHatch
+onready var bar_shield: = $Bars/Shield
+onready var bar_health: = $Bars/Health
+onready var timer_charge_cooldown: = $Timers/ChargeCooldown
 
 
 func _ready() -> void:
 	#initialize bot
-	_set_up_default_vars()
+	_init_bot()
 	
 	#stuff that changes
-	update_vars()
+	update_bot()
 
 
-func _set_up_default_vars() -> void:
+func _init_bot() -> void:
 	#weapons
-	var initialized_selected_weap: bool = false
-	for slot in $Weapons.get_children():
-		if slot.has_node("Weapon") == false:
-			continue
-		var weap_node = slot.get_node("Weapon")
-		#initialize first weapon
+	var initialized_selected_weap: = false
+	var i: = -1
+	for weapon in $Weapons.get_children():
+		i += 1
+		dict_weapons[i] = weapon
 		if initialized_selected_weap == false:
-			current_weapon = weap_node
+			current_weapon = weapon
 			initialized_selected_weap = true
 			continue
-		#hide every weapons
-		weap_node.hide()
+		weapon.hide()
 	
 	#bot physics and properties
 	$CollisionShape.shape.radius = bot_radius
@@ -82,32 +87,32 @@ func _set_up_default_vars() -> void:
 		$Bars.hide()
 	
 	#bot's body set up
-	body_texture.scale = Vector2(bot_radius/AVERAGE_BOT_RADIUS, bot_radius/AVERAGE_BOT_RADIUS)
+	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
 	bar_shield.rect_position.y += bot_radius + BARS_OFFSET
 	bar_health.rect_position.y += bar_shield.rect_position.y + BARS_OFFSET
-	var circle_points = _plot_circle_points(bot_radius)
-	body_charge_effect.polygon = circle_points
-	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
-	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
 	var outline = bot_radius + OUTLINE_SIZE
 	body_outline.polygon = _plot_circle_points(outline)
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
+	var circle_points = _plot_circle_points(bot_radius)
+	body_charge_effect.polygon = circle_points
+	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
+	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
 	
-	#other body set ups
-	_set_up_legs([circle_points[4], circle_points[12], circle_points[20]])
-	_set_up_hatch([circle_points[0], circle_points[1], circle_points[2], circle_points[10],
+	#other body initializations
+	_init_legs([circle_points[4], circle_points[12], circle_points[20]])
+	_init_hatch([circle_points[0], circle_points[1], circle_points[2], circle_points[10],
 		circle_points[11], circle_points[12], circle_points[13], circle_points[14],
 		circle_points[22], circle_points[23]])
 
 
-func _set_up_legs(circle_points) -> void:
-	var leg_sprite = $Legs/Sprite
-	var leg1 = $Legs/Leg1
-	var leg2 = $Legs/Leg2
-	var leg3 = $Legs/Leg3
-	var deg = 360.0/POLY_SIDES as float
+func _init_legs(circle_points) -> void:
+	var leg_sprite: = $Legs/Sprite
+	var leg1: = $Legs/Leg1
+	var leg2: = $Legs/Leg2
+	var leg3: = $Legs/Leg3
+	var deg: = 360.0/POLY_SIDES as float
 	for i in circle_points.size():
 		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
 		match i:
@@ -129,7 +134,7 @@ func _set_up_legs(circle_points) -> void:
 	leg_sprite.hide()
 
 
-func _set_up_hatch(circle_points: Array) -> void:
+func _init_hatch(circle_points: Array) -> void:
 	body_weapon_hatch.polygon = circle_points
 
 
@@ -140,7 +145,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-func update_vars() -> void:
+func update_bot() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
 	bar_shield.value = current_shield
@@ -218,13 +223,13 @@ func _apply_force() -> void:
 
 
 func _apply_charging_effects() -> void:
-	var hostile = Color(1, 0.13, 0.13) #red
-	var non_hostile = Color(0.4, 1, 0.4) #green
+	var color_hostile: = Color(1, 0.13, 0.13) #red
+	var color_non_hostile: = Color(0.4, 1, 0.4) #green
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		if is_hostile == true: #outline for hostiles becomes red
-			body_outline.color = lerp(body_outline.color, hostile, 0.8)
+			body_outline.color = lerp(body_outline.color, color_hostile, 0.8)
 		elif is_hostile == false: #outline for non-hostiles becomes green
-			body_outline.color = lerp(body_outline.color, non_hostile, 0.8)
+			body_outline.color = lerp(body_outline.color, color_non_hostile, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
@@ -266,7 +271,7 @@ func switch_mode() -> void:
 
 
 func _animate_legs() -> void:
-	var leg_tween = $Legs/LegTween
+	var leg_tween: = $Legs/LegTween
 	if roll_mode == false:
 		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
@@ -280,7 +285,7 @@ func _animate_legs() -> void:
 
 
 func _animate_weapon_hatch() -> void:
-	var weapon_hatch_tween = body_weapon_hatch.get_node("WeaponHatchTween")
+	var weapon_hatch_tween: = body_weapon_hatch.get_node("WeaponHatchTween")
 	if roll_mode == false:
 		if current_weapon != null:
 			current_weapon.global_rotation = body_weapon_hatch.global_rotation
@@ -306,19 +311,18 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 func shoot_weapon() -> void:
 	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
-	current_weapon.get_node("ShootingSound").play()
-	var muzzle = current_weapon.get_node("Muzzle")
+	var muzzle: = current_weapon.get_node("Muzzle")
 	emit_signal("shooting", current_weapon.get_projectiles(), muzzle.global_position,
 		muzzle.global_rotation, is_hostile)
 
 
 func change_weapon(slot_num: int) -> void:
-	var weap = "Weapons/Slot" + slot_num as String + "/Weapon"
-	if has_node(weap) == false || current_weapon == get_node(weap):
+	var weap = dict_weapons[slot_num]
+	if weap == null || weap == current_weapon:
 		return
 	if roll_mode == false:
 		current_weapon.visible = !current_weapon.visible
-	current_weapon = get_node(weap)
+	current_weapon = weap
 	if roll_mode == false:
 		current_weapon.visible = !current_weapon.visible
 

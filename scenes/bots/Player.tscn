@@ -80,11 +80,11 @@ stream = ExtResource( 8 )
 [node name="CollisionShape" parent="." index="5"]
 shape = SubResource( 2 )
 
-[node name="Weapon" parent="Weapons/Slot0" index="0" instance=ExtResource( 5 )]
+[node name="IntroWeapon" parent="Weapons" index="0" instance=ExtResource( 5 )]
 
-[node name="Weapon" parent="Weapons/Slot1" index="0" instance=ExtResource( 9 )]
+[node name="Scattershot" parent="Weapons" index="1" instance=ExtResource( 9 )]
 
-[node name="Camera2D" type="Camera2D" parent="." index="9"]
+[node name="Camera2D" type="Camera2D" parent="." index="10"]
 current = true
 zoom = Vector2( 1.8, 1.8 )
 smoothing_speed = 10.0
@@ -92,9 +92,9 @@ smoothing_speed = 10.0
 [node name="MouseRay" type="RayCast2D" parent="Camera2D" index="0"]
 cast_to = Vector2( 0, 0 )
 
-[node name="PlayerUI" parent="." index="10" instance=ExtResource( 10 )]
+[node name="UI" type="Node2D" parent="." index="11"]
+
+[node name="PlayerUI" parent="UI" index="0" instance=ExtResource( 10 )]
 [connection signal="tween_all_completed" from="Bars/ChargeLevel/ChargeTween" to="." method="_on_ChargeTween_tween_all_completed"]
 
-[editable path="PlayerUI"]
-
-[editable path="PlayerUI/Inventory"]
+[editable path="UI/PlayerUI"]

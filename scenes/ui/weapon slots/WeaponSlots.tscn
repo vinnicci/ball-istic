@@ -76,8 +76,7 @@ margin_right = -21.0
 margin_bottom = -3.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.133333, 0.266667, 0.14902, 1 )
-text = "1
-"
+text = "1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -221,7 +220,7 @@ position = Vector2( -29, -29 )
 
 [node name="SlotSelected" type="Sprite" parent="."]
 modulate = Color( 0.0352941, 0.992157, 0.00392157, 1 )
-position = Vector2( -221, -29 )
+position = Vector2( -157, -29 )
 texture = ExtResource( 2 )
 centered = false
 offset = Vector2( 0, -22 )

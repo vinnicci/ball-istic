@@ -21,6 +21,7 @@ func _ready() -> void:
 func get_projectiles() -> Array:
 	$ShootCooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
+	$ShootingSound.play()
 	current_heat += heat_per_shot
 	return _instantiate_projectile()
 

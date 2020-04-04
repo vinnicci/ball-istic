@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/weapons/scattershot.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/ScattershotProjectile.tscn" type="PackedScene" id=4]
 
-[node name="Weapon" instance=ExtResource( 2 )]
+[node name="Scattershot" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 4 )
 heat_dissipation_per_second = 5.0
