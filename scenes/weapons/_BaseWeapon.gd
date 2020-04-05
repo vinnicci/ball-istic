@@ -9,9 +9,12 @@ export (float) var heat_capacity: float = 50.0
 export (float) var heat_dissipation_per_second: float = 10.0
 export (float, 0.01, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
 export (float) var shoot_cooldown: float = 1.0
+
 var current_heat: float
-var is_overheating: bool = false
 var transform_speed: float
+var is_overheating: bool = false
+
+onready var parent_node: = get_parent().get_parent()
 
 
 func _ready() -> void:

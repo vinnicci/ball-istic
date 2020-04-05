@@ -30,6 +30,10 @@ func _travel(pos, dir):
 
 
 func _physics_process(delta: float) -> void:
+	pass
+
+
+func _process(delta: float) -> void:
 	position += velocity * delta
 
 

@@ -2,7 +2,10 @@
 
 [ext_resource path="res://addons/node_fsm_plugin/fsm_node.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ai/_BaseAI.gd" type="Script" id=2]
-[ext_resource path="res://assets/audio/AI_Detect.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/ai/AI_Detect.wav" type="AudioStream" id=3]
+
+
+
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true

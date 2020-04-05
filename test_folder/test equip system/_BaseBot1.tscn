@@ -1,15 +1,17 @@
 [gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://test_folder/test equip system/_BaseBot1.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui elements/bar.png" type="Texture" id=2]
+[ext_resource path="res://assets/ui/bar.png" type="Texture" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
-[ext_resource path="res://assets/audio/Bot_Bump.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/audio/Bot_Charge_Attack.wav" type="AudioStream" id=5]
-[ext_resource path="res://assets/audio/Bot_Charge_Attack_Hit.wav" type="AudioStream" id=6]
-[ext_resource path="res://assets/audio/Bot_Shield_Damage.wav" type="AudioStream" id=7]
-[ext_resource path="res://assets/audio/Bot_Health_Damage.wav" type="AudioStream" id=8]
-[ext_resource path="res://assets/audio/Bot_Transform.wav" type="AudioStream" id=9]
-[ext_resource path="res://assets/audio/Bot_Explode.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/bots/Bot_Bump.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/bots/Bot_Charge_Attack.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/bots/Bot_Charge_Attack_Hit.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/bots/Bot_Shield_Damage.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/bots/Bot_Health_Damage.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/bots/Bot_Transform.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/bots/Bot_Explode.wav" type="AudioStream" id=10]
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5

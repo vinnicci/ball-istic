@@ -1,12 +1,13 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/audio/Bot_Bump.wav" type="AudioStream" id=1]
-[ext_resource path="res://assets/audio/Bot_Charge_Attack.wav" type="AudioStream" id=2]
-[ext_resource path="res://assets/audio/Bot_Charge_Attack_Hit.wav" type="AudioStream" id=3]
-[ext_resource path="res://assets/audio/Bot_Shield_Damage.wav" type="AudioStream" id=4]
-[ext_resource path="res://assets/audio/Bot_Health_Damage.wav" type="AudioStream" id=5]
-[ext_resource path="res://assets/audio/Bot_Transform.wav" type="AudioStream" id=6]
-[ext_resource path="res://assets/audio/Bot_Explode.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/bots/Bot_Bump.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/bots/Bot_Charge_Attack.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/bots/Bot_Charge_Attack_Hit.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/bots/Bot_Shield_Damage.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/bots/Bot_Health_Damage.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/bots/Bot_Transform.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/bots/Bot_Explode.wav" type="AudioStream" id=7]
+
 
 [node name="SoundTest" type="Node2D"]
 

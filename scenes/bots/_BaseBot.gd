@@ -3,14 +3,15 @@ extends RigidBody2D
 
 #make sure to import body texture with repeating enabled
 export (float, 25.0, 100.0) var bot_radius: = 32.0
-export (float) var shield_capacity: = 20
-export (float) var health_capacity: = 20
+export (float) var shield_capacity: = 30
+export (float) var health_capacity: = 30
 export (int, 0, 3000) var roll_speed: = 1200
 export (float) var shield_recovery_per_sec: = 1.0
 export (float, 0.1, 0.8) var transform_speed: = 0.5
-export (float, 0.5, 5.0) var charge_cooldown: = 2.5
+export (float, 0.25, 5.0) var charge_cooldown: = 2.5
 export (float, 0, 1.0) var knockback_resist: = 0.25
-export (float, 0, 1.0) var charge_force_factor: = 0.5
+export (float, 0.01, 0.1) var charge_damage_factor: = 0.05
+export (float, 0, 1.5) var charge_force_factor: = 0.5
 export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
@@ -22,10 +23,9 @@ const OUTLINE_SIZE: float = 4.0
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
-const CHARGE_DAMAGE_FACTOR: float = 0.03
 const POLY_SIDES = 24
-
 var _legs_position: Dictionary = {}
+
 var current_shield: float
 var current_health: float
 var current_roll_speed: int
@@ -33,14 +33,16 @@ var current_shield_recovery: float
 var current_transform_speed: float
 var current_charge_cooldown: float
 var current_knockback_resist: float
+var current_charge_damage_factor: float
 var current_charge_force_factor: float
-var roll_mode: bool = false
+var current_weapon: Node
+
 var velocity: Vector2
-var is_alive: bool = true #bot control states
+var roll_mode: bool = false
+var is_alive: bool = true
 var is_charging: bool = false
 var is_transforming: bool = false
 var is_in_control: bool = true
-var current_weapon: Node
 var dict_weapons: Dictionary = {
 	0: null,
 	1: null,
@@ -62,7 +64,8 @@ onready var timer_charge_cooldown: = $Timers/ChargeCooldown
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
-	update_bot()
+	if name != "Player":
+		reset_bot_vars()
 
 
 func _init_bot() -> void:
@@ -113,22 +116,21 @@ func _init_legs(circle_points) -> void:
 	var deg: = 360.0/POLY_SIDES as float
 	for i in circle_points.size():
 		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
-		match i:
-			0:
-				leg1.add_child(leg)
-				leg1.position = circle_points[0]
-				_legs_position[leg1] = circle_points[0]
-				leg1.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
-			1:
-				leg2.add_child(leg)
-				leg2.position = circle_points[1]
-				_legs_position[leg2] = circle_points[1]
-				leg2.rotation = deg2rad(12*deg)
-			2:
-				leg3.add_child(leg)
-				leg3.position = circle_points[2]
-				_legs_position[leg3] = circle_points[2]
-				leg3.rotation = deg2rad(20*deg)
+		if i == 0:
+			leg1.add_child(leg)
+			leg1.position = circle_points[0]
+			_legs_position[leg1] = circle_points[0]
+			leg1.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
+		elif i == 1:
+			leg2.add_child(leg)
+			leg2.position = circle_points[1]
+			_legs_position[leg2] = circle_points[1]
+			leg2.rotation = deg2rad(12*deg)
+		elif i == 2:
+			leg3.add_child(leg)
+			leg3.position = circle_points[2]
+			_legs_position[leg3] = circle_points[2]
+			leg3.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
 
 
@@ -143,7 +145,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-func update_bot() -> void:
+func reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
 	bar_shield.value = current_shield
@@ -159,10 +161,11 @@ func update_bot() -> void:
 	
 	current_charge_cooldown = charge_cooldown
 	timer_charge_cooldown.wait_time = current_charge_cooldown
+	current_charge_damage_factor = charge_damage_factor
+	current_charge_force_factor = charge_force_factor
 	
 	current_roll_speed = roll_speed
 	current_knockback_resist = knockback_resist
-	current_charge_force_factor = charge_force_factor
 
 
 func _process(delta: float) -> void:
@@ -385,14 +388,14 @@ func _on_Bot_body_entered(body: Node) -> void:
 			$Sounds/Bump.play()
 		return
 	$Sounds/ChargeAttackHit.play()
-	var damage = current_roll_speed * CHARGE_DAMAGE_FACTOR
+	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
 	if body.get_parent().name == "Bots":
 		if is_hostile == body.is_hostile:
 			return
 		elif is_hostile != body.is_hostile:
-			body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
+			body.take_damage(damage, Vector2(0,0))
 	else:
-		body.take_damage(damage * current_charge_force_factor, Vector2(0,0))
+		body.take_damage(damage, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:

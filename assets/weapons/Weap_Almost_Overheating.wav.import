@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Weap_Almost_Overheating.wav-c3b47b6632c4821ac9207b9ef9ef9846.sample"
+
+[deps]
+
+source_file="res://assets/weapons/Weap_Almost_Overheating.wav"
+dest_files=[ "res://.import/Weap_Almost_Overheating.wav-c3b47b6632c4821ac9207b9ef9ef9846.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

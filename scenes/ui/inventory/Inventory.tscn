@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/ui/font.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/ui elements/hud_weap_slot.png" type="Texture" id=2]
-[ext_resource path="res://scenes/ui/inventory/WeaponSlot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/inventory/SingleSlot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/inventory/TexButtonSlots.tscn" type="PackedScene" id=3]
 
 [node name="Inventory" type="Control"]
 margin_left = 40.0
@@ -34,11 +34,10 @@ margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 text = "TECH MOD:"
 
-[node name="TechModSlot" type="TextureRect" parent="Slots/SlotsContainer"]
+[node name="TechModSlot" parent="Slots/SlotsContainer" instance=ExtResource( 2 )]
 margin_top = 37.0
 margin_right = 400.0
 margin_bottom = 107.0
-texture = ExtResource( 2 )
 
 [node name="WeaponsLabel" type="Label" parent="Slots/SlotsContainer"]
 margin_top = 111.0
@@ -47,31 +46,10 @@ margin_bottom = 144.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPONS:"
 
-[node name="WeaponSlots" type="HBoxContainer" parent="Slots/SlotsContainer"]
+[node name="WeaponSlots" parent="Slots/SlotsContainer" instance=ExtResource( 3 )]
 margin_top = 148.0
 margin_right = 400.0
 margin_bottom = 218.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WeaponSlot0" parent="Slots/SlotsContainer/WeaponSlots" instance=ExtResource( 3 )]
-
-[node name="WeaponSlot1" parent="Slots/SlotsContainer/WeaponSlots" instance=ExtResource( 3 )]
-margin_left = 74.0
-margin_right = 144.0
-
-[node name="WeaponSlot2" parent="Slots/SlotsContainer/WeaponSlots" instance=ExtResource( 3 )]
-margin_left = 148.0
-margin_right = 218.0
-
-[node name="WeaponSlot3" parent="Slots/SlotsContainer/WeaponSlots" instance=ExtResource( 3 )]
-margin_left = 222.0
-margin_right = 292.0
-
-[node name="WeaponSlot4" parent="Slots/SlotsContainer/WeaponSlots" instance=ExtResource( 3 )]
-margin_left = 296.0
-margin_right = 366.0
 
 [node name="PassivesLabel" type="Label" parent="Slots/SlotsContainer"]
 margin_top = 222.0
@@ -80,42 +58,10 @@ margin_bottom = 255.0
 custom_fonts/font = ExtResource( 1 )
 text = "PASSIVES:"
 
-[node name="PassiveSlots" type="HBoxContainer" parent="Slots/SlotsContainer"]
+[node name="PassiveSlots" parent="Slots/SlotsContainer" instance=ExtResource( 3 )]
 margin_top = 259.0
 margin_right = 400.0
 margin_bottom = 329.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PassiveSlot0" type="TextureButton" parent="Slots/SlotsContainer/PassiveSlots"]
-margin_right = 70.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
-
-[node name="PassiveSlot1" type="TextureButton" parent="Slots/SlotsContainer/PassiveSlots"]
-margin_left = 74.0
-margin_right = 144.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
-
-[node name="PassiveSlot2" type="TextureButton" parent="Slots/SlotsContainer/PassiveSlots"]
-margin_left = 148.0
-margin_right = 218.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
-
-[node name="PassiveSlot3" type="TextureButton" parent="Slots/SlotsContainer/PassiveSlots"]
-margin_left = 222.0
-margin_right = 292.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
-
-[node name="PassiveSlot4" type="TextureButton" parent="Slots/SlotsContainer/PassiveSlots"]
-margin_left = 296.0
-margin_right = 366.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
 
 [node name="SpecialPassiveSlots" type="HBoxContainer" parent="Slots/SlotsContainer"]
 visible = false
@@ -123,22 +69,11 @@ margin_top = 351.0
 margin_right = 500.0
 margin_bottom = 421.0
 
-[node name="SpecialPassiveSlot0" type="TextureButton" parent="Slots/SlotsContainer/SpecialPassiveSlots"]
-margin_right = 70.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
+[node name="Slot0" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
 
-[node name="SpecialPassiveSlot1" type="TextureButton" parent="Slots/SlotsContainer/SpecialPassiveSlots"]
-margin_left = 74.0
-margin_right = 144.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
+[node name="Slot1" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
 
-[node name="SpecialPassiveSlot2" type="TextureButton" parent="Slots/SlotsContainer/SpecialPassiveSlots"]
-margin_left = 148.0
-margin_right = 218.0
-margin_bottom = 70.0
-texture_normal = ExtResource( 2 )
+[node name="Slot2" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
 
 [node name="Description" type="Control" parent="."]
 margin_left = 400.0
@@ -178,13 +113,3 @@ margin_right = 400.0
 margin_bottom = 500.0
 custom_fonts/normal_font = ExtResource( 1 )
 text = "ALL FOUND ITEMS HERE"
-
-[editable path="Slots/SlotsContainer/WeaponSlots/WeaponSlot0"]
-
-[editable path="Slots/SlotsContainer/WeaponSlots/WeaponSlot1"]
-
-[editable path="Slots/SlotsContainer/WeaponSlots/WeaponSlot2"]
-
-[editable path="Slots/SlotsContainer/WeaponSlots/WeaponSlot3"]
-
-[editable path="Slots/SlotsContainer/WeaponSlots/WeaponSlot4"]

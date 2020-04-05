@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/passives/SuperCharge.gd" type="Script" id=1]
+[ext_resource path="res://assets/passives/super_charge.png" type="Texture" id=2]
+[ext_resource path="res://scenes/passives/_BasePassive.tscn" type="PackedScene" id=3]
+
+[node name="SuperCharge" instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
