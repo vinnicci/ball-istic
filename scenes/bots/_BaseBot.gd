@@ -3,22 +3,22 @@ extends RigidBody2D
 
 #make sure to import body texture with repeating enabled
 export (float, 25.0, 100.0) var bot_radius: = 32.0
-export (float) var shield_capacity: = 30
-export (float) var health_capacity: = 30
+export (float) var shield_capacity: = 25
+export (float) var health_capacity: = 25
 export (int, 0, 3000) var roll_speed: = 1200
 export (float) var shield_recovery_per_sec: = 1.0
-export (float, 0.1, 0.8) var transform_speed: = 0.5
+export (float, 0.1, 1.0) var transform_speed: = 0.6
 export (float, 0.25, 5.0) var charge_cooldown: = 2.5
-export (float, 0, 1.0) var knockback_resist: = 0.25
-export (float, 0.01, 0.1) var charge_damage_factor: = 0.05
-export (float, 0, 1.5) var charge_force_factor: = 0.5
+export (float, 0, 1.0) var knockback_resist: = 0.2
+export (float, 0.01, 0.1) var charge_damage_factor: = 0.03
+export (float, 0.1, 1.5) var charge_force_factor: = 0.5
 export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
 const DEFAULT_BOT_RADIUS: float = 32.0
 const BARS_OFFSET: int = 15
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.75
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
 const OUTLINE_SIZE: float = 4.0
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
@@ -64,8 +64,7 @@ onready var timer_charge_cooldown: = $Timers/ChargeCooldown
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
-	if name != "Player":
-		reset_bot_vars()
+	_reset_bot_vars()
 
 
 func _init_bot() -> void:
@@ -145,7 +144,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-func reset_bot_vars() -> void:
+func _reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
 	bar_shield.value = current_shield
@@ -166,6 +165,17 @@ func reset_bot_vars() -> void:
 	
 	current_roll_speed = roll_speed
 	current_knockback_resist = knockback_resist
+	
+	cap_current_vars()
+
+
+func cap_current_vars() -> void:
+	current_roll_speed = clamp(current_roll_speed, 500, 3000)
+	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
+	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
+	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
+	current_charge_damage_factor = clamp(current_charge_damage_factor, 0.01, 0.1)
+	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 1.5)
 
 
 func _process(delta: float) -> void:
@@ -358,8 +368,8 @@ func take_damage(damage, knockback) -> void:
 
 func _explode() -> void:
 	is_alive = false
-	$Legs.modulate = Color(0.180392, 0.180392, 0.180392)
-	$Body.modulate = Color(0.180392, 0.180392, 0.180392)
+	$Legs.modulate = Color(0.18, 0.18, 0.18)
+	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
 

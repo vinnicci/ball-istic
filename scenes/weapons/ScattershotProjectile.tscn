@@ -6,10 +6,12 @@
 
 [sub_resource type="CircleShape2D" id=1]
 
-[node name="Projectile" instance=ExtResource( 2 )]
+[node name="ScattershotProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 900
+damage = 7.0
 proj_range = 300
+knockback = 0.025
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )

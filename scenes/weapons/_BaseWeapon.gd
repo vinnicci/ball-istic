@@ -1,14 +1,13 @@
 extends Node2D
 
 
-#be sure to name root node as Weapon
-#however you can name the scene as anything
 export (PackedScene) var Projectile
 export (float) var heat_per_shot: float = 10.0
 export (float) var heat_capacity: float = 50.0
-export (float) var heat_dissipation_per_second: float = 10.0
+export (float) var heat_dissipation_per_sec: float = 10.0
 export (float, 0.01, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
 export (float) var shoot_cooldown: float = 1.0
+
 
 var current_heat: float
 var transform_speed: float
@@ -43,7 +42,9 @@ func _process(_delta: float) -> void:
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
-		current_heat -= heat_dissipation_per_second/2
+		current_heat -= heat_dissipation_per_sec/2
+	elif current_heat < 0:
+		current_heat = 0
 
 
 func _on_Cooldown_timeout() -> void:

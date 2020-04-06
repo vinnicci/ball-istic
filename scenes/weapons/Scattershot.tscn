@@ -8,7 +8,6 @@
 [node name="Scattershot" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 4 )
-heat_dissipation_per_second = 5.0
 shoot_cooldown = 0.5
 
 [node name="Muzzle" parent="." index="0"]

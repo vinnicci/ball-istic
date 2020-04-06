@@ -29,6 +29,8 @@ func _ready() -> void:
 func _init_player() -> void:
 	#player bars initialize
 	bar_weapon_heat.rect_position.x -= bar_weapon_heat.rect_size.y + bot_radius + PLAYER_BARS_OFFSET
+	bar_weapon_heat.max_value = current_weapon.heat_capacity
+	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + PLAYER_BARS_OFFSET
 	var i: = 0 #initialize player passives
 	for passive in $Passives.get_children():
@@ -42,18 +44,19 @@ func _init_player() -> void:
 	for passive_slot in ui_loadout.get_node("PassiveSlots").get_children():
 		passive_slot.connect("pressed", self, "_on_PassiveSlot_pressed", [passive_slot.name])
 		i += 1
-	update_player_vars()
-	update_ui_weapons()
-	update_ui_passives()
-	reset_bot_vars()
+	_update_player_vars()
+	_update_ui_weapons()
+	_update_ui_passives()
 
 
-func update_player_vars() -> void:
-	bar_weapon_heat.max_value = current_weapon.heat_capacity
-	bar_weapon_heat.value = 0
+#use only on bot bays
+func _update_player_vars() -> void:
+	for passive in $Passives.get_children():
+		passive.apply_effects()
+	cap_current_vars()
 
 
-func update_ui_weapons() -> void:
+func _update_ui_weapons() -> void:
 	var selected_slot_initialized: = false
 	for i in dict_weapons.keys():
 		var weap = dict_weapons[i]
@@ -63,7 +66,7 @@ func update_ui_weapons() -> void:
 		var inv_weap_sprite: = ui_loadout.get_node("WeaponSlots/Slot" + i_str + "/Sprite")
 		var inv_swap_label: = ui_loadout.get_node("WeaponSlots/Slot" + i_str + "/SwapPromptLabel")
 		inv_swap_label.hide()
-		if weap == null: #wipe weapon inventory slot
+		if weap == null: #wipe empty weapon slot
 			hud_weap_sprite.texture = null
 			hud_weap_heat.value = 0
 			inv_weap_sprite.texture = null
@@ -77,15 +80,15 @@ func update_ui_weapons() -> void:
 			inv_weap_sprite.texture = weap_sprite_tex
 
 
-func update_ui_passives() -> void:
+func _update_ui_passives() -> void:
 	for i in dict_passives.keys():
 		var passive = dict_passives[i]
 		var i_str: = i as String
 		var inv_passive_sprite: = ui_loadout.get_node("PassiveSlots/Slot" + i_str + "/Sprite")
 		var inv_swap_label: = ui_loadout.get_node("PassiveSlots/Slot" + i_str + "/SwapPromptLabel")
 		inv_swap_label.hide()
-		inv_passive_sprite.hide()
-		if passive == null: #wipe passive inventory slot
+#		inv_passive_sprite.hide()
+		if passive == null: #wipe empty passive slot
 			inv_passive_sprite.texture = null
 		else:
 			var passive_sprite_tex = passive.get_node("Sprite").texture
@@ -127,7 +130,7 @@ func _control(delta):
 
 
 func _process(delta: float) -> void:
-	#is_in_control var has no influence here
+	#var is_in_control has no influence here
 	#weapon heat bar
 	_update_bar_weapon_heat()
 	
@@ -178,7 +181,9 @@ func _control_player_weapon_hotkeys() -> void:
 	if slot_num != -1:
 		change_weapon(slot_num)
 		_change_slot_selected(slot_num)
-		update_player_vars()
+		#update heat bar
+		bar_weapon_heat.max_value = current_weapon.heat_capacity
+		bar_weapon_heat.value = 0
 
 
 func _update_bar_charge_level() -> void:
@@ -208,23 +213,24 @@ func _update_bar_weapon_heat() -> void:
 	bar_weapon_heat.value = current_weapon.current_heat
 
 
-#refactoring later lots of code trimming
 var is_holding_item: bool = false
 var temp_weapon_slot_held: int = -1
 var temp_passive_slot_held: int = -1
 
+
 func _on_WeaponSlot_pressed(slot_name: String) -> void:
-#	_manage_inventory_weapons(_get_slot_num(slot_name))
 	_set_weapon_access(_get_slot_num(slot_name))
 
+
 func _on_PassiveSlot_pressed(slot_name: String) -> void:
-#	_manage_inventory_passives(_get_slot_num(slot_name))
 	_set_passive_access(_get_slot_num(slot_name))
+
 
 func _get_slot_num(slot_name: String) -> int:
 	var slot_num_pattern = RegEx.new()
 	slot_num_pattern.compile("\\d$")
 	return slot_num_pattern.search(slot_name).get_string() as int
+
 
 func _set_weapon_access(slot_num: int) -> void:
 	if temp_passive_slot_held != -1:
@@ -236,6 +242,7 @@ func _set_weapon_access(slot_num: int) -> void:
 		temp_weapon_slot_held = slot_num
 	_manage_loadout(weap_sprite, swap_label, slot_num)
 
+
 func _set_passive_access(slot_num: int) -> void:
 	if temp_weapon_slot_held != -1:
 		return
@@ -245,6 +252,7 @@ func _set_passive_access(slot_num: int) -> void:
 	if temp_passive_slot_held == -1:
 		temp_passive_slot_held = slot_num
 	_manage_loadout(passive_sprite, swap_label, slot_num)
+
 
 func _manage_loadout(sprite: Sprite, swap_label: Label, slot_num: int) -> void:
 	if sprite.texture == null && is_holding_item == false: #if first slot selected is empty
@@ -265,11 +273,11 @@ func _manage_loadout(sprite: Sprite, swap_label: Label, slot_num: int) -> void:
 			dict_weapons[temp_weapon_slot_held] = dict_weapons[slot_num]
 			dict_weapons[slot_num] = weap_held
 			temp_weapon_slot_held = -1
-			update_ui_weapons()
+			_update_ui_weapons()
 		elif temp_passive_slot_held != -1:
 			var passive_held = dict_passives[temp_passive_slot_held]
 			dict_passives[temp_passive_slot_held] = dict_passives[slot_num]
 			dict_passives[slot_num] = passive_held
 			temp_passive_slot_held = -1
-			update_ui_passives()
+			_update_ui_passives()
 		is_holding_item = false

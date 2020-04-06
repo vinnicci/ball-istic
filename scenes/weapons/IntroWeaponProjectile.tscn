@@ -7,11 +7,11 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
-[node name="Projectile" instance=ExtResource( 2 )]
+[node name="IntroWeapProj" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 speed = 800
 proj_range = 800
-knockback = 0.05
+knockback = 0.065
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://scenes/levels/_BaseRigidObject.gd" type="Script" id=1]
 
-
 [node name="RigidObject" type="RigidBody2D"]
 script = ExtResource( 1 )
 
