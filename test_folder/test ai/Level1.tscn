@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://scenes/bots/ChargerDummy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/Player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/bots/Dummy.tscn" type="PackedScene" id=8]
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -59,7 +60,8 @@ health_capacity = 80.0
 roll_speed = 1400
 charge_force_factor = 0.7
 
-[node name="Player" parent="Bots" index="9" instance=ExtResource( 7 )]
+[node name="Dummy" parent="Bots" index="9" instance=ExtResource( 8 )]
+position = Vector2( 1754.6, 2904.06 )
+
+[node name="Player" parent="Bots" index="10" instance=ExtResource( 7 )]
 position = Vector2( 593.322, 2976.67 )
-shield_capacity = 20.0
-health_capacity = 20.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/bots/_BaseBot.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/bar.png" type="Texture" id=2]
@@ -9,7 +9,8 @@
 [ext_resource path="res://assets/bots/Bot_Shield_Damage.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/bots/Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/Bot_Transform.wav" type="AudioStream" id=9]
-[ext_resource path="res://assets/bots/Bot_Explode.wav" type="AudioStream" id=10]
+[ext_resource path="res://scenes/global/Explosion.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/bots/_BaseBotExplosion.gd" type="Script" id=11]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
@@ -17,28 +18,6 @@ bounce = 0.85
 
 [sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
-
-[sub_resource type="Gradient" id=3]
-colors = PoolColorArray( 1, 0.871086, 0.523438, 1, 1, 0, 0, 0.501961 )
-
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
-
-[sub_resource type="ParticlesMaterial" id=5]
-lifetime_randomness = 0.5
-emission_shape = 1
-emission_sphere_radius = 15.0
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 700.0
-initial_velocity_random = 0.8
-angular_velocity = 500.0
-angular_velocity_random = 0.5
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 15.0
-color_ramp = SubResource( 4 )
 
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
@@ -140,26 +119,20 @@ stream = ExtResource( 8 )
 [node name="ChangeMode" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 9 )
 
-[node name="Explode" type="AudioStreamPlayer2D" parent="Sounds"]
-stream = ExtResource( 10 )
-
 [node name="Roll" type="AudioStreamPlayer2D" parent="Sounds"]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
-[node name="ExplosionParticles" type="Particles2D" parent="."]
-emitting = false
-amount = 120
-one_shot = true
-explosiveness = 1.0
-local_coords = false
-process_material = SubResource( 5 )
-
 [node name="TechMod" type="Node2D" parent="."]
 visible = false
 
 [node name="Weapons" type="Node2D" parent="."]
+
+[node name="Explosion" parent="." instance=ExtResource( 10 )]
+script = ExtResource( 11 )
+explosion_radius = 150.0
+damage = 10.0
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

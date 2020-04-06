@@ -383,8 +383,7 @@ func _on_ExplodeDelay_timeout() -> void:
 	$CollisionShape.disabled = true
 	
 	#explosion effects here
-	$ExplosionParticles.emitting = true
-	$Sounds/Explode.play()
+	$Explosion.start_explosion()
 	$Timers/ExplodeTimer.start()
 
 

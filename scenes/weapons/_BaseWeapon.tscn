@@ -4,20 +4,22 @@
 [ext_resource path="res://assets/weapons/Weap_IntroWeapon.wav" type="AudioStream" id=2]
 
 [sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 0.930176, 0.352691, 0.043602, 1, 0.678431, 0.678431, 0.678431, 0 )
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 0.184857, 0.984863, 0.0153885, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
 
 [sub_resource type="ParticlesMaterial" id=3]
-lifetime_randomness = 0.5
+resource_local_to_scene = true
+lifetime_randomness = 0.9
 emission_shape = 1
 emission_sphere_radius = 1.0
 flag_disable_z = true
 spread = 30.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 500.0
-initial_velocity_random = 0.5
+initial_velocity = 200.0
+initial_velocity_random = 0.9
 angular_velocity = 500.0
 angular_velocity_random = 0.5
 orbit_velocity = 0.0
@@ -43,6 +45,9 @@ tracks/0/keys = {
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource( 1 )
+heat_per_shot = 1.0
+heat_capacity = 5.0
+heat_dissipation_per_sec = 1.0
 
 [node name="Muzzle" type="Position2D" parent="."]
 

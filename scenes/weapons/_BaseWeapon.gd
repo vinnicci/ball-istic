@@ -2,9 +2,9 @@ extends Node2D
 
 
 export (PackedScene) var Projectile
-export (float) var heat_per_shot: float = 10.0
-export (float) var heat_capacity: float = 50.0
-export (float) var heat_dissipation_per_sec: float = 10.0
+export (float) var heat_per_shot: float = 1
+export (float) var heat_capacity: float = 5
+export (float) var heat_dissipation_per_sec: float = 1
 export (float, 0.01, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
 export (float) var shoot_cooldown: float = 1.0
 
@@ -30,7 +30,8 @@ func get_projectiles() -> Array:
 
 #bundle projectiles
 func _instantiate_projectile() -> Array:
-	return [Projectile.instance()]
+	var projectiles = [Projectile.instance()]
+	return projectiles
 
 
 func _process(_delta: float) -> void:
