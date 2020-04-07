@@ -45,9 +45,6 @@ tracks/0/keys = {
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource( 1 )
-heat_per_shot = 1.0
-heat_capacity = 5.0
-heat_dissipation_per_sec = 1.0
 
 [node name="Muzzle" type="Position2D" parent="."]
 

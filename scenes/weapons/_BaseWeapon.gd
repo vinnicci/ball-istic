@@ -5,7 +5,7 @@ export (PackedScene) var Projectile
 export (float) var heat_per_shot: float = 1
 export (float) var heat_capacity: float = 5
 export (float) var heat_dissipation_per_sec: float = 1
-export (float, 0.01, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
+export (float, 0, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
 export (float) var shoot_cooldown: float = 1.0
 
 
@@ -37,7 +37,7 @@ func _instantiate_projectile() -> Array:
 func _process(_delta: float) -> void:
 	if current_heat > heat_capacity:
 		is_overheating = true
-	if is_overheating == true && current_heat < heat_capacity * heat_cooled_factor:
+	if is_overheating == true && current_heat <= heat_capacity * heat_cooled_factor:
 		is_overheating = false
 
 

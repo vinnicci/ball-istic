@@ -18,7 +18,7 @@ export (bool) var is_hostile: = true
 const DEFAULT_BOT_RADIUS: float = 32.0
 const BARS_OFFSET: int = 15
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.75
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.65
 const OUTLINE_SIZE: float = 4.0
 const ROLLING_EFFECT_FACTOR: float = 0.01
 const ROLL_MODE_DAMP: int = 2
@@ -50,7 +50,7 @@ var dict_weapons: Dictionary = {
 	3: null,
 	4: null
 }
-signal shooting
+signal shot_weapon
 
 onready var body_outline: = $Body/Outline
 onready var body_texture: = $Body/Texture
@@ -323,7 +323,7 @@ func shoot_weapon() -> void:
 	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
 	var muzzle: = current_weapon.get_node("Muzzle")
-	emit_signal("shooting", current_weapon.get_projectiles(), muzzle.global_position,
+	emit_signal("shot_weapon", current_weapon.get_projectiles(), muzzle.global_position,
 		muzzle.global_rotation, is_hostile)
 
 
@@ -383,6 +383,7 @@ func _on_ExplodeDelay_timeout() -> void:
 	$CollisionShape.disabled = true
 	
 	#explosion effects here
+	mode = RigidBody2D.MODE_STATIC
 	$Explosion.start_explosion()
 	$Timers/ExplodeTimer.start()
 

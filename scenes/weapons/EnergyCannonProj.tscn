@@ -11,27 +11,23 @@ radius = 16.0
 
 [node name="EnergyCannonProj" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
+speed = 700
 damage = 0.0
-proj_range = 800
+proj_range = 1000
 knockback = 0.0
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 texture = ExtResource( 1 )
 offset = Vector2( -25, 0 )
 
-[node name="CollisionShape" parent="." index="1"]
+[node name="CollisionShape" parent="." index="2"]
 shape = SubResource( 1 )
-
-[node name="OnHitParticles" parent="." index="4"]
-visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
-explosion_radius = 200.0
+explosion_radius = 250.0
 damage = 40.0
-knockback = 700.0
+knockback = 1000.0
 
-[node name="KnockBackDirection" parent="Explosion" index="3"]
-cast_to = Vector2( 1, 0 )
-
-[editable path="Explosion"]
+[node name="OnHitParticles" parent="." index="6"]
+visible = false

@@ -33,13 +33,13 @@ color_ramp = SubResource( 2 )
 [node name="EnergyCannon" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 1 )
-heat_per_shot = 10.0
+heat_per_shot = 21.0
 heat_capacity = 20.0
-heat_cooled_factor = 0.5
+heat_cooled_factor = 0.0
 shoot_cooldown = 2.5
 
 [node name="Muzzle" parent="." index="0"]
-position = Vector2( 75, 0 )
+position = Vector2( 60, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 amount = 50
@@ -48,4 +48,4 @@ process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 2 )
-offset = Vector2( 22, 0 )
+offset = Vector2( 17, 0 )

@@ -25,6 +25,6 @@ func start_explosion() -> void:
 	$Blast.show()
 	var blast_anim = $Blast/AnimationPlayer
 	blast_anim.play("blast")
-	$AreaOfEffect.set_deferred("monitoring", false)
 	$Particles2D.emitting = true
+	$AreaOfEffect.set_deferred("monitoring", false)
 	$Sound.play()

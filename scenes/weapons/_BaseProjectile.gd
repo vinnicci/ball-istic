@@ -46,10 +46,9 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		#body.take_projectile_effect(some params)
 		#normal damage
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
-		velocity = Vector2(0,0)
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
-		velocity = Vector2(0,0)
+	velocity = Vector2(0,0)
 	$Sprite.hide()
 	$Blast.show()
 	$Blast/AnimationPlayer.play("blast")
