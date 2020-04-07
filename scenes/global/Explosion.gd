@@ -5,6 +5,8 @@ export (float) var explosion_radius: float = 100
 export (float) var damage: float = 15
 export (float) var knockback: float = 500
 
+const PARTICLEV_RADIUS_RATIO: float = 0.35
+
 
 func _ready() -> void:
 	#set radius
@@ -14,6 +16,8 @@ func _ready() -> void:
 	for i in range(24):
 		circle.append(Vector2(explosion_radius, 0).rotated(deg2rad(i * 15)))
 	$Blast.polygon = circle
+	#particle velocity
+	$Particles2D.process_material.initial_velocity = (explosion_radius/PARTICLEV_RADIUS_RATIO) as int
 
 
 func start_explosion() -> void:
