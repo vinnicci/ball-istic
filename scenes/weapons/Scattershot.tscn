@@ -33,8 +33,9 @@ color_ramp = SubResource( 2 )
 [node name="Scattershot" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 2.0
-heat_capacity = 3.0
+heat_per_shot = 5.0
+heat_capacity = 6.0
+heat_dissipation_per_sec = 0.5
 shoot_cooldown = 0.5
 
 [node name="Muzzle" parent="." index="0"]

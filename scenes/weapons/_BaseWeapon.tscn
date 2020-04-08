@@ -64,7 +64,7 @@ process_material = SubResource( 3 )
 one_shot = true
 
 [node name="DissipationCooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

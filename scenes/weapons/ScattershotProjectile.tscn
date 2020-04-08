@@ -10,11 +10,10 @@
 script = ExtResource( 1 )
 speed = 900
 damage = 7.0
-proj_range = 300
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
 offset = Vector2( -8, 0 )
 
-[node name="CollisionShape" parent="." index="1"]
+[node name="CollisionShape" parent="." index="2"]
 shape = SubResource( 1 )
