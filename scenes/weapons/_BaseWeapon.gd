@@ -35,16 +35,17 @@ func _instantiate_projectile() -> Array:
 
 
 func _process(_delta: float) -> void:
-	if current_heat > heat_capacity:
+	if current_heat > heat_capacity && is_overheating == false:
+		current_heat = heat_capacity + (heat_capacity*0.05)
 		is_overheating = true
-	if is_overheating == true && current_heat <= heat_capacity * heat_cooled_factor:
+	elif is_overheating == true && current_heat <= heat_capacity * heat_cooled_factor:
 		is_overheating = false
 
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
-		current_heat -= heat_dissipation_per_sec/4
-	elif current_heat < 0:
+		current_heat -= heat_dissipation_per_sec/8
+	elif current_heat <= 0:
 		current_heat = 0
 
 

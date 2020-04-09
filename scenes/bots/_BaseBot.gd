@@ -50,7 +50,7 @@ var dict_weapons: Dictionary = {
 	3: null,
 	4: null
 }
-signal shot_weapon
+signal weapon_shot
 
 onready var body_outline: = $Body/Outline
 onready var body_texture: = $Body/Texture
@@ -82,6 +82,7 @@ func _init_bot() -> void:
 	
 	#bot physics and properties
 	$CollisionShape.shape.radius = bot_radius
+	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = SHOOT_MODE_DAMP
 	if is_destructible == false:
 		$Bars.hide()
@@ -323,7 +324,7 @@ func shoot_weapon() -> void:
 	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
 	var muzzle: = current_weapon.get_node("Muzzle")
-	emit_signal("shot_weapon", current_weapon.get_projectiles(), muzzle.global_position,
+	emit_signal("weapon_shot", current_weapon.get_projectiles(), muzzle.global_position,
 		muzzle.global_rotation, is_hostile)
 
 
@@ -406,6 +407,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 			body.take_damage(damage, Vector2(0,0))
 	else:
 		body.take_damage(damage, Vector2(0,0))
+	$CollisionSpark.look_at(body.global_position)
+	$CollisionSpark.emitting = true
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void:

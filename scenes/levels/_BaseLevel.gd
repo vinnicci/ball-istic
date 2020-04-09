@@ -11,7 +11,7 @@ var is_player_dead: bool = false
 func _ready() -> void:
 	for child_node in $Bots.get_children():
 		if child_node.dict_weapons[0] != null:
-			child_node.connect("shot_weapon", self, "_on_shot_weapon")
+			child_node.connect("weapon_shot", self, "_on_weapon_shot")
 		if child_node.name == "Player":
 			player = weakref(child_node)
 
@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 		is_player_dead = true
 
 
-func _on_shot_weapon(projectiles, proj_position, proj_direction, hostile_proj) -> void:
+func _on_weapon_shot(projectiles, proj_position, proj_direction, hostile_proj) -> void:
 	for projectile in projectiles:
 		add_child(projectile)
 		projectile.ready_travel(proj_position, proj_direction, hostile_proj)

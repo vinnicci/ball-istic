@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/weapons/_BaseWeapon.gd" type="Script" id=1]
-[ext_resource path="res://assets/weapons/Weap_IntroWeapon.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/weapons/sfx_Weap_IntroWeapon.wav" type="AudioStream" id=2]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -64,7 +64,7 @@ process_material = SubResource( 3 )
 one_shot = true
 
 [node name="DissipationCooldown" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.125
 autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

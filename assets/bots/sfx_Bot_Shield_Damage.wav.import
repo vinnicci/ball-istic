@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_Bot_Shield_Damage.wav-d9b1e8d81db5958f8d040a8e7b80cf0c.sample"
+
+[deps]
+
+source_file="res://assets/bots/sfx_Bot_Shield_Damage.wav"
+dest_files=[ "res://.import/sfx_Bot_Shield_Damage.wav-d9b1e8d81db5958f8d040a8e7b80cf0c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

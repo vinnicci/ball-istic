@@ -27,8 +27,7 @@ func start_explosion() -> void:
 		if body.has_method("take_damage") == true:
 			body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 	$Blast.show()
-	var blast_anim = $Blast/AnimationPlayer
-	blast_anim.play("blast")
+	$Blast/AnimationPlayer.play("blast")
 	$Particles2D.emitting = true
 	$AreaOfEffect.set_deferred("monitoring", false)
 	$Sound.play()

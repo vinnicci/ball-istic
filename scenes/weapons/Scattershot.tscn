@@ -2,8 +2,9 @@
 
 [ext_resource path="res://scenes/weapons/Scattershot.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_BaseWeapon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/weapons/scattershot.png" type="Texture" id=3]
+[ext_resource path="res://assets/weapons/tex_scattershot.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/ScattershotProjectile.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
