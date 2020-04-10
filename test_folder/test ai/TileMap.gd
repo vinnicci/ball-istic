@@ -1,2 +1,2 @@
-extends "res://scenes/levels/_BaseTileMap.gd"
+extends "res://scenes/levels/_base/_BaseTileMap.gd"
 

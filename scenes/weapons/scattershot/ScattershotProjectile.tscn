@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/weapons/scattershot/ScattershotProjectile.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/tex_scattershot_proj.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="ScattershotProj" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+speed = 900
+damage = 7.0
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 3 )
+offset = Vector2( -8, 0 )
+
+[node name="CollisionShape" parent="." index="2"]
+shape = SubResource( 1 )
