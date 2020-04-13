@@ -49,7 +49,7 @@ process_material = SubResource( 3 )
 one_shot = true
 
 [node name="DissipationCooldown" type="Timer" parent="."]
-wait_time = 0.125
+wait_time = 0.25
 autostart = true
 
 [node name="ShootingSound" type="AudioStreamPlayer2D" parent="."]

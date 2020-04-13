@@ -50,11 +50,11 @@ script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Legs"]
 
+[node name="Leg0" type="Position2D" parent="Legs"]
+
 [node name="Leg1" type="Position2D" parent="Legs"]
 
 [node name="Leg2" type="Position2D" parent="Legs"]
-
-[node name="Leg3" type="Position2D" parent="Legs"]
 
 [node name="LegTween" type="Tween" parent="Legs"]
 
@@ -109,7 +109,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="ShieldRecoveryTimer" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 0.25
 autostart = true
 
 [node name="ExplodeDelay" type="Timer" parent="Timers"]

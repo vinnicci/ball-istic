@@ -16,14 +16,15 @@ export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const BARS_OFFSET: int = 15
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.78
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.7
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.8
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.75
 const OUTLINE_SIZE: float = 4.0
-const ROLLING_EFFECT_FACTOR: float = 0.009
+const ROLLING_EFFECT_FACTOR: float = 0.008
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const POLY_SIDES = 24
+const HOSTILE_COLOR = Color(1, 0.13, 0.13)
+const NON_HOSTILE_COLOR = Color(0.4, 1, 0.4)
 var _legs_position: Dictionary = {}
 
 var current_shield: float
@@ -90,47 +91,37 @@ func _init_bot() -> void:
 	#bot's body set up
 	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
-	bar_shield.rect_position.y += bot_radius + BARS_OFFSET
-	bar_health.rect_position.y += bar_shield.rect_position.y + BARS_OFFSET
+	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
+	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now
 	var outline = bot_radius + OUTLINE_SIZE
 	body_outline.polygon = _plot_circle_points(outline)
 	body_outline.position = Vector2(-outline, -outline)
 	body_outline.offset = Vector2(outline, outline)
-	var circle_points = _plot_circle_points(bot_radius)
-	body_charge_effect.polygon = circle_points
+	var cp = _plot_circle_points(bot_radius) #<- circle points
+	body_charge_effect.polygon = cp
 	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
 	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
 	
 	#other body initializations
-	_init_legs([circle_points[4], circle_points[12], circle_points[20]])
-	_init_hatch([circle_points[0], circle_points[1], circle_points[2], circle_points[10],
-		circle_points[11], circle_points[12], circle_points[13], circle_points[14],
-		circle_points[22], circle_points[23]])
+	_init_legs([cp[4], cp[12], cp[20]])
+	_init_hatch([cp[0], cp[1], cp[2], cp[10], cp[11], cp[12], cp[13], cp[14], cp[22], cp[23]])
 
 
 func _init_legs(circle_points) -> void:
 	var leg_sprite: = $Legs/Sprite
-	var leg1: = $Legs/Leg1
-	var leg2: = $Legs/Leg2
-	var leg3: = $Legs/Leg3
 	var deg: = 360.0/POLY_SIDES as float
 	for i in circle_points.size():
-		var leg = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
+		var leg_node = get_node("Legs/Leg" + i as String)
+		var leg_sprite_c = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
+		leg_node.add_child(leg_sprite_c)
+		leg_node.position = circle_points[i]
+		_legs_position[leg_node] = circle_points[i]
 		if i == 0:
-			leg1.add_child(leg)
-			leg1.position = circle_points[0]
-			_legs_position[leg1] = circle_points[0]
-			leg1.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
+			leg_node.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
 		elif i == 1:
-			leg2.add_child(leg)
-			leg2.position = circle_points[1]
-			_legs_position[leg2] = circle_points[1]
-			leg2.rotation = deg2rad(12*deg)
+			leg_node.rotation = deg2rad(12*deg)
 		elif i == 2:
-			leg3.add_child(leg)
-			leg3.position = circle_points[2]
-			_legs_position[leg3] = circle_points[2]
-			leg3.rotation = deg2rad(20*deg)
+			leg_node.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
 
 
@@ -145,6 +136,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
+#use only for initialization or when getting loadout items(basically in bot ports or something)
 func _reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
@@ -165,10 +157,10 @@ func _reset_bot_vars() -> void:
 	current_roll_speed = roll_speed
 	current_knockback_resist = knockback_resist
 	
-	cap_current_vars()
+	_cap_current_vars()
 
 
-func cap_current_vars() -> void:
+func _cap_current_vars() -> void:
 	current_roll_speed = clamp(current_roll_speed, 500, 3000)
 	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
@@ -179,11 +171,6 @@ func cap_current_vars() -> void:
 
 func _process(delta: float) -> void:
 	pass
-
-
-func _control(delta) -> void:
-	if has_node("AI") == true:
-		$AI._control(delta)
 
 
 #60 fps
@@ -207,6 +194,11 @@ func _physics_process(delta: float) -> void:
 		_control(delta)
 
 
+func _control(delta) -> void:
+	if has_node("AI") == true: #<- make sure to name attached ai nodes "AI"
+		$AI._control(delta)
+
+
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	_apply_force()
 
@@ -223,13 +215,11 @@ func _apply_force() -> void:
 
 
 func _apply_charging_effects() -> void:
-	var color_hostile: = Color(1, 0.13, 0.13) #red
-	var color_non_hostile: = Color(0.4, 1, 0.4) #green
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		if is_hostile == true: #outline for hostiles becomes red
-			body_outline.color = lerp(body_outline.color, color_hostile, 0.8)
+			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
 		elif is_hostile == false: #outline for non-hostiles becomes green
-			body_outline.color = lerp(body_outline.color, color_non_hostile, 0.8)
+			body_outline.color = lerp(body_outline.color, NON_HOSTILE_COLOR, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
 		is_charging = false
@@ -325,7 +315,7 @@ func change_weapon(slot_num: int) -> void:
 		current_weapon.visible = !current_weapon.visible
 
 
-func charge_attack(charge_direction: float) -> void:
+func charge(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
@@ -334,11 +324,12 @@ func charge_attack(charge_direction: float) -> void:
 
 
 func take_damage(damage, knockback) -> void:
-	if is_alive == false:
-		$Sounds/HealthDamage.play()
-		return
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 	if is_destructible == false:
+		$Sounds/ShieldDamage.play()
+		return
+	if is_alive == false:
+		$Sounds/HealthDamage.play()
 		return
 	if current_shield - damage >= 0:
 		$Sounds/ShieldDamage.play()
@@ -368,9 +359,9 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Body.hide()
 	$Bars.hide()
 	$CollisionShape.disabled = true
+	mode = RigidBody2D.MODE_STATIC
 	
 	#explosion effects here
-	mode = RigidBody2D.MODE_STATIC
 	$Explosion.start_explosion()
 	$Timers/ExplodeTimer.start()
 
@@ -387,19 +378,15 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
 	$CollisionSpark.emitting = true
+	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
+		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
-	if body.get_parent().name == "Bots":
-		if is_hostile == body.is_hostile:
-			return
-		elif is_hostile != body.is_hostile:
-			body.take_damage(damage, Vector2(0,0))
-	else:
-		body.take_damage(damage, Vector2(0,0))
+	body.take_damage(damage, Vector2(0,0))
 
 
-func _on_ShieldRecoveryTimer_timeout() -> void:
-	if current_shield + current_shield_recovery/2 > shield_capacity:
+func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
+	if current_shield + current_shield_recovery/4 > shield_capacity:
 		current_shield = shield_capacity
-	elif current_shield + current_shield_recovery/2 <= shield_capacity:
-		current_shield += current_shield_recovery/2
+	elif current_shield + current_shield_recovery/4 <= shield_capacity:
+		current_shield += current_shield_recovery/4
 	bar_shield.value = current_shield
