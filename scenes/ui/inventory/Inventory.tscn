@@ -65,17 +65,21 @@ margin_bottom = 329.0
 
 [node name="SpecialPassiveSlots" type="HBoxContainer" parent="Slots/SlotsContainer"]
 visible = false
-margin_top = 351.0
-margin_right = 500.0
-margin_bottom = 421.0
+margin_top = 333.0
+margin_right = 400.0
+margin_bottom = 403.0
 
 [node name="Slot0" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
 
 [node name="Slot1" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
+margin_left = 74.0
+margin_right = 144.0
 
 [node name="Slot2" parent="Slots/SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 2 )]
+margin_left = 148.0
+margin_right = 218.0
 
-[node name="Description" type="Control" parent="."]
+[node name="AllItems" type="Control" parent="."]
 margin_left = 400.0
 margin_top = 50.0
 margin_right = 800.0
@@ -84,22 +88,139 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Description"]
-margin_right = 400.0
-margin_bottom = 500.0
-custom_fonts/normal_font = ExtResource( 1 )
-text = "ITEM NAME HERE:
-
-ITEM STATS AND DESCRIPTION HERE
-LAKJDLFKJSDF
-LAKJDFLKAJSDLFKJLAKDJFLA;JD
-ALJDKLFJALKJSDFLKS
-LAKJDLFKSJLDSFKJLSJDF"
+[node name="SlotsContainer" type="VBoxContainer" parent="AllItems"]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AllItems" type="Control" parent="."]
+[node name="InventoryLabel" type="Label" parent="AllItems/SlotsContainer"]
+margin_right = 366.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "INVENTORY:"
+
+[node name="ItemSlots" type="GridContainer" parent="AllItems/SlotsContainer"]
+margin_top = 37.0
+margin_right = 366.0
+margin_bottom = 329.0
+columns = 5
+
+[node name="Slot0" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+
+[node name="Slot1" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 74.0
+margin_right = 144.0
+
+[node name="Slot2" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 148.0
+margin_right = 218.0
+
+[node name="Slot3" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 222.0
+margin_right = 292.0
+
+[node name="Slot4" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 296.0
+margin_right = 366.0
+
+[node name="Slot5" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_top = 74.0
+margin_bottom = 144.0
+
+[node name="Slot6" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 74.0
+margin_top = 74.0
+margin_right = 144.0
+margin_bottom = 144.0
+
+[node name="Slot7" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 148.0
+margin_top = 74.0
+margin_right = 218.0
+margin_bottom = 144.0
+
+[node name="Slot8" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 222.0
+margin_top = 74.0
+margin_right = 292.0
+margin_bottom = 144.0
+
+[node name="Slot9" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 296.0
+margin_top = 74.0
+margin_right = 366.0
+margin_bottom = 144.0
+
+[node name="Slot10" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_top = 148.0
+margin_bottom = 218.0
+
+[node name="Slot11" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 74.0
+margin_top = 148.0
+margin_right = 144.0
+margin_bottom = 218.0
+
+[node name="Slot12" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 148.0
+margin_top = 148.0
+margin_right = 218.0
+margin_bottom = 218.0
+
+[node name="Slot13" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 222.0
+margin_top = 148.0
+margin_right = 292.0
+margin_bottom = 218.0
+
+[node name="Slot14" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 296.0
+margin_top = 148.0
+margin_right = 366.0
+margin_bottom = 218.0
+
+[node name="Slot15" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_top = 222.0
+margin_bottom = 292.0
+
+[node name="Slot16" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 74.0
+margin_top = 222.0
+margin_right = 144.0
+margin_bottom = 292.0
+
+[node name="Slot17" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 148.0
+margin_top = 222.0
+margin_right = 218.0
+margin_bottom = 292.0
+
+[node name="Slot18" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 222.0
+margin_top = 222.0
+margin_right = 292.0
+margin_bottom = 292.0
+
+[node name="Slot19" parent="AllItems/SlotsContainer/ItemSlots" instance=ExtResource( 2 )]
+margin_left = 296.0
+margin_top = 222.0
+margin_right = 366.0
+margin_bottom = 292.0
+
+[node name="TrashSlotLabel" type="Label" parent="AllItems/SlotsContainer"]
+margin_top = 333.0
+margin_right = 366.0
+margin_bottom = 366.0
+custom_fonts/font = ExtResource( 1 )
+text = "TRASH:"
+
+[node name="TrashSlot" parent="AllItems/SlotsContainer" instance=ExtResource( 2 )]
+modulate = Color( 1, 0.545098, 0.545098, 1 )
+margin_top = 370.0
+margin_right = 366.0
+margin_bottom = 440.0
+
+[node name="Description" type="Control" parent="."]
 margin_left = 800.0
 margin_top = 50.0
 margin_right = 1200.0
@@ -108,8 +229,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="AllItems"]
-margin_right = 400.0
-margin_bottom = 500.0
-custom_fonts/normal_font = ExtResource( 1 )
-text = "ALL FOUND ITEMS HERE"
+[node name="ItemName" type="Label" parent="Description"]
+custom_fonts/font = ExtResource( 1 )
+text = "ITEM NAME:
+STATS AND DESCRIPTION HERE:
+
+WAHWHALDSKFLAJ
+ALKDJFLKAJLKDJLSJKF
+LAKJDLFKJLADJFLA;A
+ALKDJLFJALKDJFLKAJ
+LAKJDLKFJLSKAJDLFJALKJ
+ALKJDLKFJLAJDKFJLAKDJ
+ALKDJFLKJSDLFKJLAJDLF
+ALKDJFLKJADLKJFLSKJFD"
+__meta__ = {
+"_edit_use_anchors_": false
+}

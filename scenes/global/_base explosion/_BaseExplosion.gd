@@ -16,7 +16,7 @@ func reset_explosion_vars() -> void:
 	#set radius
 	$AreaOfEffect/CollisionShape2D.shape.radius = explosion_radius
 	$KnockBackDirection.cast_to = Vector2(explosion_radius, 0)
-	var circle: Array
+	var circle: Array = []
 	for i in range(24):
 		circle.append(Vector2(explosion_radius, 0).rotated(deg2rad(i * 15)))
 	$Blast.polygon = circle

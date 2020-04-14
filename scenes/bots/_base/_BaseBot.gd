@@ -136,7 +136,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-#use only for initialization or when getting loadout items(basically in bot ports or something)
+#use only for initialization or adding or removing loadout items(basically in bot repair && loadout bays)
 func _reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
@@ -216,9 +216,9 @@ func _apply_force() -> void:
 
 func _apply_charging_effects() -> void:
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		if is_hostile == true: #outline for hostiles becomes red
+		if is_hostile == true:
 			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
-		elif is_hostile == false: #outline for non-hostiles becomes green
+		elif is_hostile == false:
 			body_outline.color = lerp(body_outline.color, NON_HOSTILE_COLOR, 0.8)
 		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
 		body_weapon_hatch.color = body_outline.color
@@ -237,8 +237,8 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
-#affected: rolling, shooting, charging
-#not affected: selecting weapon slot, opening loadout screen
+#if false you lose control with rolling, shooting, charging
+#still in control: selecting weapon slot, opening loadout screen
 func _check_if_in_control() -> bool:
 	return is_alive == true && is_charging == false && is_transforming == false
 
@@ -323,8 +323,8 @@ func charge(charge_direction: float) -> void:
 	timer_charge_cooldown.start()
 
 
-func take_damage(damage, knockback) -> void:
-	apply_central_impulse(knockback - (knockback*current_knockback_resist))
+func take_damage(damage: float, knockback: Vector2) -> void:
+	apply_knockback(knockback)
 	if is_destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -342,6 +342,10 @@ func take_damage(damage, knockback) -> void:
 	bar_health.value = current_health
 	if current_health <= 0:
 		_explode()
+
+
+func apply_knockback(knockback: Vector2) -> void:
+	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 
 
 func _explode() -> void:

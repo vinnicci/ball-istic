@@ -22,7 +22,7 @@ tile_data = PoolIntArray( -196608, 1, 0, -196607, 1, 0, -196606, 1, 0, -196605, 
 script = ExtResource( 5 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
-position = Vector2( 1463.68, 1566.25 )
+position = Vector2( 225.392, 2968.31 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 6 )]
 position = Vector2( 1990.07, 2953.35 )
