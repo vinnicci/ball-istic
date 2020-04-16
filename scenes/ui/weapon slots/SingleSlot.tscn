@@ -3,8 +3,6 @@
 [ext_resource path="res://assets/ui/tex_hud_weap_slot_square.png" type="Texture" id=1]
 [ext_resource path="res://assets/ui/fonts/LADYIC__.ttf" type="DynamicFontData" id=2]
 
-
-
 [sub_resource type="DynamicFont" id=1]
 size = 20
 use_filter = true
@@ -38,7 +36,6 @@ __meta__ = {
 }
 
 [node name="WeaponSprite" type="Sprite" parent="."]
-rotation = -0.785398
 
 [node name="SelectPos" type="Position2D" parent="."]
 position = Vector2( -29, -29 )

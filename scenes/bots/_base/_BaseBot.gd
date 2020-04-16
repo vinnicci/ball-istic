@@ -18,7 +18,7 @@ export (bool) var is_hostile: = true
 const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.8
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.75
-const OUTLINE_SIZE: float = 4.0
+const OUTLINE_SIZE: float = 3.5
 const ROLLING_EFFECT_FACTOR: float = 0.008
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
@@ -184,8 +184,7 @@ func _physics_process(delta: float) -> void:
 	#rolling ball graphical effect
 	_apply_rolling_effects()
 	
-	#high speed, transforming, and dying means losing control
-	#makes charge roll an attack commitment
+	#control state
 	is_in_control = _check_if_in_control()
 	
 	#velocity calculations
@@ -196,7 +195,7 @@ func _physics_process(delta: float) -> void:
 
 func _control(delta) -> void:
 	if has_node("AI") == true: #<- make sure to name attached ai nodes "AI"
-		$AI._control(delta)
+		$AI._control(delta) #<- ai node must have virtual _control() func
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
@@ -237,8 +236,8 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
-#if false you lose control with rolling, shooting, charging
-#still in control: selecting weapon slot, opening loadout screen
+#false means losing control to rolling, shooting, charging, and switching mode
+#no effect to selecting weapon slot, opening loadout screen
 func _check_if_in_control() -> bool:
 	return is_alive == true && is_charging == false && is_transforming == false
 

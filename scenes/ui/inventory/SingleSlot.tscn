@@ -13,7 +13,6 @@ __meta__ = {
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 35, 35 )
-rotation = -0.785398
 
 [node name="SwapPromptLabel" type="Label" parent="."]
 visible = false

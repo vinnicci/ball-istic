@@ -91,16 +91,21 @@ func _update_ui_weapons() -> void:
 		inv_swap_label.hide()
 		if weap == null: #wipe empty weapon slot
 			hud_weap_sprite.texture = null
-			hud_weap_heat.value = 0
 			inv_weap_sprite.texture = null
+			hud_weap_heat.value = 0
 		else:
 			if selected_slot_initialized == false: #initialize first selected slot
 				_change_slot_selected(i)
 				selected_slot_initialized = true
-			var weap_sprite_tex = weap.get_node("Sprite").texture
-			hud_weap_sprite.texture = weap_sprite_tex
+			var weap_sprite = weap.get_node("SlotIcon")
+			hud_weap_sprite.texture = weap_sprite.texture
+			hud_weap_sprite.transform = weap_sprite.transform
+			hud_weap_sprite.offset = weap_sprite.offset
+			inv_weap_sprite.texture = weap_sprite.texture
+			inv_weap_sprite.scale = weap_sprite.scale
+			inv_weap_sprite.rotation = weap_sprite.rotation
+			inv_weap_sprite.offset = weap_sprite.offset
 			hud_weap_heat.max_value = weap.heat_capacity
-			inv_weap_sprite.texture = weap_sprite_tex
 
 
 func _update_ui_passives() -> void:
@@ -128,8 +133,11 @@ func _update_ui_items() -> void:
 		if item == null: #wipe empty slot
 			inv_item_sprite.texture = null
 		else:
-			var item_sprite_tex = item.get_node("Sprite").texture
-			inv_item_sprite.texture = item_sprite_tex
+			var item_sprite = item.get_node("SlotIcon")
+			inv_item_sprite.texture = item_sprite.texture
+			inv_item_sprite.scale = item_sprite.scale
+			inv_item_sprite.rotation = item_sprite.rotation
+			inv_item_sprite.offset = item_sprite.offset
 			inv_item_sprite.show()
 
 

@@ -48,3 +48,7 @@ process_material = SubResource( 3 )
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
 offset = Vector2( 8, 0 )
+
+[node name="SlotIcon" parent="." index="2"]
+rotation = -0.785398
+texture = ExtResource( 3 )

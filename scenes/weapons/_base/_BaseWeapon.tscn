@@ -46,6 +46,7 @@ process_material = SubResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 
 [node name="SlotIcon" type="Sprite" parent="."]
+visible = false
 
 [node name="ShootCooldown" type="Timer" parent="."]
 one_shot = true
