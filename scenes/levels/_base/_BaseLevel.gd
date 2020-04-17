@@ -10,7 +10,7 @@ var is_player_dead: bool = false
 
 func _ready() -> void:
 	for child_node in $Bots.get_children():
-		if child_node.dict_weapons[0] != null:
+		if child_node.current_weapon != null:
 			child_node.connect("weapon_shot", self, "_on_weapon_shot")
 		if child_node.name == "Player":
 			player = weakref(child_node)

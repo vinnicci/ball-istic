@@ -2,26 +2,25 @@
 
 [ext_resource path="res://scenes/ui/inventory/SingleSlot.tscn" type="PackedScene" id=2]
 
-
 [node name="TexButtonSlots" type="HBoxContainer"]
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slot0" parent="." instance=ExtResource( 2 )]
+[node name="0" parent="." instance=ExtResource( 2 )]
 
-[node name="Slot1" parent="." instance=ExtResource( 2 )]
+[node name="1" parent="." instance=ExtResource( 2 )]
 margin_left = 74.0
 margin_right = 144.0
 
-[node name="Slot2" parent="." instance=ExtResource( 2 )]
+[node name="2" parent="." instance=ExtResource( 2 )]
 margin_left = 148.0
 margin_right = 218.0
 
-[node name="Slot3" parent="." instance=ExtResource( 2 )]
+[node name="3" parent="." instance=ExtResource( 2 )]
 margin_left = 222.0
 margin_right = 292.0
 
-[node name="Slot4" parent="." instance=ExtResource( 2 )]
+[node name="4" parent="." instance=ExtResource( 2 )]
 margin_left = 296.0
 margin_right = 366.0

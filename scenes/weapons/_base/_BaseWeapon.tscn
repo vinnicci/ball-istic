@@ -47,6 +47,7 @@ process_material = SubResource( 3 )
 
 [node name="SlotIcon" type="Sprite" parent="."]
 visible = false
+rotation = -0.785398
 
 [node name="ShootCooldown" type="Timer" parent="."]
 one_shot = true

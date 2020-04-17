@@ -49,5 +49,4 @@ texture = ExtResource( 1 )
 offset = Vector2( 10, 0 )
 
 [node name="SlotIcon" parent="." index="2"]
-rotation = -0.785398
 texture = ExtResource( 1 )

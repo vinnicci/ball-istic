@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/passives/tex_charge_cooldown_III.png" type="Texture" id=1]
+[ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.gd" type="Script" id=3]
+
+[node name="ChargeCooldownIII" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="SlotIcon" parent="." index="0"]
+texture = ExtResource( 1 )

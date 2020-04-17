@@ -44,13 +44,7 @@ var is_alive: bool = true
 var is_charging: bool = false
 var is_transforming: bool = false
 var is_in_control: bool = true
-var dict_weapons: Dictionary = {
-	0: null,
-	1: null,
-	2: null,
-	3: null,
-	4: null
-}
+var arr_weapons: Array = [null, null, null, null, null]
 signal weapon_shot
 
 onready var body_outline: = $Body/Outline
@@ -74,7 +68,7 @@ func _init_bot() -> void:
 	var i: = -1
 	for weapon in $Weapons.get_children():
 		i += 1
-		dict_weapons[i] = weapon
+		arr_weapons[i] = weapon
 		if initialized_selected_weap == false:
 			current_weapon = weapon
 			initialized_selected_weap = true
@@ -136,7 +130,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-#use only for initialization or adding or removing loadout items(basically in bot repair && loadout bays)
+#use only for initialization or bot stations
 func _reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
@@ -304,8 +298,8 @@ func shoot_weapon() -> void:
 
 
 func change_weapon(slot_num: int) -> void:
-	var weap = dict_weapons[slot_num]
-	if weap == null || weap == current_weapon:
+	var weap = arr_weapons[slot_num]
+	if weap == null:
 		return
 	if roll_mode == false:
 		current_weapon.visible = !current_weapon.visible

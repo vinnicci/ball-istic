@@ -15,36 +15,36 @@ texture = ExtResource( 2 )
 centered = false
 offset = Vector2( 0, -22 )
 
-[node name="Slot0" parent="." instance=ExtResource( 1 )]
+[node name="0" parent="." instance=ExtResource( 1 )]
+position = Vector2( -128, 0 )
 
-[node name="Slot1" parent="." instance=ExtResource( 1 )]
+[node name="1" parent="." instance=ExtResource( 1 )]
 position = Vector2( -64, 0 )
 
-[node name="SlotLabel" parent="Slot1" index="1"]
+[node name="SlotLabel" parent="1" index="1"]
 text = "2"
 
-[node name="Slot2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 0 )
+[node name="2" parent="." instance=ExtResource( 1 )]
 
-[node name="SlotLabel" parent="Slot2" index="1"]
+[node name="SlotLabel" parent="2" index="1"]
 text = "3"
 
-[node name="Slot3" parent="." instance=ExtResource( 1 )]
+[node name="3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 64, 0 )
 
-[node name="SlotLabel" parent="Slot3" index="1"]
+[node name="SlotLabel" parent="3" index="1"]
 text = "4"
 
-[node name="Slot4" parent="." instance=ExtResource( 1 )]
+[node name="4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, 0 )
 
-[node name="SlotLabel" parent="Slot4" index="1"]
+[node name="SlotLabel" parent="4" index="1"]
 text = "5"
 
-[editable path="Slot1"]
+[editable path="1"]
 
-[editable path="Slot2"]
+[editable path="2"]
 
-[editable path="Slot3"]
+[editable path="3"]
 
-[editable path="Slot4"]
+[editable path="4"]

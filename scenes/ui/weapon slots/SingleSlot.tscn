@@ -8,8 +8,7 @@ size = 20
 use_filter = true
 font_data = ExtResource( 2 )
 
-[node name="Slot0" type="Node2D"]
-position = Vector2( -128, 0 )
+[node name="Slot" type="Node2D"]
 
 [node name="SlotHeat" type="TextureProgress" parent="."]
 modulate = Color( 1, 0.701961, 0.14902, 0.921569 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/bots/tex_player_leg.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/player/Player.gd" type="Script" id=2]
@@ -10,11 +10,12 @@
 [ext_resource path="res://assets/weapons/sfx_Weap_Almost_Overheating.wav" type="AudioStream" id=8]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/ui/PlayerUI.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/intro weapon/IntroWeapon.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/weapons/energy cannon/EnergyCannon.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/passives/transform speed/TransformSpeedIII.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/roll speed/RollSpeedIII.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=17]
 
 [sub_resource type="Animation" id=1]
 length = 0.2
@@ -91,38 +92,52 @@ shape = SubResource( 2 )
 
 [node name="Scattershot" parent="Weapons" index="1" instance=ExtResource( 9 )]
 
-[node name="EnergyCannon" parent="Weapons" index="2" instance=ExtResource( 13 )]
-
-[node name="NukeLauncher" parent="Weapons" index="3" instance=ExtResource( 14 )]
-
 [node name="Passives" type="Node2D" parent="." index="8"]
 visible = false
 
 [node name="AllItems" type="Node2D" parent="." index="9"]
 visible = false
 
-[node name="Scattershot" parent="AllItems" index="0" instance=ExtResource( 9 )]
+[node name="ChargeForceI4" parent="AllItems" index="0" instance=ExtResource( 5 )]
 
-[node name="Scattershot2" parent="AllItems" index="1" instance=ExtResource( 9 )]
+[node name="ChargeForceI5" parent="AllItems" index="1" instance=ExtResource( 5 )]
 
-[node name="ChargeForceI" parent="AllItems" index="2" instance=ExtResource( 5 )]
+[node name="ChargeForceI6" parent="AllItems" index="2" instance=ExtResource( 5 )]
 
-[node name="ChargeForceI2" parent="AllItems" index="3" instance=ExtResource( 5 )]
+[node name="RollSpeedIII" parent="AllItems" index="3" instance=ExtResource( 15 )]
 
-[node name="TransformSpeedI" parent="AllItems" index="4" instance=ExtResource( 11 )]
+[node name="RollSpeedIII2" parent="AllItems" index="4" instance=ExtResource( 15 )]
 
-[node name="RollSpeedIII" parent="AllItems" index="5" instance=ExtResource( 15 )]
+[node name="RollSpeedIII3" parent="AllItems" index="5" instance=ExtResource( 15 )]
 
-[node name="RollSpeedIII2" parent="AllItems" index="6" instance=ExtResource( 15 )]
+[node name="ChargeForceIII" parent="AllItems" index="6" instance=ExtResource( 11 )]
 
-[node name="RollSpeedIII3" parent="AllItems" index="7" instance=ExtResource( 15 )]
+[node name="ChargeForceIII2" parent="AllItems" index="7" instance=ExtResource( 11 )]
+
+[node name="ChargeForceIII3" parent="AllItems" index="8" instance=ExtResource( 11 )]
+
+[node name="TransformSpeedI" parent="AllItems" index="9" instance=ExtResource( 16 )]
+
+[node name="ChargeCooldownIII" parent="AllItems" index="10" instance=ExtResource( 17 )]
+
+[node name="ChargeCooldownIII2" parent="AllItems" index="11" instance=ExtResource( 17 )]
+
+[node name="ChargeCooldownIII3" parent="AllItems" index="12" instance=ExtResource( 17 )]
+
+[node name="TransformSpeedIII" parent="AllItems" index="13" instance=ExtResource( 13 )]
+
+[node name="TransformSpeedIII2" parent="AllItems" index="14" instance=ExtResource( 13 )]
+
+[node name="TransformSpeedIII3" parent="AllItems" index="15" instance=ExtResource( 13 )]
 
 [node name="Camera2D" type="Camera2D" parent="." index="11"]
 current = true
-zoom = Vector2( 1.7, 1.7 )
-smoothing_speed = 10.0
+zoom = Vector2( 1.75, 1.75 )
+smoothing_speed = 20.0
 
 [node name="PlayerUI" parent="." index="12" instance=ExtResource( 10 )]
+
+[node name="HeldItem" type="Sprite" parent="PlayerUI" index="2"]
 [connection signal="tween_all_completed" from="Bars/ChargeLevel/ChargeTween" to="." method="_on_ChargeTween_tween_all_completed"]
 
 [editable path="PlayerUI"]

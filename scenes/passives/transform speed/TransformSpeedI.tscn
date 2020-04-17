@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.gd" type="Script" id=2]
-[ext_resource path="res://assets/passives/tex_quick_transform.png" type="Texture" id=3]
+[ext_resource path="res://assets/passives/tex_transform_speed_I.png" type="Texture" id=3]
 
 [node name="TransformSpeedI" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
