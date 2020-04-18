@@ -7,12 +7,12 @@ onready var hud_weapon_slots: = $PlayerUI/WeaponSlots
 onready var ui_inventory = $PlayerUI/Inventory
 onready var ui_loadout: = $PlayerUI/Inventory/Slots/SlotsContainer
 onready var ui_all_items: = $PlayerUI/Inventory/AllItems/SlotsContainer
+onready var built_in_weapon: = $Weapons.get_child(0)
 
 const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
 const WEAP_HEAT_COLOR: = Color(1, 0.7, 0.15) #orange
 
-var is_customizable: bool = false
 var arr_passives: Array = [null, null, null, null, null]
 var arr_items: Array = [
 	null, null, null, null, null,
@@ -33,20 +33,12 @@ func _init_player() -> void:
 	bar_weapon_heat.max_value = current_weapon.heat_capacity
 	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
-	var i: = 0 #initialize player passives
-	for passive in $Passives.get_children():
-		arr_passives[i] = passive
-		i += 1
-		if i == 5:
-			break
-	i = 0 #initialize player items
-	for item in $AllItems.get_children():
-		arr_items[i] = item
-		i += 1
-		if i == 20:
-			break
+	
+	#will remove node later???
+	_init_player_nodes()
 	#update capped vars
 	_update_player_vars()
+	var i: = 0
 	i = 0 #connect weapons inventory buttons
 	for weap_slot in ui_loadout.get_node("WeaponSlots").get_children():
 		weap_slot.connect("pressed", self, "_on_WeaponSlot_pressed", [weap_slot.name])
@@ -71,6 +63,23 @@ func _init_player() -> void:
 	#initialize ui items
 	for slot_num in arr_items.size():
 		_update_ui_items(slot_num)
+
+
+#if passives and allitems node are populated
+func _init_player_nodes() -> void:
+	 #initialize player passives
+	var i: int = 0
+	for passive in $Passives.get_children():
+		arr_passives[i] = passive
+		i += 1
+		if i == 5:
+			break
+	i = 0 #initialize player items
+	for item in $AllItems.get_children():
+		arr_items[i] = item
+		i += 1
+		if i == 20:
+			break
 
 
 func _init_slot_selected() -> void:
@@ -181,7 +190,7 @@ func _control(delta):
 
 func _physics_process(delta: float) -> void:
 	#var is_in_control has no influence here
-	$PlayerUI/HeldItem.position = get_viewport().get_mouse_position()
+	held_item.position = get_viewport().get_mouse_position()
 	
 	_update_bar_weapon_heat()
 	
@@ -228,7 +237,6 @@ func _control_player_weapon_hotkeys() -> void:
 	elif Input.is_action_just_pressed("weap_slot_4"):
 		slot_num = 4
 	if slot_num != -1:
-		change_weapon(slot_num)
 		_change_slot_selected(slot_num)
 		bar_weapon_heat.max_value = current_weapon.heat_capacity
 		bar_weapon_heat.value = 0
@@ -261,74 +269,60 @@ func _update_bar_weapon_heat() -> void:
 	bar_weapon_heat.value = current_weapon.current_heat
 
 
+################################################################################
+# inventory management
+################################################################################
+
+var is_customizable: bool = false
+var class_weapon = preload("res://scenes/weapons/_base/_BaseWeapon.gd")
+var class_passive = preload("res://scenes/passives/_base/_BasePassive.gd")
 var dict_held: Dictionary = {
 	"item": null,
 	"from_slot": null,
 	"slot_num": -1
 }
-var class_weapon = preload("res://scenes/weapons/_base/_BaseWeapon.gd")
-var class_passive = preload("res://scenes/passives/_base/_BasePassive.gd")
+
+onready var held_item = $PlayerUI/HeldItem
 
 
 func _on_TrashSlot_pressed() -> void:
 	print("trash slot pressed")
 
 
-#code similar pattern, will refactor later
-
-
 func _on_ItemSlot_pressed(slot_name: String) -> void:
-	var slot_num: = slot_name as int
-	if dict_held["item"] == null && arr_items[slot_num] == null:
-		return
-	if dict_held["item"] == null:
-		dict_held["item"] = arr_items[slot_num]
-		dict_held["from_slot"] = arr_items
-		dict_held["slot_num"] = slot_num
-		$PlayerUI/HeldItem.texture = dict_held["item"].get_node("SlotIcon").texture
-		$PlayerUI/HeldItem.rotation = dict_held["item"].get_node("SlotIcon").rotation
-		arr_items[slot_num] = null
-		_update_ui_items(slot_num)
-	elif dict_held["item"] != null:
-		_swap_items(slot_num, arr_items)
+	_hold_item(slot_name, arr_items)
 
 
 func _on_WeaponSlot_pressed(slot_name: String) -> void:
-#	_set_weapon_access(_get_slot_num(slot_name))
-	var slot_num: = slot_name as int
-	if dict_held["item"] == null && arr_weapons[slot_num] == null:
-		return
-	if dict_held["item"] == null:
-		dict_held["item"] = arr_weapons[slot_num]
-		dict_held["from_slot"] = arr_weapons
-		dict_held["slot_num"] = slot_num
-		$PlayerUI/HeldItem.texture = dict_held["item"].get_node("SlotIcon").texture
-		$PlayerUI/HeldItem.rotation = dict_held["item"].get_node("SlotIcon").rotation
-		arr_weapons[slot_num] = null
-		_update_ui_weapons(slot_num)
-	elif dict_held["item"] != null && dict_held["item"] is class_weapon == false:
-		return
-	elif dict_held["item"] != null:
-		_swap_items(slot_num, arr_weapons)
+	_hold_item(slot_name, arr_weapons)
 
 
 func _on_PassiveSlot_pressed(slot_name: String) -> void:
-#	_set_passive_access(_get_slot_num(slot_name))
+	_hold_item(slot_name, arr_passives)
+
+
+func _hold_item(slot_name: String, arr: Array) -> void:
 	var slot_num: = slot_name as int
-	if dict_held["item"] == null && arr_passives[slot_num] == null:
+	if dict_held["item"] == null && arr[slot_num] == null:
 		return
 	if dict_held["item"] == null:
-		dict_held["item"] = arr_passives[slot_num]
-		dict_held["from_slot"] = arr_passives
+		dict_held["item"] = arr[slot_num]
+		dict_held["from_slot"] = arr
 		dict_held["slot_num"] = slot_num
-		$PlayerUI/HeldItem.texture = dict_held["item"].get_node("SlotIcon").texture
-		$PlayerUI/HeldItem.rotation = dict_held["item"].get_node("SlotIcon").rotation
-		arr_passives[slot_num] = null
-		_update_ui_passives(slot_num)
-	elif dict_held["item"] != null && dict_held["item"] is class_passive == false:
-		return
+		arr[slot_num] = null
+		held_item.texture = dict_held["item"].get_node("SlotIcon").texture
+		held_item.rotation = dict_held["item"].get_node("SlotIcon").rotation
+		match arr:
+			arr_items: _update_ui_items(slot_num)
+			arr_weapons: _update_ui_weapons(slot_num)
+			arr_passives: _update_ui_passives(slot_num)
 	elif dict_held["item"] != null:
-		_swap_items(slot_num, arr_passives)
+		if arr == arr_passives && dict_held["item"] is class_passive == false:
+			return
+		elif arr == arr_weapons && dict_held["item"] is class_weapon == false:
+			return
+		elif dict_held["item"] != null:
+			_swap_items(slot_num, arr)
 
 
 func _swap_items(slot_num: int, to_slot: Array) -> void:
@@ -339,15 +333,9 @@ func _swap_items(slot_num: int, to_slot: Array) -> void:
 		ui_loadout.get_node("HBoxContainer/InvalidSelectWarning/Anim").play("fade")
 		return
 	else:
-		dict_held["from_slot"][dict_held["slot_num"]] = to_slot[slot_num]
+		var temp = to_slot[slot_num]
 		to_slot[slot_num] = dict_held["item"]
-		match dict_held["from_slot"]:
-			arr_items: _update_ui_items(dict_held["slot_num"])
-			arr_weapons:
-				_update_ui_weapons(dict_held["slot_num"])
-				_init_slot_selected()
-			arr_passives:
-				_update_ui_passives(dict_held["slot_num"])
+		dict_held["item"] = temp
 		match to_slot:
 			arr_items: _update_ui_items(slot_num)
 			arr_weapons:
@@ -355,50 +343,9 @@ func _swap_items(slot_num: int, to_slot: Array) -> void:
 				_init_slot_selected()
 			arr_passives:
 				_update_ui_passives(slot_num)
-		dict_held["item"] = null
-		dict_held["from_slot"] = null
-		dict_held["slot_num"] = -1
-		$PlayerUI/HeldItem.texture = null
-
-############################## loadout stuff #################################
-
-#func _set_weapon_access(slot_num: int) -> void:
-#	var node: = ui_loadout.get_node("WeaponSlots/Slot" + slot_num as String)
-#	var weap_sprite: = node.get_node("Sprite")
-#	_manage_loadout(weap_sprite, slot_num, "weap")
-#
-#
-#func _set_passive_access(slot_num: int) -> void:
-#	var node: = ui_loadout.get_node("PassiveSlots/Slot" + slot_num as String)
-#	var passive_sprite: = node.get_node("Sprite")
-#	_manage_loadout(passive_sprite, slot_num, "passive")
-
-
-#func _manage_loadout(sprite: Sprite, swap_label: Label, slot_num: int, item_slot: String) -> void:
-#	if sprite.texture == null && item_held == null: #if first slot selected is empty
-#		return
-#	elif sprite.texture != null && item_held == null: #if first slot selected is not empty
-#		if item_slot == "weap":
-#			slot_held = slot_num
-#			item_held = dict_weapons[slot_num]
-#		elif item_slot == "passive":
-#			slot_held = slot_num
-#			item_held = dict_passives[slot_num]
-#		swap_label.show()
-#	elif swap_label.visible == true && item_held != null: #second slot selected is same as first
-#		item_held = null
-#		slot_held = -1
-#		swap_label.hide()
-#	elif swap_label.visible == false && item_held != null: #second slot selected, begin swapping
-#		if item_held is class_weapon && item_slot == "weap":
-#			dict_weapons[slot_held] = dict_weapons[slot_num]
-#			dict_weapons[slot_num] = item_held
-#			_update_ui_weapons()
-#			item_held = null
-#			slot_held = -1
-#		elif item_held is class_passive && item_slot == "passive":
-#			dict_passives[slot_held] = dict_passives[slot_num]
-#			dict_passives[slot_num] = item_held
-#			_update_ui_passives()
-#			item_held = null
-#			slot_held = -1
+		if dict_held["item"] == null:
+			dict_held["from_slot"] = null
+			dict_held["slot_num"] = -1
+			held_item.texture = null
+			return
+		held_item.texture = dict_held["item"].get_node("SlotIcon").texture
