@@ -142,10 +142,6 @@ stream = ExtResource( 9 )
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 
-[node name="TechMod" type="Node2D" parent="."]
-
-[node name="Weapons" type="Node2D" parent="."]
-
 [node name="CollisionSpark" type="Particles2D" parent="."]
 emitting = false
 amount = 100
@@ -159,6 +155,8 @@ process_material = SubResource( 5 )
 explosion_radius = 150.0
 damage = 10.0
 knockback = 800.0
+
+[node name="Weapons" type="Node2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

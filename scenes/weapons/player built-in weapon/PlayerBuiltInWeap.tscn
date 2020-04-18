@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/player built-in weapon/PlayerBuiltInWeapProj.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/player built-in weapon/PlayerBuiltInWeap.gd" type="Script" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 0.184857, 0.984863, 0.0153885, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -31,7 +30,7 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="IntroWeapon" instance=ExtResource( 2 )]
+[node name="PlayerBuiltInWeap" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
 heat_capacity = 12.0

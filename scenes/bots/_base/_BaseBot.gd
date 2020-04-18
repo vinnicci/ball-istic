@@ -59,11 +59,11 @@ onready var timer_charge_cooldown: = $Timers/ChargeCooldown
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
-	_reset_bot_vars()
+	reset_bot_vars()
 
 
 func _init_bot() -> void:
-	#weapons
+	#weapons initialized here for ai too
 	var initialized_selected_weap: = false
 	var i: = -1
 	for weapon in $Weapons.get_children():
@@ -131,7 +131,7 @@ func _plot_circle_points(radius) -> Array:
 
 
 #use only for initialization or bot stations
-func _reset_bot_vars() -> void:
+func reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	bar_shield.max_value = shield_capacity
 	bar_shield.value = current_shield
@@ -189,7 +189,7 @@ func _physics_process(delta: float) -> void:
 
 func _control(delta) -> void:
 	if has_node("AI") == true: #<- make sure to name attached ai nodes "AI"
-		$AI._control(delta) #<- ai node must have virtual _control() func
+		$AI._control(delta)
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
@@ -302,10 +302,10 @@ func change_weapon(slot_num: int) -> void:
 	if weap == null:
 		return
 	if roll_mode == false:
-		current_weapon.visible = !current_weapon.visible
+		current_weapon.visible = false
 	current_weapon = weap
 	if roll_mode == false:
-		current_weapon.visible = !current_weapon.visible
+		current_weapon.visible = true
 
 
 func charge(charge_direction: float) -> void:
@@ -317,7 +317,7 @@ func charge(charge_direction: float) -> void:
 
 
 func take_damage(damage: float, knockback: Vector2) -> void:
-	apply_knockback(knockback)
+	_apply_knockback(knockback)
 	if is_destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -337,7 +337,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		_explode()
 
 
-func apply_knockback(knockback: Vector2) -> void:
+func _apply_knockback(knockback: Vector2) -> void:
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 
 

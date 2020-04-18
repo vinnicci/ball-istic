@@ -27,7 +27,7 @@ script = ExtResource( 5 )
 position = Vector2( 4544.84, 3008.47 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
-position = Vector2( 225.392, 2968.31 )
+position = Vector2( 3866.7, 2989.33 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 6 )]
 position = Vector2( 1990.07, 2953.35 )

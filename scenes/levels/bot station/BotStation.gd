@@ -7,7 +7,6 @@ func _ready() -> void:
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body.name == "Player":
-		print("ready to customize")
 		$EnterSound.play()
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
@@ -16,9 +15,8 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 func _on_Area2D_body_exited(body: Node) -> void:
 	if body.name == "Player":
-		print("customization done")
 		$ExitSound.play()
 		$Sprite/Anim.play("fading")
 		body.is_customizable = false
-		body._reset_bot_vars()
-		body._update_player_vars()
+		body.reset_bot_vars()
+		body.update_player_vars()

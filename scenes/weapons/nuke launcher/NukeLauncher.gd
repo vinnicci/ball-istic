@@ -1,6 +1,7 @@
 extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
+#that nuke sprite in weapon
 func _process(_delta: float) -> void:
 	if current_heat > heat_capacity && is_overheating == false:
 		current_heat = heat_capacity + (heat_capacity*0.05)

@@ -77,7 +77,6 @@ margin_top = 18.0
 margin_right = 342.0
 margin_bottom = 51.0
 custom_fonts/font = ExtResource( 1 )
-text = "YOU NEED TO BE IN A BOT STATION"
 
 [node name="Anim" type="AnimationPlayer" parent="Slots/SlotsContainer/HBoxContainer/InvalidSelectWarning"]
 anims/fade = SubResource( 1 )

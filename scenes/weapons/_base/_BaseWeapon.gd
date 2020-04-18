@@ -8,7 +8,6 @@ export (float) var heat_dissipation_per_sec: float = 1
 export (float, 0, 1.0) var heat_cooled_factor: float = 0.7 #heat must be below this threshold to return firing
 export (float) var shoot_cooldown: float = 1.0
 
-
 var current_heat: float
 var is_overheating: bool = false
 
@@ -45,7 +44,6 @@ func _on_WeaponTween_tween_all_completed() -> void:
 		modulate = Color(1,1,1,1)
 
 
-#bundle projectiles
 func _instantiate_projectile() -> Array:
 	var projectiles = [Projectile.instance()]
 	return projectiles
