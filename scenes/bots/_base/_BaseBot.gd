@@ -110,12 +110,10 @@ func _init_legs(circle_points) -> void:
 		leg_node.add_child(leg_sprite_c)
 		leg_node.position = circle_points[i]
 		_legs_position[leg_node] = circle_points[i]
-		if i == 0:
-			leg_node.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
-		elif i == 1:
-			leg_node.rotation = deg2rad(12*deg)
-		elif i == 2:
-			leg_node.rotation = deg2rad(20*deg)
+		match i:
+			0: leg_node.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
+			1: leg_node.rotation = deg2rad(12*deg)
+			2: leg_node.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
 
 
@@ -230,8 +228,9 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
-#false means losing control to rolling, shooting, charging, and switching mode
-#no effect to selecting weapon slot, opening loadout screen
+#false means losing control to rolling, shooting, charging, selecting weapon slot,
+#and switching mode
+#no effect to opening loadout screen
 func _check_if_in_control() -> bool:
 	return is_alive == true && is_charging == false && is_transforming == false
 
@@ -305,6 +304,7 @@ func change_weapon(slot_num: int) -> void:
 		current_weapon.visible = false
 	current_weapon = weap
 	if roll_mode == false:
+		current_weapon.look_at(get_global_mouse_position())
 		current_weapon.visible = true
 
 

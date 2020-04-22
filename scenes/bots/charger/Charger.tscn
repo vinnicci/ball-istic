@@ -9,6 +9,7 @@ resource_local_to_scene = true
 
 [node name="Charger" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+roll_speed = 1500
 charge_force_factor = 0.6
 
 [node name="Leg3" type="Position2D" parent="Legs" index="3"]

@@ -4,20 +4,23 @@ no special, balanced overall
 superheat tech:
 deal heat damage -> increase enemy weapon heat, suppress weapon heat dissipation
 
-freeze tech:
+superfreeze tech:
 deal freeze damage -> reduce enemy speed, suppress charge attack
 
-electro tech:
+supervolt tech:
 deal electro damage -> massive shield damage, suppress shield regen
 
 heavy tech:
-no shields, massive hp capacity, slow, increased weapon overall power, explosives, mobile repair tech
+pros: massive hp, increased weapon stats for heat, damage and rate of fire, explosives, drone rays for repair and heat dissipation
+cons: no shields, slow
 
 covert tech:
-balanced shield and hp, high mobility, long range weapons, strong charge attacks, cloaking, and disguise tech
+pros: high mobility, fast transform, long range weapons, stealth tech
+cons: shield and hp slightly lower than standard
 
 high tech:
-massive shield, low hp, phase tech
+pros: massive shield, beam and phase tech
+cons: low hp
 
 experimental tech:
-niche, high risk high reward mechanics for weapons and passives
+niche, unconventional

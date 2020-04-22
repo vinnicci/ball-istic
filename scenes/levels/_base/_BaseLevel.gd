@@ -25,10 +25,10 @@ func _process(delta: float) -> void:
 		is_player_dead = true
 
 
-func _on_weapon_shot(projectiles, proj_position, proj_direction, hostile_proj) -> void:
+func _on_weapon_shot(projectiles, proj_position, proj_direction, origin) -> void:
 	for projectile in projectiles:
 		add_child(projectile)
-		projectile.ready_travel(proj_position, proj_direction, hostile_proj)
+		projectile.ready_travel(proj_position, proj_direction, origin)
 
 
 func get_points(start: Vector2, end: Vector2) -> Array:

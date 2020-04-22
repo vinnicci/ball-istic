@@ -6,7 +6,7 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
-var proj_origin: bool
+var origin: bool
 var velocity: Vector2
 
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 
 
 func ready_travel(pos, dir, origin) -> void:
-	proj_origin = origin
+	self.origin = origin
 	$RangeTimer.wait_time = proj_range as float/speed as float
 	$RangeTimer.start()
 	_travel(pos, dir)
@@ -36,9 +36,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body.get_parent().name == "Bots" && body.is_hostile == proj_origin:
+	if body.get_parent().name == "Bots" && body.is_hostile == self.origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile != proj_origin:
+	elif body.get_parent().name == "Bots" && body.is_hostile != self.origin:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))

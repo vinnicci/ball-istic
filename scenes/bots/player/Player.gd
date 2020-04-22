@@ -1,14 +1,6 @@
 extends "res://scenes/bots/_base/_BaseBot.gd"
 
 
-onready var bar_weapon_heat: = $Bars/WeaponHeat
-onready var bar_charge_level: = $Bars/ChargeLevel
-onready var hud_weapon_slots: = $PlayerUI/WeaponSlots
-onready var ui_inventory = $PlayerUI/Inventory
-onready var ui_loadout: = $PlayerUI/Inventory/Slots/SlotsContainer
-onready var ui_all_items: = $PlayerUI/Inventory/AllItems/SlotsContainer
-onready var built_in_weapon: = $Weapons.get_child(0)
-
 const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
 const WEAP_HEAT_COLOR: = Color(1, 0.7, 0.15) #orange
@@ -20,6 +12,14 @@ var arr_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
+
+onready var bar_weapon_heat: = $Bars/WeaponHeat
+onready var bar_charge_level: = $Bars/ChargeLevel
+onready var hud_weapon_slots: = $PlayerUI/WeaponSlots
+onready var ui_inventory = $PlayerUI/Inventory
+onready var ui_loadout_slots: = $PlayerUI/Inventory/Slots/SlotsContainer
+onready var ui_all_items_slots: = $PlayerUI/Inventory/AllItems/SlotsContainer
+onready var built_in_weapon: = $Weapons.get_child(0)
 
 
 func _ready() -> void:
@@ -39,21 +39,21 @@ func _init_player() -> void:
 	update_player_vars()
 	var i: = 0
 	i = 0 #connect weapon slots
-	for weap_slot in ui_loadout.get_node("WeaponSlots").get_children():
+	for weap_slot in ui_loadout_slots.get_node("WeaponSlots").get_children():
 		weap_slot.connect("pressed", self, "_on_WeaponSlot_pressed", [weap_slot.name])
 		i += 1
 	i = 0 #connect passive slots
-	for passive_slot in ui_loadout.get_node("PassiveSlots").get_children():
+	for passive_slot in ui_loadout_slots.get_node("PassiveSlots").get_children():
 		passive_slot.connect("pressed", self, "_on_PassiveSlot_pressed", [passive_slot.name])
 		i += 1
 	i = 0 #connect all item slots
-	for all_item_slot in ui_all_items.get_node("ItemSlots").get_children():
+	for all_item_slot in ui_all_items_slots.get_node("ItemSlots").get_children():
 		all_item_slot.connect("pressed", self, "_on_ItemSlot_pressed", [all_item_slot.name])
 		i += 1
 		if i == 20:
 			break
 	#connect trash slot
-	ui_all_items.get_node("TrashSlot").connect("pressed", self, "_on_TrashSlot_pressed")
+	ui_all_items_slots.get_node("TrashSlot").connect("pressed", self, "_on_TrashSlot_pressed")
 	#initialize ui weapons
 	_init_weap_and_slot_selected()
 	#initialize ui passives
@@ -113,7 +113,7 @@ func _update_ui_weapons(slot_num: int) -> bool:
 	var slot_num_str: = slot_num as String
 	var hud_weap_sprite: = hud_weapon_slots.get_node(slot_num_str + "/WeaponSprite")
 	var hud_weap_heat: = hud_weapon_slots.get_node(slot_num_str + "/SlotHeat")
-	var inv_weap_sprite: = ui_loadout.get_node("WeaponSlots/" + slot_num_str + "/Sprite")
+	var inv_weap_sprite: = ui_loadout_slots.get_node("WeaponSlots/" + slot_num_str + "/Sprite")
 	if weap == null: #wipe empty weapon slot
 		hud_weap_sprite.texture = null
 		inv_weap_sprite.texture = null
@@ -130,7 +130,7 @@ func _update_ui_weapons(slot_num: int) -> bool:
 func _update_ui_passives(slot_num: int) -> void:
 	var passive = arr_passives[slot_num]
 	var slot_num_str: = slot_num as String
-	var inv_passive_sprite: = ui_loadout.get_node("PassiveSlots/" + slot_num_str + "/Sprite")
+	var inv_passive_sprite: = ui_loadout_slots.get_node("PassiveSlots/" + slot_num_str + "/Sprite")
 	if passive == null: #wipe empty passive slot
 		inv_passive_sprite.texture = null
 	else:
@@ -142,7 +142,7 @@ func _update_ui_passives(slot_num: int) -> void:
 func _update_ui_items(slot_num: int) -> void:
 	var item = arr_items[slot_num]
 	var slot_num_str: = slot_num as String
-	var inv_item_sprite: = ui_all_items.get_node("ItemSlots/" + slot_num_str + "/Sprite")
+	var inv_item_sprite: = ui_all_items_slots.get_node("ItemSlots/" + slot_num_str + "/Sprite")
 	if item == null: #wipe empty slot
 		inv_item_sprite.texture = null
 	else:
@@ -163,6 +163,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 func _control(delta):
 	current_weapon.look_at(get_global_mouse_position())
+	_control_player_weapon_hotkeys()
 	if is_customizable == true && dict_held["item"] != null:
 		return
 	if Input.is_action_pressed("move_up"):
@@ -193,8 +194,6 @@ func _physics_process(delta: float) -> void:
 	_update_bar_weapon_heat()
 	
 	_update_weapon_hud_elements()
-	
-	_control_player_weapon_hotkeys()
 	
 	_control_camera()
 	
@@ -283,6 +282,7 @@ var dict_held: Dictionary = {
 onready var held_item = $PlayerUI/HeldItem
 
 
+#refactor later, integrate with other slots
 func _on_TrashSlot_pressed() -> void:
 	if dict_held["item"] == null && trash_slot_held == null:
 		return
@@ -295,6 +295,9 @@ func _on_TrashSlot_pressed() -> void:
 		return
 	elif dict_held["item"] is class_weapon && _check_if_equipping_weapon() == false:
 		_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
+		return
+	elif dict_held["item"] != null && dict_held["from_slot"] != "items" && is_customizable == false:
+		_show_inventory_warning("MUST BE IN A BOT STATION")
 		return
 	else:
 		trash_slot_held = dict_held["item"]
@@ -381,8 +384,8 @@ func _swap_item(item: Node, to_slot: String, slot_num: int) -> void:
 
 
 func _show_inventory_warning(warning_text: String) -> void:
-	var warning = ui_loadout.get_node("HBoxContainer/InvalidSelectWarning")
-	var warning_anim = ui_loadout.get_node("HBoxContainer/InvalidSelectWarning/Anim")
+	var warning = ui_loadout_slots.get_node("HBoxContainer/InvalidSelectWarning")
+	var warning_anim = ui_loadout_slots.get_node("HBoxContainer/InvalidSelectWarning/Anim")
 	warning.text = warning_text
 	warning_anim.play("fade")
 

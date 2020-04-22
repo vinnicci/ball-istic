@@ -4,9 +4,9 @@ extends "res://scenes/weapons/_base/_BaseExplosiveProjectile.gd"
 func _on_Projectile_body_entered(body: Node) -> void:
 	if body.has_method("take_damage") == false:
 		return
-	if body.get_parent().name == "Bots" && body.is_hostile == proj_origin:
+	if body.get_parent().name == "Bots" && body.is_hostile == self.origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile != proj_origin:
+	elif body.get_parent().name == "Bots" && body.is_hostile != self.origin:
 		$Explosion.start_explosion()
 	else:
 		$Explosion.start_explosion()
