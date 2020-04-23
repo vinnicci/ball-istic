@@ -17,3 +17,6 @@ stream = ExtResource( 2 )
 
 [node name="ExitSound" parent="." index="3"]
 stream = ExtResource( 4 )
+
+[node name="Label" parent="AccessUI" index="0"]
+text = "BOT STATION"

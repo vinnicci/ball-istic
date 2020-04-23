@@ -1,8 +1,9 @@
 extends Node
 
 
-onready var parent_node: = get_parent().get_parent()
+onready var parent_node
 
 
 func apply_effects() -> void:
-	pass
+	if Globals.player.get_ref() != null:
+		parent_node = Globals.player.get_ref()

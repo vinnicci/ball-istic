@@ -19,9 +19,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
-text = "No BTREE node is selected"
+text = "No BTREE node is selected OR the parent script is ERROR !"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="hint" type="VBoxContainer" parent="."]
 anchor_right = 1.0
@@ -31,7 +34,6 @@ mouse_filter = 2
 alignment = 2
 
 [node name="help" type="VBoxContainer" parent="."]
-editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,14 +41,15 @@ mouse_filter = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="help"]
-margin_top = 90.0
-margin_right = 480.0
-margin_bottom = 189.0
+margin_top = 122.0
+margin_right = 640.0
+margin_bottom = 238.0
 text = "Control + F = Focus to selected node
 Control + S = Save
 Control + Shift + Mouse Scroll = Zoom In/Out
 (Select a node) and Control + Shift + C = Duplicate Recursive
 (Select a node) and Control + Shift + X = Delete Recursive
-(Select a node) and Control + Shift + Space = Move Recursive"
+(Select a node) and Control + Shift + Space = Move Recursive
+(Select a node)  and Control + Shift + M = Minimize Node"
 align = 1
 valign = 1

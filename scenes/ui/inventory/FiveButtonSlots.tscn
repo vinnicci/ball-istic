@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/ui/inventory/SingleSlot.tscn" type="PackedScene" id=2]
 
-[node name="TexButtonSlots" type="HBoxContainer"]
+[node name="FiveButtonSlots" type="HBoxContainer"]
 __meta__ = {
 "_edit_use_anchors_": false
 }

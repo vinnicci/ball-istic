@@ -10,8 +10,10 @@ export (float) var shoot_cooldown: float = 1.0
 
 var current_heat: float
 var is_overheating: bool = false
+var class_bot = preload("res://scenes/bots/_base/_BaseBot.gd")
+var parent_init: bool = false
 
-onready var parent_node: = get_parent().get_parent()
+onready var parent_node: Node = get_parent().get_parent()
 
 
 func _ready() -> void:
@@ -39,7 +41,7 @@ func _animate_transform(transform_speed: float) -> void:
 
 
 func _on_WeaponTween_tween_all_completed() -> void:
-	if visible == true && get_parent().get_parent().roll_mode == true:
+	if visible == true && parent_node.roll_mode == true:
 		hide()
 		modulate = Color(1,1,1,1)
 
@@ -50,6 +52,12 @@ func _instantiate_projectile() -> Array:
 
 
 func _process(_delta: float) -> void:
+	#find a way to fix this
+	if parent_node is class_bot == false && parent_init == false:
+		parent_node.get_node("Items").remove_child(self)
+		parent_node = Globals.player.get_ref()
+		parent_node.get_node("Weapons").add_child(self)
+		parent_init = true
 	if current_heat > heat_capacity && is_overheating == false:
 		current_heat = heat_capacity + (heat_capacity*0.05)
 		is_overheating = true

@@ -4,7 +4,6 @@ extends Node2D
 #Escape points: attach Position2ds, enemies will run on these points when fleeing
 #Bots node: attach bots
 
-var player: WeakRef
 var is_player_dead: bool = false
 
 
@@ -13,14 +12,14 @@ func _ready() -> void:
 		if child_node.current_weapon != null:
 			child_node.connect("weapon_shot", self, "_on_weapon_shot")
 		if child_node.name == "Player":
-			player = weakref(child_node)
+			Globals.player = weakref(child_node)
 
 
 func _process(delta: float) -> void:
-	if player.get_ref() == null:
+	if Globals.player.get_ref() == null:
 		return
-	if player.get_ref().is_alive == false && is_player_dead == false:
-		$Camera2D.global_position = player.get_ref().global_position
+	if Globals.player.get_ref().is_alive == false && is_player_dead == false:
+		$Camera2D.global_position = Globals.player.get_ref().global_position
 		$Camera2D.current = true
 		is_player_dead = true
 

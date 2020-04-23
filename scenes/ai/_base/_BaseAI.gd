@@ -29,7 +29,7 @@ func get_path_points(start, end) -> void:
 
 
 func _control(delta):
-	if parent_node.is_in_control == false || enemy == null:
+	if parent_node.is_in_control == false || enemy.get_ref() == null:
 		return
 	$TargetRay.look_at(enemy.get_ref().global_position)
 	if $TargetRay.get_collider() == enemy.get_ref() && enemy_in_sight == false:
@@ -39,7 +39,7 @@ func _control(delta):
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body.get_parent().name == "Bots" && body.is_hostile != parent_node.is_hostile:
-		if enemy == null:
+		if enemy.get_ref() == null:
 			enemy = weakref(body)
 		enemy_in_range = true
 		$TargetRay.enabled = true
@@ -50,14 +50,14 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 
 
 func _on_WithinRange_body_entered(body: Node) -> void:
-	if enemy != null && body == enemy.get_ref():
+	if enemy.get_ref() != null && body == enemy.get_ref():
 		enemy_within_range = true
 	if ally != null && body == ally.get_ref():
 		ally_within_range = true
 
 
 func _on_WithinRange_body_exited(body: Node) -> void:
-	if enemy != null && body == enemy.get_ref():
+	if enemy.get_ref() != null && body == enemy.get_ref():
 		enemy_within_range = false
 	if ally != null && body == ally.get_ref():
 		ally_within_range = false
@@ -98,7 +98,7 @@ func get_dist(from: Vector2, to: Vector2) -> float:
 
 
 func seek(target) -> void:
-	if parent_node.is_in_control == false || target == null:
+	if parent_node.is_in_control == false || target.get_ref() == null:
 		return
 	if parent_node.roll_mode == false:
 		parent_node.switch_mode()
@@ -117,23 +117,26 @@ func seek(target) -> void:
 
 func task_enemy_found(task):
 	if enemy_in_sight == true:
-		print("found ya")
 		task.succeed()
+	else:
+		task.failed()
 
 
 func task_enemy_within_range(task):
 	if (enemy_in_sight && enemy_within_range) == true:
-		print("within range")
 		task.succeed()
+	else:
+		task.failed()
 
 
 func task_idle(task):
 	parent_node.velocity = Vector2(0,0)
+	task.succeed()
 
 
 func task_seek_enemy(task):
-	print("chasing")
 	seek(enemy)
+	task.succeed()
 
 
 func task_charge_attack(task):

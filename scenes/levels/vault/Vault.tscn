@@ -10,4 +10,7 @@ script = ExtResource( 2 )
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
+[node name="Label" parent="AccessUI" index="0"]
+text = "VAULT"
+
+[node name="Items" type="Node2D" parent="." index="5"]

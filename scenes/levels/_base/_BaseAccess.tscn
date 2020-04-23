@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/levels/_base/_BaseAccess.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "fading"
@@ -38,5 +39,18 @@ shape = SubResource( 2 )
 [node name="EnterSound" type="AudioStreamPlayer2D" parent="."]
 
 [node name="ExitSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AccessUI" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="AccessUI"]
+visible = false
+margin_left = 52.0
+margin_top = 632.0
+margin_right = 92.0
+margin_bottom = 646.0
+custom_fonts/font = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
