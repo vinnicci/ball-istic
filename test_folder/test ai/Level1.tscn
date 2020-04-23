@@ -47,7 +47,7 @@ position = Vector2( 4542, 2625 )
 [node name="Scattershot" parent="Vault/Items" index="5" instance=ExtResource( 14 )]
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
-position = Vector2( 3866.7, 2989.33 )
+position = Vector2( 3345, 2859 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 6 )]
 position = Vector2( 1990.07, 2953.35 )

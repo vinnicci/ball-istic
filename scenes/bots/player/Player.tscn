@@ -86,15 +86,11 @@ current = true
 zoom = Vector2( 1.75, 1.75 )
 smoothing_speed = 20.0
 
-[node name="CoreMod" type="Node2D" parent="." index="9"]
-
 [node name="PlayerBuiltInWeap" parent="Weapons" index="0" instance=ExtResource( 12 )]
 
-[node name="Passives" type="Node2D" parent="." index="11"]
+[node name="Items" type="Node2D" parent="." index="10"]
 
-[node name="AllItems" type="Node2D" parent="." index="12"]
-
-[node name="PlayerUI" parent="." index="13" instance=ExtResource( 10 )]
+[node name="PlayerUI" parent="." index="11" instance=ExtResource( 10 )]
 
 [node name="HeldItem" type="Sprite" parent="PlayerUI" index="0"]
 z_index = 5

@@ -6,7 +6,7 @@ var arr_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
-var player = preload("res://scenes/bots/player/Player.gd")
+const player = preload("res://scenes/bots/player/Player.gd")
 var locked_down: bool = false
 
 
@@ -29,14 +29,14 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
-		body.ui_access = "VAULT"
+		body.ui_access = "vault"
 		body.ui_loadout_access_button.text = "<VAULT>"
 		body.ui_loadout_access_button.disabled = false
 		body.ui_loadout.visible = false
 		body.ui_vault.visible = true
 		body.arr_access_items = arr_items
 		for i in range(15):
-			body.update_ui_vault(i)
+			body.update_ui_slot(i, "vault")
 
 
 func _on_Area2D_body_exited(body: Node) -> void:

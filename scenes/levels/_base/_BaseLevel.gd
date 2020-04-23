@@ -1,7 +1,6 @@
 extends Node2D
 
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
-#Escape points: attach Position2ds, enemies will run on these points when fleeing
 #Bots node: attach bots
 
 var is_player_dead: bool = false

@@ -139,8 +139,10 @@ margin_bottom = 378.0
 custom_fonts/font = ExtResource( 2 )
 text = "TRASH"
 
-[node name="TrashSlot" parent="SlotsContainer" instance=ExtResource( 3 )]
-modulate = Color( 1, 0.545098, 0.545098, 1 )
+[node name="HBoxContainer" type="HBoxContainer" parent="SlotsContainer"]
 margin_top = 388.0
 margin_right = 366.0
 margin_bottom = 458.0
+
+[node name="TrashSlot" parent="SlotsContainer/HBoxContainer" instance=ExtResource( 3 )]
+modulate = Color( 1, 0.545098, 0.545098, 1 )
