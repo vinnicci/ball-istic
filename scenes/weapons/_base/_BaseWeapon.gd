@@ -18,13 +18,6 @@ func _ready() -> void:
 	$ShootCooldown.wait_time = shoot_cooldown
 
 
-func get_new_parent(new_parent: Node) -> void:
-	parent_node.get_node("Items").remove_child(self)
-	parent_node = new_parent
-	parent_node.add_child(self)
-	parent_node = parent_node.get_parent()
-
-
 func get_projectiles() -> Array:
 	$ShootCooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true

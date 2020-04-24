@@ -2,7 +2,7 @@ extends "res://scenes/levels/_base/_BaseAccess.gd"
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if body.name == "Player":
+	if body is CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$EnterSound.play()
 		$Sprite/Anim.stop()
@@ -11,7 +11,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
-	if body.name == "Player":
+	if body is CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$ExitSound.play()
 		$Sprite/Anim.play("fading")

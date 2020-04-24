@@ -31,7 +31,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[node name="Vault" type="Control"]
+[node name="Depot" type="Control"]
 margin_top = 50.0
 margin_right = 400.0
 margin_bottom = 550.0
@@ -39,26 +39,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VaultContainer" type="VBoxContainer" parent="."]
+[node name="SlotsContainer" type="VBoxContainer" parent="."]
 margin_right = 400.0
 margin_bottom = 372.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VaultContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="SlotsContainer"]
 margin_right = 400.0
 margin_bottom = 39.0
 custom_constants/separation = 217
 
-[node name="VaultLabel" type="Label" parent="VaultContainer/HBoxContainer2"]
+[node name="DepotLabel" type="Label" parent="SlotsContainer/HBoxContainer2"]
 margin_top = 3.0
 margin_right = 43.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
-text = "VAULT"
+text = "DEPOT"
 
-[node name="ToLoadout" type="Button" parent="VaultContainer/HBoxContainer2"]
+[node name="ToLoadout" type="Button" parent="SlotsContainer/HBoxContainer2"]
 margin_left = 260.0
 margin_right = 347.0
 margin_bottom = 39.0
@@ -68,116 +68,116 @@ text = "<LOADOUT>"
 flat = true
 align = 2
 
-[node name="VaultSlots" type="GridContainer" parent="VaultContainer"]
+[node name="DepotSlots" type="GridContainer" parent="SlotsContainer"]
 margin_top = 43.0
 margin_right = 400.0
 margin_bottom = 261.0
 columns = 5
 
-[node name="0" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="0" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 
-[node name="1" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="1" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 74.0
 margin_right = 144.0
 
-[node name="2" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="2" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 148.0
 margin_right = 218.0
 
-[node name="3" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="3" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 222.0
 margin_right = 292.0
 
-[node name="4" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="4" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 296.0
 margin_right = 366.0
 
-[node name="5" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="5" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_top = 74.0
 margin_bottom = 144.0
 
-[node name="6" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="6" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 74.0
 margin_top = 74.0
 margin_right = 144.0
 margin_bottom = 144.0
 
-[node name="7" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="7" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 148.0
 margin_top = 74.0
 margin_right = 218.0
 margin_bottom = 144.0
 
-[node name="8" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="8" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 222.0
 margin_top = 74.0
 margin_right = 292.0
 margin_bottom = 144.0
 
-[node name="9" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="9" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 296.0
 margin_top = 74.0
 margin_right = 366.0
 margin_bottom = 144.0
 
-[node name="10" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="10" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_top = 148.0
 margin_bottom = 218.0
 
-[node name="11" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="11" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 74.0
 margin_top = 148.0
 margin_right = 144.0
 margin_bottom = 218.0
 
-[node name="12" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="12" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 148.0
 margin_top = 148.0
 margin_right = 218.0
 margin_bottom = 218.0
 
-[node name="13" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="13" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 222.0
 margin_top = 148.0
 margin_right = 292.0
 margin_bottom = 218.0
 
-[node name="14" parent="VaultContainer/VaultSlots" instance=ExtResource( 2 )]
+[node name="14" parent="SlotsContainer/DepotSlots" instance=ExtResource( 2 )]
 margin_left = 296.0
 margin_top = 148.0
 margin_right = 366.0
 margin_bottom = 218.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VaultContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SlotsContainer"]
 margin_top = 265.0
 margin_right = 400.0
 margin_bottom = 298.0
 custom_constants/separation = 25
 
-[node name="Label" type="Label" parent="VaultContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="SlotsContainer/HBoxContainer"]
 margin_right = 175.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 text = "TAKE OUT SUCCESS RATE:"
 
-[node name="SuccessRate" type="Label" parent="VaultContainer/HBoxContainer"]
+[node name="SuccessRate" type="Label" parent="SlotsContainer/HBoxContainer"]
 margin_left = 200.0
 margin_right = 240.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 text = "100%"
 
-[node name="Instruction1" type="Label" parent="VaultContainer"]
+[node name="Instruction1" type="Label" parent="SlotsContainer"]
 margin_top = 302.0
 margin_right = 400.0
 margin_bottom = 335.0
 custom_fonts/font = ExtResource( 1 )
 
-[node name="Instruction2" type="Label" parent="VaultContainer"]
+[node name="Instruction2" type="Label" parent="SlotsContainer"]
 margin_top = 339.0
 margin_right = 400.0
 margin_bottom = 372.0
 custom_fonts/font = ExtResource( 1 )
 
-[node name="InstructionAnim" type="AnimationPlayer" parent="VaultContainer"]
+[node name="InstructionAnim" type="AnimationPlayer" parent="SlotsContainer"]
 anims/fade_out = SubResource( 1 )

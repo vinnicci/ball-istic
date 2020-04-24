@@ -6,7 +6,6 @@ var arr_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
-const player = preload("res://scenes/bots/player/Player.gd")
 var locked_down: bool = false
 
 
@@ -25,27 +24,27 @@ func _init_ui_node() -> void:
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if body is player:
+	if body is CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
-		body.ui_access = "vault"
-		body.ui_loadout_access_button.text = "<VAULT>"
+		body.ui_access = "depot"
+		body.ui_loadout_access_button.text = "<DEPOT>"
 		body.ui_loadout_access_button.disabled = false
 		body.ui_loadout.visible = false
-		body.ui_vault.visible = true
+		body.ui_depot.visible = true
 		body.arr_access_items = arr_items
 		for i in range(15):
-			body.update_ui_slot(i, "vault")
+			body.update_ui_slot(i, "depot")
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
-	if body is player:
+	if body is CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.play("fading")
 		body.ui_access = ""
 		body.ui_loadout_access_button.text = ""
 		body.ui_loadout_access_button.disabled = true
 		body.ui_loadout.visible = true
-		body.ui_vault.visible = false
+		body.ui_depot.visible = false
 		body.arr_access_items = []
