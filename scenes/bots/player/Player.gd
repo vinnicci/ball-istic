@@ -29,7 +29,7 @@ func _init_player() -> void:
 	bar_weapon_heat.max_value = current_weapon.heat_capacity
 	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
-	#update capped vars
+	
 	update_player_vars()
 	#connect buttons
 	_connect_buttons()
@@ -101,7 +101,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 
 func _control(delta):
-	current_weapon.look_at(get_global_mouse_position())
+#	current_weapon.look_at(get_global_mouse_position())
 	if (is_using_bot_station == true || ui_access != "") && dict_held["item"] != null:
 		return
 	if Input.is_action_pressed("move_up"):

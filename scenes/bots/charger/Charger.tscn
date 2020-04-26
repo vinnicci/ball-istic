@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/bots/dummy/DestructibleDummy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/bots/tex_destructible_dummy.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/charger/Charger.gd" type="Script" id=3]
+[ext_resource path="res://scenes/ai/charger/ChargerAI.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -10,7 +11,9 @@ resource_local_to_scene = true
 [node name="Charger" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 roll_speed = 1500
-charge_force_factor = 0.6
+charge_cooldown = 1.5
+charge_damage_factor = 0.02
+charge_force_factor = 0.8
 
 [node name="Leg3" type="Position2D" parent="Legs" index="3"]
 
@@ -22,3 +25,6 @@ wait_time = 0.5
 
 [node name="CollisionShape" parent="." index="5"]
 shape = SubResource( 1 )
+
+[node name="AI" parent="." index="9" instance=ExtResource( 4 )]
+visible = false

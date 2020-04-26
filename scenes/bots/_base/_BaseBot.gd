@@ -16,8 +16,8 @@ export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.8
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.75
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
 const OUTLINE_SIZE: float = 3.5
 const ROLLING_EFFECT_FACTOR: float = 0.008
 const ROLL_MODE_DAMP: int = 2
@@ -46,6 +46,7 @@ var is_transforming: bool = false
 var is_in_control: bool = true
 var arr_weapons: Array = [null, null, null, null, null]
 signal weapon_shot
+signal charged
 
 onready var body_outline: = $Body/Outline
 onready var body_texture: = $Body/Texture
@@ -171,7 +172,7 @@ func _physics_process(delta: float) -> void:
 	
 	#everything charge roll
 	#graphical feedback/effects
-	_apply_charging_effects()
+	_end_charging_effect()
 	
 	#rolling ball graphical effect
 	_apply_rolling_effects()
@@ -205,21 +206,6 @@ func _apply_force() -> void:
 	applied_force = velocity
 
 
-func _apply_charging_effects() -> void:
-	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		if is_hostile == true:
-			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
-		elif is_hostile == false:
-			body_outline.color = lerp(body_outline.color, NON_HOSTILE_COLOR, 0.8)
-		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
-		body_weapon_hatch.color = body_outline.color
-		is_charging = false
-	elif linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = Color(1, 0.24, 0.88)
-		body_charge_effect.color.a = 255
-		is_charging = true
-
-
 func _apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -228,9 +214,9 @@ func _apply_rolling_effects() -> void:
 		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
-#false means losing control to rolling, shooting, charging, selecting weapon slot,
-#and switching mode
+#false means losing control to rolling, shooting, charging, and switching mode
 #no effect to opening loadout screen
+#lose control to switching weapon slot on transforming only
 func _check_if_in_control() -> bool:
 	return is_alive == true && is_charging == false && is_transforming == false
 
@@ -312,8 +298,36 @@ func charge(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
+	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
 	timer_charge_cooldown.start()
+
+
+#0.05 sec delay is used to get almost peak linear velocity
+func _on_ChargeEffectDelay_timeout() -> void:
+	emit_signal("charged")
+
+
+func _on_Bot_charged() -> void:
+	is_charging = true
+	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+		body_outline.color = Color(1, 0.24, 0.88)
+		body_charge_effect.color.a = 255
+	else:
+		is_charging = false
+
+
+func _end_charging_effect() -> void:
+	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+		#neutrality color hardcoded for now as a result no customization for outline color
+		#might change later
+		if is_hostile == true:
+			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
+		elif is_hostile == false:
+			body_outline.color = lerp(body_outline.color, NON_HOSTILE_COLOR, 0.8)
+		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
+		body_weapon_hatch.color = body_outline.color
+		is_charging = false
 
 
 func take_damage(damage: float, knockback: Vector2) -> void:
@@ -379,6 +393,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
 	body.take_damage(damage, Vector2(0,0))
+	print(damage)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4

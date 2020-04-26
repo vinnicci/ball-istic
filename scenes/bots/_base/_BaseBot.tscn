@@ -108,6 +108,10 @@ __meta__ = {
 wait_time = 2.0
 one_shot = true
 
+[node name="ChargeEffectDelay" type="Timer" parent="Timers"]
+wait_time = 0.05
+one_shot = true
+
 [node name="ShieldRecoveryTimer" type="Timer" parent="Timers"]
 wait_time = 0.25
 autostart = true
@@ -158,7 +162,9 @@ knockback = 800.0
 
 [node name="Weapons" type="Node2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
+[connection signal="charged" from="." to="." method="_on_Bot_charged"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
+[connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
 [connection signal="timeout" from="Timers/ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
 [connection signal="timeout" from="Timers/ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]
