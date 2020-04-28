@@ -1,7 +1,6 @@
 extends RigidBody2D
 
 
-#make sure to import body texture with repeating enabled
 export (float, 25.0, 100.0) var bot_radius: = 32.0
 export (float) var shield_capacity: = 20
 export (float) var health_capacity: = 20
@@ -16,8 +15,8 @@ export (bool) var is_destructible: = true
 export (bool) var is_hostile: = true
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.7
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
 const OUTLINE_SIZE: float = 3.5
 const ROLLING_EFFECT_FACTOR: float = 0.008
 const ROLL_MODE_DAMP: int = 2
@@ -64,7 +63,7 @@ func _ready() -> void:
 
 
 func _init_bot() -> void:
-	#weapons initialized here for ai too
+	#weapons initialized here, some ai will have multiple weapons
 	var initialized_selected_weap: = false
 	var i: = -1
 	for weapon in $Weapons.get_children():
@@ -83,7 +82,7 @@ func _init_bot() -> void:
 	if is_destructible == false:
 		$Bars.hide()
 	
-	#bot's body set up
+	#bot's body look set up
 	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	body_texture.position = Vector2(-bot_radius, -bot_radius)
 	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
@@ -96,12 +95,11 @@ func _init_bot() -> void:
 	body_charge_effect.polygon = cp
 	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
 	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
-	
-	#other body initializations
+	body_weapon_hatch.polygon = [cp[0], cp[1], cp[2], cp[10], cp[11], cp[12], cp[13], cp[14], cp[22], cp[23]]
 	_init_legs([cp[4], cp[12], cp[20]])
-	_init_hatch([cp[0], cp[1], cp[2], cp[10], cp[11], cp[12], cp[13], cp[14], cp[22], cp[23]])
 
 
+#four-legged bot variant later??
 func _init_legs(circle_points) -> void:
 	var leg_sprite: = $Legs/Sprite
 	var deg: = 360.0/POLY_SIDES as float
@@ -116,10 +114,6 @@ func _init_legs(circle_points) -> void:
 			1: leg_node.rotation = deg2rad(12*deg)
 			2: leg_node.rotation = deg2rad(20*deg)
 	leg_sprite.hide()
-
-
-func _init_hatch(circle_points: Array) -> void:
-	body_weapon_hatch.polygon = circle_points
 
 
 func _plot_circle_points(radius) -> Array:
@@ -187,7 +181,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _control(delta) -> void:
-	if has_node("AI") == true: #<- make sure to name attached ai nodes "AI"
+	if has_node("AI") == true: #<- obviously attached ai nodes should be named "AI"
 		$AI._control(delta)
 
 
@@ -206,6 +200,7 @@ func _apply_force() -> void:
 	applied_force = velocity
 
 
+#make sure to import body texture with repeating enabled
 func _apply_rolling_effects() -> void:
 	if roll_mode == false:
 		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
@@ -215,8 +210,8 @@ func _apply_rolling_effects() -> void:
 
 
 #false means losing control to rolling, shooting, charging, and switching mode
-#no effect to opening loadout screen
 #lose control to switching weapon slot on transforming only
+#no effect to opening inventory
 func _check_if_in_control() -> bool:
 	return is_alive == true && is_charging == false && is_transforming == false
 
@@ -268,12 +263,14 @@ func _animate_weapon_hatch() -> void:
 	weapon_hatch_tween.start()
 
 
+#some weapons have longer anim than hatch, so will change this later
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if roll_mode == true:
 		body_weapon_hatch.hide()
 	is_transforming = false
 
 
+#some weapons' shooting mode aren't auto, so will change this later
 func shoot_weapon() -> void:
 	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
 		return
@@ -294,7 +291,7 @@ func change_weapon(slot_num: int) -> void:
 		current_weapon.visible = true
 
 
-func charge(charge_direction: float) -> void:
+func charge_roll(charge_direction: float) -> void:
 	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
@@ -303,24 +300,22 @@ func charge(charge_direction: float) -> void:
 	timer_charge_cooldown.start()
 
 
-#0.05 sec delay is used to get almost peak linear velocity
+#0.05 sec delay in order to get almost peak linear velocity
 func _on_ChargeEffectDelay_timeout() -> void:
 	emit_signal("charged")
 
 
 func _on_Bot_charged() -> void:
-	is_charging = true
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		body_outline.color = Color(1, 0.24, 0.88)
 		body_charge_effect.color.a = 255
-	else:
-		is_charging = false
+		is_charging = true
 
 
 func _end_charging_effect() -> void:
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
-		#neutrality color hardcoded for now as a result no customization for outline color
-		#might change later
+		#hostility color hardcoded for now, as a result no customization for outline color
+		#will change later
 		if is_hostile == true:
 			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
 		elif is_hostile == false:
@@ -386,13 +381,15 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	$Sounds/ChargeAttackHit.play()
-	$CollisionSpark.look_at(body.global_position)
-	$CollisionSpark.emitting = true
 	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
 		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
+	if body.get_parent().name == "Bots" && body.is_charging == true:
+		damage /= 8
 	body.take_damage(damage, Vector2(0,0))
+	$Sounds/ChargeAttackHit.play()
+	$CollisionSpark.look_at(body.global_position)
+	$CollisionSpark.emitting = true
 	print(damage)
 
 

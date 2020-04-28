@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_shooter_dummy_leg.png-ad15d9304441fc0426238f4e35f96030.s3tc.stex"
-path.etc2="res://.import/tex_shooter_dummy_leg.png-ad15d9304441fc0426238f4e35f96030.etc2.stex"
+path.s3tc="res://.import/tex_self_destruct_charger.png-20d2a1a542f9b2341cd4f1df2bc07b12.s3tc.stex"
+path.etc2="res://.import/tex_self_destruct_charger.png-20d2a1a542f9b2341cd4f1df2bc07b12.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/bots/tex_shooter_dummy_leg.png"
-dest_files=[ "res://.import/tex_shooter_dummy_leg.png-ad15d9304441fc0426238f4e35f96030.s3tc.stex", "res://.import/tex_shooter_dummy_leg.png-ad15d9304441fc0426238f4e35f96030.etc2.stex" ]
+source_file="res://assets/bots/tex_self_destruct_charger.png"
+dest_files=[ "res://.import/tex_self_destruct_charger.png-20d2a1a542f9b2341cd4f1df2bc07b12.s3tc.stex", "res://.import/tex_self_destruct_charger.png-20d2a1a542f9b2341cd4f1df2bc07b12.etc2.stex" ]
 
 [params]
 

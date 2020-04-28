@@ -23,4 +23,4 @@ pros: massive shield, beam and phase tech
 cons: low hp
 
 experimental tech:
-niche, unconventional
+niche, unconventional, critical chances

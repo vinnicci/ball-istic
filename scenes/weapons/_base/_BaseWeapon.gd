@@ -50,8 +50,9 @@ func _instantiate_projectile() -> Array:
 
 
 func _process(_delta: float) -> void:
-	if is_instance_valid(Globals.player) && parent_node == Globals.player:
-		look_at(get_global_mouse_position())
+	#some weapons can't rotate 360 deg
+#	if is_instance_valid(Globals.player) && parent_node == Globals.player && parent_node.is_in_control == true:
+#		look_at(get_global_mouse_position())
 	if current_heat > heat_capacity && is_overheating == false:
 		current_heat = heat_capacity + (heat_capacity*0.05)
 		is_overheating = true

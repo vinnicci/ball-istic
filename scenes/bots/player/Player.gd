@@ -101,7 +101,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 
 func _control(delta):
-#	current_weapon.look_at(get_global_mouse_position())
+	current_weapon.look_at(get_global_mouse_position())
 	if (is_using_bot_station == true || ui_access != "") && dict_held["item"] != null:
 		return
 	if Input.is_action_pressed("move_up"):
@@ -120,7 +120,7 @@ func _control(delta):
 	if Input.is_action_just_released("charge_roll"):
 		if $Timers/ChargeCooldown.is_stopped() == true && roll_mode == true:
 			_update_bar_charge_level()
-		charge(current_weapon.global_rotation)
+		charge_roll(current_weapon.global_rotation)
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 

@@ -19,4 +19,5 @@ stream = ExtResource( 2 )
 stream = ExtResource( 4 )
 
 [node name="Label" parent="AccessUI" index="0"]
-text = "BOT STATION"
+text = "BOT STATION
+REPAIR AND CUSTOMIZE LOADOUT HERE"

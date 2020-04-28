@@ -15,12 +15,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if is_instance_valid(Globals.player) == false:
-		return
-	if Globals.player.is_alive == false && is_player_dead == false:
-		$Camera2D.global_position = Globals.player.global_position
+	if is_instance_valid(Globals.player) == false && is_player_dead == false:
 		$Camera2D.current = true
-		is_player_dead = true
+		is_player_dead == true
 
 
 func _on_weapon_shot(projectiles, proj_position, proj_direction, origin) -> void:

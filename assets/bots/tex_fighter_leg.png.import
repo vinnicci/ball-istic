@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_suicide bot.png-25e5465539f2cf6b304b27423a37c236.s3tc.stex"
-path.etc2="res://.import/tex_suicide bot.png-25e5465539f2cf6b304b27423a37c236.etc2.stex"
+path.s3tc="res://.import/tex_fighter_leg.png-b284101db829d41ecd416afa1b44a3ff.s3tc.stex"
+path.etc2="res://.import/tex_fighter_leg.png-b284101db829d41ecd416afa1b44a3ff.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/bots/tex_suicide bot.png"
-dest_files=[ "res://.import/tex_suicide bot.png-25e5465539f2cf6b304b27423a37c236.s3tc.stex", "res://.import/tex_suicide bot.png-25e5465539f2cf6b304b27423a37c236.etc2.stex" ]
+source_file="res://assets/bots/tex_fighter_leg.png"
+dest_files=[ "res://.import/tex_fighter_leg.png-b284101db829d41ecd416afa1b44a3ff.s3tc.stex", "res://.import/tex_fighter_leg.png-b284101db829d41ecd416afa1b44a3ff.etc2.stex" ]
 
 [params]
 

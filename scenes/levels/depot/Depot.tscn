@@ -11,6 +11,8 @@ script = ExtResource( 3 )
 texture = ExtResource( 2 )
 
 [node name="Label" parent="AccessUI" index="0"]
-text = "DEPOT"
+text = "DEPOT
+FOR YOUR EQUIPMENT NEEDS
+PROVIDED BY BALLS & BALLISTICS TECHNOLOGIES"
 
 [node name="Items" type="Node2D" parent="." index="5"]
