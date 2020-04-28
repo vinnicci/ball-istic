@@ -73,9 +73,21 @@ func seek(target) -> void:
 #############
 
 
+#############
+# enemy found
+#############
 func task_idle(task):
 	parent_node.velocity = Vector2(0,0)
 	task.succeed()
+
+
+func task_is_enemy_instance_valid(task):
+	if is_instance_valid(enemy) == false:
+		enemy = null
+		task.failed()
+		return
+	else:
+		task.succeed()
 
 
 func task_seek_enemy(task):
@@ -89,12 +101,18 @@ func task_seek_enemy(task):
 		task.reset()
 
 
-func task_is_enemy_instance_valid(task):
+##########
+# charger
+##########
+func task_charge_attack(task):
 	if is_instance_valid(enemy) == false:
-		enemy = null
 		task.failed()
-	else:
+		return
+	if $Rays/TargetRay.get_collider() == enemy && parent_node.timer_charge_cooldown.is_stopped() == true:
+		parent_node.charge_roll($Rays/TargetRay.global_rotation)
 		task.succeed()
+	else:
+		task.failed()
 
 
 func task_back_off(task):
@@ -102,9 +120,9 @@ func task_back_off(task):
 		task.failed()
 		return
 	if parent_node.timer_charge_cooldown.is_stopped() == false:
-		if global_position.distance_to(enemy.global_position) < 300:
+		if global_position.distance_to(enemy.global_position) < task.get_param(0):
 			$Rays/VelocityRay.global_rotation = $Rays/TargetRay.global_rotation - deg2rad(180)
-		elif global_position.distance_to(enemy.global_position) > 300:
+		elif global_position.distance_to(enemy.global_position) > task.get_param(0):
 			$Rays/VelocityRay.global_rotation = $Rays/TargetRay.global_rotation
 		if $Rays/VelocityRay.is_colliding() == true:
 			parent_node.velocity = Vector2(1,0).rotated($Rays/VelocityRay.global_rotation) + Vector2(1,0).rotated($Rays/VelocityRay.get_collision_normal().angle())
@@ -115,12 +133,60 @@ func task_back_off(task):
 		task.succeed()
 
 
-func task_charge_attack(task):
+######
+# flee
+######
+func task_enemy_close(task):
 	if is_instance_valid(enemy) == false:
 		task.failed()
 		return
-	if $Rays/TargetRay.get_collider() == enemy && parent_node.timer_charge_cooldown.is_stopped() == true:
-		parent_node.charge_roll($Rays/TargetRay.global_rotation)
+	if global_position.distance_to(enemy.global_position) <= task.get_param(0):
+		task.succeed()
+	else:
+		$Rays/VelocityRay.global_rotation = $Rays/TargetRay.global_rotation - deg2rad(180)
+		task.failed()
+
+
+func task_look_dir(task):
+	var vector: Vector2
+	if $Rays/VelocityRay.is_colliding() == true:
+		vector = Vector2(1,0).rotated($Rays/VelocityRay.global_rotation) + Vector2(1,0).rotated($Rays/VelocityRay.get_collision_normal().angle())
+		$Rays/VelocityRay.global_rotation = vector.angle()
+		task.reset()
+	task.succeed()
+
+
+func task_move(task):
+	if is_instance_valid(enemy) == false:
+		task.failed()
+		return
+	parent_node.velocity = Vector2(1,0).rotated($Rays/VelocityRay.global_rotation)
+	if global_position.distance_to(enemy.global_position) < 150:
+		$Rays/VelocityRay.global_rotation = $Rays/TargetRay.global_rotation - deg2rad(180)
+	task.succeed()
+
+
+#############
+# fire weapon
+#############
+func task_shoot_enemy(task):
+	if is_instance_valid(enemy) == false:
+		task.failed()
+		return
+	parent_node.current_weapon.look_at(enemy.global_position)
+	if global_position.distance_to(enemy.global_position) > task.get_param(0) || parent_node.current_weapon.is_overheating == true:
+		if parent_node.roll_mode == false:
+			parent_node.switch_mode()
+		task.succeed()
+	if parent_node.current_weapon.is_overheating == false && $Rays/TargetRay.get_collider() == enemy:
+		if parent_node.roll_mode == true:
+			parent_node.switch_mode()
+		parent_node.shoot_weapon()
+		task.reset()
+
+
+func task_weapon_ready(task):
+	if parent_node.current_weapon.is_overheating == false:
 		task.succeed()
 	else:
 		task.failed()
