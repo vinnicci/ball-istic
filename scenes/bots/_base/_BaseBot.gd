@@ -18,7 +18,7 @@ const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
 const OUTLINE_SIZE: float = 3.5
-const ROLLING_EFFECT_FACTOR: float = 0.008
+const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: int = 2
 const SHOOT_MODE_DAMP: int = 5
 const POLY_SIDES = 24
@@ -191,7 +191,7 @@ func _plot_circle_points(radius) -> Array:
 	return circle_points
 
 
-#use only for initialization or bot stations
+#use only for initialization or in bot stations
 func reset_bot_vars() -> void:
 	current_shield = shield_capacity
 	_bar_shield.max_value = shield_capacity
@@ -225,22 +225,21 @@ func _cap_current_vars() -> void:
 
 
 func _process(delta: float) -> void:
-	pass
+	$Bars.global_rotation = 0
+	
+	#rolling ball graphical effect
+	_apply_rolling_effects(delta)
+	
+	#control state
+	_is_in_control = _check_if_in_control()
 
 
 #60 fps
 func _physics_process(delta: float) -> void:
-	$Bars.global_rotation = 0
-	
 	#everything charge roll
 	#graphical feedback/effects
+	#ball turns black when put in _process on higher framerates, fix later
 	_end_charging_effect()
-	
-	#rolling ball graphical effect
-	_apply_rolling_effects()
-	
-	#control state
-	_is_in_control = _check_if_in_control()
 	
 	#velocity calculations
 	if _is_in_control == true:
@@ -262,19 +261,18 @@ func _apply_force() -> void:
 	if _is_rolling == false:
 		return
 	if velocity.is_normalized() == false:
-		velocity = velocity.normalized() * current_roll_speed
-	else:
-		velocity *= current_roll_speed
-	applied_force = velocity
+		velocity = velocity.normalized()
+	set_applied_force(velocity * current_roll_speed) #(current_roll_speed - (current_roll_speed * delta)))
 
 
 #make sure to import body texture with repeating enabled
-func _apply_rolling_effects() -> void:
+func _apply_rolling_effects(delta: float) -> void:
 	if _is_rolling == false:
-		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), 0.5)
+		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
+		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
 		return
 	if _is_rolling == true:
-		_body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
+		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
 
 
 #false means losing control to rolling, shooting, charging, and switching mode
@@ -285,6 +283,8 @@ func _check_if_in_control() -> bool:
 
 
 func switch_mode() -> void:
+	if _is_in_control == false:
+		return
 	_is_in_control = false
 	_is_transforming = true
 	$Sounds/ChangeMode.play()

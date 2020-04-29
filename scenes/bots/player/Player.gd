@@ -125,7 +125,9 @@ func _control(delta):
 		shoot_weapon()
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
+	_control_camera(delta)
+	
 	#var is_in_control has no influence here
 	_held_item.position = get_viewport().get_mouse_position()
 	
@@ -133,14 +135,16 @@ func _physics_process(delta: float) -> void:
 	
 	_update_weapon_hud_elements()
 	
-	_control_camera()
-	
 	if _is_transforming == false:
 		_control_player_weapon_hotkeys()
 	
 	#inventory
 	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
 		_ui_inventory.visible = !_ui_inventory.visible
+
+
+func _physics_process(delta: float) -> void:
+	pass
 
 
 func _update_weapon_hud_elements() -> void:
@@ -155,11 +159,11 @@ func _update_weapon_hud_elements() -> void:
 		hud_weap_heat.value = _arr_weapons[i].current_heat()
 
 
-func _control_camera() -> void:
+func _control_camera(delta: float) -> void:
 	var mouse_pos: = get_global_mouse_position().y - global_position.y
-	var lerp_speed: = 0.05
+	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
 	var v_distance: = 0.4
-	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_speed)
+	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
 
 
 func _control_player_weapon_hotkeys() -> void:

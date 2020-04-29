@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/levels/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test_folder/test btree/Level.gd" type="Script" id=3]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=5]
 [ext_resource path="res://scenes/levels/_base/_BaseTileMap.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=7]
 
 [node name="Level" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -23,58 +22,16 @@ position = Vector2( -666.673, -282.47 )
 [node name="Fighter3" parent="Bots" index="2" instance=ExtResource( 4 )]
 position = Vector2( 1058.03, -279.379 )
 
-[node name="Charger" parent="Bots" index="3" instance=ExtResource( 7 )]
-position = Vector2( -441.995, -284.36 )
-
-[node name="Charger2" parent="Bots" index="4" instance=ExtResource( 7 )]
-position = Vector2( -228.724, -278.178 )
-
-[node name="Charger3" parent="Bots" index="5" instance=ExtResource( 7 )]
-position = Vector2( -21.6361, -281.269 )
-
-[node name="Charger4" parent="Bots" index="6" instance=ExtResource( 7 )]
-position = Vector2( 401.813, -278.178 )
-
-[node name="Charger5" parent="Bots" index="7" instance=ExtResource( 7 )]
-position = Vector2( 618.174, -275.088 )
-
-[node name="Charger6" parent="Bots" index="8" instance=ExtResource( 7 )]
-position = Vector2( 840.717, -275.087 )
-
-[node name="Fighter6" parent="Bots" index="9" instance=ExtResource( 4 )]
+[node name="Fighter6" parent="Bots" index="3" instance=ExtResource( 4 )]
 position = Vector2( 189.288, 675.126 )
 hostile = false
 
-[node name="Fighter5" parent="Bots" index="10" instance=ExtResource( 4 )]
+[node name="Fighter5" parent="Bots" index="4" instance=ExtResource( 4 )]
 position = Vector2( -669.974, 668.944 )
 hostile = false
 
-[node name="Fighter4" parent="Bots" index="11" instance=ExtResource( 4 )]
+[node name="Fighter4" parent="Bots" index="5" instance=ExtResource( 4 )]
 position = Vector2( 1054.73, 672.035 )
-hostile = false
-
-[node name="Charger12" parent="Bots" index="12" instance=ExtResource( 7 )]
-position = Vector2( -445.296, 667.054 )
-hostile = false
-
-[node name="Charger11" parent="Bots" index="13" instance=ExtResource( 7 )]
-position = Vector2( -232.025, 673.236 )
-hostile = false
-
-[node name="Charger10" parent="Bots" index="14" instance=ExtResource( 7 )]
-position = Vector2( -24.9374, 670.145 )
-hostile = false
-
-[node name="Charger9" parent="Bots" index="15" instance=ExtResource( 7 )]
-position = Vector2( 398.512, 673.236 )
-hostile = false
-
-[node name="Charger8" parent="Bots" index="16" instance=ExtResource( 7 )]
-position = Vector2( 614.873, 676.326 )
-hostile = false
-
-[node name="Charger7" parent="Bots" index="17" instance=ExtResource( 7 )]
-position = Vector2( 837.416, 676.327 )
 hostile = false
 
 [node name="Camera2D" parent="." index="2"]
