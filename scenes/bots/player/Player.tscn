@@ -30,7 +30,6 @@ resource_local_to_scene = true
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-is_hostile = false
 
 [node name="Sprite" parent="Legs" index="0"]
 texture = ExtResource( 1 )

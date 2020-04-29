@@ -4,15 +4,15 @@ extends "res://scenes/weapons/_base/_BaseExplosiveProjectile.gd"
 func _on_Projectile_body_entered(body: Node) -> void:
 	if body.has_method("take_damage") == false:
 		return
-	if body.get_parent().name == "Bots" && body.is_hostile == f_origin:
+	if body.get_parent().name == "Bots" && body.is_hostile == _origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile != f_origin:
+	elif body.get_parent().name == "Bots" && body.is_hostile != _origin:
 		$Explosion.start_explosion()
 	else:
 		$Explosion.start_explosion()
-	velocity = Vector2(0,0)
+	_proj_velocity = Vector2(0,0)
 	$Sprite.hide()
-	exploded = true
+	_exploded = true
 	_flash_screen()
 	set_deferred("monitoring", false)
 
@@ -24,10 +24,10 @@ func _flash_screen() -> void:
 
 
 func _on_RangeTimer_timeout() -> void:
-	velocity = Vector2(0,0)
+	_proj_velocity = Vector2(0,0)
 	$Sprite.hide()
 	$RemoveTimer.start()
-	if exploded == false:
+	if _exploded == false:
 		$Explosion.start_explosion()
 		_flash_screen()
 	set_deferred("monitoring", false)

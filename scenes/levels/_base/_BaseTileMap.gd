@@ -3,11 +3,16 @@ extends TileMap
 #be sure to extend
 #and attach this to nav node
 
-export (bool) var is_destructible: = false
+export (bool) var destructible: = false setget , is_destructible
 export (float) var health_capacity: = 1000.0
-var current_health: float
+
+var _current_health: float
+
+
+func is_destructible():
+	return destructible
 
 
 func take_damage(damage, knockback):
-	if is_destructible == false:
+	if destructible == false:
 		return

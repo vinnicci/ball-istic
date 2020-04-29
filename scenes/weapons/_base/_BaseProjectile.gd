@@ -6,8 +6,8 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
-var f_origin: bool
-var velocity: Vector2
+var _origin: bool
+var _proj_velocity: Vector2
 
 
 func _ready() -> void:
@@ -18,11 +18,11 @@ func _ready() -> void:
 
 
 func ready_travel(pos, dir, origin) -> void:
-	f_origin = origin
+	_origin = origin
 	$RangeTimer.wait_time = proj_range as float/speed as float
 	$RangeTimer.start()
 	_travel(pos, dir)
-	velocity = Vector2(speed,0).rotated(rotation)
+	_proj_velocity = Vector2(speed,0).rotated(rotation)
 
 
 #virtual func for proj behavior while travelling
@@ -32,17 +32,17 @@ func _travel(pos, dir):
 
 
 func _physics_process(delta: float) -> void:
-	position += velocity * delta
+	position += _proj_velocity * delta
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body.get_parent().name == "Bots" && body.is_hostile == f_origin:
+	if body.get_parent().name == "Bots" && body.is_hostile() == _origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile != f_origin:
+	elif body.get_parent().name == "Bots" && body.is_hostile() != _origin:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
-	velocity = Vector2(0,0)
+	_proj_velocity = Vector2(0,0)
 	$Sprite.hide()
 	$Blast.show()
 	$Blast/AnimationPlayer.play("blast")
@@ -51,7 +51,7 @@ func _on_Projectile_body_entered(body: Node) -> void:
 
 
 func _on_RangeTimer_timeout() -> void:
-	velocity = Vector2(0,0)
+	_proj_velocity = Vector2(0,0)
 	$Sprite.hide()
 	$RemoveTimer.start()
 	set_deferred("monitoring", false)

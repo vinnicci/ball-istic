@@ -1,18 +1,18 @@
 extends RigidBody2D
 
 
-export (float, 25.0, 100.0) var bot_radius: = 32.0
-export (float) var shield_capacity: = 20
-export (float) var health_capacity: = 20
-export (int, 0, 3000) var roll_speed: = 1200
-export (float) var shield_recovery_per_sec: = 1.0
-export (float, 0.1, 1.0) var transform_speed: = 0.6
-export (float, 0.5, 5.0) var charge_cooldown: = 3.0
-export (float, 0, 1.0) var knockback_resist: = 0.5
-export (float, 0.01, 0.15) var charge_damage_factor: = 0.05
-export (float, 0.1, 1.5) var charge_force_factor: = 0.5
-export (bool) var is_destructible: = true
-export (bool) var is_hostile: = true
+export (float, 25.0, 100.0) var bot_radius: = 32.0 setget , get_bot_radius
+export (float) var shield_capacity: = 20 setget , get_shield_capacity
+export (float) var health_capacity: = 20 setget , get_health_capacity
+export (int, 0, 3000) var roll_speed: = 1200 setget , get_roll_speed
+export (float) var shield_recovery_per_sec: = 1.0 setget , get_shield_recovery_per_sec
+export (float, 0.1, 1.0) var transform_speed: = 0.6 setget , get_transform_speed
+export (float, 0.5, 5.0) var charge_cooldown: = 3.0 setget , get_charge_cooldown
+export (float, 0, 1.0) var knockback_resist: = 0.5 setget , get_knockback_resist
+export (float, 0.01, 0.15) var charge_damage_factor: = 0.05 setget , get_charge_damage_factor
+export (float, 0.1, 1.5) var charge_force_factor: = 0.5 setget , get_charge_force_factor
+export (bool) var destructible: = true setget , is_destructible
+export (bool) var hostile: = true setget , is_hostile
 
 const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
@@ -31,29 +31,97 @@ var current_health: float
 var current_roll_speed: int
 var current_shield_recovery: float
 var current_transform_speed: float
-var current_charge_cooldown: float
+var _current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
 var current_charge_damage_factor: float
 var current_charge_force_factor: float
 var current_weapon: Node
-
 var velocity: Vector2
-var roll_mode: bool = false
-var is_alive: bool = true
-var is_charging: bool = false
-var is_transforming: bool = false
-var is_in_control: bool = true
-var arr_weapons: Array = [null, null, null, null, null]
+var _is_rolling: bool = false setget , is_rolling
+var _is_alive: bool = true setget , is_alive
+var _is_charge_rolling: bool = false setget , is_charge_rolling
+var _is_transforming: bool = false setget , is_transforming
+var _is_in_control: bool = true setget , is_in_control
+var _arr_weapons: Array = [null, null, null, null, null]
+
 signal weapon_shot
 signal charged
 
-onready var body_outline: = $Body/Outline
-onready var body_texture: = $Body/Texture
-onready var body_charge_effect: = $Body/ChargeEffect
-onready var body_weapon_hatch: = $Body/WeaponHatch
-onready var bar_shield: = $Bars/Shield
-onready var bar_health: = $Bars/Health
-onready var timer_charge_cooldown: = $Timers/ChargeCooldown
+onready var _body_outline: = $Body/Outline
+onready var _body_texture: = $Body/Texture
+onready var _body_charge_effect: = $Body/ChargeEffect
+onready var _body_weapon_hatch: = $Body/WeaponHatch
+onready var _bar_shield: = $Bars/Shield
+onready var _bar_health: = $Bars/Health
+onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
+
+
+###########################
+# default export properties
+###########################
+func get_bot_radius():
+	return bot_radius
+
+func get_shield_capacity():
+	return shield_capacity
+
+func get_health_capacity():
+	return health_capacity
+
+func get_roll_speed():
+	return roll_speed
+
+func get_shield_recovery_per_sec():
+	return shield_recovery_per_sec
+
+func get_transform_speed():
+	return transform_speed
+
+func get_charge_cooldown():
+	return charge_cooldown
+
+func get_knockback_resist():
+	return knockback_resist
+
+func get_charge_damage_factor():
+	return charge_damage_factor
+
+func get_charge_force_factor():
+	return charge_force_factor
+
+func is_destructible():
+	return destructible
+
+func is_hostile():
+	return hostile
+
+####################
+# current properties
+####################
+func set_current_charge_cooldown(new_charge_cooldown: float):
+	_current_charge_cooldown = new_charge_cooldown
+	_timer_charge_cooldown.wait_time = new_charge_cooldown
+
+func get_current_charge_cooldown():
+	return _current_charge_cooldown
+
+func is_rolling():
+	return _is_rolling
+
+func is_alive():
+	return _is_alive
+
+func is_charge_rolling():
+	return _is_charge_rolling
+
+func is_transforming():
+	return _is_transforming
+
+func is_in_control():
+	return _is_in_control
+
+func is_charge_roll_ready():
+	return _timer_charge_cooldown.is_stopped()
 
 
 func _ready() -> void:
@@ -68,7 +136,7 @@ func _init_bot() -> void:
 	var i: = -1
 	for weapon in $Weapons.get_children():
 		i += 1
-		arr_weapons[i] = weapon
+		_arr_weapons[i] = weapon
 		if initialized_selected_weap == false:
 			current_weapon = weapon
 			initialized_selected_weap = true
@@ -79,23 +147,23 @@ func _init_bot() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = SHOOT_MODE_DAMP
-	if is_destructible == false:
+	if destructible == false:
 		$Bars.hide()
 	
 	#bot's body look set up
-	body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
-	body_texture.position = Vector2(-bot_radius, -bot_radius)
-	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
-	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now
+	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
+	_body_texture.position = Vector2(-bot_radius, -bot_radius)
+	_bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
+	_bar_health.rect_position.y += _bar_shield.rect_position.y + 15 #-> hardcoded for now
 	var outline = bot_radius + OUTLINE_SIZE
-	body_outline.polygon = _plot_circle_points(outline)
-	body_outline.position = Vector2(-outline, -outline)
-	body_outline.offset = Vector2(outline, outline)
+	_body_outline.polygon = _plot_circle_points(outline)
+	_body_outline.position = Vector2(-outline, -outline)
+	_body_outline.offset = Vector2(outline, outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
-	body_charge_effect.polygon = cp
-	body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
-	body_charge_effect.offset = Vector2(bot_radius, bot_radius)
-	body_weapon_hatch.polygon = [cp[0], cp[1], cp[2], cp[10], cp[11], cp[12], cp[13], cp[14], cp[22], cp[23]]
+	_body_charge_effect.polygon = cp
+	_body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
+	_body_charge_effect.offset = Vector2(bot_radius, bot_radius)
+	_body_weapon_hatch.polygon = [cp[0], cp[1], cp[2], cp[10], cp[11], cp[12], cp[13], cp[14], cp[22], cp[23]]
 	_init_legs([cp[4], cp[12], cp[20]])
 
 
@@ -126,18 +194,18 @@ func _plot_circle_points(radius) -> Array:
 #use only for initialization or bot stations
 func reset_bot_vars() -> void:
 	current_shield = shield_capacity
-	bar_shield.max_value = shield_capacity
-	bar_shield.value = current_shield
+	_bar_shield.max_value = shield_capacity
+	_bar_shield.value = current_shield
 	current_shield_recovery = shield_recovery_per_sec
 	
 	current_health = health_capacity
-	bar_health.max_value = health_capacity
-	bar_health.value = current_health
+	_bar_health.max_value = health_capacity
+	_bar_health.value = current_health
 	
 	current_transform_speed = transform_speed
 	
-	current_charge_cooldown = charge_cooldown
-	timer_charge_cooldown.wait_time = current_charge_cooldown
+	_current_charge_cooldown = charge_cooldown
+	_timer_charge_cooldown.wait_time = _current_charge_cooldown
 	current_charge_damage_factor = charge_damage_factor
 	current_charge_force_factor = charge_force_factor
 	
@@ -150,7 +218,7 @@ func reset_bot_vars() -> void:
 func _cap_current_vars() -> void:
 	current_roll_speed = clamp(current_roll_speed, 500, 3000)
 	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
-	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
+	_current_charge_cooldown = clamp(_current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 	current_charge_damage_factor = clamp(current_charge_damage_factor, 0.01, 0.1)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
@@ -172,17 +240,17 @@ func _physics_process(delta: float) -> void:
 	_apply_rolling_effects()
 	
 	#control state
-	is_in_control = _check_if_in_control()
+	_is_in_control = _check_if_in_control()
 	
 	#velocity calculations
-	if is_in_control == true:
+	if _is_in_control == true:
 		velocity = Vector2(0,0)
 		_control(delta)
 
 
 func _control(delta) -> void:
 	if has_node("AI") == true: #<- obviously attached ai nodes should be named "AI"
-		$AI._control(delta)
+		$AI.update_control(delta)
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
@@ -191,7 +259,7 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 
 func _apply_force() -> void:
 	applied_force = Vector2(0,0)
-	if roll_mode == false:
+	if _is_rolling == false:
 		return
 	if velocity.is_normalized() == false:
 		velocity = velocity.normalized() * current_roll_speed
@@ -202,43 +270,43 @@ func _apply_force() -> void:
 
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects() -> void:
-	if roll_mode == false:
-		body_texture.texture_offset = lerp(body_texture.texture_offset, Vector2(0,0), 0.5)
+	if _is_rolling == false:
+		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), 0.5)
 		return
-	if roll_mode == true:
-		body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
+	if _is_rolling == true:
+		_body_texture.texture_offset -= (linear_velocity.rotated(-rotation)/current_roll_speed) * (current_roll_speed * ROLLING_EFFECT_FACTOR)
 
 
 #false means losing control to rolling, shooting, charging, and switching mode
 #lose control to switching weapon slot on transforming only
 #no effect to opening inventory
 func _check_if_in_control() -> bool:
-	return is_alive == true && is_charging == false && is_transforming == false
+	return _is_alive == true && _is_charge_rolling == false && _is_transforming == false
 
 
 func switch_mode() -> void:
-	is_in_control = false
-	is_transforming = true
+	_is_in_control = false
+	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
 	_animate_weapon_hatch()
-	roll_mode = !roll_mode
-	if roll_mode == true:
+	_is_rolling = !_is_rolling
+	if _is_rolling == true:
 		linear_damp = ROLL_MODE_DAMP
 		mode = RigidBody2D.MODE_RIGID
-	elif roll_mode == false:
+	elif _is_rolling == false:
 		linear_damp = SHOOT_MODE_DAMP
 		mode = RigidBody2D.MODE_CHARACTER
 
 
 func _animate_legs() -> void:
 	var leg_tween: = $Legs/LegTween
-	if roll_mode == false:
+	if _is_rolling == false:
 		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			leg_tween.start()
-	elif roll_mode == true:
+	elif _is_rolling == true:
 		for leg in _legs_position.keys():
 			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -246,58 +314,58 @@ func _animate_legs() -> void:
 
 
 func _animate_weapon_hatch() -> void:
-	var weapon_hatch_tween: = body_weapon_hatch.get_node("WeaponHatchTween")
-	if roll_mode == false:
+	var weapon_hatch_tween: = _body_weapon_hatch.get_node("WeaponHatchTween")
+	if _is_rolling == false:
 		if current_weapon != null:
-			current_weapon._animate_transform(current_transform_speed)
-			current_weapon.global_rotation = body_weapon_hatch.global_rotation
-		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
+			current_weapon.animate_transform(current_transform_speed)
+			current_weapon.global_rotation = _body_weapon_hatch.global_rotation
+		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	elif roll_mode == true:
+	elif _is_rolling == true:
 		if current_weapon != null:
-			current_weapon._animate_transform(current_transform_speed)
-			body_weapon_hatch.global_rotation = current_weapon.global_rotation
-		body_weapon_hatch.show()
-		weapon_hatch_tween.interpolate_property(body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
+			current_weapon.animate_transform(current_transform_speed)
+			_body_weapon_hatch.global_rotation = current_weapon.global_rotation
+		_body_weapon_hatch.show()
+		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	weapon_hatch_tween.start()
 
 
 #some weapons have longer anim than hatch, so will change this later
 func _on_WeaponHatchTween_tween_all_completed() -> void:
-	if roll_mode == true:
-		body_weapon_hatch.hide()
-	is_transforming = false
+	if _is_rolling == true:
+		_body_weapon_hatch.hide()
+	_is_transforming = false
 
 
 #some weapons' shooting mode aren't auto, so will change this later
 func shoot_weapon() -> void:
-	if is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating == true || roll_mode == true:
+	if _is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating() == true || _is_rolling == true:
 		return
 	var muzzle: = current_weapon.get_node("Muzzle")
 	emit_signal("weapon_shot", current_weapon.get_projectiles(), muzzle.global_position,
-		muzzle.global_rotation, is_hostile)
+		muzzle.global_rotation, hostile)
 
 
 func change_weapon(slot_num: int) -> void:
-	var weap = arr_weapons[slot_num]
+	var weap = _arr_weapons[slot_num]
 	if weap == null:
 		return
-	if roll_mode == false:
+	if _is_rolling == false:
 		current_weapon.visible = false
 	current_weapon = weap
-	if roll_mode == false:
+	if _is_rolling == false:
 		current_weapon.look_at(get_global_mouse_position())
 		current_weapon.visible = true
 
 
 func charge_roll(charge_direction: float) -> void:
-	if is_in_control == false || timer_charge_cooldown.is_stopped() == false || roll_mode == false:
+	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
-	timer_charge_cooldown.start()
+	_timer_charge_cooldown.start()
 
 
 #0.05 sec delay in order to get almost peak linear velocity
@@ -307,30 +375,30 @@ func _on_ChargeEffectDelay_timeout() -> void:
 
 func _on_Bot_charged() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		body_outline.color = Color(1, 0.24, 0.88)
-		body_charge_effect.color.a = 255
-		is_charging = true
+		_body_outline.color = Color(1, 0.24, 0.88)
+		_body_charge_effect.color.a = 255
+		_is_charge_rolling = true
 
 
 func _end_charging_effect() -> void:
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
 		#will change later
-		if is_hostile == true:
-			body_outline.color = lerp(body_outline.color, HOSTILE_COLOR, 0.8)
-		elif is_hostile == false:
-			body_outline.color = lerp(body_outline.color, NON_HOSTILE_COLOR, 0.8)
-		body_charge_effect.color.a = lerp(body_charge_effect.color.a, 0, 0.8)
-		body_weapon_hatch.color = body_outline.color
-		is_charging = false
+		if hostile == true:
+			_body_outline.color = lerp(_body_outline.color, HOSTILE_COLOR, 0.8)
+		elif hostile == false:
+			_body_outline.color = lerp(_body_outline.color, NON_HOSTILE_COLOR, 0.8)
+		_body_charge_effect.color.a = lerp(_body_charge_effect.color.a, 0, 0.8)
+		_body_weapon_hatch.color = _body_outline.color
+		_is_charge_rolling = false
 
 
 func take_damage(damage: float, knockback: Vector2) -> void:
-	_apply_knockback(knockback)
-	if is_destructible == false:
+	apply_knockback(knockback)
+	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
-	if is_alive == false:
+	if _is_alive == false:
 		$Sounds/HealthDamage.play()
 		return
 	if current_shield - damage >= 0:
@@ -340,18 +408,18 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
-	bar_shield.value = current_shield
-	bar_health.value = current_health
+	_bar_shield.value = current_shield
+	_bar_health.value = current_health
 	if current_health <= 0:
 		_explode()
 
 
-func _apply_knockback(knockback: Vector2) -> void:
+func apply_knockback(knockback: Vector2) -> void:
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 
 
 func _explode() -> void:
-	is_alive = false
+	_is_alive = false
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
@@ -377,20 +445,19 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if is_charging == false:
+	if _is_charge_rolling == false:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	if body.get_parent().name == "Bots" && is_hostile == body.is_hostile:
+	if body.get_parent().name == "Bots" && hostile == body.hostile:
 		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
-	if body.get_parent().name == "Bots" && body.is_charging == true:
+	if body.get_parent().name == "Bots" && body._is_charge_rolling == true:
 		damage /= 8
 	body.take_damage(damage, Vector2(0,0))
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
 	$CollisionSpark.emitting = true
-	print(damage)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
@@ -398,4 +465,4 @@ func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
 		current_shield = shield_capacity
 	elif current_shield + current_shield_recovery/4 <= shield_capacity:
 		current_shield += current_shield_recovery/4
-	bar_shield.value = current_shield
+	_bar_shield.value = current_shield

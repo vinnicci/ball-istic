@@ -3,8 +3,12 @@ extends StaticBody2D
 #be sure to extend
 #and attach this to nav node
 
-var is_destructible: = false
+var destructible: = false setget , is_destructible
 
 
-func take_damage(_damage, _knockback):
+func is_destructible():
+	return destructible
+
+
+func take_damage(damage, knockback):
 	return

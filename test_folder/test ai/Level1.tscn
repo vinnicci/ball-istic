@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -10,8 +10,11 @@
 [ext_resource path="res://scenes/bots/dummy/DestructibleDummy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/levels/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/levels/depot/Depot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=15]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
@@ -36,6 +39,18 @@ position = Vector2( 4542, 449 )
 position = Vector2( 4539, 2622 )
 
 [node name="Scattershot" parent="Depot/Items" index="0" instance=ExtResource( 14 )]
+
+[node name="ChargeForceIII" parent="Depot/Items" index="1" instance=ExtResource( 12 )]
+
+[node name="ChargeCooldownIII" parent="Depot/Items" index="2" instance=ExtResource( 11 )]
+
+[node name="ChargeCooldownIII2" parent="Depot/Items" index="3" instance=ExtResource( 11 )]
+
+[node name="ChargeCooldownIII3" parent="Depot/Items" index="4" instance=ExtResource( 11 )]
+
+[node name="ChargeCooldownIII4" parent="Depot/Items" index="5" instance=ExtResource( 11 )]
+
+[node name="NukeLauncher" parent="Depot/Items" index="6" instance=ExtResource( 15 )]
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 268, 2967 )
@@ -105,5 +120,8 @@ position = Vector2( 246, 958 )
 
 [node name="Charger7" parent="Bots" index="19" instance=ExtResource( 13 )]
 position = Vector2( 622, 328 )
+
+[node name="Camera2D" parent="." index="5"]
+position = Vector2( 2292, 2647 )
 
 [editable path="Depot"]

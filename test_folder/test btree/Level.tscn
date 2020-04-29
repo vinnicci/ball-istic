@@ -43,39 +43,39 @@ position = Vector2( 840.717, -275.087 )
 
 [node name="Fighter6" parent="Bots" index="9" instance=ExtResource( 4 )]
 position = Vector2( 188.984, 675.443 )
-is_hostile = false
+hostile = false
 
 [node name="Fighter7" parent="Bots" index="10" instance=ExtResource( 4 )]
 position = Vector2( 1048.61, 675.443 )
-is_hostile = false
+hostile = false
 
 [node name="Fighter5" parent="Bots" index="11" instance=ExtResource( 4 )]
 position = Vector2( -670.279, 669.261 )
-is_hostile = false
+hostile = false
 
 [node name="Charger12" parent="Bots" index="12" instance=ExtResource( 7 )]
 position = Vector2( -445.6, 667.37 )
-is_hostile = false
+hostile = false
 
 [node name="Charger11" parent="Bots" index="13" instance=ExtResource( 7 )]
 position = Vector2( -232.33, 673.552 )
-is_hostile = false
+hostile = false
 
 [node name="Charger10" parent="Bots" index="14" instance=ExtResource( 7 )]
 position = Vector2( -25.2412, 670.461 )
-is_hostile = false
+hostile = false
 
 [node name="Charger9" parent="Bots" index="15" instance=ExtResource( 7 )]
 position = Vector2( 398.208, 673.552 )
-is_hostile = false
+hostile = false
 
 [node name="Charger8" parent="Bots" index="16" instance=ExtResource( 7 )]
 position = Vector2( 614.569, 676.643 )
-is_hostile = false
+hostile = false
 
 [node name="Charger7" parent="Bots" index="17" instance=ExtResource( 7 )]
 position = Vector2( 837.112, 676.643 )
-is_hostile = false
+hostile = false
 
 [node name="Camera2D" parent="." index="2"]
 position = Vector2( 190, 190 )

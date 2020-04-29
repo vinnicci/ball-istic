@@ -3,7 +3,8 @@ extends Node2D
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
 
-var is_player_dead: bool = false
+var _is_player_dead: bool = false
+var _init_cam: bool = false
 
 
 func _ready() -> void:
@@ -15,9 +16,15 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if is_instance_valid(Globals.player) == false && is_player_dead == false:
+	if _init_cam == true:
+		return
+	if is_instance_valid(Globals.player) == true && Globals.player.is_alive() == false:
+		$Camera2D.global_position = Globals.player.global_position
 		$Camera2D.current = true
-		is_player_dead == true
+		_init_cam = true
+	if is_instance_valid(Globals.player) == false:
+		$Camera2D.current = true
+		_init_cam = true
 
 
 func _on_weapon_shot(projectiles, proj_position, proj_direction, origin) -> void:
