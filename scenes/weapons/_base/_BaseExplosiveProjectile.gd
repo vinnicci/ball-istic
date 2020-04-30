@@ -5,9 +5,9 @@ var _exploded: bool = false
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body.get_parent().name == "Bots" && body.is_hostile == _origin:
+	if body is CLASS_BOT && body.is_hostile == _origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile != _origin:
+	elif body is CLASS_BOT && body.is_hostile != _origin:
 		$Explosion.start_explosion()
 	else:
 		$Explosion.start_explosion()

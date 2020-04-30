@@ -15,8 +15,8 @@ export (bool) var destructible: = true setget , is_destructible
 export (bool) var hostile: = true setget , is_hostile
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.65
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.6
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.68
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
 const OUTLINE_SIZE: float = 3.5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: int = 2
@@ -238,7 +238,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	#everything charge roll
 	#graphical feedback/effects
-	#ball turns black when put in _process on higher framerates, fix later
+	#ball turns black when put in _process and higher framerates, fix later
 	_end_charging_effect()
 	
 	#velocity calculations
@@ -248,21 +248,22 @@ func _physics_process(delta: float) -> void:
 
 
 func _control(delta) -> void:
-	if has_node("AI") == true: #<- obviously attached ai nodes should be named "AI"
-		$AI.update_control(delta)
+	if has_node("AI") == true: #<- attached ai node should be named "AI"
+		$AI.control_ai(delta)
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	_apply_force()
 
 
+#framerate independent hopefully
 func _apply_force() -> void:
 	applied_force = Vector2(0,0)
 	if _is_rolling == false:
 		return
 	if velocity.is_normalized() == false:
 		velocity = velocity.normalized()
-	set_applied_force(velocity * current_roll_speed) #(current_roll_speed - (current_roll_speed * delta)))
+	set_applied_force(velocity * current_roll_speed)
 
 
 #make sure to import body texture with repeating enabled
@@ -285,7 +286,7 @@ func _check_if_in_control() -> bool:
 func switch_mode() -> void:
 	if _is_in_control == false:
 		return
-	_is_in_control = false
+#	_is_in_control = false #apply immediately as possible
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()

@@ -6,6 +6,8 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
+const CLASS_BOT = preload("res://scenes/bots/_base/_BaseBot.gd")
+
 var _origin: bool
 var _proj_velocity: Vector2
 
@@ -36,9 +38,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body.get_parent().name == "Bots" && body.is_hostile() == _origin:
+	if body is CLASS_BOT && body.is_hostile() == _origin:
 		return
-	elif body.get_parent().name == "Bots" && body.is_hostile() != _origin:
+	elif body is CLASS_BOT && body.is_hostile() != _origin:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))

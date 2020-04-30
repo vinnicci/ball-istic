@@ -9,7 +9,6 @@ resource_local_to_scene = true
 radius = 1000.0
 
 [node name="AI" type="Node2D"]
-visible = false
 script = ExtResource( 2 )
 
 [node name="BTREE" type="Node" parent="."]
@@ -672,23 +671,22 @@ tree = {
 }
 
 [node name="DetectionRange" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource( 1 )
 
-[node name="Rays" type="Node2D" parent="."]
-
-[node name="LookAtRay" type="RayCast2D" parent="Rays"]
+[node name="TargetRay" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 1000, 0 )
 
-[node name="TargetRay" type="RayCast2D" parent="Rays"]
-enabled = true
-cast_to = Vector2( 1000, 0 )
-
-[node name="VelocityRay" type="RayCast2D" parent="Rays"]
+[node name="VelocityRay" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 60, 0 )
+
+[node name="LookRay" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 1000, 0 )
 
 [node name="FoundTarget" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )

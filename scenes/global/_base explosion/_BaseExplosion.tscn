@@ -84,11 +84,13 @@ wait_time = 0.5
 one_shot = true
 
 [node name="AreaOfEffect" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOfEffect"]
 shape = SubResource( 5 )
 
 [node name="KnockBackDirection" type="RayCast2D" parent="."]
+visible = false
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
