@@ -4,7 +4,7 @@ extends Node2D
 var _enemies: Array = []
 var _allies: Array = []
 var _enemy: CLASS_BOT = null
-var _ally: Node = null
+var _ally: CLASS_BOT = null
 var _path_points: Array = []
 var _next_path_point: Vector2
 var _velocity: Vector2
@@ -33,14 +33,19 @@ func control_ai(delta):
 		$TargetRay.look_at(_enemy.global_position)
 
 
+#func _process(delta: float) -> void:
+#	if _parent_node.name == "Fighter":
+#		print("transforming: " + _parent_node.is_transforming() as String + "\nswitched: " + _switched as String)
+
+
 func _get_new_target_enemy() -> void:
 	if _enemies.size() != 0 && _enemy == null:
-		if is_instance_valid(_enemies[0]) == false:
-			_enemies.remove(0)
+		if is_instance_valid(_enemies.front()) == false:
+			_enemies.pop_front()
 			return
-		$LookRay.look_at(_enemies[0].global_position)
-		if $LookRay.get_collider() == _enemies[0]:
-			_enemy = _enemies[0]
+		$LookRay.look_at(_enemies.front().global_position)
+		if $LookRay.get_collider() == _enemies.front():
+			_enemy = _enemies.pop_front()
 			$FoundTarget.play()
 
 
@@ -75,38 +80,36 @@ func _seek(target) -> void:
 # enemy found
 #############
 func task_idle(task):
-	if _parent_node.name == "Fighter":
-		print("idle")
 	_velocity = Vector2(0,0)
 	task.succeed()
 	return
 
 
-func task_is_enemy_instance_valid(task):
-	if _parent_node.name == "Fighter":
-		print("find")
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		_enemy = null
-		_get_new_target_enemy()
-		if _enemy == null:
-			task.failed()
-			return
+func task_get_enemy(task):
+	_get_new_target_enemy()
 	task.succeed()
 	return
+
+
+func task_is_enemy_instance_valid(task):
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		_enemy = null
+		task.failed()
+		return
+	else:
+		task.succeed()
+		return
 
 
 func task_seek_enemy(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
-	if _parent_node.name == "Fighter":
-		print("seeking from: " + global_position as String + " to: " + _enemy.global_position as String)
 	if global_position.distance_to(_enemy.global_position) < task.get_param(0):
 		task.succeed()
 		return
 	else:
 		_seek(_enemy)
-		task.reset()
 
 
 ###########
@@ -115,48 +118,40 @@ func task_seek_enemy(task):
 var _switched: bool = false
 
 
-func task_roll_mode(task):
-	if _parent_node.name == "Fighter" && _parent_node.is_transforming():
-		print("to roll, transform, " + _switched as String)
-	if _parent_node.name == "Fighter":
-		print("rolling, " + task.get_param(0))
-	if _switched == false:
-		if _parent_node.is_rolling() == true:
-			task.succeed()
-			return
-		if _parent_node.is_rolling() == false:
-			_parent_node.switch_mode()
-			_switched = true
+func task_transformed(task):
 	if _parent_node.is_transforming() == false && _switched == true:
 		_switched = false
 		task.succeed()
 		return
-	task.reset()
+
+
+func task_roll_mode(task):
+	if _switched == false:
+		if _parent_node.is_rolling() == true:
+			_switched = true
+		if _parent_node.is_rolling() == false:
+			_switched = true
+			_parent_node.switch_mode()
+		task.succeed()
+		return
 
 
 func task_shoot_mode(task):
-	if _parent_node.name == "Fighter":
-		print("to shoot")
 	if _switched == false:
 		if _parent_node.is_rolling() == false:
-			task.succeed()
-			return
-		if _parent_node.is_rolling() == true:
-			_parent_node.switch_mode()
 			_switched = true
-	if _parent_node.is_transforming() == false && _switched == true:
-		_switched = false
+		if _parent_node.is_rolling() == true:
+			_switched = true
+			_parent_node.current_weapon.global_rotation = $TargetRay.global_rotation
+			_parent_node.switch_mode()
 		task.succeed()
 		return
-	task.reset()
 
 
 #############
 # charge roll
 #############
 func task_charge_attack(task):
-	if _parent_node.name == "Fighter":
-		print("charging")
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
@@ -166,11 +161,10 @@ func task_charge_attack(task):
 		return
 	else:
 		task.failed()
+		return
 
 
 func task_back_off(task):
-	if _parent_node.name == "Fighter":
-		print("backing off")
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
@@ -184,6 +178,7 @@ func task_back_off(task):
 		else:
 			_velocity = Vector2(1,0).rotated($VelocityRay.global_rotation)
 		task.reset()
+		return
 	else:
 		task.succeed()
 		return
@@ -211,6 +206,7 @@ func task_look_dir(task):
 		vector = Vector2(1,0).rotated($VelocityRay.global_rotation) + Vector2(1,0).rotated($VelocityRay.get_collision_normal().angle())
 		$VelocityRay.global_rotation = vector.angle()
 		task.reset()
+		return
 	task.succeed()
 	return
 
@@ -230,8 +226,6 @@ func task_move(task):
 # shoot weapon
 ##############
 func task_shoot_enemy(task):
-	if _parent_node.name == "Fighter":
-		print("shooting")
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
@@ -242,9 +236,8 @@ func task_shoot_enemy(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
 		return
-	if _parent_node.current_weapon.is_overheating() == false:
+	if _parent_node.current_weapon.is_overheating() == false && _level_node.get_node("Nav").get_children().has($TargetRay.get_collider()) == false:
 		_parent_node.shoot_weapon()
-		task.reset()
 
 
 #func task_get_nearest_ally(task):
