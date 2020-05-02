@@ -1,13 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
 [ext_resource path="res://scenes/levels/_base/_BaseLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/levels/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
-[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/bots/dummy/DestructibleDummy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/levels/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/levels/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=11]
@@ -15,10 +13,6 @@
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=15]
-
-[sub_resource type="PhysicsMaterial" id=1]
-friction = 0.5
-bounce = 0.65
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -54,71 +48,36 @@ position = Vector2( 4539, 2622 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 268, 2967 )
+roll_speed = 2000
 
-[node name="Dummy" parent="Bots" index="1" instance=ExtResource( 6 )]
-position = Vector2( 1990.07, 2953.35 )
-physics_material_override = SubResource( 1 )
-
-[node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 6 )]
-position = Vector2( 3958.97, 391.663 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy2" parent="Bots" index="3" instance=ExtResource( 8 )]
-position = Vector2( 1212.8, 2892.84 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy5" parent="Bots" index="4" instance=ExtResource( 8 )]
-position = Vector2( 441.355, 1549.62 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy6" parent="Bots" index="5" instance=ExtResource( 8 )]
-position = Vector2( 1811.8, 1631.3 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy7" parent="Bots" index="6" instance=ExtResource( 8 )]
-position = Vector2( 1085.74, 2275.68 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy8" parent="Bots" index="7" instance=ExtResource( 8 )]
-position = Vector2( 976.827, 1005.07 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy3" parent="Bots" index="8" instance=ExtResource( 8 )]
-position = Vector2( 3577.89, 1407.87 )
-physics_material_override = SubResource( 1 )
-
-[node name="DestructibleDummy4" parent="Bots" index="9" instance=ExtResource( 8 )]
-position = Vector2( 1534.9, 254.052 )
-physics_material_override = SubResource( 1 )
-
-[node name="Charger" parent="Bots" index="10" instance=ExtResource( 13 )]
+[node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
 position = Vector2( 3815, 236 )
 
-[node name="Charger2" parent="Bots" index="11" instance=ExtResource( 13 )]
+[node name="Charger2" parent="Bots" index="2" instance=ExtResource( 13 )]
 position = Vector2( 1417, 2121 )
 
-[node name="Charger8" parent="Bots" index="12" instance=ExtResource( 13 )]
+[node name="Charger8" parent="Bots" index="3" instance=ExtResource( 13 )]
 position = Vector2( 3652, 2921 )
 
-[node name="Charger9" parent="Bots" index="13" instance=ExtResource( 13 )]
+[node name="Charger9" parent="Bots" index="4" instance=ExtResource( 13 )]
 position = Vector2( 3461, 1693 )
 
-[node name="Charger10" parent="Bots" index="14" instance=ExtResource( 13 )]
+[node name="Charger10" parent="Bots" index="5" instance=ExtResource( 13 )]
 position = Vector2( 3614, 278 )
 
-[node name="Charger3" parent="Bots" index="15" instance=ExtResource( 13 )]
+[node name="Charger3" parent="Bots" index="6" instance=ExtResource( 13 )]
 position = Vector2( 1417, 2302 )
 
-[node name="Charger4" parent="Bots" index="16" instance=ExtResource( 13 )]
+[node name="Charger4" parent="Bots" index="7" instance=ExtResource( 13 )]
 position = Vector2( 623, 958 )
 
-[node name="Charger5" parent="Bots" index="17" instance=ExtResource( 13 )]
+[node name="Charger5" parent="Bots" index="8" instance=ExtResource( 13 )]
 position = Vector2( 270, 500 )
 
-[node name="Charger6" parent="Bots" index="18" instance=ExtResource( 13 )]
+[node name="Charger6" parent="Bots" index="9" instance=ExtResource( 13 )]
 position = Vector2( 246, 958 )
 
-[node name="Charger7" parent="Bots" index="19" instance=ExtResource( 13 )]
+[node name="Charger7" parent="Bots" index="10" instance=ExtResource( 13 )]
 position = Vector2( 622, 328 )
 
 [node name="Camera2D" parent="." index="5"]

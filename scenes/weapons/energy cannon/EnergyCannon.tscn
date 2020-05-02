@@ -5,6 +5,8 @@
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/energy cannon/EnergyCannon.gd" type="Script" id=4]
 
+
+
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 0.184857, 0.984863, 0.0153885, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )

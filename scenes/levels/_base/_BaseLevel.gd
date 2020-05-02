@@ -2,28 +2,26 @@ extends Node2D
 
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
-
-const CLASS_PLAYER = preload("res://scenes/bots/player/Player.gd")
-
 var _is_player_dead: bool = false
 var _init_cam: bool = false
+
 
 func _ready() -> void:
 	for child_node in $Bots.get_children():
 		if child_node.current_weapon != null:
 			child_node.connect("weapon_shot", self, "_on_weapon_shot")
-		if child_node is CLASS_PLAYER:
-			Globals.player = child_node
+		if child_node is Global.CLASS_PLAYER:
+			Global.player = child_node
 
 
 func _process(delta: float) -> void:
 	if _init_cam == true:
 		return
-	if is_instance_valid(Globals.player) == true && Globals.player.is_alive() == false:
-		$Camera2D.global_position = Globals.player.global_position
+	if is_instance_valid(Global.player) == true && Global.player.is_alive() == false:
+		$Camera2D.global_position = Global.player.global_position
 		$Camera2D.current = true
 		_init_cam = true
-	if is_instance_valid(Globals.player) == false:
+	if is_instance_valid(Global.player) == false:
 		$Camera2D.current = true
 		_init_cam = true
 

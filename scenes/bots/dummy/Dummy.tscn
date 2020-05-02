@@ -6,7 +6,6 @@
 resource_local_to_scene = true
 
 [node name="Dummy" instance=ExtResource( 1 )]
-is_destructible = false
 
 [node name="CollisionShape" parent="." index="5"]
 shape = SubResource( 1 )

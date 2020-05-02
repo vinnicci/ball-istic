@@ -450,10 +450,10 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	if body.get_parent().name == "Bots" && hostile == body.hostile:
+	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
-	if body.get_parent().name == "Bots" && body._is_charge_rolling == true:
+	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
 		damage /= 8
 	body.take_damage(damage, Vector2(0,0))
 	$Sounds/ChargeAttackHit.play()

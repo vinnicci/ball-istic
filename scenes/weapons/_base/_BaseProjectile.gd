@@ -6,8 +6,6 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
-const CLASS_BOT = preload("res://scenes/bots/_base/_BaseBot.gd")
-
 var _origin: bool
 var _proj_velocity: Vector2
 
@@ -16,7 +14,7 @@ func _ready() -> void:
 	var circle: Array = []
 	for i in range(12):
 		circle.append(Vector2($CollisionShape.shape.radius, 0).rotated(deg2rad(i * 30)))
-	$Blast.polygon = circle
+	$HitBlast.polygon = circle
 
 
 func ready_travel(pos, dir, origin) -> void:
@@ -38,26 +36,29 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body is CLASS_BOT && body.is_hostile() == _origin:
+	if body is Global.CLASS_BOT && body.is_hostile() == _origin:
 		return
-	elif body is CLASS_BOT && body.is_hostile() != _origin:
+	elif body is Global.CLASS_BOT && body.is_hostile() != _origin:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
-	_proj_velocity = Vector2(0,0)
-	$Sprite.hide()
-	$Blast.show()
-	$Blast/AnimationPlayer.play("blast")
+	$HitBlast.show()
+	$HitBlast/AnimationPlayer.play("blast")
 	$OnHitParticles.emitting = true
-	set_deferred("monitoring", false)
+	_stop_projectile()
 
 
 func _on_RangeTimer_timeout() -> void:
+	$RemoveTimer.start()
+	_stop_projectile()
+
+
+#common steps to stop projectile
+func _stop_projectile() -> void:
 	_proj_velocity = Vector2(0,0)
 	$Sprite.hide()
-	$RemoveTimer.start()
 	set_deferred("monitoring", false)
-	
+
 
 func _on_RemoveTimer_timeout() -> void:
 	queue_free()

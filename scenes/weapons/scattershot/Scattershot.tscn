@@ -38,17 +38,17 @@ heat_capacity = 8.0
 heat_dissipation_per_sec = 0.5
 shoot_cooldown = 0.5
 
-[node name="Muzzle" parent="." index="0"]
+[node name="SlotIcon" parent="." index="0"]
+rotation = -0.785398
+texture = ExtResource( 3 )
+
+[node name="Muzzle" parent="." index="1"]
 position = Vector2( 33, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 amount = 20
 process_material = SubResource( 3 )
 
-[node name="Sprite" parent="." index="1"]
+[node name="Sprite" parent="." index="2"]
 texture = ExtResource( 3 )
 offset = Vector2( 8, 0 )
-
-[node name="SlotIcon" parent="." index="2"]
-rotation = -0.785398
-texture = ExtResource( 3 )

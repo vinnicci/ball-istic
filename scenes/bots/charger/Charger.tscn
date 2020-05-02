@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/bots/dummy/DestructibleDummy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/bots/tex_charger.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/charger/Charger.gd" type="Script" id=3]
 [ext_resource path="res://scenes/ai/charger ai/ChargerAI.tscn" type="PackedScene" id=4]

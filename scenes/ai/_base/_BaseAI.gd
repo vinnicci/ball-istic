@@ -3,13 +3,11 @@ extends Node2D
 
 var _enemies: Array = []
 var _allies: Array = []
-var _enemy: CLASS_BOT = null
-var _ally: CLASS_BOT = null
+var _enemy: Global.CLASS_BOT = null
+var _ally: Global.CLASS_BOT = null
 var _path_points: Array = []
 var _next_path_point: Vector2
 var _velocity: Vector2
-
-const CLASS_BOT = preload("res://scenes/bots/_base/_BaseBot.gd")
 
 onready var _parent_node: = get_parent()
 onready var _level_node: = _parent_node.get_parent().get_parent()
@@ -17,7 +15,11 @@ onready var _level_node: = _parent_node.get_parent().get_parent()
 
 func _ready() -> void:
 	for object in _level_node.get_node("Nav").get_children():
-		$LookRay.add_exception(object)
+		$Rays/LookAt.add_exception(object)
+
+
+func _process(delta: float) -> void:
+	$Rays.global_rotation = 0
 
 
 func get_path_points(start, end) -> void:
@@ -30,7 +32,7 @@ func control_ai(delta):
 	if _parent_node.is_in_control() == true:
 		_parent_node.velocity = _velocity
 	if is_instance_valid(_enemy) == true:
-		$TargetRay.look_at(_enemy.global_position)
+		$Rays/Target.look_at(_enemy.global_position)
 
 
 #func _process(delta: float) -> void:
@@ -43,19 +45,19 @@ func _get_new_target_enemy() -> void:
 		if is_instance_valid(_enemies.front()) == false:
 			_enemies.pop_front()
 			return
-		$LookRay.look_at(_enemies.front().global_position)
-		if $LookRay.get_collider() == _enemies.front():
+		$Rays/LookAt.look_at(_enemies.front().global_position)
+		if $Rays/LookAt.get_collider() == _enemies.front():
 			_enemy = _enemies.pop_front()
 			$FoundTarget.play()
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
+	if body is Global.CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
 		_enemies.append(body)
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	if body is CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
+	if body is Global.CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
 		if _enemies.has(body) == true:
 			_enemies.erase(body)
 
@@ -65,10 +67,10 @@ func _seek(target) -> void:
 		return
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) < 300:
 		get_path_points(global_position, target.global_position)
-	if global_position.distance_to(_next_path_point) < 150:
+	if global_position.distance_to(_next_path_point) < 200:
 		_next_path_point = _path_points.pop_front()
-	$VelocityRay.look_at(_next_path_point)
-	_velocity = Vector2(1,0).rotated($VelocityRay.global_rotation)
+	$Rays/Velocity.look_at(_next_path_point)
+	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
 #############
@@ -142,7 +144,7 @@ func task_shoot_mode(task):
 			_switched = true
 		if _parent_node.is_rolling() == true:
 			_switched = true
-			_parent_node.current_weapon.global_rotation = $TargetRay.global_rotation
+			_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 			_parent_node.switch_mode()
 		task.succeed()
 		return
@@ -155,8 +157,8 @@ func task_charge_attack(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
-	if $TargetRay.get_collider() == _enemy && _parent_node.is_charge_roll_ready() == true:
-		_parent_node.charge_roll($TargetRay.global_rotation)
+	if $Rays/Target.get_collider() == _enemy && _parent_node.is_charge_roll_ready() == true:
+		_parent_node.charge_roll($Rays/Target.global_rotation)
 		task.succeed()
 		return
 	else:
@@ -170,13 +172,13 @@ func task_back_off(task):
 		return
 	if _parent_node.is_charge_roll_ready() == false:
 		if global_position.distance_to(_enemy.global_position) < task.get_param(0):
-			$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
+			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 		elif global_position.distance_to(_enemy.global_position) > task.get_param(0):
-			$VelocityRay.global_rotation = $TargetRay.global_rotation
-		if $VelocityRay.is_colliding() == true:
-			_velocity = Vector2(1,0).rotated($VelocityRay.global_rotation) + Vector2(1,0).rotated($VelocityRay.get_collision_normal().angle())
+			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation
+		if $Rays/Velocity.is_colliding() == true:
+			_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation) + Vector2(1,0).rotated($Rays/Velocity.get_collision_normal().angle())
 		else:
-			_velocity = Vector2(1,0).rotated($VelocityRay.global_rotation)
+			_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 		task.reset()
 		return
 	else:
@@ -195,16 +197,16 @@ func task_enemy_close(task):
 		task.succeed()
 		return
 	else:
-		$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
+		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 		task.failed()
 		return
 
 
 func task_look_dir(task):
 	var vector: Vector2
-	if $VelocityRay.is_colliding() == true:
-		vector = Vector2(1,0).rotated($VelocityRay.global_rotation) + Vector2(1,0).rotated($VelocityRay.get_collision_normal().angle())
-		$VelocityRay.global_rotation = vector.angle()
+	if $Rays/Velocity.is_colliding() == true:
+		vector = Vector2(1,0).rotated($Rays/Velocity.global_rotation) + Vector2(1,0).rotated($Rays/Velocity.get_collision_normal().angle())
+		$Rays/Velocity.global_rotation = vector.angle()
 		task.reset()
 		return
 	task.succeed()
@@ -215,9 +217,9 @@ func task_move(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
-	_velocity = Vector2(1,0).rotated($VelocityRay.global_rotation)
+	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 	if global_position.distance_to(_enemy.global_position) < 150:
-		$VelocityRay.global_rotation = $TargetRay.global_rotation - deg2rad(180)
+		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	task.succeed()
 	return
 
@@ -236,7 +238,7 @@ func task_shoot_enemy(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
 		return
-	if _parent_node.current_weapon.is_overheating() == false && _level_node.get_node("Nav").get_children().has($TargetRay.get_collider()) == false:
+	if _parent_node.current_weapon.is_overheating() == false && _level_node.get_node("Nav").get_children().has($Rays/Target.get_collider()) == false:
 		_parent_node.shoot_weapon()
 
 

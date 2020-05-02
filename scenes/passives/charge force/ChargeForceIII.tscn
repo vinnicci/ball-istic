@@ -4,6 +4,8 @@
 [ext_resource path="res://assets/passives/tex_super_charge_III.png" type="Texture" id=2]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceIII.gd" type="Script" id=3]
 
+
+
 [node name="ChargeForceIII" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 

@@ -216,9 +216,6 @@ func _update_bar_weapon_heat() -> void:
 ######################
 
 
-const CLASS_WEAPON = preload("res://scenes/weapons/_base/_BaseWeapon.gd")
-const CLASS_PASSIVE = preload("res://scenes/passives/_base/_BasePassive.gd")
-
 var is_using_bot_station: bool = false
 var _trash_slot_held: Node = null
 var _dict_held: Dictionary = {
@@ -301,7 +298,7 @@ func _on_TrashSlot_pressed() -> void:
 	elif _dict_held["item"] == _built_in_weapon:
 		_show_inventory_warning("CAN'T TRASH BUILT-IN WEAPON")
 		return
-	elif _dict_held["item"] is CLASS_WEAPON && _check_if_equipping_weapon() == false:
+	elif _dict_held["item"] is Global.CLASS_WEAPON && _check_if_equipping_weapon() == false:
 		_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
 		return
 	elif _dict_held["item"] != null && _dict_held["from_slot"] != "item" && is_using_bot_station == false:
@@ -313,7 +310,7 @@ func _on_TrashSlot_pressed() -> void:
 		_trash_slot_held = _dict_held["item"]
 		_dict_held["item"] = null
 		_dict_held["from_slot"] = ""
-		if _trash_slot_held is CLASS_WEAPON:
+		if _trash_slot_held is Global.CLASS_WEAPON:
 			_init_weap_and_slot_selected()
 	update_ui_slot(0, "trash")
 	_show_held_item()
@@ -386,9 +383,9 @@ func _hold_item(item: Node, slot: String, slot_num: int) -> void:
 			"weapon": _update_ui_weapon_slot(slot_num)
 			"passive": update_ui_slot(slot_num, "passive")
 	elif _dict_held["item"] != null:
-		if slot == "passive" && _dict_held["item"] is CLASS_PASSIVE == false:
+		if slot == "passive" && _dict_held["item"] is Global.CLASS_PASSIVE == false:
 			return
-		elif slot == "weapon" && _dict_held["item"] is CLASS_WEAPON == false:
+		elif slot == "weapon" && _dict_held["item"] is Global.CLASS_WEAPON == false:
 			return
 		elif _dict_held["item"] != null:
 			_swap_item(item, slot, slot_num)

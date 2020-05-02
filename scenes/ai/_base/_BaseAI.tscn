@@ -147,16 +147,6 @@ tree = {
 "type": 99
 }, {
 "data": {
-"fn": "task_is_enemy_instance_valid",
-"offset": Vector2( -600, 200 ),
-"params": [  ],
-"size": Vector2( 318, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-}, {
-"data": {
 "data": {
 "connection": [ {
 "from": "sequence3",
@@ -557,7 +547,7 @@ tree = {
 "type": 14
 }
 },
-"label": "shoot mode",
+"label": "turret mode",
 "offset": Vector2( -600, 700 ),
 "size": Vector2( 236, 83 )
 },
@@ -975,6 +965,26 @@ tree = {
 },
 "name": "minim_node6",
 "type": 99
+}, {
+"data": {
+"fn": "task_idle",
+"offset": Vector2( -600, 0 ),
+"params": [  ],
+"size": Vector2( 240, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"data": {
+"fn": "task_is_enemy_instance_valid",
+"offset": Vector2( -600, 200 ),
+"params": [  ],
+"size": Vector2( 318, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
 } ],
 "root": {
 "child": [  ],
@@ -993,15 +1003,17 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource( 1 )
 
-[node name="TargetRay" type="RayCast2D" parent="."]
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="Target" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 1000, 0 )
 
-[node name="VelocityRay" type="RayCast2D" parent="."]
+[node name="Velocity" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( 60, 0 )
+cast_to = Vector2( 75, 0 )
 
-[node name="LookRay" type="RayCast2D" parent="."]
+[node name="LookAt" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 1000, 0 )
 

@@ -24,7 +24,7 @@ func _init_ui_node() -> void:
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
-	if body is CLASS_PLAYER:
+	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
@@ -39,7 +39,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
-	if body is CLASS_PLAYER:
+	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.play("fading")
 		body.ui_access = ""

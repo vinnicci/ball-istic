@@ -1,4 +1,4 @@
-extends Node2D
+extends "res://scenes/global/_base item/_BaseItem.gd"
 
 
 export (PackedScene) var Projectile
@@ -11,8 +11,6 @@ export (float) var shoot_cooldown: float = 1.0
 var _current_heat: float setget , current_heat
 var _is_overheating: bool = false setget , is_overheating
 
-onready var _parent_node: Node = get_parent().get_parent() setget set_parent_node, get_parent_node
-
 
 func current_heat():
 	return _current_heat
@@ -20,14 +18,6 @@ func current_heat():
 
 func is_overheating():
 	return _is_overheating
-
-
-func set_parent_node(new_parent: Node):
-	_parent_node = new_parent
-
-
-func get_parent_node():
-	return _parent_node
 
 
 func _ready() -> void:
@@ -83,5 +73,5 @@ func _on_DissipationCooldown_timeout() -> void:
 		_current_heat = 0
 
 
-func _on_Cooldown_timeout() -> void:
+func _on_ShootCooldown_timeout() -> void:
 	$Muzzle/MuzzleParticles.emitting = false

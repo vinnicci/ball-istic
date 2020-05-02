@@ -31,7 +31,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Globals="*res://scenes/global/Globals.gd"
+Global="*res://scenes/global/Global.gd"
 
 [display]
 
