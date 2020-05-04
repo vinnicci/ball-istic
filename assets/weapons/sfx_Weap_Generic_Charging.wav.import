@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_Weap_Generic_Charging.wav-d80e718ca86e14f25db5aa7dafc96d63.sample"
+
+[deps]
+
+source_file="res://assets/weapons/sfx_Weap_Generic_Charging.wav"
+dest_files=[ "res://.import/sfx_Weap_Generic_Charging.wav-d80e718ca86e14f25db5aa7dafc96d63.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

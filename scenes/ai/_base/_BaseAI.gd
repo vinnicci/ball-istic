@@ -238,7 +238,7 @@ func task_shoot_enemy(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
 		return
-	if _parent_node.current_weapon.is_overheating() == false && _level_node.get_node("Nav").get_children().has($Rays/Target.get_collider()) == false:
+	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() != Global.CLASS_LEVEL_OBJECT:
 		_parent_node.shoot_weapon()
 
 

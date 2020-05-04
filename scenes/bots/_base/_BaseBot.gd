@@ -277,7 +277,10 @@ func _apply_rolling_effects(delta: float) -> void:
 #lose control to switching weapon slot on transforming only
 #no effect to opening inventory
 func _check_if_in_control() -> bool:
-	return _is_alive == true && _is_charge_rolling == false && _is_transforming == false
+	var output: bool = _is_alive == true && _is_charge_rolling == false && _is_transforming == false
+	if current_weapon != null:
+		output = output && current_weapon.is_shooting() == false
+	return output
 
 
 func switch_mode() -> void:

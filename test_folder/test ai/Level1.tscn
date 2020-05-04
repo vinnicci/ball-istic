@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://scenes/weapons/burst blaster/BurstBlaster.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/weapons/charge blaster/ChargeBlaster.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/levels/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/levels/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=11]
@@ -14,6 +15,7 @@
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/weapons/roundshot/RoundShot.tscn" type="PackedScene" id=16]
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -48,6 +50,11 @@ position = Vector2( 4539, 2622 )
 [node name="NukeLauncher" parent="Depot/Items" index="6" instance=ExtResource( 15 )]
 
 [node name="BurstBlaster" parent="Depot/Items" index="7" instance=ExtResource( 6 )]
+
+[node name="ChargeBlaster" parent="Depot/Items" index="8" instance=ExtResource( 8 )]
+proj_count_per_shot = 30
+
+[node name="RoundShot" parent="Depot/Items" index="9" instance=ExtResource( 16 )]
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 3929, 2835 )

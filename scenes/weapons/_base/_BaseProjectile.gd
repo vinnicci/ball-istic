@@ -37,10 +37,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && body.is_hostile() == _origin:
-		return
-	elif body is Global.CLASS_BOT && body.is_hostile() != _origin:
-		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+	if body is Global.CLASS_BOT:
+		if body.is_hostile() == _origin:
+			return
+		elif body.is_hostile() != _origin && body.is_alive() == false:
+			return
+		else:
+			body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	$HitBlast.show()

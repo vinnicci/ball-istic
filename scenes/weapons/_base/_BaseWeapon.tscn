@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/weapons/sfx_Weap_Generic.wav" type="AudioStream" id=1]
 [ext_resource path="res://scenes/global/_base item/_BaseItem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.gd" type="Script" id=3]
+[ext_resource path="res://assets/weapons/sfx_Weap_Generic_Charging.wav" type="AudioStream" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -49,22 +50,38 @@ process_material = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="." index="2"]
 
-[node name="BurstTimer" type="Timer" parent="." index="3"]
-wait_time = 0.03
+[node name="Timers" type="Node2D" parent="." index="3"]
+
+[node name="BurstTimer" type="Timer" parent="Timers" index="0"]
+wait_time = 0.02
 one_shot = true
 
-[node name="ShootCooldown" type="Timer" parent="." index="4"]
+[node name="ShootCooldown" type="Timer" parent="Timers" index="1"]
 one_shot = true
 
-[node name="DissipationCooldown" type="Timer" parent="." index="5"]
+[node name="ChargeTimer" type="Timer" parent="Timers" index="2"]
+wait_time = 3.0
+
+[node name="ChargeCancelTimer" type="Timer" parent="Timers" index="3"]
+wait_time = 0.1
+one_shot = true
+
+[node name="DissipationCooldown" type="Timer" parent="Timers" index="4"]
 wait_time = 0.25
 autostart = true
+
+[node name="ChargingTween" type="Tween" parent="." index="4"]
+
+[node name="WeaponTween" type="Tween" parent="." index="5"]
 
 [node name="ShootingSound" type="AudioStreamPlayer2D" parent="." index="6"]
 stream = ExtResource( 1 )
 
-[node name="WeaponTween" type="Tween" parent="." index="7"]
-[connection signal="timeout" from="BurstTimer" to="." method="_on_BurstTimer_timeout"]
-[connection signal="timeout" from="ShootCooldown" to="." method="_on_ShootCooldown_timeout"]
-[connection signal="timeout" from="DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]
+[node name="ChargingSound" type="AudioStreamPlayer2D" parent="." index="7"]
+stream = ExtResource( 4 )
+[connection signal="timeout" from="Timers/BurstTimer" to="." method="_on_BurstTimer_timeout"]
+[connection signal="timeout" from="Timers/ShootCooldown" to="." method="_on_ShootCooldown_timeout"]
+[connection signal="timeout" from="Timers/ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
+[connection signal="timeout" from="Timers/ChargeCancelTimer" to="." method="_on_ChargeCancelTimer_timeout"]
+[connection signal="timeout" from="Timers/DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]
 [connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_all_completed"]
