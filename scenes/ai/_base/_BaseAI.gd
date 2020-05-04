@@ -138,7 +138,7 @@ func task_roll_mode(task):
 		return
 
 
-func task_shoot_mode(task):
+func task_turret_mode(task):
 	if _switched == false:
 		if _parent_node.is_rolling() == false:
 			_switched = true

@@ -26,6 +26,7 @@ func ready_travel(pos, dir, origin) -> void:
 
 
 #virtual func for proj behavior while travelling
+#use for random behaviors, such as homing, splitting etc.
 func _travel(pos, dir):
 	position = pos
 	rotation = dir

@@ -424,6 +424,7 @@ func _swap_item(item: Node, to_slot: String, slot_num: int) -> void:
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
+	ui_sprite.modulate = item_sprite.modulate
 	ui_sprite.texture = item_sprite.texture
 	ui_sprite.scale = item_sprite.scale
 	ui_sprite.rotation = item_sprite.rotation
@@ -440,8 +441,9 @@ func _show_inventory_warning(warning_text: String) -> void:
 
 func _show_held_item() -> void:
 	if _dict_held["item"] != null:
-		_held_item.texture = _dict_held["item"].get_node("SlotIcon").texture
-		_held_item.rotation = _dict_held["item"].get_node("SlotIcon").rotation
+		_match_sprite($PlayerUI/HeldItem, _dict_held["item"].get_node("SlotIcon"))
+#		_held_item.texture = _dict_held["item"].get_node("SlotIcon").texture
+#		_held_item.rotation = _dict_held["item"].get_node("SlotIcon").rotation
 	elif _dict_held["item"] == null:
 		_held_item.texture = null
 

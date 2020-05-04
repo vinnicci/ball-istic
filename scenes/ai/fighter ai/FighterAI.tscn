@@ -34,11 +34,6 @@ tree = {
 "to_port": 0
 }, {
 "from": "sequence",
-"from_port": 4,
-"to": "minim_node4",
-"to_port": 0
-}, {
-"from": "sequence",
 "from_port": 5,
 "to": "task3",
 "to_port": 0
@@ -56,6 +51,11 @@ tree = {
 "from": "sequence",
 "from_port": 1,
 "to": "minim_node",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 4,
+"to": "minim_node4",
 "to_port": 0
 } ],
 "nodes": [ {
@@ -352,7 +352,7 @@ tree = {
 "nodes": [ {
 "child": [  ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",
@@ -361,7 +361,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
@@ -369,8 +369,8 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -381,7 +381,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -389,7 +389,7 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -398,7 +398,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -411,8 +411,8 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -425,7 +425,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -434,7 +434,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -442,7 +442,7 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -450,14 +450,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
 "type": 6
 } ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",
@@ -962,157 +962,6 @@ tree = {
 "data": {
 "data": {
 "connection": [ {
-"from": "inverter3",
-"from_port": 0,
-"to": "paralel2",
-"to_port": 0
-}, {
-"from": "paralel2",
-"from_port": 0,
-"to": "task7",
-"to_port": 0
-}, {
-"from": "paralel2",
-"from_port": 1,
-"to": "repeat2",
-"to_port": 0
-}, {
-"from": "repeat2",
-"from_port": 0,
-"to": "inverter4",
-"to_port": 0
-}, {
-"from": "inverter4",
-"from_port": 0,
-"to": "task8",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"offset": Vector2( 147.74, 374.452 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter3",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 347.74, 374.452 ),
-"size": Vector2( 113, 91 )
-},
-"name": "paralel2",
-"type": 6
-}, {
-"child": [  ],
-"data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
-"params": [  ],
-"size": Vector2( 271, 91 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat2",
-"type": 8
-}, {
-"child": [  ],
-"data": {
-"offset": Vector2( 747.74, 474.452 ),
-"size": Vector2( 117, 64 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
-"params": [  ],
-"size": Vector2( 271, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
-"params": [  ],
-"size": Vector2( 271, 91 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
-"params": [  ],
-"size": Vector2( 271, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 747.74, 474.452 ),
-"size": Vector2( 117, 64 )
-},
-"name": "inverter4",
-"type": 14
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 347.74, 374.452 ),
-"size": Vector2( 113, 91 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"offset": Vector2( 147.74, 374.452 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter3",
-"type": 14
-}
-},
-"label": "turret mode",
-"offset": Vector2( -500, 500 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node4",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
 "from": "inverter2",
 "from_port": 0,
 "to": "paralel",
@@ -2013,7 +1862,7 @@ tree = {
 "nodes": [ {
 "child": [  ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",
@@ -2022,7 +1871,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
@@ -2030,8 +1879,8 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -2042,7 +1891,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -2050,7 +1899,7 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -2059,7 +1908,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -2072,8 +1921,8 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -2086,7 +1935,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -2095,7 +1944,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -2103,7 +1952,7 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -2111,14 +1960,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
 "type": 6
 } ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",
@@ -2697,6 +2546,157 @@ tree = {
 },
 "name": "minim_node",
 "type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "inverter3",
+"from_port": 0,
+"to": "paralel2",
+"to_port": 0
+}, {
+"from": "paralel2",
+"from_port": 0,
+"to": "task7",
+"to_port": 0
+}, {
+"from": "paralel2",
+"from_port": 1,
+"to": "repeat2",
+"to_port": 0
+}, {
+"from": "repeat2",
+"from_port": 0,
+"to": "inverter4",
+"to_port": 0
+}, {
+"from": "inverter4",
+"from_port": 0,
+"to": "task8",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"offset": Vector2( -500, 500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter3",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( -300, 500 ),
+"size": Vector2( 113, 91 )
+},
+"name": "paralel2",
+"type": 6
+}, {
+"child": [  ],
+"data": {
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
+"params": [  ],
+"size": Vector2( 271, 91 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"count": 0.0,
+"offset": Vector2( -100, 600 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat2",
+"type": 8
+}, {
+"child": [  ],
+"data": {
+"offset": Vector2( 100, 600 ),
+"size": Vector2( 117, 64 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_transformed",
+"offset": Vector2( 300, 600 ),
+"params": [  ],
+"size": Vector2( 271, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
+"params": [  ],
+"size": Vector2( 271, 91 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_transformed",
+"offset": Vector2( 300, 600 ),
+"params": [  ],
+"size": Vector2( 271, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 100, 600 ),
+"size": Vector2( 117, 64 )
+},
+"name": "inverter4",
+"type": 14
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( -100, 600 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( -300, 500 ),
+"size": Vector2( 113, 91 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"offset": Vector2( -500, 500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter3",
+"type": 14
+}
+},
+"label": "turret mode",
+"offset": Vector2( -500, 500 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node4",
+"type": 99
 } ],
 "root": {
 "child": [ {
@@ -2992,7 +2992,7 @@ tree = {
 "nodes": [ {
 "child": [  ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",
@@ -3001,7 +3001,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
@@ -3009,8 +3009,8 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -3021,7 +3021,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -3029,7 +3029,7 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -3038,7 +3038,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -3051,8 +3051,8 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_shoot_mode",
-"offset": Vector2( 547.74, 374.452 ),
+"fn": "task_turret_mode",
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 271, 91 ),
 "values": [  ]
@@ -3065,7 +3065,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_transformed",
-"offset": Vector2( 947.74, 474.452 ),
+"offset": Vector2( 300, 600 ),
 "params": [  ],
 "size": Vector2( 271, 85 ),
 "values": [  ]
@@ -3074,7 +3074,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 747.74, 474.452 ),
+"offset": Vector2( 100, 600 ),
 "size": Vector2( 117, 64 )
 },
 "name": "inverter4",
@@ -3082,7 +3082,7 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 547.74, 474.452 ),
+"offset": Vector2( -100, 600 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -3090,14 +3090,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 347.74, 374.452 ),
+"offset": Vector2( -300, 500 ),
 "size": Vector2( 113, 91 )
 },
 "name": "paralel2",
 "type": 6
 } ],
 "data": {
-"offset": Vector2( 147.74, 374.452 ),
+"offset": Vector2( -500, 500 ),
 "size": Vector2( 117, 49 )
 },
 "name": "inverter3",

@@ -20,7 +20,7 @@ const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
 const OUTLINE_SIZE: float = 3.5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: int = 2
-const SHOOT_MODE_DAMP: int = 5
+const TURRET_MODE_DAMP: int = 5
 const POLY_SIDES = 24
 const HOSTILE_COLOR = Color(1, 0.13, 0.13)
 const NON_HOSTILE_COLOR = Color(0.4, 1, 0.4)
@@ -43,8 +43,6 @@ var _is_charge_rolling: bool = false setget , is_charge_rolling
 var _is_transforming: bool = false setget , is_transforming
 var _is_in_control: bool = true setget , is_in_control
 var _arr_weapons: Array = [null, null, null, null, null]
-
-signal weapon_shot
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -145,7 +143,7 @@ func _init_bot() -> void:
 	#bot physics and properties
 	$CollisionShape.shape.radius = bot_radius
 	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
-	linear_damp = SHOOT_MODE_DAMP
+	linear_damp = TURRET_MODE_DAMP
 	if destructible == false:
 		$Bars.hide()
 	
@@ -237,7 +235,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	#everything charge roll
 	#graphical feedback/effects
-	#ball turns black when put in _process and higher framerates, fix later
+	#to be placed in process
 	_end_charging_effect()
 	
 	#velocity calculations
@@ -275,7 +273,7 @@ func _apply_rolling_effects(delta: float) -> void:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
 
 
-#false means losing control to rolling, shooting, charging, and switching mode
+#false means losing control to rolling, shooting, charging and switching mode
 #lose control to switching weapon slot on transforming only
 #no effect to opening inventory
 func _check_if_in_control() -> bool:
@@ -295,7 +293,7 @@ func switch_mode() -> void:
 		linear_damp = ROLL_MODE_DAMP
 		mode = RigidBody2D.MODE_RIGID
 	elif _is_rolling == false:
-		linear_damp = SHOOT_MODE_DAMP
+		linear_damp = TURRET_MODE_DAMP
 		mode = RigidBody2D.MODE_CHARACTER
 
 
@@ -339,11 +337,8 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 
 #some weapons' shooting mode aren't auto, so will change this later
 func shoot_weapon() -> void:
-	if _is_in_control == false || _is_rolling == true:
-		return
-	var muzzle: = current_weapon.get_node("Muzzle")
-	emit_signal("weapon_shot", current_weapon.fire(),
-		muzzle.global_position, muzzle.global_rotation, hostile)
+	if _is_in_control == true && _is_rolling == false:
+		current_weapon.fire()
 
 
 func change_weapon(slot_num: int) -> void:

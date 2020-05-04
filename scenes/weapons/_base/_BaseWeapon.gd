@@ -8,8 +8,11 @@ export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipa
 #heat must be below this threshold to return firing
 export (float, 0, 1.0) var heat_cooled_threshold: float = 0 setget , get_heat_cooled_threshold
 export (float) var shoot_cooldown: float = 1.0 setget , get_shoot_cooldown
-enum FireModes {AUTO, SEMI_AUTO, BURST, CHARGE}
+enum FireModes {AUTO, BURST, CHARGE}
 export (FireModes) var fire_mode setget , get_fire_mode
+export (int) var proj_count_per_shot: int = 1 setget , get_proj_count_per_shot
+export (float) var spread: float = 10 setget , get_spread #degrees
+export (int) var recoil: int = 0 setget , get_recoil
 
 var _current_heat: float setget , current_heat
 var _is_overheating: bool = false setget , is_overheating
@@ -33,6 +36,15 @@ func get_shoot_cooldown():
 func get_fire_mode():
 	return fire_mode
 
+func get_proj_count_per_shot():
+	return proj_count_per_shot
+
+func get_spread():
+	return spread
+
+func get_recoil():
+	return recoil
+
 func current_heat():
 	return _current_heat
 
@@ -44,42 +56,60 @@ func _ready() -> void:
 	$ShootCooldown.wait_time = shoot_cooldown
 
 
-func fire() -> Array:
+func fire() -> void:
 	if $ShootCooldown.is_stopped() == false:
-		return []
+		return
 	$ShootCooldown.start()
 	if _is_overheating == true:
-		return []
-	match fire_mode:
-		0: return _fire_auto()
-		1: return _fire_semi_auto()
-		2: return _fire_burst()
-		3: return _fire_charged()
-		_: return []
-
-
-func _fire_auto() -> Array:
+		return
 	$Muzzle/MuzzleParticles.emitting = true
-	$ShootingSound.play()
 	_current_heat += heat_per_shot
-	return _instantiate_projectile()
+	match fire_mode:
+		0: _fire_auto()
+		1: _fire_burst()
+		3: _fire_charged()
 
 
-func _fire_semi_auto() -> Array:
-	return []
+###########
+# auto fire
+###########
+func _fire_auto() -> void:
+	$ShootingSound.play()
+	for i in proj_count_per_shot:
+		_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
+		Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
+			$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
 
 
-func _fire_burst() -> Array:
-	return []
+############
+# burst fire
+############
+var _current_burst_count: int = 0
 
 
-func _fire_charged() -> Array:
-	return []
+func _fire_burst() -> void:
+#	_is_firing = true
+	$BurstTimer.start()
 
 
-func _instantiate_projectile() -> Array:
-	var projectiles = [Projectile.instance()]
-	return projectiles
+func _on_BurstTimer_timeout() -> void:
+	if _current_burst_count == proj_count_per_shot || _parent_node.is_rolling() == true:
+		_current_burst_count = 0
+#		_is_firing = false
+		return
+	$ShootingSound.play()
+	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
+	Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+	_current_burst_count += 1
+	$BurstTimer.start()
+
+
+#############
+# charge fire
+#############
+func _fire_charged() -> void:
+	pass
 
 
 func animate_transform(transform_speed: float) -> void:

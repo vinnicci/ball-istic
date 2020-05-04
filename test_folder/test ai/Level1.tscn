@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
 [ext_resource path="res://scenes/levels/_base/_BaseLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/levels/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
+[ext_resource path="res://scenes/weapons/burst blaster/BurstBlaster.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/levels/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/levels/depot/Depot.tscn" type="PackedScene" id=10]
@@ -46,8 +47,10 @@ position = Vector2( 4539, 2622 )
 
 [node name="NukeLauncher" parent="Depot/Items" index="6" instance=ExtResource( 15 )]
 
+[node name="BurstBlaster" parent="Depot/Items" index="7" instance=ExtResource( 6 )]
+
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
-position = Vector2( 268, 2967 )
+position = Vector2( 3929, 2835 )
 roll_speed = 2000
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
@@ -57,7 +60,7 @@ position = Vector2( 3815, 236 )
 position = Vector2( 1417, 2121 )
 
 [node name="Charger8" parent="Bots" index="3" instance=ExtResource( 13 )]
-position = Vector2( 3652, 2921 )
+position = Vector2( 855, 1726 )
 
 [node name="Charger9" parent="Bots" index="4" instance=ExtResource( 13 )]
 position = Vector2( 3461, 1693 )
