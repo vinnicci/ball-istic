@@ -86,7 +86,7 @@ current = true
 zoom = Vector2( 1.75, 1.75 )
 smoothing_speed = 20.0
 
-[node name="PlayerBuiltInWeap" parent="Weapons" index="0" instance=ExtResource( 12 )]
+[node name="AutoBlaster" parent="Weapons" index="0" instance=ExtResource( 12 )]
 
 [node name="Items" type="Node2D" parent="." index="10"]
 

@@ -128,7 +128,7 @@ func _control(delta):
 func _process(delta: float) -> void:
 	_control_camera(delta)
 	
-	#var is_in_control has no influence here
+	#var _is_in_control has no influence here
 	_held_item.position = get_viewport().get_mouse_position()
 	
 	_update_bar_weapon_heat()
@@ -214,6 +214,9 @@ func _update_bar_weapon_heat() -> void:
 ######################
 # inventory management
 ######################
+
+
+#needs refactor holy crap
 
 
 var is_using_bot_station: bool = false

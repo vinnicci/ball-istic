@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/weapons/sfx_Weap_IntroWeapon.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/weapons/sfx_Weap_Generic.wav" type="AudioStream" id=1]
 [ext_resource path="res://scenes/global/_base item/_BaseItem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.gd" type="Script" id=3]
 

@@ -45,7 +45,6 @@ var _is_in_control: bool = true setget , is_in_control
 var _arr_weapons: Array = [null, null, null, null, null]
 
 signal weapon_shot
-signal charged
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -319,7 +318,6 @@ func _animate_weapon_hatch() -> void:
 	if _is_rolling == false:
 		if current_weapon != null:
 			current_weapon.animate_transform(current_transform_speed)
-			current_weapon.global_rotation = _body_weapon_hatch.global_rotation
 		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif _is_rolling == true:
@@ -341,11 +339,11 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 
 #some weapons' shooting mode aren't auto, so will change this later
 func shoot_weapon() -> void:
-	if _is_in_control == false || current_weapon.get_node("ShootCooldown").is_stopped() == false || current_weapon.is_overheating() == true || _is_rolling == true:
+	if _is_in_control == false || _is_rolling == true:
 		return
 	var muzzle: = current_weapon.get_node("Muzzle")
-	emit_signal("weapon_shot", current_weapon.get_projectiles(), muzzle.global_position,
-		muzzle.global_rotation, hostile)
+	emit_signal("weapon_shot", current_weapon.fire(),
+		muzzle.global_position, muzzle.global_rotation, hostile)
 
 
 func change_weapon(slot_num: int) -> void:
@@ -367,6 +365,9 @@ func charge_roll(charge_direction: float) -> void:
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
 	_timer_charge_cooldown.start()
+
+
+signal charged
 
 
 #0.05 sec delay in order to get almost peak linear velocity

@@ -4,6 +4,7 @@
 
 [node name="RigidObject" type="RigidBody2D"]
 script = ExtResource( 1 )
+destructible = true
 
 [node name="RigidObjectSprite" type="Sprite" parent="."]
 

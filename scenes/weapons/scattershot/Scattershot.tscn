@@ -39,7 +39,6 @@ heat_dissipation_per_sec = 0.5
 shoot_cooldown = 0.5
 
 [node name="SlotIcon" parent="." index="0"]
-rotation = -0.785398
 texture = ExtResource( 3 )
 
 [node name="Muzzle" parent="." index="1"]
