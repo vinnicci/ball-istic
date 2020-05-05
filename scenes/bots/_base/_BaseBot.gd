@@ -286,7 +286,7 @@ func _check_if_in_control() -> bool:
 func switch_mode() -> void:
 	if _is_in_control == false:
 		return
-#	_is_in_control = false #apply immediately as possible
+	_is_in_control = false #apply immediately as possible
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
@@ -375,9 +375,10 @@ func _on_ChargeEffectDelay_timeout() -> void:
 
 func _on_Bot_charged() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+		_is_in_control = false
+		_is_charge_rolling = true
 		_body_outline.color = Color(1, 0.24, 0.88)
 		_body_charge_effect.color.a = 255
-		_is_charge_rolling = true
 
 
 func _end_charging_effect() -> void:
@@ -420,6 +421,7 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func _explode() -> void:
 	_is_alive = false
+	_is_in_control = false
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()

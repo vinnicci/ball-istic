@@ -5,15 +5,17 @@
 [ext_resource path="res://assets/weapons/tex_scattershot_proj.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
+radius = 12.0
 
 [node name="ScattershotProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 900
-damage = 7.0
+damage = 10.0
+proj_range = 600
 
 [node name="Sprite" parent="." index="1"]
 texture = ExtResource( 3 )
-offset = Vector2( -8, 0 )
+offset = Vector2( -10, 0 )
 
 [node name="CollisionShape" parent="." index="2"]
 shape = SubResource( 1 )

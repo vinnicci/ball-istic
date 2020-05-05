@@ -98,16 +98,24 @@ func fire() -> void:
 		2: _fire_charged()
 
 
+func _spawn_proj() -> void:
+	Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+
+
+func _apply_recoil() -> void:
+	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
+
+
 ################################################################################
 # auto fire
 # fire one or more projectiles at once, shootcooldown node is the rate of fire
 ################################################################################
 func _fire_auto() -> void:
 	$ShootingSound.play()
-	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
 	for i in proj_count_per_shot:
-		Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
-			$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+		_spawn_proj()
+	_apply_recoil()
 
 
 ################################################################################
@@ -120,9 +128,8 @@ var _current_burst_count: int = 0
 
 func _fire_burst() -> void:
 	$ShootingSound.play()
-	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
-	Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+	_spawn_proj()
+	_apply_recoil()
 	_current_burst_count += 1
 	_timer_burst_timer.start()
 
@@ -131,12 +138,7 @@ func _on_BurstTimer_timeout() -> void:
 	if _current_burst_count == proj_count_per_shot || _parent_node.is_rolling() == true:
 		_current_burst_count = 0
 		return
-	$ShootingSound.play()
-	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
-	Global.current_level.spawn_projectiles(Projectile.instance(), $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
-	_current_burst_count += 1
-	_timer_burst_timer.start()
+	_fire_burst()
 
 
 ################################################################################
@@ -145,7 +147,7 @@ func _on_BurstTimer_timeout() -> void:
 # chargecanceltimer node is the delay of letting go to cancel charge
 ################################################################################
 func _fire_charged() -> void:
-	if _is_overheating == true:
+	if _is_overheating == true || _parent_node.is_transforming() == true:
 		return
 	if _parent_node.is_rolling() == true:
 		_timer_charge_timer.stop()

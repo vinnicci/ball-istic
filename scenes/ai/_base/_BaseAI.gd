@@ -13,11 +13,6 @@ onready var _parent_node: = get_parent()
 onready var _level_node: = _parent_node.get_parent().get_parent()
 
 
-func _ready() -> void:
-	for object in _level_node.get_node("Nav").get_children():
-		$Rays/LookAt.add_exception(object)
-
-
 func _process(delta: float) -> void:
 	$Rays.global_rotation = 0
 
@@ -65,9 +60,9 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 func _seek(target) -> void:
 	if is_instance_valid(target) == false:
 		return
-	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) < 300:
+	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 300:
 		get_path_points(global_position, target.global_position)
-	if global_position.distance_to(_next_path_point) < 200:
+	if global_position.distance_to(_next_path_point) <= 200:
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
@@ -104,10 +99,10 @@ func task_is_enemy_instance_valid(task):
 
 
 func task_seek_enemy(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
-	if global_position.distance_to(_enemy.global_position) < task.get_param(0):
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
+	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
 	else:
@@ -154,9 +149,9 @@ func task_turret_mode(task):
 # charge roll
 #############
 func task_charge_attack(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
 	if $Rays/Target.get_collider() == _enemy && _parent_node.is_charge_roll_ready() == true:
 		_parent_node.charge_roll($Rays/Target.global_rotation)
 		task.succeed()
@@ -167,11 +162,11 @@ func task_charge_attack(task):
 
 
 func task_back_off(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
 	if _parent_node.is_charge_roll_ready() == false:
-		if global_position.distance_to(_enemy.global_position) < task.get_param(0):
+		if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 		elif global_position.distance_to(_enemy.global_position) > task.get_param(0):
 			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation
@@ -190,9 +185,9 @@ func task_back_off(task):
 # flee
 ######
 func task_enemy_close(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
 	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
@@ -214,11 +209,11 @@ func task_look_dir(task):
 
 
 func task_move(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
-	if global_position.distance_to(_enemy.global_position) < 150:
+	if global_position.distance_to(_enemy.global_position) <= 150:
 		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	task.succeed()
 	return
@@ -228,9 +223,9 @@ func task_move(task):
 # shoot weapon
 ##############
 func task_shoot_enemy(task):
-	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-		task.failed()
-		return
+#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+#		task.failed()
+#		return
 	_parent_node.current_weapon.look_at(_enemy.global_position)
 	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
 		task.failed()

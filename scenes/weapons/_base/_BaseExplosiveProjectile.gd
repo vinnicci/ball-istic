@@ -5,10 +5,13 @@ var _exploded: bool = false
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && body.is_hostile() == _origin:
-		return
-	elif body is Global.CLASS_BOT && body.is_hostile() != _origin:
-		$Explosion.start_explosion()
+	if body is Global.CLASS_BOT:
+		if body.is_hostile() == _origin:
+			return
+		elif body.is_hostile() != _origin && body.is_alive() == false:
+			return
+		else:
+			$Explosion.start_explosion()
 	else:
 		$Explosion.start_explosion()
 	_exploded = true
@@ -18,5 +21,4 @@ func _on_Projectile_body_entered(body: Node) -> void:
 func _on_RangeTimer_timeout() -> void:
 	if _exploded == false:
 		$Explosion.start_explosion()
-	$RemoveTimer.start()
-	_stop_projectile()
+	._on_RangeTimer_timeout()

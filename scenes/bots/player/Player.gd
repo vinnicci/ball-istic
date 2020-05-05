@@ -162,7 +162,7 @@ func _update_weapon_hud_elements() -> void:
 func _control_camera(delta: float) -> void:
 	var mouse_pos: = get_global_mouse_position().y - global_position.y
 	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
-	var v_distance: = 0.4
+	var v_distance: = 0.45
 	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
 
 
