@@ -251,17 +251,13 @@ func _control(delta) -> void:
 
 
 func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
-	_apply_force()
-
-
-#framerate independent hopefully
-func _apply_force() -> void:
 	applied_force = Vector2(0,0)
 	if _is_rolling == false:
 		return
 	if velocity.is_normalized() == false:
 		velocity = velocity.normalized()
-	set_applied_force(velocity * current_roll_speed)
+	velocity *= current_roll_speed
+	set_applied_force(velocity)
 
 
 #make sure to import body texture with repeating enabled

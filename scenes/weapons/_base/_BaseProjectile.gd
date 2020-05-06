@@ -6,8 +6,13 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
+var proj_velocity: Vector2
 var _origin: bool
-var _proj_velocity: Vector2
+var _is_stopped: bool = false setget , is_stopped
+
+
+func is_stopped():
+	return _is_stopped
 
 
 func _ready() -> void:
@@ -17,23 +22,16 @@ func _ready() -> void:
 	$HitBlast.polygon = circle
 
 
-func ready_travel(pos, dir, origin) -> void:
+func init_travel(pos, dir, origin) -> void:
 	_origin = origin
 	$RangeTimer.wait_time = proj_range as float/speed as float
 	$RangeTimer.start()
-	_travel(pos, dir)
-	_proj_velocity = Vector2(speed,0).rotated(rotation)
-
-
-#virtual func for proj behavior while travelling
-#use for random behaviors, such as homing, splitting etc.
-func _travel(pos, dir):
 	position = pos
 	rotation = dir
 
 
 func _physics_process(delta: float) -> void:
-	position += _proj_velocity * delta
+	position += proj_velocity * delta
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
@@ -59,7 +57,8 @@ func _on_RangeTimer_timeout() -> void:
 
 #common steps to stop projectile
 func _stop_projectile() -> void:
-	_proj_velocity = Vector2(0,0)
+	_is_stopped = true
+	proj_velocity = Vector2(0,0)
 	$Sprite.hide()
 	set_deferred("monitoring", false)
 

@@ -26,10 +26,9 @@ func _process(delta: float) -> void:
 		_init_cam = true
 
 
-func spawn_projectiles(projectile, proj_position: Vector2,
-	proj_direction: float, origin: bool) -> void:
+func spawn_projectiles(projectile, proj_position: Vector2, proj_direction: float, origin: bool) -> void:
 	add_child(projectile)
-	projectile.ready_travel(proj_position, proj_direction, origin)
+	projectile.init_travel(proj_position, proj_direction, origin)
 
 
 func get_points(start: Vector2, end: Vector2) -> Array:
