@@ -19,8 +19,8 @@ const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.68
 const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
 const OUTLINE_SIZE: float = 3.5
 const ROLLING_SPEED: float = 0.6
-const ROLL_MODE_DAMP: int = 2
-const TURRET_MODE_DAMP: int = 5
+const ROLL_MODE_DAMP: float = 2.0
+const TURRET_MODE_DAMP: float = 5.0
 const POLY_SIDES = 24
 const HOSTILE_COLOR = Color(1, 0.13, 0.13)
 const NON_HOSTILE_COLOR = Color(0.4, 1, 0.4)
@@ -144,6 +144,7 @@ func _init_bot() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
+	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
 		$Bars.hide()
 	
@@ -294,9 +295,11 @@ func switch_mode() -> void:
 	_is_rolling = !_is_rolling
 	if _is_rolling == true:
 		linear_damp = ROLL_MODE_DAMP
+		angular_damp = -1
 		mode = RigidBody2D.MODE_RIGID
 	elif _is_rolling == false:
 		linear_damp = TURRET_MODE_DAMP
+		angular_damp = TURRET_MODE_DAMP
 		mode = RigidBody2D.MODE_CHARACTER
 
 

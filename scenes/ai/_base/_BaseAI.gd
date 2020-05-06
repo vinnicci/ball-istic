@@ -99,9 +99,9 @@ func task_is_enemy_instance_valid(task):
 
 
 func task_seek_enemy(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
@@ -149,9 +149,9 @@ func task_turret_mode(task):
 # charge roll
 #############
 func task_charge_attack(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	if $Rays/Target.get_collider() == _enemy && _parent_node.is_charge_roll_ready() == true:
 		_parent_node.charge_roll($Rays/Target.global_rotation)
 		task.succeed()
@@ -162,9 +162,9 @@ func task_charge_attack(task):
 
 
 func task_back_off(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	if _parent_node.is_charge_roll_ready() == false:
 		if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
@@ -185,9 +185,9 @@ func task_back_off(task):
 # flee
 ######
 func task_enemy_close(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
@@ -209,9 +209,9 @@ func task_look_dir(task):
 
 
 func task_move(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 	if global_position.distance_to(_enemy.global_position) <= 150:
 		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
@@ -223,9 +223,9 @@ func task_move(task):
 # shoot weapon
 ##############
 func task_shoot_enemy(task):
-#	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
-#		task.failed()
-#		return
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	_parent_node.current_weapon.look_at(_enemy.global_position)
 	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
 		task.failed()
@@ -233,7 +233,7 @@ func task_shoot_enemy(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
 		return
-	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() != Global.CLASS_LEVEL_OBJECT:
+	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
 		_parent_node.shoot_weapon()
 
 

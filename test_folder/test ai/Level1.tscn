@@ -58,7 +58,7 @@ proj_count_per_shot = 30
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 3929, 2835 )
-roll_speed = 2000
+roll_speed = 1850
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
 position = Vector2( 3713, 278 )
