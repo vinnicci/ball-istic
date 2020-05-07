@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/weapons/tex_energy_cannon_proj.png" type="Texture" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/global/_base explosion/_BaseExplosion.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/energy cannon/EnergyCannonProj.gd" type="Script" id=4]
-[ext_resource path="res://scenes/weapons/_projectile behaviors/travel/Travel.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -30,5 +29,3 @@ visible = false
 explosion_radius = 300.0
 damage = 40.0
 knockback = 1000.0
-
-[node name="Travel" parent="." index="7" instance=ExtResource( 5 )]

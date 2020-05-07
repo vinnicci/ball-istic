@@ -37,8 +37,8 @@ heat_per_shot = 4.0
 heat_capacity = 3.0
 heat_dissipation_per_sec = 0.5
 fire_mode = 1
-proj_count_per_shot = 10
-spread = 10.0
+burst_count = 6
+spread = 2.5
 recoil = 50
 
 [node name="SlotIcon" parent="." index="0"]

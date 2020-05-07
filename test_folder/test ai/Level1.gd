@@ -1,2 +1,2 @@
-extends "res://scenes/levels/_base/_BaseLevel.gd"
+extends "res://scenes/level/_base/_BaseLevel.gd"
 

@@ -13,12 +13,12 @@ func _charge_fire() -> void:
 
 
 func _on_BurstTimer_timeout() -> void:
-	if _current_burst_count == proj_count_per_shot:
+	if _current_burst_count == burst_count || _parent_node.is_alive() == false:
 		_current_burst_count = 0
 		_is_shooting = false
 		return
 	$ShootingSound.play()
-	_spawn_proj()
+	_fire_auto()
 	_apply_recoil()
 	global_rotation += deg2rad(_deg_rotate)
 	if _current_burst_count % 5 == 0:

@@ -6,10 +6,14 @@ export (float) var damage: = 5
 export (int) var proj_range: = 500
 export (float) var knockback: = 50
 
-var proj_velocity: Vector2
-var _origin: bool
+var velocity: Vector2
+var acceleration: Vector2
+var _origin: bool setget , origin
 var _is_stopped: bool = false setget , is_stopped
 
+
+func origin():
+	return _origin
 
 func is_stopped():
 	return _is_stopped
@@ -28,10 +32,17 @@ func init_travel(pos, dir, origin) -> void:
 	$RangeTimer.start()
 	position = pos
 	rotation = dir
+	velocity = Vector2(speed, 0).rotated(rotation)
 
 
 func _physics_process(delta: float) -> void:
-	position += proj_velocity * delta
+	if _is_stopped == true:
+		velocity = Vector2(0,0)
+		return
+	velocity += acceleration
+	velocity = velocity.normalized() * speed
+	position += velocity * delta
+	acceleration = Vector2(0,0)
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
@@ -58,7 +69,6 @@ func _on_RangeTimer_timeout() -> void:
 #common steps to stop projectile
 func _stop_projectile() -> void:
 	_is_stopped = true
-	proj_velocity = Vector2(0,0)
 	$Sprite.hide()
 	set_deferred("monitoring", false)
 

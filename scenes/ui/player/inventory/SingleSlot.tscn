@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/ui/tex_hud_weap_slot.png" type="Texture" id=1]
+
+[node name="Slot" type="TextureButton"]
+margin_right = 70.0
+margin_bottom = 70.0
+texture_normal = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 35, 35 )

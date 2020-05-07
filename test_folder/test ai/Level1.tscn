@@ -1,21 +1,22 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
-[ext_resource path="res://scenes/levels/_base/_BaseLevel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/levels/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://scenes/weapons/burst blaster/BurstBlaster.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/weapons/charge blaster/ChargeBlaster.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/levels/bot station/BotStation.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/levels/depot/Depot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/weapons/sweeper/Sweeper.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -52,7 +53,6 @@ position = Vector2( 4539, 2622 )
 [node name="BurstBlaster" parent="Depot/Items" index="7" instance=ExtResource( 6 )]
 
 [node name="ChargeBlaster" parent="Depot/Items" index="8" instance=ExtResource( 8 )]
-proj_count_per_shot = 30
 
 [node name="Sweeper" parent="Depot/Items" index="9" instance=ExtResource( 16 )]
 
@@ -89,6 +89,10 @@ position = Vector2( 629, 853 )
 
 [node name="Charger7" parent="Bots" index="10" instance=ExtResource( 13 )]
 position = Vector2( 622, 328 )
+
+[node name="Dummy" parent="Bots" index="11" instance=ExtResource( 17 )]
+position = Vector2( 2203.69, 2958.45 )
+destructible = false
 
 [node name="Camera2D" parent="." index="5"]
 position = Vector2( 2292, 2647 )
