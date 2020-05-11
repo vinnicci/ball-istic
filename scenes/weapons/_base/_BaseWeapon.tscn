@@ -59,14 +59,11 @@ one_shot = true
 [node name="ShootCooldown" type="Timer" parent="Timers" index="1"]
 one_shot = true
 
-[node name="ChargeTimer" type="Timer" parent="Timers" index="2"]
-wait_time = 3.0
-
-[node name="ChargeCancelTimer" type="Timer" parent="Timers" index="3"]
-wait_time = 0.1
+[node name="ChargeCancelTimer" type="Timer" parent="Timers" index="2"]
+wait_time = 0.2
 one_shot = true
 
-[node name="DissipationCooldown" type="Timer" parent="Timers" index="4"]
+[node name="DissipationCooldown" type="Timer" parent="Timers" index="3"]
 wait_time = 0.25
 autostart = true
 
@@ -81,7 +78,6 @@ stream = ExtResource( 1 )
 stream = ExtResource( 4 )
 [connection signal="timeout" from="Timers/BurstTimer" to="." method="_on_BurstTimer_timeout"]
 [connection signal="timeout" from="Timers/ShootCooldown" to="." method="_on_ShootCooldown_timeout"]
-[connection signal="timeout" from="Timers/ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="timeout" from="Timers/ChargeCancelTimer" to="." method="_on_ChargeCancelTimer_timeout"]
 [connection signal="timeout" from="Timers/DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]
 [connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_all_completed"]

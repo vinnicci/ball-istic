@@ -24,6 +24,12 @@ var _is_overheating: bool = false setget , is_overheating
 var _is_shooting: bool = false setget , is_shooting
 
 
+onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
+onready var _timer_burst_timer: Node = $Timers/BurstTimer
+onready var _timer_charge_cancel_timer: Node = $Timers/ChargeCancelTimer
+onready var _timer_dissipation_cooldown: Node = $Timers/DissipationCooldown
+
+
 func get_heat_per_shot():
 	return heat_per_shot
 
@@ -70,22 +76,12 @@ func is_shooting():
 	return _is_shooting
 
 
-onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
-onready var _timer_burst_timer: Node = $Timers/BurstTimer
-onready var _timer_charge_timer: Node = $Timers/ChargeTimer
-onready var _timer_charge_cancel_timer: Node = $Timers/ChargeCancelTimer
-onready var _timer_dissipation_cooldown: Node = $Timers/DissipationCooldown
-
-
 func _ready() -> void:
 	_timer_shoot_cooldown.wait_time = shoot_cooldown
 	_timer_burst_timer.wait_time = burst_timer
-	_timer_charge_timer.wait_time = charge_timer
-	#made sure no heat per shot
-	#chargecanceltimer is 0.1, shootcooldown must twice as fast
-	#to prevent charge timer timeout
-	#thus letting go for atleast 0.1 sec means cancelling charge
-	if fire_mode == 2:
+	#charge fire mode makes sure no heat per shot
+	#letting go for atleast 0.05 sec means cancelling charge
+	if fire_mode == FireModes.CHARGE:
 		heat_per_shot = 0
 		_timer_shoot_cooldown.wait_time = 0.05
 
@@ -97,10 +93,10 @@ func fire() -> void:
 	$Muzzle/MuzzleParticles.emitting = true
 	_current_heat += heat_per_shot
 	match fire_mode:
-		0: _fire_auto()
-		1: _fire_burst()
-		2: _fire_charged()
-		3: _fire_other()
+		FireModes.AUTO: _fire_auto()
+		FireModes.BURST: _fire_burst()
+		FireModes.CHARGE: _fire_charged()
+		FireModes.OTHER: _fire_other()
 
 
 func _spawn_proj() -> void:
@@ -140,7 +136,7 @@ func _fire_burst() -> void:
 
 
 func _on_BurstTimer_timeout() -> void:
-	if _current_burst_count == burst_count || _parent_node.is_rolling() == true:
+	if _current_burst_count == burst_count || _parent_node.is_rolling() == true || _parent_node.is_alive() == false:
 		_current_burst_count = 0
 		return
 	_fire_burst()
@@ -155,21 +151,19 @@ func _fire_charged() -> void:
 	if _is_overheating == true || _parent_node.is_transforming() == true:
 		return
 	if _parent_node.is_rolling() == true:
-		_timer_charge_timer.stop()
 		_cancel_charge()
 		return
 	if _current_heat == heat_capacity:
+		_is_overheating = true
 		_timer_charge_cancel_timer.stop()
 		_charge_fire()
 		_cancel_charge()
-		_is_overheating = true
 		return
-	if _timer_charge_timer.is_stopped() == true && _current_heat == 0:
+	if _current_heat == 0:
 		$ChargingSound.play()
-		_timer_charge_timer.start()
 		_timer_dissipation_cooldown.paused = true
 		$ChargingTween.interpolate_property(self, "_current_heat", _current_heat,
-			heat_capacity, _timer_charge_timer.wait_time, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			heat_capacity, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		$ChargingTween.start()
 	_timer_charge_cancel_timer.start()
 
@@ -182,23 +176,20 @@ func _charge_fire() -> void:
 	_fire_burst()
 
 
-func _cancel_charge() -> void:
-	_timer_charge_timer.stop()
-	$ChargingTween.stop_all()
-	_timer_dissipation_cooldown.paused = false
-
-
 func _on_ChargeCancelTimer_timeout() -> void:
 	_cancel_charge()
 	_current_heat = 0
 
 
+func _cancel_charge() -> void:
+	$ChargingTween.stop_all()
+	_timer_dissipation_cooldown.paused = false
+
+
 ################################################################################
 # other
-# for other kind of weapons
+# for special weapons
 ################################################################################
-
-
 func _fire_other() -> void:
 	pass
 
@@ -238,7 +229,3 @@ func _on_DissipationCooldown_timeout() -> void:
 
 func _on_ShootCooldown_timeout() -> void:
 	$Muzzle/MuzzleParticles.emitting = false
-
-
-func _on_ChargeTimer_timeout() -> void:
-	pass # Replace with function body.

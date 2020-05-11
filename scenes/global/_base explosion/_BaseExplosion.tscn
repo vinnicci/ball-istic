@@ -79,10 +79,6 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 4 )
 
-[node name="ParticleTimer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-
 [node name="AreaOfEffect" type="Area2D" parent="."]
 visible = false
 
@@ -94,4 +90,3 @@ visible = false
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
-[connection signal="timeout" from="ParticleTimer" to="." method="_on_ParticleTimer_timeout"]

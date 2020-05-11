@@ -9,10 +9,10 @@ const PARTICLEV_RADIUS_RATIO: float = 0.35
 
 
 func _ready() -> void:
-	reset_explosion_vars()
+	_init_explosion()
 
 
-func reset_explosion_vars() -> void:
+func _init_explosion() -> void:
 	#set radius
 	$AreaOfEffect/CollisionShape2D.shape.radius = explosion_radius
 	$KnockBackDirection.cast_to = Vector2(explosion_radius, 0)
@@ -33,10 +33,5 @@ func start_explosion() -> void:
 	$Blast.show()
 	$Blast/AnimationPlayer.play("blast")
 	$Particles2D.emitting = true
-	$ParticleTimer.start()
-	$AreaOfEffect.set_deferred("monitoring", false)
 	$Sound.play()
-
-
-func _on_ParticleTimer_timeout() -> void:
-	$Particles2D.hide()
+	$AreaOfEffect.set_deferred("monitoring", false)

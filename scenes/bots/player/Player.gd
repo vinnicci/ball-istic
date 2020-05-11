@@ -31,15 +31,19 @@ func _init_player() -> void:
 	_bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
 	
 	update_player_vars()
+	
 	#connect buttons
 	_connect_buttons()
+	
 	#initialize ui weapons
 	_init_weap_and_slot_selected()
+	
 	#initialize ui passives
 	for slot_num in _arr_passives.size():
 		update_ui_slot(slot_num, "passive")
 	#initialize ui items
-	for slot_num in _arr_items.size():
+	
+	for slot_num in _arr_inventory.size():
 		update_ui_slot(slot_num, "inventory")
 
 
@@ -49,24 +53,25 @@ func _connect_buttons() -> void:
 	for weap_slot in _ui_loadout_slots.get_node("WeaponSlots").get_children():
 		weap_slot.connect("pressed", self, "_on_WeaponSlot_pressed", [weap_slot.name])
 		i += 1
+	
 	i = 0 #connect passive slots
 	for passive_slot in _ui_loadout_slots.get_node("PassiveSlots").get_children():
 		passive_slot.connect("pressed", self, "_on_PassiveSlot_pressed", [passive_slot.name])
 		i += 1
+	
 	i = 0 #connect all item slots
 	for all_item_slot in _ui_all_items_slots.get_node("ItemSlots").get_children():
 		all_item_slot.connect("pressed", self, "_on_ItemSlot_pressed", [all_item_slot.name])
 		i += 1
-		if i == 20:
-			break
+	
 	i = 0 #connect depot slots
 	for depot_slot in _ui_depot_slots.get_node("DepotSlots").get_children():
 		depot_slot.connect("pressed", self, "_on_DepotSlot_pressed", [depot_slot.name])
 		i += 1
-		if i == 15:
-			break
+	
 	#connect trash slot
 	_ui_all_items_slots.get_node("HBoxContainer/TrashSlot").connect("pressed", self, "_on_TrashSlot_pressed")
+	
 	#connect access buttons
 	ui_loadout_access_button.connect("pressed", self, "_on_SwitchAccess_pressed")
 	_ui_depot_slots.get_node("HBoxContainer2/ToLoadout").connect("pressed", self, "_on_SwitchAccess_pressed")
@@ -82,7 +87,7 @@ func _init_weap_and_slot_selected() -> void:
 			slot_initialized = true
 
 
-#use only on initialization or in bot stations
+#used only on initialization or in bot stations
 func update_player_vars() -> void:
 	for i in _arr_passives.size():
 		if _arr_passives[i] != null:
@@ -126,9 +131,9 @@ func _control(delta):
 
 
 func _process(delta: float) -> void:
+	#_is_in_control has no influence here
 	_control_camera(delta)
 	
-	#var _is_in_control has no influence here
 	_held_item.position = get_viewport().get_mouse_position()
 	
 	_update_bar_weapon_heat()
@@ -214,18 +219,13 @@ func _update_bar_weapon_heat() -> void:
 ######################
 # inventory management
 ######################
-
-
-#needs refactor holy crap
-
-
 var is_using_bot_station: bool = false
-var _trash_slot_held: Node = null
 var _dict_held: Dictionary = {
 	"item": null,
 	"from_slot": "",
 }
-var _arr_items: Array = [
+var _arr_trash: Array = [null]
+var _arr_inventory: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null,
 	null, null, null, null, null,
@@ -233,11 +233,13 @@ var _arr_items: Array = [
 ]
 var _arr_passives: Array = [null, null, null, null, null]
 var ui_access: String
-var arr_access_items: Array = []
+var arr_external: Array
 
 onready var _held_item = $PlayerUI/HeldItem
 
 
+#minimal code duplication
+#special tasks doesn't need extra if-conditions
 func _update_ui_weapon_slot(slot_num: int) -> bool:
 	var weap = _arr_weapons[slot_num]
 	var slot_num_str: = slot_num as String
@@ -266,13 +268,13 @@ func update_ui_slot(slot_num: int, arr: String) -> void:
 			item = _arr_passives[slot_num]
 			slot_sprite = _ui_loadout_slots.get_node("PassiveSlots/" + slot_num_str + "/Sprite")
 		"inventory":
-			item = _arr_items[slot_num]
+			item = _arr_inventory[slot_num]
 			slot_sprite = _ui_all_items_slots.get_node("ItemSlots/" + slot_num_str + "/Sprite")
 		"trash":
-			item = _trash_slot_held
+			item = _arr_trash[0]
 			slot_sprite = _ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot/Sprite")
 		"depot":
-			item = arr_access_items[slot_num]
+			item = arr_external[slot_num]
 			slot_sprite = _ui_depot_slots.get_node("DepotSlots/" + slot_num_str + "/Sprite")
 	if item == null:
 		slot_sprite.texture = null
@@ -289,15 +291,46 @@ func _on_SwitchAccess_pressed() -> void:
 		"depot":
 			ui_depot.visible = !ui_depot.visible
 			ui_loadout.visible = !ui_loadout.visible
+		"storage":
+			pass
+
+
+func _on_ItemSlot_pressed(slot_name: String) -> void:
+	_match_slot(slot_name as int, "inventory", _arr_inventory)
+
+
+func _on_WeaponSlot_pressed(slot_name: String) -> void:
+	_match_slot(slot_name as int, "weapon", _arr_weapons)
+
+
+func _on_PassiveSlot_pressed(slot_name: String) -> void:
+	_match_slot(slot_name as int, "passive", _arr_passives)
 
 
 func _on_TrashSlot_pressed() -> void:
-	if _dict_held["item"] == null && _trash_slot_held == null:
+	_match_slot(0, "trash", _arr_trash)
+
+
+func _on_DepotSlot_pressed(slot_name: String) -> void:
+	_match_slot(slot_name as int, "depot", arr_external)
+
+
+func _match_slot(slot_num: int, arr_name: String, arr: Array) -> void:
+	if arr[slot_num] == null && _dict_held["item"] == null:
 		return
-	elif _dict_held["item"] == null && _trash_slot_held != null:
-		_dict_held["item"] = _trash_slot_held
-		_dict_held["from_slot"] = "item"
-		_trash_slot_held = null
+	match arr_name:
+		"trash": _manage_trash()
+		"inventory": _manage_inventory(slot_num)
+		"weapon": _manage_weapons(slot_num)
+		"passive": _manage_passives(slot_num)
+		"depot": _manage_depot(slot_num)
+
+
+func _manage_trash() -> void:
+	if _dict_held["item"] == null && _arr_trash[0] != null:
+		_dict_held["item"] = _arr_trash[0]
+		_dict_held["from_slot"] = "inventory"
+		_arr_trash[0] = null
 	elif _dict_held["item"] == _built_in_weapon:
 		_show_inventory_warning("CAN'T TRASH BUILT-IN WEAPON")
 		return
@@ -308,41 +341,39 @@ func _on_TrashSlot_pressed() -> void:
 		_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 		return
 	else:
-		if _trash_slot_held != null:
-			_trash_slot_held.queue_free()
-		_trash_slot_held = _dict_held["item"]
+		if _arr_trash[0] != null:
+			_arr_trash[0].queue_free()
+		_arr_trash[0] = _dict_held["item"]
 		_dict_held["item"] = null
 		_dict_held["from_slot"] = ""
-		if _trash_slot_held is Global.CLASS_WEAPON:
+		if _arr_trash[0] is Global.CLASS_WEAPON:
 			_init_weap_and_slot_selected()
 	update_ui_slot(0, "trash")
 	_show_held_item()
 
 
-func _on_DepotSlot_pressed(slot_name: String) -> void:
-	var slot_num = slot_name as int
-	var depot_item = arr_access_items[slot_num]
+func _manage_depot(slot_num: int) -> void:
+	var depot_item = arr_external[slot_num]
 	var text1 = _ui_depot_slots.get_node("Instruction1")
 	var text2 = _ui_depot_slots.get_node("Instruction2")
 	var text_anim = _ui_depot_slots.get_node("InstructionAnim")
-	if _dict_held["item"] == null && depot_item == null:
-		return
-	elif _dict_held["item"] == null && depot_item != null && _get_inv_count() == 20:
-		text1.text = "EXCEPTION OCCURRED: INVENTORY IS FULL"
-		text2.text = "EXCEPTION HANDLED: PREVENTED TAKE OUT"
-		text_anim.stop(true)
-		text_anim.play("fade_out")
-		return
-	elif _dict_held["item"] == null && depot_item != null:
-		_dict_held["item"] = depot_item
-		_dict_held["from_slot"] = "item"
-		_change_item_parent(depot_item, get_node("Items"))
-		arr_access_items[slot_num] = null
-		text1.text = "ALL CLEAR"
-		text2.text = ""
-		text_anim.stop(true)
-		text_anim.play("fade_out")
-	elif _dict_held["item"] != null:
+	if _dict_held["item"] == null:
+		if _get_inv_count() == 20:
+			text1.text = "EXCEPTION OCCURRED: INVENTORY IS FULL"
+			text2.text = "EXCEPTION HANDLED: PREVENTED TAKE OUT"
+			text_anim.stop(true)
+			text_anim.play("fade_out")
+			return
+		else:
+			_dict_held["item"] = depot_item
+			_dict_held["from_slot"] = "inventory"
+			_change_item_parent(depot_item, get_node("Items"))
+			arr_external[slot_num] = null
+			text1.text = "ALL CLEAR"
+			text2.text = ""
+			text_anim.stop(true)
+			text_anim.play("fade_out")
+	else:
 		text1.text = "EXCEPTION OCCURRED: RETURN EQUIPMENT"
 		text2.text = "EXCEPTION HANDLED: PREVENTED RETURN"
 		text_anim.stop(true)
@@ -352,75 +383,61 @@ func _on_DepotSlot_pressed(slot_name: String) -> void:
 	_show_held_item()
 
 
+func _swap(slot_name: String, slot_num: int) -> void:
+	var arr_slot: Array
+	match slot_name:
+		"inventory": arr_slot = _arr_inventory
+		"weapon": arr_slot = _arr_weapons
+		"passive": arr_slot = _arr_passives
+	var temp_hold = arr_slot[slot_num]
+	arr_slot[slot_num] = _dict_held["item"]
+	_dict_held["item"] = temp_hold
+	_dict_held["from_slot"] = slot_name
+	_show_held_item()
+	if slot_name != "weapon":
+		update_ui_slot(slot_num, slot_name)
+	else:
+		_update_ui_weapon_slot(slot_num)
+		_init_weap_and_slot_selected()
+
+
+func _manage_inventory(slot_num: int) -> void:
+	if _dict_held["item"] != null:
+		if is_using_bot_station == false && _dict_held["from_slot"] != "inventory":
+			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
+			return
+		elif is_using_bot_station == true && _dict_held["from_slot"] == "weapon" && _check_if_equipping_weapon() == false:
+			_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
+			return
+	_swap("inventory", slot_num)
+
+
+func _manage_weapons(slot_num: int) -> void:
+	if _dict_held["item"] != null:
+		if is_using_bot_station == false && _dict_held["from_slot"] == "inventory":
+			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
+			return
+		if _dict_held["item"] is Global.CLASS_WEAPON == false:
+			_show_inventory_warning("NOT A WEAPON")
+			return
+	_swap("weapon", slot_num)
+
+
+func _manage_passives(slot_num: int) -> void:
+	if _dict_held["item"] != null:
+		if is_using_bot_station == false && _dict_held["from_slot"] == "inventory":
+			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
+			return
+		if _dict_held["item"] is Global.CLASS_PASSIVE == false:
+			_show_inventory_warning("NOT A PASSIVE")
+			return
+	_swap("passive", slot_num)
+
+
 func _change_item_parent(item: Node, new_parent: Node) -> void:
 	item.get_parent().remove_child(item)
 	new_parent.add_child(item)
 	item.set_parent_node(new_parent.get_parent())
-
-
-func _on_ItemSlot_pressed(slot_name: String) -> void:
-	_hold_item(_arr_items[slot_name as int], "item", slot_name as int)
-
-
-func _on_WeaponSlot_pressed(slot_name: String) -> void:
-	_hold_item(_arr_weapons[slot_name as int], "weapon", slot_name as int)
-
-
-func _on_PassiveSlot_pressed(slot_name: String) -> void:
-	_hold_item(_arr_passives[slot_name as int], "passive", slot_name as int)
-
-
-func _hold_item(item: Node, slot: String, slot_num: int) -> void:
-	if _dict_held["item"] == null && item == null:
-		return
-	if _dict_held["item"] == null:
-		_dict_held["item"] = item
-		_dict_held["from_slot"] = slot
-		_show_held_item()
-		match slot:
-			"item": _arr_items[slot_num] = null
-			"weapon": _arr_weapons[slot_num] = null
-			"passive": _arr_passives[slot_num] = null
-		match slot:
-			"item": update_ui_slot(slot_num, "inventory")
-			"weapon": _update_ui_weapon_slot(slot_num)
-			"passive": update_ui_slot(slot_num, "passive")
-	elif _dict_held["item"] != null:
-		if slot == "passive" && _dict_held["item"] is Global.CLASS_PASSIVE == false:
-			return
-		elif slot == "weapon" && _dict_held["item"] is Global.CLASS_WEAPON == false:
-			return
-		elif _dict_held["item"] != null:
-			_swap_item(item, slot, slot_num)
-
-
-func _swap_item(item: Node, to_slot: String, slot_num: int) -> void:
-	if is_using_bot_station == false && _dict_held["from_slot"] == "item" && to_slot != "item":
-		_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
-		return
-	elif is_using_bot_station == false && _dict_held["from_slot"] != "item" && to_slot == "item":
-		_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
-		return
-	elif is_using_bot_station == true && _dict_held["from_slot"] == "weapon" && to_slot == "item" && _check_if_equipping_weapon() == false:
-		_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
-		return
-	match to_slot:
-		"item":
-			_arr_items[slot_num] = _dict_held["item"]
-			_dict_held["item"] = item
-			update_ui_slot(slot_num, "inventory")
-		"weapon":
-			_arr_weapons[slot_num] = _dict_held["item"]
-			_dict_held["item"] = item
-			_update_ui_weapon_slot(slot_num)
-			_init_weap_and_slot_selected()
-		"passive": 
-			_arr_passives[slot_num] = _dict_held["item"]
-			_dict_held["item"] = item
-			update_ui_slot(slot_num, "passive")
-	if _dict_held["item"] == null:
-		_dict_held["from_slot"] = ""
-	_show_held_item()
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
@@ -442,8 +459,6 @@ func _show_inventory_warning(warning_text: String) -> void:
 func _show_held_item() -> void:
 	if _dict_held["item"] != null:
 		_match_sprite($PlayerUI/HeldItem, _dict_held["item"].get_node("SlotIcon"))
-#		_held_item.texture = _dict_held["item"].get_node("SlotIcon").texture
-#		_held_item.rotation = _dict_held["item"].get_node("SlotIcon").rotation
 	elif _dict_held["item"] == null:
 		_held_item.texture = null
 
@@ -457,7 +472,7 @@ func _check_if_equipping_weapon() -> bool:
 
 func _get_inv_count() -> int:
 	var count: int = 0
-	for item in _arr_items:
+	for item in _arr_inventory:
 		if item == null:
 			continue
 		count += 1

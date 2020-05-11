@@ -7,8 +7,18 @@ var _target_bot: Global.CLASS_BOT = null
 onready var _parent_node: Area2D = get_parent()
 
 
+func _init_detector(radius: float) -> void:
+	$DetectionRange/CollisionShape2D.shape.radius = radius
+	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
+
+
+func _init_raycast(cast_to: float) -> void:
+	$TargetRay.cast_to = Vector2(cast_to, 0)
+	$TargetRay.enabled = true
+
+
 func _physics_process(delta: float) -> void:
-	if _detected.size() != 0 && _target_bot == null:
+	if $TargetRay.enabled == true && _detected.size() != 0 && _target_bot == null:
 		for target in _detected:
 			if is_instance_valid(target) == false:
 				_detected.erase(target)
@@ -17,15 +27,6 @@ func _physics_process(delta: float) -> void:
 			if $TargetRay.get_collider() == target:
 				_target_bot = target
 				return
-
-
-func _init_detector(radius: float) -> void:
-	$DetectionRange/CollisionShape2D.shape.radius = radius
-	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
-
-func _init_raycast(cast_to: float) -> void:
-	$TargetRay.cast_to = Vector2(cast_to, 0)
-	$TargetRay.enabled = true
 
 
 #############
