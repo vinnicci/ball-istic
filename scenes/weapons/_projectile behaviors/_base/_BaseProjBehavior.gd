@@ -19,9 +19,13 @@ func _physics_process(delta: float) -> void:
 				return
 
 
-func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && _parent_node.origin() != body.is_hostile():
-		_detected.append(body)
+func _init_detector(radius: float) -> void:
+	$DetectionRange/CollisionShape2D.shape.radius = radius
+	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
+
+func _init_raycast(cast_to: float) -> void:
+	$TargetRay.cast_to = Vector2(cast_to, 0)
+	$TargetRay.enabled = true
 
 
 #############
@@ -32,18 +36,10 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 ########
 # homing
 ########
-func task_get_target_bot(task):
-	if _target_bot == null || _parent_node.is_stopped() == true:
-		task.failed()
-		return
-	task.succeed()
-	return
-
-
 func task_homing(task):
 	if is_instance_valid(_target_bot) == false || _target_bot.is_alive() == false:
 		_target_bot = null
-		task.failed()
+		task.succeed()
 		return
 	var target_vector = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
 	var steer_vector = (target_vector - _parent_node.velocity).normalized() * task.get_param(0)
@@ -51,6 +47,12 @@ func task_homing(task):
 	_parent_node.acceleration = final_vector
 	_parent_node.get_node("Sprite").global_rotation = final_vector.angle()
 	task.succeed()
+	return
+
+
+func _on_DetectionRange_body_entered(body: Node) -> void:
+	if body is Global.CLASS_BOT && _parent_node.origin() != body.is_hostile():
+		_detected.append(body)
 
 
 ################
@@ -58,20 +60,18 @@ func task_homing(task):
 ################
 var is_split: bool = false
 
+
 func task_split_to_three(task):
-	if _parent_node.is_stopped() == true:
-		task.failed()
-		return
-	if is_split == true:
-		task.failed()
+	if _parent_node.is_stopped() == true || is_split == true:
 		return
 	is_split = true
-	$Timer.wait_time = task.get_param(0)
-	$Timer.start()
+	$SplitToThreeTimer.wait_time = task.get_param(0)
+	$SplitToThreeTimer.start()
 	task.succeed()
+	return
 
 
-func _on_Timer_timeout() -> void:
+func _on_SplitToThreeTimer_timeout() -> void:
 	if _parent_node.is_stopped() == true:
 		return
 	var spread: = 10
@@ -82,6 +82,21 @@ func _on_Timer_timeout() -> void:
 
 
 func _split() -> Node:
-	var clone = _parent_node.duplicate()
+	var clone = _parent_node.duplicate(DUPLICATE_USE_INSTANCING)
 	clone.get_node("ProjBehavior").is_split = true
 	return clone
+
+
+#############
+# curve speed
+#############
+export var curve: Curve
+
+
+func task_curve_speed(task):
+	var range_timer = _parent_node.get_node("RangeTimer")
+	_parent_node.current_speed = curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
+	if _parent_node.current_speed == 0:
+		_parent_node.current_speed = 1
+	task.succeed()
+	return

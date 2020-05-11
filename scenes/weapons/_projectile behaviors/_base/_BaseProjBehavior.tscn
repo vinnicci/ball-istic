@@ -1,13 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/weapons/_projectile behaviors/_base/_BaseProjBehavior.gd" type="Script" id=1]
 [ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=2]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 1, Vector2( 1, 1 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
 [node name="ProjBehavior" type="Node2D"]
 script = ExtResource( 1 )
+curve = SubResource( 1 )
 
 [node name="BTREE" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -16,96 +20,21 @@ tree = {
 "nodes": [ {
 "child": [  ],
 "data": {
-"offset": Vector2( 0, -100 ),
+"offset": Vector2( 0, 0 ),
 "size": Vector2( 96, 82.0006 )
 },
 "name": "root",
 "type": 0
 }, {
 "data": {
-"data": {
-"connection": [ {
-"from": "sequence",
-"from_port": 0,
-"to": "task4",
-"to_port": 0
-}, {
-"from": "sequence",
-"from_port": 1,
-"to": "task5",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( -300, 100 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_get_target_bot",
-"offset": Vector2( -100, 100 ),
-"params": [  ],
-"size": Vector2( 272, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-}, {
-"child": [  ],
-"data": {
 "fn": "task_homing",
-"offset": Vector2( -100, 200 ),
-"params": [ [ 0, 0 ] ],
-"size": Vector2( 238, 91 ),
-"values": [ 0 ]
-},
-"name": "task5",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_get_target_bot",
-"offset": Vector2( -100, 100 ),
-"params": [  ],
-"size": Vector2( 272, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_homing",
-"offset": Vector2( -100, 200 ),
-"params": [ [ 0, 0 ] ],
-"size": Vector2( 238, 91 ),
-"values": [ 0 ]
-},
-"name": "task5",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( -300, 100 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}
-},
-"label": "homing",
 "offset": Vector2( -300, -100 ),
-"size": Vector2( 236, 83 )
+"params": [ [ 0, 0 ] ],
+"size": Vector2( 238, 91 ),
+"values": [ 0 ]
 },
-"name": "minim_node2",
-"type": 99
+"name": "task",
+"type": 1
 }, {
 "data": {
 "fn": "task_split_to_three",
@@ -114,13 +43,23 @@ tree = {
 "size": Vector2( 267, 91 ),
 "values": [ 0 ]
 },
-"name": "task",
+"name": "task2",
+"type": 1
+}, {
+"data": {
+"fn": "task_curve_speed",
+"offset": Vector2( -300, 100 ),
+"params": [  ],
+"size": Vector2( 261, 85 ),
+"values": [  ]
+},
+"name": "task3",
 "type": 1
 } ],
 "root": {
 "child": [  ],
 "data": {
-"offset": Vector2( 0, -100 ),
+"offset": Vector2( 0, 0 ),
 "size": Vector2( 96, 82.0006 )
 },
 "name": "root",
@@ -131,9 +70,9 @@ tree = {
 [node name="DetectionRange" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="TargetRay" type="RayCast2D" parent="."]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SplitToThreeTimer" type="Timer" parent="."]
 one_shot = true
