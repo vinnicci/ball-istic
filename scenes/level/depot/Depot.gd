@@ -19,15 +19,15 @@ func _init_ui_node() -> void:
 		_arr_items[i] = item
 		item.hide()
 		i += 1
-		if i == _arr_items.size():
-			break
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		_access(body, _arr_items, "depot", _arr_items.size())
+		body.ui_depot.visible = true
 
 
 func _on_Area2D_body_exited(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		_exit_access(body)
+		body.ui_depot.visible = false

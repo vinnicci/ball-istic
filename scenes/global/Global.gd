@@ -12,7 +12,7 @@ const CLASS_PASSIVE = preload("res://scenes/passives/_base/_BasePassive.gd")
 #level objects include: tilemap walls, static body walls, or rigid body objects
 const CLASS_LEVEL_OBJECT = preload("res://scenes/level/_base/_BaseLevelObject.gd")
 
-var arr_storage: Array = [
+var arr_vault: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null,
 	null, null, null, null, null,

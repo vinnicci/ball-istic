@@ -12,10 +12,12 @@ onready var _ui_inventory: = $PlayerUI/Inventory
 onready var _ui_loadout_slots: = $PlayerUI/Inventory/Loadout/SlotsContainer
 onready var _ui_all_items_slots: = $PlayerUI/Inventory/AllItems/SlotsContainer
 onready var _ui_depot_slots: = $PlayerUI/Inventory/Depot/SlotsContainer
-onready var _built_in_weapon: = $Weapons.get_child(0)
-onready var ui_loadout_access_button: = _ui_loadout_slots.get_node("HBoxContainer2/ToAccess")
+onready var _ui_vault_slots: = $PlayerUI/Inventory/Vault/SlotsContainer
 onready var ui_loadout: = $PlayerUI/Inventory/Loadout
 onready var ui_depot: = $PlayerUI/Inventory/Depot
+onready var ui_vault: = $PlayerUI/Inventory/Vault
+onready var _built_in_weapon: = $Weapons.get_child(0)
+onready var ui_loadout_access_button: = _ui_loadout_slots.get_node("HBoxContainer2/ToAccess")
 
 
 func _ready() -> void:
@@ -43,7 +45,7 @@ func _init_player() -> void:
 		update_ui_slot(slot_num, "passive")
 	#initialize ui items
 	
-	for slot_num in _arr_inventory.size():
+	for slot_num in _arr_all_items.size():
 		update_ui_slot(slot_num, "inventory")
 
 
@@ -69,12 +71,18 @@ func _connect_buttons() -> void:
 		depot_slot.connect("pressed", self, "_on_DepotSlot_pressed", [depot_slot.name])
 		i += 1
 	
+	i = 0 #connect vault slots
+	for vault_slot in _ui_vault_slots.get_node("VaultSlots").get_children():
+		vault_slot.connect("pressed", self, "_on_VaultSlot_pressed", [vault_slot.name])
+		i += 1
+	
 	#connect trash slot
 	_ui_all_items_slots.get_node("HBoxContainer/TrashSlot").connect("pressed", self, "_on_TrashSlot_pressed")
 	
 	#connect access buttons
 	ui_loadout_access_button.connect("pressed", self, "_on_SwitchAccess_pressed")
 	_ui_depot_slots.get_node("HBoxContainer2/ToLoadout").connect("pressed", self, "_on_SwitchAccess_pressed")
+	ui_vault.get_node("HBoxContainer/ToLoadout").connect("pressed", self, "_on_SwitchAccess_pressed")
 
 
 func _init_weap_and_slot_selected() -> void:
@@ -225,7 +233,7 @@ var _dict_held: Dictionary = {
 	"from_slot": "",
 }
 var _arr_trash: Array = [null]
-var _arr_inventory: Array = [
+var _arr_all_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null,
 	null, null, null, null, null,
@@ -268,7 +276,7 @@ func update_ui_slot(slot_num: int, arr: String) -> void:
 			item = _arr_passives[slot_num]
 			slot_sprite = _ui_loadout_slots.get_node("PassiveSlots/" + slot_num_str + "/Sprite")
 		"inventory":
-			item = _arr_inventory[slot_num]
+			item = _arr_all_items[slot_num]
 			slot_sprite = _ui_all_items_slots.get_node("ItemSlots/" + slot_num_str + "/Sprite")
 		"trash":
 			item = _arr_trash[0]
@@ -276,6 +284,9 @@ func update_ui_slot(slot_num: int, arr: String) -> void:
 		"depot":
 			item = arr_external[slot_num]
 			slot_sprite = _ui_depot_slots.get_node("DepotSlots/" + slot_num_str + "/Sprite")
+		"vault":
+			item = arr_external[slot_num]
+			slot_sprite = _ui_vault_slots.get_node("VaultSlots/" + slot_num_str + "/Sprite")
 	if item == null:
 		slot_sprite.texture = null
 	else:
@@ -290,13 +301,13 @@ func _on_SwitchAccess_pressed() -> void:
 	match ui_access:
 		"depot":
 			ui_depot.visible = !ui_depot.visible
-			ui_loadout.visible = !ui_loadout.visible
-		"storage":
-			pass
+		"vault":
+			ui_vault.visible = !ui_vault.visible
+	ui_loadout.visible = !ui_loadout.visible
 
 
 func _on_ItemSlot_pressed(slot_name: String) -> void:
-	_match_slot(slot_name as int, "inventory", _arr_inventory)
+	_match_slot(slot_name as int, "inventory", _arr_all_items)
 
 
 func _on_WeaponSlot_pressed(slot_name: String) -> void:
@@ -315,6 +326,11 @@ func _on_DepotSlot_pressed(slot_name: String) -> void:
 	_match_slot(slot_name as int, "depot", arr_external)
 
 
+func _on_VaultSlot_pressed(slot_name: String) -> void:
+	print(slot_name)
+	_match_slot(slot_name as int, "vault", arr_external)
+
+
 func _match_slot(slot_num: int, arr_name: String, arr: Array) -> void:
 	if arr[slot_num] == null && _dict_held["item"] == null:
 		return
@@ -324,6 +340,7 @@ func _match_slot(slot_num: int, arr_name: String, arr: Array) -> void:
 		"weapon": _manage_weapons(slot_num)
 		"passive": _manage_passives(slot_num)
 		"depot": _manage_depot(slot_num)
+		"vault": _manage_vault(slot_num)
 
 
 func _manage_trash() -> void:
@@ -383,10 +400,14 @@ func _manage_depot(slot_num: int) -> void:
 	_show_held_item()
 
 
+func _manage_vault(slot_num: int) -> void:
+	pass
+
+
 func _swap(slot_name: String, slot_num: int) -> void:
 	var arr_slot: Array
 	match slot_name:
-		"inventory": arr_slot = _arr_inventory
+		"inventory": arr_slot = _arr_all_items
 		"weapon": arr_slot = _arr_weapons
 		"passive": arr_slot = _arr_passives
 	var temp_hold = arr_slot[slot_num]
@@ -472,7 +493,7 @@ func _check_if_equipping_weapon() -> bool:
 
 func _get_inv_count() -> int:
 	var count: int = 0
-	for item in _arr_inventory:
+	for item in _arr_all_items:
 		if item == null:
 			continue
 		count += 1
