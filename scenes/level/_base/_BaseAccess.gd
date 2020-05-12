@@ -6,7 +6,7 @@ func _ready() -> void:
 
 
 func _access(body: Node, arr: Array, access_name: String, arr_count: int) -> void:
-	$AccessUI/Label.visible = !$AccessUI/Label.visible
+	$AccessUI/Label.visible = true
 	$Sprite/Anim.stop()
 	$Sprite.modulate.a = 1.0
 	body.ui_access = access_name
@@ -19,7 +19,7 @@ func _access(body: Node, arr: Array, access_name: String, arr_count: int) -> voi
 
 
 func _exit_access(body: Node) -> void:
-	$AccessUI/Label.visible = !$AccessUI/Label.visible
+	$AccessUI/Label.visible = false
 	$Sprite/Anim.play("fading")
 	body.ui_access = ""
 	body.ui_loadout_access_button.text = ""

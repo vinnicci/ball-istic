@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -10,7 +10,10 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/passives/roll speed/RollSpeedIII.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/sweeper/Sweeper.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 
@@ -34,10 +37,37 @@ position = Vector2( 4539, 2622 )
 
 [node name="Sweeper" parent="Depot/Items" index="0" instance=ExtResource( 16 )]
 
-[node name="BurstBlaster" parent="Depot/Items" index="1" instance=ExtResource( 6 )]
+[node name="Scattershot" parent="Depot/Items" index="1" instance=ExtResource( 12 )]
+
+[node name="Sweeper2" parent="Depot/Items" index="2" instance=ExtResource( 16 )]
+
+[node name="BurstBlaster" parent="Depot/Items" index="3" instance=ExtResource( 6 )]
+
+[node name="RollSpeedIII" parent="Depot/Items" index="4" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII2" parent="Depot/Items" index="5" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII3" parent="Depot/Items" index="6" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII4" parent="Depot/Items" index="7" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII5" parent="Depot/Items" index="8" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII6" parent="Depot/Items" index="9" instance=ExtResource( 11 )]
+
+[node name="RollSpeedIII7" parent="Depot/Items" index="10" instance=ExtResource( 11 )]
+
+[node name="ChargeForceIII" parent="Depot/Items" index="11" instance=ExtResource( 14 )]
+
+[node name="ChargeForceIII2" parent="Depot/Items" index="12" instance=ExtResource( 14 )]
+
+[node name="ChargeForceIII3" parent="Depot/Items" index="13" instance=ExtResource( 14 )]
 
 [node name="Vault" parent="." index="4" instance=ExtResource( 8 )]
 position = Vector2( 4925.12, 2626.05 )
+
+[node name="Vault2" parent="." index="5" instance=ExtResource( 8 )]
+position = Vector2( 4924.93, 445.502 )
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 3929, 2835 )
@@ -77,7 +107,7 @@ position = Vector2( 622, 328 )
 position = Vector2( 2203.69, 2958.45 )
 destructible = false
 
-[node name="Camera2D" parent="." index="6"]
+[node name="Camera2D" parent="." index="7"]
 position = Vector2( 2292, 2647 )
 
 [editable path="Depot"]

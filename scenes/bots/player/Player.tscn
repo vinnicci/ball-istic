@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/bots/tex_player_leg.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=4]
+[ext_resource path="res://scenes/ui/player/inventory/HeldItem.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/bots/sfx_Player_Charge_Ready.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/bots/tex_player.png" type="Texture" id=7]
 [ext_resource path="res://assets/weapons/sfx_Weap_Almost_Overheating.wav" type="AudioStream" id=8]
@@ -92,8 +93,7 @@ smoothing_speed = 20.0
 
 [node name="PlayerUI" parent="." index="11" instance=ExtResource( 10 )]
 
-[node name="HeldItem" type="Sprite" parent="PlayerUI" index="0"]
-z_index = 5
+[node name="HeldItem" parent="PlayerUI" index="2" instance=ExtResource( 5 )]
 [connection signal="tween_all_completed" from="Bars/ChargeLevel/ChargeTween" to="." method="_on_ChargeTween_tween_all_completed"]
 
 [editable path="PlayerUI"]

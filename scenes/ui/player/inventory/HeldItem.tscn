@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="HeldItem" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 5
+
+[node name="InvalidSelectWarning" type="Label" parent="."]
+margin_top = 20.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Anim" type="AnimationPlayer" parent="InvalidSelectWarning"]
+anims/fade_out = SubResource( 1 )

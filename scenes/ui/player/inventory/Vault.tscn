@@ -32,7 +32,7 @@ text = "VAULT"
 [node name="SlotsContainer" type="ScrollContainer" parent="."]
 margin_top = 43.0
 margin_right = 390.0
-margin_bottom = 550.0
+margin_bottom = 335.0
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_use_anchors_": false
