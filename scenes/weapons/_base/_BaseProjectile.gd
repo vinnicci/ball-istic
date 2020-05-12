@@ -42,6 +42,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2(0,0)
 		return
 	velocity += acceleration
+	$Sprite.global_rotation = velocity.angle()
 	velocity = velocity.normalized() * current_speed
 	position += velocity * delta
 	acceleration = Vector2(0,0)

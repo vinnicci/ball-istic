@@ -42,11 +42,13 @@ func task_homing(task):
 		_target_bot = null
 		task.succeed()
 		return
+	if _parent_node.is_stopped() == true:
+		return
 	var target_vector = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
 	var steer_vector = (target_vector - _parent_node.velocity).normalized() * task.get_param(0)
 	var final_vector = _parent_node.velocity + steer_vector
 	_parent_node.acceleration = final_vector
-	_parent_node.get_node("Sprite").global_rotation = final_vector.angle()
+#	_parent_node.get_node("Sprite").global_rotation = final_vector.angle()
 	task.succeed()
 	return
 
@@ -89,15 +91,39 @@ func _split() -> Node:
 
 
 #############
-# curve speed
+# speed curve
 #############
-export var curve: Curve
+export var speed_curve: Curve
 
 
 func task_curve_speed(task):
+	if _parent_node.is_stopped() == true:
+		return
 	var range_timer = _parent_node.get_node("RangeTimer")
-	_parent_node.current_speed = curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
+	_parent_node.current_speed = speed_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
 	if _parent_node.current_speed == 0:
 		_parent_node.current_speed = 1
+	task.succeed()
+	return
+
+
+#############
+# steer curve
+#############
+export var steer_curve: Curve
+onready var _random_dir = rand_range(0, 1.0)
+
+
+func task_curve_steer(task):
+	# for compatibility with homing, this behavior will stop if homing target is detected
+	if _target_bot != null || _parent_node.is_stopped() == true:
+		return
+	var range_timer = _parent_node.get_node("RangeTimer")
+	var y_val = steer_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time)
+	#steer
+	if y_val != 0:
+		if _random_dir > 0.5:
+			y_val *= -1
+		_parent_node.acceleration = _parent_node.velocity.rotated(deg2rad(10 * y_val))
 	task.succeed()
 	return
