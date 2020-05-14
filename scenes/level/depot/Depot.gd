@@ -14,11 +14,10 @@ func _ready() -> void:
 
 
 func _init_ui_node() -> void:
-	var i: = 0
-	for item in $Items.get_children():
+	for i in $Items.get_children().size():
+		var item = $Items.get_child(i)
 		_arr_items[i] = item
 		item.hide()
-		i += 1
 
 
 func _on_Area2D_body_entered(body: Node) -> void:

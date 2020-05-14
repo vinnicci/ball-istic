@@ -40,6 +40,7 @@ fire_mode = 1
 burst_count = 6
 spread = 2.5
 recoil = 50
+cam_shake_intensity = 10.0
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.992157, 0.458824, 0.458824, 1 )

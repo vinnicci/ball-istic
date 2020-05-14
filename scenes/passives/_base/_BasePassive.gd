@@ -1,4 +1,4 @@
-extends "res://scenes/global/_base item/_BaseItem.gd"
+extends "res://scenes/global/items/_base/_BaseItem.gd"
 
 
 func _apply_effects() -> void:

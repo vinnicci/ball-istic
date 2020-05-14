@@ -25,6 +25,10 @@ func _init_explosion() -> void:
 
 
 func start_explosion() -> void:
+	if Global.player.is_alive() == true && global_position.distance_to(Global.player.global_position) < explosion_radius * 4:
+		Global.player.get_node("Camera2D").shake_camera(50, 0.2, 0.2, 1)
+	elif global_position.distance_to(Global.current_level.get_node("Camera2D").global_position) < explosion_radius * 4:
+		Global.current_level.get_node("Camera2D").shake_camera(50, 0.25, 0.25, 1)
 	var bodies = $AreaOfEffect.get_overlapping_bodies()
 	for body in bodies:
 		$KnockBackDirection.look_at(body.global_position)
@@ -33,5 +37,10 @@ func start_explosion() -> void:
 	$Blast.show()
 	$Blast/AnimationPlayer.play("blast")
 	$Particles2D.emitting = true
+	$RemoveParticles.start()
 	$Sound.play()
 	$AreaOfEffect.set_deferred("monitoring", false)
+
+
+func _on_RemoveParticles_timeout() -> void:
+	$Particles2D.hide()

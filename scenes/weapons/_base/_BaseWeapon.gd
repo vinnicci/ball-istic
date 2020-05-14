@@ -1,4 +1,4 @@
-extends "res://scenes/global/_base item/_BaseItem.gd"
+extends "res://scenes/global/items/_base/_BaseItem.gd"
 
 
 export (PackedScene) var Projectile
@@ -18,6 +18,7 @@ export (int) var recoil: int = 0 setget , get_recoil
 export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 #works only with charge firing mode
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
+export (float) var cam_shake_intensity: float = 0
 
 var _current_heat: float setget , current_heat
 var _is_overheating: bool = false setget , is_overheating
@@ -105,6 +106,7 @@ func _spawn_proj() -> void:
 
 
 func _apply_recoil() -> void:
+	_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
 	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
 
 

@@ -41,6 +41,7 @@ burst_count = 25
 spread = 20.0
 recoil = 50
 charge_timer = 2.0
+cam_shake_intensity = 20.0
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.247059, 0.501961, 0.941176, 1 )

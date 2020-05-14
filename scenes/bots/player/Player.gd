@@ -50,31 +50,25 @@ func _init_player() -> void:
 
 
 func _connect_buttons() -> void:
-	var i: = 0
-	i = 0 #connect weapon slots
+	#connect weapon slots
 	for weap_slot in _ui_loadout_slots.get_node("WeaponSlots").get_children():
 		weap_slot.connect("pressed", self, "_on_WeaponSlot_pressed", [weap_slot.name])
-		i += 1
 	
-	i = 0 #connect passive slots
+	#connect passive slots
 	for passive_slot in _ui_loadout_slots.get_node("PassiveSlots").get_children():
 		passive_slot.connect("pressed", self, "_on_PassiveSlot_pressed", [passive_slot.name])
-		i += 1
 	
-	i = 0 #connect all item slots
+	#connect all item slots
 	for all_item_slot in _ui_all_items_slots.get_node("ItemSlots").get_children():
 		all_item_slot.connect("pressed", self, "_on_ItemSlot_pressed", [all_item_slot.name])
-		i += 1
 	
-	i = 0 #connect depot slots
+	#connect depot slots
 	for depot_slot in _ui_depot_slots.get_node("DepotSlots").get_children():
 		depot_slot.connect("pressed", self, "_on_DepotSlot_pressed", [depot_slot.name])
-		i += 1
 	
-	i = 0 #connect vault slots
+	#connect vault slots
 	for vault_slot in _ui_vault_slots.get_node("VaultSlots").get_children():
 		vault_slot.connect("pressed", self, "_on_VaultSlot_pressed", [vault_slot.name])
-		i += 1
 	
 	#connect trash slot
 	_ui_all_items_slots.get_node("HBoxContainer/TrashSlot").connect("pressed", self, "_on_TrashSlot_pressed")
@@ -115,7 +109,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 func _control(delta):
 	current_weapon.look_at(get_global_mouse_position())
-	if (is_using_bot_station == true || ui_access != "") && _dict_held["item"] != null:
+	if (is_using_bot_station == true || ui_access != "") && ui_inventory.visible == true:
 		return
 	if Input.is_action_pressed("move_up"):
 		velocity.y = -1
@@ -173,13 +167,6 @@ func _update_weapon_hud_elements() -> void:
 		hud_weap_heat.value = _arr_weapons[i].current_heat()
 
 
-func _control_camera(delta: float) -> void:
-	var mouse_pos: = get_global_mouse_position().y - global_position.y
-	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
-	var v_distance: = 0.45
-	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
-
-
 func _control_player_weapon_hotkeys() -> void:
 	var slot_num: int = -1
 	if Input.is_action_just_pressed("weap_slot_0"):
@@ -225,6 +212,20 @@ func _update_bar_weapon_heat() -> void:
 	_bar_weapon_heat.value = current_weapon.current_heat()
 
 
+func _control_camera(delta: float) -> void:
+	if has_node("Camera2D") == false:
+		return
+	var mouse_pos: = get_global_mouse_position().y - global_position.y
+	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
+	var v_distance: = 0.45
+	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
+
+
+func take_damage(damage: float, knockback: Vector2) -> void:
+	.take_damage(damage, knockback)
+	$Camera2D.shake_camera(50, 0.1, 0.1)
+
+
 ######################
 # inventory management
 ######################
@@ -247,8 +248,7 @@ var arr_external: Array
 onready var _held_item = $PlayerUI/HeldItem
 
 
-#minimal code duplication
-#special tasks doesn't need extra if-conditions
+#code duplication, i know
 func _update_ui_weapon_slot(slot_num: int) -> bool:
 	var weap = _arr_weapons[slot_num]
 	var slot_num_str: = slot_num as String
@@ -382,9 +382,9 @@ func _manage_depot(slot_num: int) -> void:
 			text_anim.play("fade_out")
 			return
 		else:
+			_change_item_parent(depot_item, get_node("Items"))
 			_dict_held["item"] = depot_item
 			_dict_held["from_slot"] = "all_item"
-			_change_item_parent(depot_item, get_node("Items"))
 			arr_external[slot_num] = null
 			text1.text = "ALL CLEAR"
 			text2.text = ""
@@ -470,7 +470,8 @@ func _manage_passives(slot_num: int) -> void:
 func _change_item_parent(item: Node, new_parent: Node) -> void:
 	item.get_parent().remove_child(item)
 	new_parent.add_child(item)
-	item.set_parent_node(new_parent.get_parent())
+	if item.has_method("set_parent_node") == true:
+		item.set_parent_node(new_parent.get_parent())
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:

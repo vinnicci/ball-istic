@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/global/_base explosion/_BaseExplosion.gd" type="Script" id=1]
+[ext_resource path="res://scenes/global/explosions/_base/_BaseExplosion.gd" type="Script" id=1]
 [ext_resource path="res://assets/global/sfx_Explosion.wav" type="AudioStream" id=2]
 
 [sub_resource type="Animation" id=1]
@@ -90,3 +90,8 @@ visible = false
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
+
+[node name="RemoveParticles" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="timeout" from="RemoveParticles" to="." method="_on_RemoveParticles_timeout"]
