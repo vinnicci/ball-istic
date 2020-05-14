@@ -18,22 +18,25 @@ func shake_camera(amplitude: float, frequency: float, duration: float, priority:
 
 
 func _shake() -> void:
-	var random_amp = Vector2(
-		rand_range(-_amp, _amp),
-		rand_range(-_amp, _amp) + offset.y)
+	var random: = rand_range(0, 1.0)
+	var amp_vector: Vector2
+	if random < 0.5:
+		amp_vector = Vector2(-_amp, rand_range(-_amp, _amp) + offset.y)
+	else:
+		amp_vector = Vector2(_amp, rand_range(-_amp, _amp) + offset.y)
 	var shake_tween: = $ShakeTween
 	shake_tween.interpolate_property(self, "offset", offset,
-		random_amp, $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+		amp_vector, $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	shake_tween.start()
 
 
 func _stop_shake() -> void:
+	_priority = 0
 	var shake_tween: = $ShakeTween
 	shake_tween.interpolate_property(self, "offset", offset, Vector2(0, offset.y),
 		$Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	shake_tween.start()
 	$Frequency.stop()
-	_priority = 0
 
 
 func _on_Frequency_timeout() -> void:

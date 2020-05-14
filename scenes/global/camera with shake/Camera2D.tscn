@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/global/camera with shake/Camera2D.gd" type="Script" id=1]
 
 [node name="Camera2D" type="Camera2D"]
-zoom = Vector2( 1.75, 1.75 )
+zoom = Vector2( 1.5, 1.5 )
 smoothing_speed = 20.0
 script = ExtResource( 1 )
 

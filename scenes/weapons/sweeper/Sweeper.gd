@@ -1,7 +1,7 @@
 extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
-var _deg_increment: = 10
+var _deg_increment: = 5
 
 
 func _charge_fire() -> void:
@@ -9,7 +9,7 @@ func _charge_fire() -> void:
 		return
 	_is_shooting = true
 	$Timers/BurstTimer.start()
-	global_rotation += deg2rad(20)
+	global_rotation += deg2rad(10)
 
 
 func _on_BurstTimer_timeout() -> void:

@@ -119,7 +119,6 @@ func _control(delta):
 		velocity.x = -1
 	elif Input.is_action_pressed("move_right"):
 		velocity.x = 1
-	velocity = velocity * delta
 	if ui_inventory.visible == true:
 		return
 	if Input.is_action_just_released("change_mode"):
@@ -223,7 +222,13 @@ func _control_camera(delta: float) -> void:
 
 func take_damage(damage: float, knockback: Vector2) -> void:
 	.take_damage(damage, knockback)
-	$Camera2D.shake_camera(50, 0.1, 0.1)
+	$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+
+
+func _on_Bot_body_entered(body: Node) -> void:
+	._on_Bot_body_entered(body)
+	if _is_charge_rolling == true:
+		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
 
 
 ######################
@@ -382,7 +387,7 @@ func _manage_depot(slot_num: int) -> void:
 			text_anim.play("fade_out")
 			return
 		else:
-			_change_item_parent(depot_item, get_node("Items"))
+			_own_item(depot_item, get_node("Items"))
 			_dict_held["item"] = depot_item
 			_dict_held["from_slot"] = "all_item"
 			arr_external[slot_num] = null
@@ -408,6 +413,9 @@ func _manage_vault(slot_num: int) -> void:
 		if _dict_held["item"] == _built_in_weapon:
 			_show_inventory_warning("CAN'T STORE BUILT-IN WEAPON")
 			return
+	elif _dict_held["item"] == null:
+		if arr_external[slot_num].get_parent_node() != self:
+			_own_item(arr_external[slot_num], self)
 	var temp_hold = arr_external[slot_num]
 	arr_external[slot_num] = _dict_held["item"]
 	_dict_held["item"] = temp_hold
@@ -467,7 +475,7 @@ func _manage_passives(slot_num: int) -> void:
 	_swap("passive", slot_num)
 
 
-func _change_item_parent(item: Node, new_parent: Node) -> void:
+func _own_item(item: Node, new_parent: Node) -> void:
 	item.get_parent().remove_child(item)
 	new_parent.add_child(item)
 	if item.has_method("set_parent_node") == true:

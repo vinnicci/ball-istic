@@ -40,7 +40,7 @@ shoot_cooldown = 0.5
 proj_count_per_shot = 10
 spread = 20.0
 recoil = 300
-cam_shake_intensity = 15.0
+cam_shake_intensity = 10.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 3 )
