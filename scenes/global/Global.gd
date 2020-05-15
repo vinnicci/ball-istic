@@ -3,6 +3,7 @@ extends Node
 
 const CLASS_BOT = preload("res://scenes/bots/_base/_BaseBot.gd")
 const CLASS_PLAYER = preload("res://scenes/bots/player/Player.gd")
+const CLASS_BOT_PROJ = preload("res://scenes/weapons/_base/_BaseBotProjectile.gd")
 
 #core mods later not implemented in demo
 const CLASS_ITEM = preload("res://scenes/global/items/_base/_BaseItem.gd")

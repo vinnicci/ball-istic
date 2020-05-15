@@ -6,8 +6,9 @@
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
-[node name="Bot" instance=ExtResource( 2 )]
+[node name="BotUnarmed" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+transform_speed = 0.1
 
 [node name="CollisionShape" parent="." index="5"]
 shape = SubResource( 1 )

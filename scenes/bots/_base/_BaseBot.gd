@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-export (float, 25.0, 100.0) var bot_radius: = 32.0 setget , get_bot_radius
+export (float, 20.0, 100.0) var bot_radius: = 32.0 setget , get_bot_radius
 export (float) var shield_capacity: = 20 setget , get_shield_capacity
 export (float) var health_capacity: = 20 setget , get_health_capacity
 export (int, 0, 3000) var roll_speed: = 1200 setget , get_roll_speed
