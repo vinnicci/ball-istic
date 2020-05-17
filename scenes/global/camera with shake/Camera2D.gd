@@ -7,9 +7,9 @@ var _priority: int = 0
 
 func shake_camera(amplitude: float, frequency: float, duration: float, priority: int = 0) -> void:
 	_amp = amplitude
-	_priority = priority
 	if priority < _priority || amplitude < 1.0:
 		return
+	_priority = priority
 	$Frequency.wait_time = frequency
 	$Duration.wait_time = duration
 	$Frequency.start()
