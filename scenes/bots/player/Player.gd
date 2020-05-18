@@ -34,21 +34,23 @@ func _init_player() -> void:
 	
 	update_player_vars()
 	
-	#connect buttons
+	#connect inventory buttons
 	_connect_buttons()
 	
-	#initialize ui weapons
+	#initialize hud weapons
 	_init_weap_and_slot_selected()
 	
 	#initialize ui passives
 	for slot_num in _arr_passives.size():
 		update_ui_slot(slot_num, "passive")
-	#initialize ui items
 	
+	#initialize ui items
 	for slot_num in _arr_all_items.size():
 		update_ui_slot(slot_num, "all_item")
 
 
+#code dupes
+#refactor later to pass node and parse strings
 func _connect_buttons() -> void:
 	#connect weapon slots
 	for weap_slot in _ui_loadout_slots.get_node("WeaponSlots").get_children():
@@ -109,6 +111,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 func _control(delta):
 	current_weapon.look_at(get_global_mouse_position())
+	#lose control when inventory ui is open and in an access area
 	if (is_using_bot_station == true || ui_access != "") && ui_inventory.visible == true:
 		return
 	if Input.is_action_pressed("move_up"):
@@ -135,8 +138,9 @@ func _process(delta: float) -> void:
 	#_is_in_control has no influence here
 	_control_camera(delta)
 	
-	_held_item.position = get_viewport().get_mouse_position()
-	_held_item.global_rotation = 0
+	if _held_item != null:
+		_held_item.position = get_viewport().get_mouse_position()
+		_held_item.global_rotation = 0
 	
 	_update_bar_weapon_heat()
 	
@@ -146,6 +150,7 @@ func _process(delta: float) -> void:
 		_control_player_weapon_hotkeys()
 	
 	#inventory
+	#can't close the ui if holding an item
 	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
 		ui_inventory.visible = !ui_inventory.visible
 
@@ -216,7 +221,7 @@ func _control_camera(delta: float) -> void:
 		return
 	var mouse_pos: = get_global_mouse_position().y - global_position.y
 	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
-	var v_distance: = 0.45
+	var v_distance: = 0.5
 	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
 
 

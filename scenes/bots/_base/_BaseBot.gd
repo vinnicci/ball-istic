@@ -44,6 +44,9 @@ var _is_transforming: bool = false setget , is_transforming
 var _is_in_control: bool = true setget , is_in_control
 var _arr_weapons: Array = [null, null, null, null, null]
 
+signal charged
+signal control_updated
+
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
 onready var _body_charge_effect: = $Body/ChargeEffect
@@ -227,22 +230,26 @@ func _process(delta: float) -> void:
 	
 	#rolling ball graphical effect
 	_apply_rolling_effects(delta)
-	
-	#control state
-	_is_in_control = _check_if_in_control()
 
 
 #60 fps
 func _physics_process(delta: float) -> void:
 	#everything charge roll
 	#graphical feedback/effects
-	#to be placed in process
+	#in physics_process for now, due to lerp func
 	_end_charging_effect()
 	
 	#velocity calculations
 	if _is_in_control == true:
 		velocity = Vector2(0,0)
 		_control(delta)
+
+
+#false means losing control to rolling, shooting, charging and switching mode
+#lose control to switching weapon slot on transforming only
+#no effect to opening inventory
+func _on_Bot_control_updated(control_status: bool) -> void:
+	_is_in_control = control_status
 
 
 func _control(delta) -> void:
@@ -263,6 +270,8 @@ func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
 	if _is_rolling == false:
+		#magic number i know
+		#same as other lerp func i used
 		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
 		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
 		return
@@ -270,20 +279,10 @@ func _apply_rolling_effects(delta: float) -> void:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
 
 
-#false means losing control to rolling, shooting, charging and switching mode
-#lose control to switching weapon slot on transforming only
-#no effect to opening inventory
-func _check_if_in_control() -> bool:
-	var output: bool = _is_alive == true && _is_charge_rolling == false && _is_transforming == false
-	if current_weapon != null:
-		output = output && current_weapon.is_shooting() == false
-	return output
-
-
 func switch_mode() -> void:
 	if _is_in_control == false:
 		return
-	_is_in_control = false #apply immediately as possible
+	emit_signal("control_updated", false)
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
@@ -334,6 +333,7 @@ func _animate_weapon_hatch() -> void:
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if _is_rolling == true:
 		_body_weapon_hatch.hide()
+	emit_signal("control_updated", true)
 	_is_transforming = false
 
 
@@ -364,9 +364,6 @@ func charge_roll(charge_direction: float) -> void:
 	_timer_charge_cooldown.start()
 
 
-signal charged
-
-
 #0.05 sec delay in order to get almost peak linear velocity
 func _on_ChargeEffectDelay_timeout() -> void:
 	emit_signal("charged")
@@ -374,7 +371,8 @@ func _on_ChargeEffectDelay_timeout() -> void:
 
 func _on_Bot_charged() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
-		_is_in_control = false
+		if _is_in_control == true:
+			emit_signal("control_updated", false)
 		_is_charge_rolling = true
 		_body_outline.color = Color(1, 0.24, 0.88)
 		_body_charge_effect.color.a = 255
@@ -383,13 +381,14 @@ func _on_Bot_charged() -> void:
 func _end_charging_effect() -> void:
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
-		#will change later
 		if hostile == true:
 			_body_outline.color = lerp(_body_outline.color, HOSTILE_COLOR, 0.8)
 		elif hostile == false:
 			_body_outline.color = lerp(_body_outline.color, NON_HOSTILE_COLOR, 0.8)
 		_body_charge_effect.color.a = lerp(_body_charge_effect.color.a, 0, 0.8)
 		_body_weapon_hatch.color = _body_outline.color
+		if _is_in_control == false && _is_charge_rolling == true:
+			emit_signal("control_updated", true)
 		_is_charge_rolling = false
 
 
@@ -420,7 +419,7 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func _explode() -> void:
 	_is_alive = false
-	_is_in_control = false
+	emit_signal("control_updated", false)
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
