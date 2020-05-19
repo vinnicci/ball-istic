@@ -106,6 +106,8 @@ func _spawn_proj() -> void:
 
 
 func _apply_recoil() -> void:
+	if _parent_node.has_node("Camera2D") == false:
+		return
 	_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
 	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
 

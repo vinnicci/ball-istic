@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	$Rays.global_rotation = 0
 
 
-func get_path_points(start, end) -> void:
+func _get_path_points(start, end) -> void:
 	_path_points = []
 	_path_points = _level_node.get_points(start, end)
 	_next_path_point = _path_points.pop_front()
@@ -28,11 +28,6 @@ func control_ai(delta):
 		_parent_node.velocity = _velocity
 	if is_instance_valid(_enemy) == true:
 		$Rays/Target.look_at(_enemy.global_position)
-
-
-#func _process(delta: float) -> void:
-#	if _parent_node.name == "Fighter":
-#		print("transforming: " + _parent_node.is_transforming() as String + "\nswitched: " + _switched as String)
 
 
 func _get_new_target_enemy() -> void:
@@ -47,7 +42,7 @@ func _get_new_target_enemy() -> void:
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
+	if body is Global.CLASS_BOT && body is Global.CLASS_BOT_PROJ == false && body.is_hostile() != _parent_node.is_hostile():
 		_enemies.append(body)
 
 
@@ -61,11 +56,25 @@ func _seek(target) -> void:
 	if is_instance_valid(target) == false:
 		return
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 300:
-		get_path_points(global_position, target.global_position)
+		_get_path_points(global_position, target.global_position)
 	if global_position.distance_to(_next_path_point) <= 200:
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+
+
+signal resume
+
+
+func _coroutine_delay(wait_time: float) -> void:
+	$ResumeTimer.wait_time = wait_time
+	if $ResumeTimer.is_stopped() == true:
+		$ResumeTimer.start()
+	yield(self, "resume")
+
+
+func _on_ResumeTimer_timeout() -> void:
+	emit_signal("resume")
 
 
 #############
@@ -78,6 +87,13 @@ func _seek(target) -> void:
 #############
 func task_idle(task):
 	_velocity = Vector2(0,0)
+	task.succeed()
+	return
+
+
+func task_timed_idle(task):
+	_velocity = Vector2(0,0)
+	_coroutine_delay(task.get_param(0))
 	task.succeed()
 	return
 
@@ -102,47 +118,51 @@ func task_seek_enemy(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
+	_seek(_enemy)
+	task.succeed()
+	return
+
+
+func task_is_enemy_close(task):
+	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
+		task.failed()
+		return
 	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
 	else:
-		_seek(_enemy)
+		task.failed()
+		return
 
 
 ###########
 # transform
 ###########
-var _switched: bool = false
+#var _switched: bool = false
 
 
-func task_transformed(task):
-	if _parent_node.is_transforming() == false && _switched == true:
-		_switched = false
-		task.succeed()
-		return
+#func task_transformed(task):
+#	if _parent_node.is_transforming() == false && _switched == true:
+#		_switched = false
+#		task.succeed()
+#		return
 
 
 func task_roll_mode(task):
-	if _switched == false:
-		if _parent_node.is_rolling() == true:
-			_switched = true
-		if _parent_node.is_rolling() == false:
-			_switched = true
-			_parent_node.switch_mode()
-		task.succeed()
-		return
+	if _parent_node.is_rolling() == false:
+		_parent_node.switch_mode()
+		_coroutine_delay(_parent_node.current_transform_speed)
+	task.succeed()
+	return
 
 
 func task_turret_mode(task):
-	if _switched == false:
-		if _parent_node.is_rolling() == false:
-			_switched = true
-		if _parent_node.is_rolling() == true:
-			_switched = true
-			_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
-			_parent_node.switch_mode()
-		task.succeed()
-		return
+	if _parent_node.is_rolling() == true:
+		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
+		_parent_node.switch_mode()
+		_coroutine_delay(_parent_node.current_transform_speed)
+	task.succeed()
+	return
 
 
 #############
@@ -154,11 +174,8 @@ func task_charge_attack(task):
 		return
 	if $Rays/Target.get_collider() == _enemy && _parent_node.is_charge_roll_ready() == true:
 		_parent_node.charge_roll($Rays/Target.global_rotation)
-		task.succeed()
-		return
-	else:
-		task.failed()
-		return
+	task.succeed()
+	return
 
 
 func task_back_off(task):
@@ -181,10 +198,11 @@ func task_back_off(task):
 		return
 
 
-######
+##############
 # flee
-######
-func task_enemy_close(task):
+# needs rework
+##############
+func task_ready_flee(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
 		return
@@ -222,6 +240,15 @@ func task_move(task):
 ##############
 # shoot weapon
 ##############
+func task_is_weapon_overheating(task):
+	if _parent_node.current_weapon.is_overheating() == true:
+		task.succeed()
+		return
+	else:
+		task.failed()
+		return
+
+
 func task_shoot_enemy(task):
 	if is_instance_valid(_enemy) == false || _enemy.is_alive() == false:
 		task.failed()
@@ -230,11 +257,13 @@ func task_shoot_enemy(task):
 	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
 		task.failed()
 		return
-	if _parent_node.current_weapon.is_overheating() == true:
-		task.succeed()
-		return
 	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
 		_parent_node.shoot_weapon()
+		task.reset()
+		return
+	elif _parent_node.current_weapon.is_overheating() == true:
+		task.succeed()
+		return
 
 
 #func task_get_nearest_ally(task):

@@ -45,7 +45,6 @@ var _is_in_control: bool = true setget , is_in_control
 var _arr_weapons: Array = [null, null, null, null, null]
 
 signal charged
-signal control_updated
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -282,7 +281,7 @@ func _apply_rolling_effects(delta: float) -> void:
 func switch_mode() -> void:
 	if _is_in_control == false:
 		return
-	emit_signal("control_updated", false)
+	_is_in_control = false
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
@@ -333,7 +332,7 @@ func _animate_weapon_hatch() -> void:
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if _is_rolling == true:
 		_body_weapon_hatch.hide()
-	emit_signal("control_updated", true)
+	_is_in_control = true
 	_is_transforming = false
 
 
@@ -372,7 +371,7 @@ func _on_ChargeEffectDelay_timeout() -> void:
 func _on_Bot_charged() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		if _is_in_control == true:
-			emit_signal("control_updated", false)
+			_is_in_control = false
 		_is_charge_rolling = true
 		_body_outline.color = Color(1, 0.24, 0.88)
 		_body_charge_effect.color.a = 255
@@ -388,7 +387,7 @@ func _end_charging_effect() -> void:
 		_body_charge_effect.color.a = lerp(_body_charge_effect.color.a, 0, 0.8)
 		_body_weapon_hatch.color = _body_outline.color
 		if _is_in_control == false && _is_charge_rolling == true:
-			emit_signal("control_updated", true)
+			_is_in_control = true
 		_is_charge_rolling = false
 
 
@@ -419,7 +418,7 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func _explode() -> void:
 	_is_alive = false
-	emit_signal("control_updated", false)
+	_is_in_control = false
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
