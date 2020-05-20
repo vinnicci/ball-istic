@@ -256,14 +256,14 @@ func _control(delta) -> void:
 		$AI.control_ai(delta)
 
 
-func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
 	if _is_rolling == false:
 		return
 	if velocity.is_normalized() == false:
 		velocity = velocity.normalized()
 	velocity *= current_roll_speed
-	set_applied_force(velocity)
+	applied_force = velocity
 
 
 #make sure to import body texture with repeating enabled
