@@ -457,6 +457,16 @@ tree = {
 },
 "name": "task6",
 "type": 1
+}, {
+"data": {
+"fn": "task_is_weapon_overheating",
+"offset": Vector2( -600, 700 ),
+"params": [  ],
+"size": Vector2( 314, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
 } ],
 "root": {
 "child": [  ],

@@ -33,9 +33,10 @@ color_ramp = SubResource( 2 )
 [node name="GrenadeLauncher" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
-heat_per_shot = 1.0
-heat_capacity = 50.0
-shoot_cooldown = 0.1
+heat_per_shot = 5.0
+heat_capacity = 9.0
+heat_dissipation_per_sec = 0.5
+shoot_cooldown = 0.5
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.25098, 0.552941, 0.176471, 1 )

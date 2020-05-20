@@ -12,4 +12,4 @@ texture = ExtResource( 3 )
 
 [node name="Label" parent="AccessUI" index="0"]
 text = "VAULT
-STORE ALL YOUR EQUIPMENT HERE"
+STORE YOUR EQUIPMENT HERE"
