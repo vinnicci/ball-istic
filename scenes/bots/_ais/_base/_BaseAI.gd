@@ -72,15 +72,9 @@ func _seek(target) -> void:
 signal resume
 
 
-func _delay_exec(wait_time: float) -> void:
-	$ResumeTimer.wait_time = wait_time
-	if $ResumeTimer.is_stopped() == true:
-		$ResumeTimer.start()
-	yield(self, "resume")
-
-
 func _on_ResumeTimer_timeout() -> void:
 	emit_signal("resume")
+
 
 #############
 # btree tasks
@@ -90,8 +84,13 @@ func _on_ResumeTimer_timeout() -> void:
 #############
 # enemy found
 #############
+
+#time based instead of tick based wait task using coroutine
 func task_timed_idle(task):
-	_delay_exec(task.get_param(0))
+	$ResumeTimer.wait_time = task.get_param(0)
+	if $ResumeTimer.is_stopped() == true:
+		$ResumeTimer.start()
+	yield(self, "resume")
 	task.succeed()
 	return
 
@@ -139,19 +138,30 @@ func task_is_enemy_close(task):
 ###########
 # transform
 ###########
-func task_roll_mode(task):
-	if _parent_node.is_rolling() == false:
-		_parent_node.switch_mode()
-		_delay_exec(_parent_node.current_transform_speed)
-	task.succeed()
-	return
-
-
-func task_turret_mode(task):
+func task_is_in_roll_mode(task):
 	if _parent_node.is_rolling() == true:
-		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
-		_parent_node.switch_mode()
-		_delay_exec(_parent_node.current_transform_speed)
+		task.succeed()
+		return
+	else:
+		task.failed()
+		return
+
+
+func task_is_in_turret_mode(task):
+	if _parent_node.is_rolling() == false:
+		task.succeed()
+		return
+	else:
+		task.failed()
+		return
+
+
+func task_switch_mode(task):
+	_parent_node.switch_mode()
+	$ResumeTimer.wait_time = _parent_node.current_transform_speed
+	if $ResumeTimer.is_stopped() == true:
+		$ResumeTimer.start()
+	yield(self, "resume")
 	task.succeed()
 	return
 

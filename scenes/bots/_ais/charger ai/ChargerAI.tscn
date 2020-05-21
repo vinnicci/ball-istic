@@ -166,9 +166,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -312,9 +312,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -419,9 +419,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -570,9 +570,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -648,9 +648,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -698,9 +698,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -728,9 +728,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
@@ -848,9 +848,9 @@ tree = {
 "data": {
 "fn": "task_timed_idle",
 "offset": Vector2( 900, 700 ),
-"params": [ [ 0.75, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 0.75 ]
+"values": [ 0.5 ]
 },
 "name": "task9",
 "type": 1
