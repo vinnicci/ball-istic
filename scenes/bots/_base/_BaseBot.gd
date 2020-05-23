@@ -31,7 +31,7 @@ var current_health: float
 var current_roll_speed: int
 var current_shield_recovery: float
 var current_transform_speed: float
-var _current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
+var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
 var current_charge_damage_factor: float
 var current_charge_force_factor: float
@@ -43,8 +43,6 @@ var _is_charge_rolling: bool = false setget , is_charge_rolling
 var _is_transforming: bool = false setget , is_transforming
 var _is_in_control: bool = true setget , is_in_control
 var _arr_weapons: Array = [null, null, null, null, null]
-
-signal charged
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -98,11 +96,11 @@ func is_hostile():
 # current properties
 ####################
 func set_current_charge_cooldown(new_charge_cooldown: float):
-	_current_charge_cooldown = new_charge_cooldown
+	current_charge_cooldown = new_charge_cooldown
 	_timer_charge_cooldown.wait_time = new_charge_cooldown
 
 func get_current_charge_cooldown():
-	return _current_charge_cooldown
+	return current_charge_cooldown
 
 func is_rolling():
 	return _is_rolling
@@ -148,7 +146,8 @@ func _init_bot() -> void:
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
-		$Bars.hide()
+		$Bars/Shield.hide()
+		$Bars/Health.hide()
 	
 	#bot's body look set up
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
@@ -204,8 +203,8 @@ func reset_bot_vars() -> void:
 	
 	current_transform_speed = transform_speed
 	
-	_current_charge_cooldown = charge_cooldown
-	_timer_charge_cooldown.wait_time = _current_charge_cooldown
+	current_charge_cooldown = charge_cooldown
+	_timer_charge_cooldown.wait_time = current_charge_cooldown
 	current_charge_damage_factor = charge_damage_factor
 	current_charge_force_factor = charge_force_factor
 	
@@ -218,7 +217,7 @@ func reset_bot_vars() -> void:
 func _cap_current_vars() -> void:
 	current_roll_speed = clamp(current_roll_speed, 500, 3000)
 	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
-	_current_charge_cooldown = clamp(_current_charge_cooldown, 0.5, 5.0)
+	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 	current_charge_damage_factor = clamp(current_charge_damage_factor, 0.01, 0.1)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
@@ -246,7 +245,6 @@ func _physics_process(delta: float) -> void:
 
 #false means losing control to rolling, shooting, charging and switching mode
 #lose control to switching weapon slot on transforming only
-#no effect to opening inventory
 func _on_Bot_control_updated(control_status: bool) -> void:
 	_is_in_control = control_status
 
@@ -256,7 +254,7 @@ func _control(delta) -> void:
 		$AI.control_ai(delta)
 
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
 	if _is_rolling == false:
 		return
@@ -269,7 +267,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
 	if _is_rolling == false:
-		#magic number i know
+		#magic number, i know
 		#same as other lerp func i used
 		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
 		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
@@ -328,7 +326,7 @@ func _animate_weapon_hatch() -> void:
 	weapon_hatch_tween.start()
 
 
-#some weapons have longer anim than hatch, so will change this later
+#some weapons have fixed anim, so will change this later
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	if _is_rolling == true:
 		_body_weapon_hatch.hide()
@@ -354,6 +352,7 @@ func change_weapon(slot_num: int) -> void:
 		current_weapon.visible = true
 
 
+#impulse depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
 	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false:
 		return
@@ -365,10 +364,10 @@ func charge_roll(charge_direction: float) -> void:
 
 #0.05 sec delay in order to get almost peak linear velocity
 func _on_ChargeEffectDelay_timeout() -> void:
-	emit_signal("charged")
+	_peak_charge_roll()
 
 
-func _on_Bot_charged() -> void:
+func _peak_charge_roll() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		if _is_in_control == true:
 			_is_in_control = false
@@ -406,6 +405,8 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
+		if has_node("Camera2D") == true:
+			$Camera2D.shake_camera(20, 0.1, 0.1, 1)
 	_bar_shield.value = current_shield
 	_bar_health.value = current_health
 	if current_health <= 0:
@@ -448,15 +449,17 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
+	if has_node("Camera2D") == true:
+		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+	$Sounds/ChargeAttackHit.play()
+	$CollisionSpark.look_at(body.global_position)
+	$CollisionSpark.emitting = true
 	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
 	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
 	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
 		damage /= 8
 	body.take_damage(damage, Vector2(0,0))
-	$Sounds/ChargeAttackHit.play()
-	$CollisionSpark.look_at(body.global_position)
-	$CollisionSpark.emitting = true
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4

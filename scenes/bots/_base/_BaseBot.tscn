@@ -162,7 +162,6 @@ explosion_radius = 150.0
 damage = 10.0
 knockback = 800.0
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
-[connection signal="charged" from="." to="." method="_on_Bot_charged"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]

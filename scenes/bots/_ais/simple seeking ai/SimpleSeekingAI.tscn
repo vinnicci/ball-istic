@@ -35,7 +35,7 @@ tree = {
 }, {
 "from": "sequence",
 "from_port": 1,
-"to": "task",
+"to": "task3",
 "to_port": 0
 } ],
 "nodes": [ {
@@ -75,12 +75,12 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_seek_enemy",
-"offset": Vector2( 100, 500 ),
+"offset": Vector2( 300, 500 ),
 "params": [ [ 200, 0 ] ],
-"size": Vector2( 260, 91 ),
+"size": Vector2( 286, 91 ),
 "values": [ 200 ]
 },
-"name": "task",
+"name": "task3",
 "type": 1
 } ],
 "data": {
@@ -133,12 +133,12 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_seek_enemy",
-"offset": Vector2( 100, 500 ),
+"offset": Vector2( 300, 500 ),
 "params": [ [ 200, 0 ] ],
-"size": Vector2( 260, 91 ),
+"size": Vector2( 286, 91 ),
 "values": [ 200 ]
 },
-"name": "task",
+"name": "task3",
 "type": 1
 } ],
 "data": {
@@ -205,12 +205,12 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_seek_enemy",
-"offset": Vector2( 100, 500 ),
+"offset": Vector2( 300, 500 ),
 "params": [ [ 200, 0 ] ],
-"size": Vector2( 260, 91 ),
+"size": Vector2( 286, 91 ),
 "values": [ 200 ]
 },
-"name": "task",
+"name": "task3",
 "type": 1
 } ],
 "root": {
@@ -250,12 +250,12 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_seek_enemy",
-"offset": Vector2( 100, 500 ),
+"offset": Vector2( 300, 500 ),
 "params": [ [ 200, 0 ] ],
-"size": Vector2( 260, 91 ),
+"size": Vector2( 286, 91 ),
 "values": [ 200 ]
 },
-"name": "task",
+"name": "task3",
 "type": 1
 } ],
 "data": {

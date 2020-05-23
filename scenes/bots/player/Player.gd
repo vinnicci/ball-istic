@@ -109,8 +109,10 @@ func _change_slot_selected(slot_num: int) -> void:
 	change_weapon(slot_num)
 
 
+#using _physics_process loop
 func _control(delta):
 	current_weapon.look_at(get_global_mouse_position())
+	
 	#lose control when inventory ui is open and in an access area
 	if (is_using_bot_station == true || ui_access != "") && ui_inventory.visible == true:
 		return
@@ -122,6 +124,8 @@ func _control(delta):
 		velocity.x = -1
 	elif Input.is_action_pressed("move_right"):
 		velocity.x = 1
+	
+	#can't shoot/charge roll or transform when inventory is open
 	if ui_inventory.visible == true:
 		return
 	if Input.is_action_just_released("change_mode"):
@@ -135,7 +139,6 @@ func _control(delta):
 
 
 func _process(delta: float) -> void:
-	#_is_in_control has no influence here
 	_control_camera(delta)
 	
 	if _held_item != null:
@@ -194,7 +197,7 @@ func _update_bar_charge_level() -> void:
 	_bar_charge_level.modulate = Color(0.6, 0.6, 0.6)
 	var tween: = _bar_charge_level.get_node("ChargeTween")
 	tween.interpolate_property(_bar_charge_level, 'value', _bar_charge_level.value, _bar_charge_level.max_value,
-		_current_charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		current_charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
 
@@ -225,17 +228,6 @@ func _control_camera(delta: float) -> void:
 	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
 
 
-func take_damage(damage: float, knockback: Vector2) -> void:
-	.take_damage(damage, knockback)
-	$Camera2D.shake_camera(20, 0.1, 0.1, 1)
-
-
-func _on_Bot_body_entered(body: Node) -> void:
-	._on_Bot_body_entered(body)
-	if _is_charge_rolling == true:
-		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
-
-
 ######################
 # inventory management
 ######################
@@ -258,7 +250,7 @@ var arr_external: Array
 onready var _held_item = $PlayerUI/HeldItem
 
 
-#code duplication, i know
+#similar to upddate_ui_slot func but with extra steps and returns bool value
 func _update_ui_weapon_slot(slot_num: int) -> bool:
 	var weap = _arr_weapons[slot_num]
 	var slot_num_str: = slot_num as String
