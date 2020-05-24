@@ -15,7 +15,7 @@ onready var _level_node: = _parent_node.get_parent().get_parent()
 
 
 func _ready() -> void:
-	var ray_len: = 200
+	var ray_len: = 180
 	for i in range(8):
 		var ray = $FleeRays.get_node("R" + i as String)
 		ray.cast_to = Vector2(ray_len, 0).rotated(deg2rad(i * 45))
@@ -25,13 +25,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	$FleeRays.global_rotation = 0
 	$Rays.global_rotation = 0
-	
-	if _parent_node.has_node("NextPath"):
-		var sprite = _parent_node.get_node("NextPath")
-		sprite.position = Vector2(0,0)
-		if _next_path_point != null:
-			sprite.global_position = _next_path_point
-		sprite.global_rotation = 0
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
@@ -58,16 +51,8 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 	return distance
 
 
-#func _get_distance(from: Vector2, to: Vector2) -> int:
-#	var points = _level_node.get_points(from, to)
-#	var total_dist: int
-#	while(points.size() != 1):
-#		total_dist += points.pop_front().distance_to(points.front())
-#	return total_dist
-
-
 func control_ai(delta):
-	if _parent_node.is_in_control() == true:
+	if _parent_node.get_control_state() == true:
 		_parent_node.velocity = _velocity
 	if _check_if_valid_bot(_enemy) == true:
 		$Rays/Target.look_at(_enemy.global_position)
@@ -100,7 +85,7 @@ func _seek(target) -> void:
 		return
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 250:
 		_get_path_points(global_position, target.global_position)
-	if _next_path_point == null || (_path_points.size() != 0 && global_position.distance_to(_next_path_point) <= 150):
+	if _next_path_point == null || (_path_points.size() != 0 && global_position.distance_to(_next_path_point) <= 100):
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
@@ -109,22 +94,22 @@ func _seek(target) -> void:
 func _flee(flee_dist: int) -> void:
 	if _check_if_valid_bot(_enemy) == false:
 		return
-	if _next_path_point != null && _get_distance(global_position, _next_path_point) <= 150:
+	if _next_path_point != null && _get_distance(global_position, _next_path_point) <= 100:
 		_next_path_point = null
 	if _next_path_point == null || _get_distance(global_position, _enemy.global_position) <= flee_dist:
 		_flee_routes = {}
 		for ray in $FleeRays.get_children():
 			var pos
-			if ray.is_colliding() == true:
-				if ray.get_collider() is Global.CLASS_LEVEL_OBJECT:
-					pos = ray.get_collision_point()
-				elif ray.get_collider() == _enemy:
-					continue
+			if ray.is_colliding() == true && ray.get_collider() is Global.CLASS_LEVEL_OBJECT:
+				continue
 			else:
 				pos = ray.get_node("Pos").global_position
 			_flee_routes[_get_distance(pos, _enemy.global_position)] = pos
-		_next_path_point = _flee_routes[_flee_routes.keys().max()]
-	$Rays/Velocity.look_at(_next_path_point)
+		if _flee_routes.size() != 0:
+			_next_path_point = _flee_routes[_flee_routes.keys().max()]
+			$Rays/Velocity.look_at(_next_path_point)
+		else:
+			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
@@ -174,7 +159,9 @@ func task_seek_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
+	if _get_distance(global_position, _enemy.global_position) <= task.get_param(0):
+		_path_points = []
+		_next_path_point = null
 		task.succeed()
 		return
 	else:
@@ -185,7 +172,7 @@ func task_is_enemy_close(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
+	if _get_distance(global_position, _enemy.global_position) <= task.get_param(0):
 		task.succeed()
 		return
 	else:
@@ -215,6 +202,7 @@ func task_is_in_turret_mode(task):
 
 
 func task_switch_mode(task):
+	_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 	_parent_node.switch_mode()
 	$ResumeTimer.wait_time = _parent_node.current_transform_speed
 	if $ResumeTimer.is_stopped() == true:
@@ -246,52 +234,10 @@ func task_is_charge_ready(task):
 		return
 
 
-#func task_back_off(task):
-#	if _check_if_valid_bot(_enemy) == false:
-#		task.failed()
-#		return
-#	if global_position.distance_to(_enemy.global_position) > task.get_param(0) || _parent_node.is_charge_roll_ready() == true:
-#		task.succeed()
-#		return
-#	_velocity = Vector2(1,0).rotated($Rays/Target.global_rotation - deg2rad(180))
-
-
 ##############
 # flee
-# needs rework
+# needs refinement
 ##############
-#func task_ready_flee(task):
-#	if _check_if_valid_bot(_enemy) == false:
-#		task.failed()
-#		return
-#	if global_position.distance_to(_enemy.global_position) <= task.get_param(0):
-#		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
-#		task.succeed()
-#		return
-#
-#
-#func task_look_dir(task):
-#	var vector: Vector2
-#	if $Rays/Velocity.is_colliding() == true:
-#		vector = Vector2(1,0).rotated($Rays/Velocity.global_rotation) + Vector2(1,0).rotated($Rays/Velocity.get_collision_normal().angle())
-#		$Rays/Velocity.global_rotation = vector.angle()
-#	else:
-#		task.succeed()
-#		return
-#
-#
-#func task_move(task):
-#	if _check_if_valid_bot(_enemy) == false:
-#		task.failed()
-#		return
-#	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
-#	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
-#		task.succeed()
-#		return
-#	if global_position.distance_to(_enemy.global_position) <= 150:
-#		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
-
-
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
@@ -299,8 +245,9 @@ func task_flee(task):
 	if $FleeRays/R0.enabled == false:
 		for ray in $FleeRays.get_children():
 			ray.enabled = true
-	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
+	if _get_distance(global_position, _enemy.global_position) > task.get_param(0):
 		_velocity = Vector2(0,0)
+		_next_path_point = null
 		task.succeed()
 		return
 	_flee(task.get_param(0))
@@ -323,7 +270,7 @@ func task_shoot_enemy(task):
 		task.failed()
 		return
 	_parent_node.current_weapon.look_at(_enemy.global_position)
-	if global_position.distance_to(_enemy.global_position) > task.get_param(0):
+	if _get_distance(global_position, _enemy.global_position) > task.get_param(0):
 		task.failed()
 		return
 	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
@@ -352,12 +299,6 @@ func task_shoot_enemy(task):
 #func task_seek_ally(task):
 #	seek(ally)
 #	task.succeed()
-#
-#
-#func task_flee_blind(task):
-#	return
-#func flee_blind() -> void:
-#	pass
 
 
 #seek area with allies within and decent distance from enemy

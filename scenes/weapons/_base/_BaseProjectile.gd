@@ -72,6 +72,7 @@ func _on_RangeTimer_timeout() -> void:
 #common steps to stop and remove projectile
 func _stop_projectile() -> void:
 	_is_stopped = true
+	set_deferred("monitoring", false)
 	$Sprite.hide()
 	$RemoveTimer.start()
 

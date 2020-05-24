@@ -7,7 +7,7 @@ var _deg_increment: = 5
 func _charge_fire() -> void:
 	if _parent_node.is_rolling() == true:
 		return
-	_is_shooting = true
+	_parent_node.set_control_state(false)
 	$Timers/BurstTimer.start()
 	global_rotation += deg2rad(10)
 
@@ -15,7 +15,7 @@ func _charge_fire() -> void:
 func _on_BurstTimer_timeout() -> void:
 	if _current_burst_count == burst_count || _parent_node.is_alive() == false:
 		_current_burst_count = 0
-		_is_shooting = false
+		_parent_node.set_control_state(true)
 		return
 	$ShootingSound.play()
 	_fire_auto()

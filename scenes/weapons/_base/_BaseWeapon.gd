@@ -22,7 +22,6 @@ export (float) var cam_shake_intensity: float = 0
 
 var _current_heat: float setget , current_heat
 var _is_overheating: bool = false setget , is_overheating
-var _is_shooting: bool = false setget , is_shooting
 
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
@@ -72,9 +71,6 @@ func current_heat():
 
 func is_overheating():
 	return _is_overheating
-
-func is_shooting():
-	return _is_shooting
 
 
 func _ready() -> void:

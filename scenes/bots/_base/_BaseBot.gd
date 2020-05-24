@@ -41,7 +41,7 @@ var _is_rolling: bool = false setget , is_rolling
 var _is_alive: bool = true setget , is_alive
 var _is_charge_rolling: bool = false setget , is_charge_rolling
 var _is_transforming: bool = false setget , is_transforming
-var _is_in_control: bool = true setget , is_in_control
+var _is_in_control: bool = true setget set_control_state, get_control_state
 var _arr_weapons: Array = [null, null, null, null, null]
 
 onready var _body_outline: = $Body/Outline
@@ -114,7 +114,10 @@ func is_charge_rolling():
 func is_transforming():
 	return _is_transforming
 
-func is_in_control():
+func set_control_state(state: bool):
+	_is_in_control = state
+
+func get_control_state():
 	return _is_in_control
 
 func is_charge_roll_ready():

@@ -8,4 +8,4 @@ func _ready() -> void:
 
 func _on_WeaponHatchTween_tween_all_completed() -> void:
 	._on_WeaponHatchTween_tween_all_completed()
-	transform_speed = 0.6
+	current_transform_speed = 0.6
