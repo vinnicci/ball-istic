@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/bots/tex_fighter_leg.png" type="Texture" id=1]
+[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=1]
 [ext_resource path="res://assets/bots/tex_fighter.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=4]
@@ -19,6 +19,7 @@ charge_damage_factor = 0.01
 charge_force_factor = 0.8
 
 [node name="Sprite" parent="Legs" index="0"]
+modulate = Color( 0.717647, 0.694118, 0.411765, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( 12, 0 )
 

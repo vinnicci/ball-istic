@@ -282,6 +282,7 @@ func _apply_rolling_effects(delta: float) -> void:
 func switch_mode() -> void:
 	if _is_in_control == false:
 		return
+	velocity = Vector2(0,0)
 	_is_in_control = false
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
@@ -316,13 +317,14 @@ func _animate_weapon_hatch() -> void:
 	var weapon_hatch_tween: = _body_weapon_hatch.get_node("WeaponHatchTween")
 	if _is_rolling == false:
 		if current_weapon != null:
+			current_weapon.global_rotation = _body_weapon_hatch.global_rotation
 			current_weapon.animate_transform(current_transform_speed)
 		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif _is_rolling == true:
 		if current_weapon != null:
-			current_weapon.animate_transform(current_transform_speed)
 			_body_weapon_hatch.global_rotation = current_weapon.global_rotation
+			current_weapon.animate_transform(current_transform_speed)
 		_body_weapon_hatch.show()
 		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -409,7 +411,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		current_health += current_shield - damage
 		current_shield = 0
 		if has_node("Camera2D") == true:
-			$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+			$Camera2D.shake_camera(10, 0.05, 0.05, 1)
 	_bar_shield.value = current_shield
 	_bar_health.value = current_health
 	if current_health <= 0:
@@ -453,7 +455,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 			$Sounds/Bump.play()
 		return
 	if has_node("Camera2D") == true:
-		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
 	$CollisionSpark.emitting = true
