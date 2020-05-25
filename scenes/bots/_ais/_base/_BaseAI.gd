@@ -269,17 +269,16 @@ func task_shoot_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	_parent_node.current_weapon.look_at(_enemy.global_position)
-	if _get_distance(global_position, _enemy.global_position) > task.get_param(0):
-		task.failed()
-		return
-	if _parent_node.current_weapon.is_overheating() == false && $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
+	_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
+	if $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
 		_parent_node.shoot_weapon()
-	elif _parent_node.current_weapon.is_overheating() == true:
-		task.succeed()
-		return
+	task.succeed()
+	return
 
 
+####################
+# ally/master follow
+####################
 #func task_get_nearest_ally(task):
 #	if parent_node.get_parent().get_children().size() == 2:
 #		task.failed()
