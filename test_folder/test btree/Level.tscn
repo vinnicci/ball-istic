@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=5]
 [ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -30,6 +31,9 @@ shape = SubResource( 1 )
 [node name="AutoBlaster" parent="Bots/Dummy/Weapons" index="0" instance=ExtResource( 7 )]
 
 [node name="AI" parent="Bots/Dummy" index="9" instance=ExtResource( 9 )]
+
+[node name="SirenBot" parent="Bots" index="2" instance=ExtResource( 8 )]
+position = Vector2( -502.113, 259.425 )
 
 [node name="Camera2D" parent="." index="3"]
 position = Vector2( 190, 190 )

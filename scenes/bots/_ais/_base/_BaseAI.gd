@@ -3,8 +3,7 @@ extends Node2D
 
 var _enemies: Array = []
 var _enemy: Global.CLASS_BOT = null
-#var _allies: Array = []
-#var _ally: Global.CLASS_BOT = null
+var _master: Global.CLASS_BOT = null
 var _path_points: Array = []
 var _next_path_point
 var _velocity: Vector2
@@ -61,15 +60,22 @@ func control_ai(delta):
 		$Rays/Target.look_at(_enemy.global_position)
 
 
+func set_master(bot: Global.CLASS_BOT) -> void:
+	if _check_if_valid_bot(bot) == false:
+		return
+	_master = bot
+
+
 func _get_new_target_enemy() -> void:
 	if _enemies.size() != 0 && _enemy == null:
-		if _check_if_valid_bot(_enemies.front()) == false:
-			_enemies.pop_front()
-			return
-		$Rays/LookAt.look_at(_enemies.front().global_position)
-		if $Rays/LookAt.get_collider() == _enemies.front():
-			_enemy = _enemies.pop_front()
-			$FoundTarget.play()
+		for bot in _enemies:
+			if _check_if_valid_bot(bot) == false:
+				_enemies.erase(bot)
+				return
+			$Rays/LookAt.look_at(bot.global_position)
+			if $Rays/LookAt.get_collider() == bot:
+				_enemy = bot
+				$FoundTarget.play()
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
@@ -118,10 +124,6 @@ func _flee() -> void:
 	_next_path_point = null
 
 
-func _charge_roll(direction: float) -> void:
-	_parent_node.charge_roll(direction)
-
-
 signal resume
 
 
@@ -133,11 +135,10 @@ func _on_ResumeTimer_timeout() -> void:
 # btree tasks
 #############
 
-
 #############
 # enemy found
 #############
-#time based instead of tick based wait task using coroutine
+#time based wait task using coroutine
 func task_timed_idle(task):
 	$ResumeTimer.wait_time = task.get_param(0)
 	if $ResumeTimer.is_stopped() == true:
@@ -168,12 +169,6 @@ func task_seek_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-#	if _get_distance(global_position, _enemy.global_position) <= task.get_param(0):
-#		_path_points = []
-#		_next_path_point = null
-#		task.succeed()
-#		return
-#	else:
 	_seek(_enemy)
 	task.succeed()
 	return
@@ -260,11 +255,6 @@ func task_flee(task):
 	if $FleeRays/R0.enabled == false:
 		for ray in $FleeRays.get_children():
 			ray.enabled = true
-#	if _get_distance(global_position, _enemy.global_position) > task.get_param(0):
-#		_velocity = Vector2(0,0)
-#		_next_path_point = null
-#		task.succeed()
-#		return
 	_flee()
 	task.succeed()
 	return
@@ -296,25 +286,36 @@ func task_shoot_enemy(task):
 ####################
 # ally/master follow
 ####################
-#func task_get_nearest_ally(task):
-#	if parent_node.get_parent().get_children().size() == 2:
-#		task.failed()
-#	if find_ally() == false:
-#		task.failed()
-#		return
-#	task.succeed()
-#
-#
-#func task_ally_within_range(task):
-#	if ally_within_range == true:
-#		task.succeed()
-#	else:
-#		task.failed()
-#
-#
-#func task_seek_ally(task):
-#	seek(ally)
-#	task.succeed()
+func task_is_master_instance_valid(task):
+	if _check_if_valid_bot(_master) == false:
+		_master = null
+		_velocity = Vector2(0,0)
+		task.failed()
+		return
+	else:
+		task.succeed()
+		return
+
+
+func task_is_master_close(task):
+	if _check_if_valid_bot(_master) == false:
+		task.failed()
+		return
+	if _get_distance(global_position, _master.global_position) <= task.get_param(0):
+		task.succeed()
+		return
+	else:
+		task.failed()
+		return
+
+
+func task_seek_master(task):
+	if _check_if_valid_bot(_master) == false:
+		task.failed()
+		return
+	_seek(_master)
+	task.succeed()
+	return
 
 
 #seek area with allies within and decent distance from enemy

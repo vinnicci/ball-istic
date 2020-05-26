@@ -1,10 +1,6 @@
 extends Node2D
 
 
-func _ready() -> void:
-	$Sprite/Anim.play("fading")
-
-
 func _access(body: Node, arr: Array, access_name: String, arr_count: int) -> void:
 	$AccessUI/Label.visible = true
 	$Sprite/Anim.stop()

@@ -29,6 +29,7 @@ script = ExtResource( 1 )
 scale = Vector2( 2, 2 )
 
 [node name="Anim" type="AnimationPlayer" parent="Sprite"]
+autoplay = "fading"
 anims/fading = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
