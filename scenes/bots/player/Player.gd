@@ -171,7 +171,7 @@ func _update_weapon_hud_elements() -> void:
 			hud_weap_heat.modulate = WEAP_OVERHEAT_COLOR
 		else:
 			hud_weap_heat.modulate = WEAP_HEAT_COLOR
-		hud_weap_heat.value = _arr_weapons[i].current_heat()
+		hud_weap_heat.value = _arr_weapons[i].current_heat
 
 
 func _control_player_weapon_hotkeys() -> void:
@@ -212,11 +212,11 @@ func _update_bar_weapon_heat() -> void:
 		_bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
 	elif current_weapon.is_overheating() == false && bar_weapon_heat_anim.is_playing() == false:
 		_bar_weapon_heat.modulate = WEAP_HEAT_COLOR
-	if current_weapon.current_heat() > current_weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
+	if current_weapon.current_heat > current_weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
 		if bar_weapon_heat_anim.is_playing() == false && current_weapon.is_overheating() == false:
 			bar_weapon_heat_anim.play("too_much_heat")
 			$Sounds/CloseToOverheating.play()
-	_bar_weapon_heat.value = current_weapon.current_heat()
+	_bar_weapon_heat.value = current_weapon.current_heat
 
 
 func _control_camera(delta: float) -> void:

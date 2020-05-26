@@ -20,7 +20,7 @@ export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
 export (float) var cam_shake_intensity: float = 0
 
-var _current_heat: float setget , current_heat
+var current_heat: float
 var _is_overheating: bool = false setget , is_overheating
 
 
@@ -66,9 +66,6 @@ func get_burst_timer():
 func get_charge_timer():
 	return charge_timer
 
-func current_heat():
-	return _current_heat
-
 func is_overheating():
 	return _is_overheating
 
@@ -88,7 +85,7 @@ func fire() -> void:
 		return
 	_timer_shoot_cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
-	_current_heat += heat_per_shot
+	current_heat += heat_per_shot
 	match fire_mode:
 		FireModes.AUTO: _fire_auto()
 		FireModes.BURST: _fire_burst()
@@ -153,16 +150,16 @@ func _fire_charged() -> void:
 	if _parent_node.is_rolling() == true:
 		_cancel_charge()
 		return
-	if _current_heat == heat_capacity:
+	if current_heat == heat_capacity:
 		_is_overheating = true
 		_timer_charge_cancel_timer.stop()
 		_charge_fire()
 		_cancel_charge()
 		return
-	if _current_heat == 0:
+	if current_heat == 0:
 		$ChargingSound.play()
 		_timer_dissipation_cooldown.paused = true
-		$ChargingTween.interpolate_property(self, "_current_heat", _current_heat,
+		$ChargingTween.interpolate_property(self, "current_heat", current_heat,
 			heat_capacity, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		$ChargingTween.start()
 	_timer_charge_cancel_timer.start()
@@ -178,7 +175,7 @@ func _charge_fire() -> void:
 
 func _on_ChargeCancelTimer_timeout() -> void:
 	_cancel_charge()
-	_current_heat = 0
+	current_heat = 0
 
 
 func _cancel_charge() -> void:
@@ -213,18 +210,18 @@ func _on_WeaponTween_tween_all_completed() -> void:
 
 
 func _process(_delta: float) -> void:
-	if _current_heat > heat_capacity && _is_overheating == false:
-		_current_heat = heat_capacity + (heat_capacity*0.05)
+	if current_heat > heat_capacity && _is_overheating == false:
+		current_heat = heat_capacity + (heat_capacity*0.05)
 		_is_overheating = true
-	elif _is_overheating == true && _current_heat <= heat_capacity * heat_below_threshold:
+	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
 		_is_overheating = false
 
 
 func _on_DissipationCooldown_timeout() -> void:
-	if _current_heat > 0:
-		_current_heat -= heat_dissipation_per_sec/4 #<- rate 1sec/4
-	elif _current_heat <= 0:
-		_current_heat = 0
+	if current_heat > 0:
+		current_heat -= heat_dissipation_per_sec/4 #<- rate 1sec/4
+	elif current_heat <= 0:
+		current_heat = 0
 
 
 func _on_ShootCooldown_timeout() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/global/explosions/_base/_BaseExplosion.gd" type="Script" id=1]
 [ext_resource path="res://assets/global/sfx_Explosion.wav" type="AudioStream" id=2]
@@ -57,9 +57,6 @@ scale = 10.0
 scale_random = 0.9
 color_ramp = SubResource( 3 )
 
-[sub_resource type="CircleShape2D" id=5]
-resource_local_to_scene = true
-
 [node name="Explosion" type="Node2D"]
 z_index = 5
 script = ExtResource( 1 )
@@ -83,7 +80,6 @@ process_material = SubResource( 4 )
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOfEffect"]
-shape = SubResource( 5 )
 
 [node name="KnockBackDirection" type="RayCast2D" parent="."]
 visible = false

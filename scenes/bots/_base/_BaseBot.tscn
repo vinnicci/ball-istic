@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
@@ -9,9 +9,8 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Shield_Damage.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/sfx_Bot_Transform.wav" type="AudioStream" id=9]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=10]
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id=6]
 friction = 0.5
 bounce = 0.7
 
@@ -40,7 +39,7 @@ scale_random = 0.9
 color_ramp = SubResource( 4 )
 
 [node name="Bot" type="RigidBody2D"]
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 6 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
@@ -156,11 +155,6 @@ local_coords = false
 process_material = SubResource( 5 )
 
 [node name="Weapons" type="Node2D" parent="."]
-
-[node name="Explosion" parent="." instance=ExtResource( 10 )]
-explosion_radius = 150.0
-damage = 10.0
-knockback = 800.0
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/WeaponHatch/WeaponHatchTween" to="." method="_on_WeaponHatchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]

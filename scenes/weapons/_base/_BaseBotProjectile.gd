@@ -1,4 +1,4 @@
-extends "res://scenes/bots/_base/_BaseBotUnarmed.gd"
+extends "res://scenes/bots/_base/_BaseBotRolling.gd"
 
 
 func init_travel(proj_position: Vector2, proj_direction: float, origin: bool) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseAccess.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
@@ -19,9 +19,6 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.117647 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 128.0
-
 [node name="Access" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -35,7 +32,6 @@ anims/fading = SubResource( 1 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 2 )
 
 [node name="EnterSound" type="AudioStreamPlayer2D" parent="."]
 

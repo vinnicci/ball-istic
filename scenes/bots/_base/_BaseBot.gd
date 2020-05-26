@@ -131,6 +131,10 @@ func _ready() -> void:
 
 
 func _init_bot() -> void:
+	#error no explosion
+	if has_node("Explosion") == false:
+		push_error(name + "has no explosion node. Please attach one.")
+	
 	#weapons initialized here, some ai will have multiple weapons
 	var initialized_selected_weap: = false
 	var i: = -1
@@ -213,6 +217,11 @@ func reset_bot_vars() -> void:
 	
 	current_roll_speed = roll_speed
 	current_knockback_resist = knockback_resist
+	
+	for weap in _arr_weapons:
+		if weap == null:
+			continue
+		weap.current_heat = 0
 	
 	_cap_current_vars()
 

@@ -11,6 +11,7 @@ var acceleration: Vector2
 var current_speed: int
 var _origin: bool setget , origin
 var _is_stopped: bool = false setget , is_stopped
+var _exploded: bool = false
 
 
 func origin():
@@ -55,17 +56,27 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		elif body.is_hostile() != _origin && body.is_alive() == false:
 			return
 		else:
-			body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+			if has_node("Explosion") == true:
+				$Explosion.start_explosion()
+			else:
+				body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
-		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
-	$HitBlast.show()
-	$HitBlast/AnimationPlayer.play("blast")
-	$OnHitParticles.emitting = true
+		if has_node("Explosion") == true:
+			$Explosion.start_explosion()
+		else:
+			body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+	if has_node("Explosion") == true:
+		_exploded = true
+	else:
+		$HitBlast.show()
+		$HitBlast/AnimationPlayer.play("blast")
+		$OnHitParticles.emitting = true
 	_stop_projectile()
 
 
 func _on_RangeTimer_timeout() -> void:
-	$RemoveTimer.start()
+	if has_node("Explosion") && _exploded == false:
+		$Explosion.start_explosion()
 	_stop_projectile()
 
 
