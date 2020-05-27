@@ -71,7 +71,7 @@ func _get_new_target_enemy() -> void:
 		for bot in _enemies:
 			if _check_if_valid_bot(bot) == false:
 				_enemies.erase(bot)
-				return
+				continue
 			$Rays/LookAt.look_at(bot.global_position)
 			if $Rays/LookAt.get_collider() == bot:
 				_enemy = bot

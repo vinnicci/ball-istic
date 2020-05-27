@@ -228,9 +228,9 @@ func _control_camera(delta: float) -> void:
 	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
 
 
-######################
+################################################################################
 # inventory management
-######################
+################################################################################
 var is_using_bot_station: bool = false
 var _dict_held: Dictionary = {
 	"item": null,

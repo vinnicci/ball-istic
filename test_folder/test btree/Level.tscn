@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -24,6 +25,11 @@ tile_data = PoolIntArray( -196615, 1, 0, -196614, 1, 0, -196613, 1, 0, -196612, 
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 2 )]
 position = Vector2( 451.645, 303.364 )
+
+[node name="Sprite" parent="Bots/Dummy/Legs" index="0"]
+modulate = Color( 0.227451, 0.396078, 0.85098, 1 )
+texture = ExtResource( 10 )
+offset = Vector2( 13, 0 )
 
 [node name="CollisionShape" parent="Bots/Dummy" index="5"]
 shape = SubResource( 1 )

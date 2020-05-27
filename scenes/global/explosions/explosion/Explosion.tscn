@@ -33,6 +33,9 @@ resource_local_to_scene = true
 
 [node name="Explosion" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+explosion_radius = 200.0
+damage = 5.0
+knockback = 800.0
 
 [node name="Particles2D" parent="." index="1"]
 process_material = SubResource( 3 )
