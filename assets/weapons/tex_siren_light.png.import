@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_siren_call_circle.png-f12d2c12161e8957c84322574c539af8.s3tc.stex"
-path.etc2="res://.import/tex_siren_call_circle.png-f12d2c12161e8957c84322574c539af8.etc2.stex"
+path.s3tc="res://.import/tex_siren_light.png-9d85314d20c7170cc0363584c9827d27.s3tc.stex"
+path.etc2="res://.import/tex_siren_light.png-9d85314d20c7170cc0363584c9827d27.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_siren_call_circle.png"
-dest_files=[ "res://.import/tex_siren_call_circle.png-f12d2c12161e8957c84322574c539af8.s3tc.stex", "res://.import/tex_siren_call_circle.png-f12d2c12161e8957c84322574c539af8.etc2.stex" ]
+source_file="res://assets/weapons/tex_siren_light.png"
+dest_files=[ "res://.import/tex_siren_light.png-9d85314d20c7170cc0363584c9827d27.s3tc.stex", "res://.import/tex_siren_light.png-9d85314d20c7170cc0363584c9827d27.etc2.stex" ]
 
 [params]
 

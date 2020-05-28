@@ -147,6 +147,9 @@ modulate = Color( 0.25098, 0.294118, 0.956863, 1 )
 texture = ExtResource( 25 )
 offset = Vector2( 13, 0 )
 
+[node name="Bars" parent="Bots/Dummy2" index="2"]
+z_index = 0
+
 [node name="CollisionShape" parent="Bots/Dummy2" index="5"]
 shape = SubResource( 3 )
 
@@ -164,6 +167,10 @@ hostile = false
 position = Vector2( 1649.87, 3041.22 )
 destructible = false
 hostile = false
+
+[node name="Dummy" parent="Bots" index="14" instance=ExtResource( 17 )]
+position = Vector2( 459.349, 1386.86 )
+destructible = true
 
 [editable path="Access/Depot"]
 

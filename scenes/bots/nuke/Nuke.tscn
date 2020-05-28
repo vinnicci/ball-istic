@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/bots/tex_nuke_bot.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/_base/_BaseBotRolling.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/global/explosions/nuclear/NuclearExplosion.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/nuke/Nuke.gd" type="Script" id=4]
+[ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -14,6 +15,7 @@ shield_capacity = 10.0
 health_capacity = 30.0
 roll_speed = 1000
 shield_recovery_per_sec = 0.0
+charge_force_factor = 0.8
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 1 )
@@ -23,3 +25,5 @@ uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
+
+[node name="AI" parent="." index="9" instance=ExtResource( 5 )]

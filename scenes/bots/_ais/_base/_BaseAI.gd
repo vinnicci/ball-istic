@@ -226,10 +226,10 @@ func task_charge_roll(task):
 		task.failed()
 		return
 	match task.get_param(0):
-		"toward":
+		"target":
 			if $Rays/Target.get_collider() == _enemy:
 				_parent_node.charge_roll($Rays/Target.global_rotation)
-		"away":
+		"velocity":
 			_parent_node.charge_roll($Rays/Velocity.global_rotation)
 	task.succeed()
 	return
@@ -316,6 +316,20 @@ func task_seek_master(task):
 	_seek(_master)
 	task.succeed()
 	return
+
+
+###############
+# special tasks
+###############
+func task_special(task):
+	_special()
+	task.succeed()
+	return
+
+
+#virtual func for bots with special tasks
+func _special() -> void:
+	pass
 
 
 #seek area with allies within and decent distance from enemy

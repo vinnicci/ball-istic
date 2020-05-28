@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_siren_light_red.png-9a98ca7b17ddc1ef08ead33c085ff972.s3tc.stex"
-path.etc2="res://.import/tex_siren_light_red.png-9a98ca7b17ddc1ef08ead33c085ff972.etc2.stex"
+path.s3tc="res://.import/tex_beam_pincer_motion_proj.png-f629502d5cf886995789eeeddd23e7c5.s3tc.stex"
+path.etc2="res://.import/tex_beam_pincer_motion_proj.png-f629502d5cf886995789eeeddd23e7c5.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_siren_light_red.png"
-dest_files=[ "res://.import/tex_siren_light_red.png-9a98ca7b17ddc1ef08ead33c085ff972.s3tc.stex", "res://.import/tex_siren_light_red.png-9a98ca7b17ddc1ef08ead33c085ff972.etc2.stex" ]
+source_file="res://assets/weapons/tex_beam_pincer_motion_proj.png"
+dest_files=[ "res://.import/tex_beam_pincer_motion_proj.png-f629502d5cf886995789eeeddd23e7c5.s3tc.stex", "res://.import/tex_beam_pincer_motion_proj.png-f629502d5cf886995789eeeddd23e7c5.etc2.stex" ]
 
 [params]
 

@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/sfx_Bot_Transform.wav" type="AudioStream" id=9]
 
-[sub_resource type="PhysicsMaterial" id=6]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
 bounce = 0.7
 
@@ -39,7 +39,7 @@ scale_random = 0.9
 color_ramp = SubResource( 4 )
 
 [node name="Bot" type="RigidBody2D"]
-physics_material_override = SubResource( 6 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
@@ -78,6 +78,7 @@ polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 [node name="ChargeEffect" type="Polygon2D" parent="Body"]
 
 [node name="Bars" type="Node2D" parent="."]
+z_index = 5
 
 [node name="Shield" type="TextureProgress" parent="Bars"]
 modulate = Color( 0.292969, 1, 0.968223, 1 )

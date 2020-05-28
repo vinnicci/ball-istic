@@ -5,6 +5,12 @@ var _damage: float = 45
 var _knockback: float = 800
 
 
+func _process(delta: float) -> void:
+	if _parent_node.is_alive() == false:
+		$Beams/Beam1/HurtBox.monitoring = false
+		$Beams/Beam2/HurtBox.monitoring = false
+
+
 func _fire_other() -> void:
 	_parent_node.set_control_state(false)
 	$ShootingSound.play()
@@ -12,7 +18,7 @@ func _fire_other() -> void:
 	$Beams/Anim.play("attack")
 
 
-func _on_DamageArea_body_entered(body: Node) -> void:
+func _on_HurtBox_body_entered(body: Node) -> void:
 	if _parent_node is Global.CLASS_BOT == false:
 		return
 	if body is Global.CLASS_BOT:
