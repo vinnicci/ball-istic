@@ -415,6 +415,7 @@ run_on = 1
 
 [node name="DetectionRange" type="Area2D" parent="."]
 visible = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 

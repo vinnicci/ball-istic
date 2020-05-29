@@ -9,6 +9,7 @@ onready var _parent_node: Area2D = get_parent()
 
 func _init_detector(radius: float) -> void:
 	$DetectionRange/CollisionShape2D.shape.radius = radius
+	$DetectionRange.monitoring = true
 	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
 
 
@@ -48,7 +49,6 @@ func task_homing(task):
 	var steer_vector = (target_vector - _parent_node.velocity).normalized() * task.get_param(0)
 	var final_vector = _parent_node.velocity + steer_vector
 	_parent_node.acceleration = final_vector
-#	_parent_node.get_node("Sprite").global_rotation = final_vector.angle()
 	task.succeed()
 	return
 

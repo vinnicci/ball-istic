@@ -61,6 +61,8 @@ tree = {
 }
 
 [node name="DetectionRange" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 

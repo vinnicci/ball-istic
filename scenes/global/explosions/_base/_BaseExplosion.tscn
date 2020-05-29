@@ -78,6 +78,8 @@ process_material = SubResource( 4 )
 
 [node name="AreaOfEffect" type="Area2D" parent="."]
 visible = false
+monitoring = false
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOfEffect"]
 

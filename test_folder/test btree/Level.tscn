@@ -15,10 +15,10 @@
 [ext_resource path="res://scenes/bots/explosive/Explosive.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=14]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
 [node name="Level" instance=ExtResource( 1 )]
@@ -33,7 +33,7 @@ destructible = false
 hostile = true
 
 [node name="CollisionShape" parent="Bots/Player" index="5"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="Camera2D" parent="Bots/Player" index="6"]
 zoom = Vector2( 1, 1 )
@@ -47,7 +47,7 @@ texture = ExtResource( 10 )
 offset = Vector2( 13, 0 )
 
 [node name="CollisionShape" parent="Bots/Dummy" index="5"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="AutoBlaster" parent="Bots/Dummy/Weapons" index="0" instance=ExtResource( 7 )]
 

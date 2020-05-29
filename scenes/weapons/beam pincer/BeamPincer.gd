@@ -6,7 +6,7 @@ var _knockback: float = 800
 
 
 func _process(delta: float) -> void:
-	if _parent_node.is_alive() == false:
+	if _parent_node is Global.CLASS_BOT && _parent_node.is_alive() == false:
 		$Beams/Beam1/HurtBox.monitoring = false
 		$Beams/Beam2/HurtBox.monitoring = false
 
