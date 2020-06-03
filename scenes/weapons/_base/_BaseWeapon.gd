@@ -101,7 +101,7 @@ func _process(_delta: float) -> void:
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
-		current_heat -= heat_dissipation_per_sec/4 #<- rate 1sec/4
+		current_heat -= heat_dissipation_per_sec * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
 		current_heat = 0
 
@@ -132,7 +132,7 @@ func _on_WeaponTween_tween_all_completed() -> void:
 # all the firing modes
 ######################
 func fire() -> void:
-	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true:
+	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true || _parent_node.is_alive() == false:
 		return
 	_timer_shoot_cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
@@ -207,7 +207,6 @@ func _fire_charged() -> void:
 func _charge_fire() -> void:
 	if _parent_node.is_rolling() == true:
 		return
-#	_fire_burst()
 
 
 func _on_ChargeCancelTimer_timeout() -> void:

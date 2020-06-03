@@ -207,7 +207,7 @@ func _on_ChargeTween_tween_all_completed() -> void:
 
 
 func _update_bar_weapon_heat() -> void:
-	var bar_weapon_heat_anim: = _bar_weapon_heat.get_node("WeaponHeatAnimation")
+	var bar_weapon_heat_anim: = _bar_weapon_heat.get_node("Anim")
 	if current_weapon.is_overheating() == true:
 		_bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
 	elif current_weapon.is_overheating() == false && bar_weapon_heat_anim.is_playing() == false:

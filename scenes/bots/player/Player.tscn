@@ -40,9 +40,6 @@ modulate = Color( 0.435294, 0.682353, 0.92549, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( 14, 1 )
 
-[node name="Outline" parent="Body" index="0"]
-color = Color( 0.392157, 0.890196, 0.772549, 1 )
-
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 7 )
 
@@ -58,7 +55,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WeaponHeatAnimation" type="AnimationPlayer" parent="Bars/WeaponHeat" index="0"]
+[node name="Anim" type="AnimationPlayer" parent="Bars/WeaponHeat" index="0"]
 anims/too_much_heat = SubResource( 1 )
 
 [node name="ChargeLevel" type="TextureProgress" parent="Bars" index="3"]

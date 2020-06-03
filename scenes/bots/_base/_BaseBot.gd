@@ -48,6 +48,8 @@ onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
 onready var _body_charge_effect: = $Body/ChargeEffect
 onready var _body_weapon_hatch: = $Body/WeaponHatch
+onready var _switch_tween: = $Body/SwitchTween
+onready var _charge_tween: = $Body/ChargeTween
 onready var _bar_shield: = $Bars/Shield
 onready var _bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
@@ -164,6 +166,12 @@ func _init_bot() -> void:
 	if destructible == false:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
+	if hostile == true:
+		_body_outline.modulate = HOSTILE_COLOR
+		_body_weapon_hatch.modulate = HOSTILE_COLOR
+	else:
+		_body_outline.modulate = NON_HOSTILE_COLOR
+		_body_weapon_hatch.modulate = NON_HOSTILE_COLOR
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
@@ -248,13 +256,15 @@ func _process(delta: float) -> void:
 	
 	#rolling ball graphical effect
 	_apply_rolling_effects(delta)
+	
+	#reset colors after charging
+	_end_charging_effect()
 
 
 #60 fps
 func _physics_process(delta: float) -> void:
-	#in physics_process for now
-	#for consistency with lerp func
-	_end_charging_effect()
+	pass
+	
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
@@ -281,7 +291,7 @@ func _apply_rolling_effects(delta: float) -> void:
 
 
 func switch_mode() -> void:
-	if _is_in_control == false:
+	if _is_in_control == false || _is_alive == false:
 		return
 	velocity = Vector2(0,0)
 	_is_in_control = false
@@ -301,39 +311,37 @@ func switch_mode() -> void:
 
 
 func _animate_legs() -> void:
-	var leg_tween: = $Legs/LegTween
 	if _is_rolling == false:
 		for leg in _legs_position.keys():
-			leg_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
+			_switch_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			leg_tween.start()
+			_switch_tween.start()
 	elif _is_rolling == true:
 		for leg in _legs_position.keys():
-			leg_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
+			_switch_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			leg_tween.start()
+			_switch_tween.start()
 
 
 func _animate_weapon_hatch() -> void:
-	var weapon_hatch_tween: = _body_weapon_hatch.get_node("WeaponHatchTween")
 	if _is_rolling == false:
 		if current_weapon != null:
 			current_weapon.global_rotation = _body_weapon_hatch.global_rotation
 			current_weapon.animate_transform(current_transform_speed)
-		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
+		_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif _is_rolling == true:
 		if current_weapon != null:
 			_body_weapon_hatch.global_rotation = current_weapon.global_rotation
 			current_weapon.animate_transform(current_transform_speed)
 		_body_weapon_hatch.show()
-		weapon_hatch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
+		_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	weapon_hatch_tween.start()
+	_switch_tween.start()
 
 
 #some weapons have fixed anim, so will change this later
-func _on_WeaponHatchTween_tween_all_completed() -> void:
+func _on_SwitchTween_tween_all_completed() -> void:
 	if _is_rolling == true:
 		_body_weapon_hatch.hide()
 	_is_in_control = true
@@ -377,22 +385,24 @@ func _peak_charge_roll() -> void:
 		if _is_in_control == true:
 			_is_in_control = false
 		_is_charge_rolling = true
-		_body_outline.color = Color(1, 0.24, 0.88)
-		_body_charge_effect.color.a = 255
+		_body_outline.modulate = Color(1, 0.24, 0.88) #--> bright pink
+		_body_charge_effect.modulate.a = 1.0
 
 
 #use tween so we can transfer this to _process loop
 func _end_charging_effect() -> void:
-	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR && _is_in_control == false:
+	if _is_charge_rolling == true && _is_in_control == false && linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
 		if hostile == true:
-			_body_outline.color = lerp(_body_outline.color, HOSTILE_COLOR, 0.8)
+			_charge_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
+				HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		elif hostile == false:
-			_body_outline.color = lerp(_body_outline.color, NON_HOSTILE_COLOR, 0.8)
-		_body_charge_effect.color.a = lerp(_body_charge_effect.color.a, 0, 0.8)
-		_body_weapon_hatch.color = _body_outline.color
-		if _is_in_control == false && _is_charge_rolling == true:
-			_is_in_control = true
+			_charge_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
+				NON_HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		_charge_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
+			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		_charge_tween.start()
+		_is_in_control = true
 		_is_charge_rolling = false
 
 
@@ -447,6 +457,9 @@ func _on_ExplodeDelay_timeout() -> void:
 
 
 func _on_ExplodeTimer_timeout() -> void:
+	for sound in $Sounds.get_children():
+		if sound.is_playing() == true:
+			sound.stop()
 	queue_free()
 
 
@@ -462,15 +475,15 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$CollisionSpark.emitting = true
 	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
-	var damage = (linear_velocity.length()/25 * current_charge_force_factor) + current_charge_base_damage
+	var damage: float = (linear_velocity.length() * 0.25 * current_charge_force_factor) + current_charge_base_damage
 	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
-		damage /= 8
+		damage *= 0.125
 	body.take_damage(damage, Vector2(0,0))
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
-	if current_shield + current_shield_recovery/4 > shield_capacity:
+	if current_shield + current_shield_recovery * 0.25 > shield_capacity:
 		current_shield = shield_capacity
-	elif current_shield + current_shield_recovery/4 <= shield_capacity:
-		current_shield += current_shield_recovery/4
+	elif current_shield + current_shield_recovery * 0.25 <= shield_capacity:
+		current_shield += current_shield_recovery * 0.25
 	_bar_shield.value = current_shield

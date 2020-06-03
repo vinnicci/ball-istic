@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -22,11 +22,8 @@
 [ext_resource path="res://scenes/weapons/grenade launcher/GrenadeLauncher.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=24]
-[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=25]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=27]
-[ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=28]
 [ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=29]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -37,8 +34,9 @@ radius = 128.0
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="CircleShape2D" id=3]
-resource_local_to_scene = true
+[sub_resource type="PhysicsMaterial" id=3]
+friction = 0.5
+bounce = 0.7
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
@@ -137,48 +135,28 @@ physics_material_override = SubResource( 2 )
 position = Vector2( 235.305, -100.626 )
 physics_material_override = SubResource( 2 )
 
-[node name="Dummy2" parent="Bots" index="11" instance=ExtResource( 17 )]
-position = Vector2( 3991.77, 2877.19 )
-physics_material_override = SubResource( 2 )
-hostile = false
-
-[node name="Sprite" parent="Bots/Dummy2/Legs" index="0"]
-modulate = Color( 0.25098, 0.294118, 0.956863, 1 )
-texture = ExtResource( 25 )
-offset = Vector2( 13, 0 )
-
-[node name="Bars" parent="Bots/Dummy2" index="2"]
-z_index = 0
-
-[node name="CollisionShape" parent="Bots/Dummy2" index="5"]
-shape = SubResource( 3 )
-
-[node name="AutoBlaster" parent="Bots/Dummy2/Weapons" index="0" instance=ExtResource( 24 )]
-
-[node name="AI" parent="Bots/Dummy2" index="9" instance=ExtResource( 28 )]
-
-[node name="Nuke" parent="Bots" index="12" instance=ExtResource( 27 )]
+[node name="Nuke" parent="Bots" index="11" instance=ExtResource( 27 )]
 position = Vector2( 4013.65, 3041.78 )
+physics_material_override = SubResource( 3 )
 hostile = false
 
-[node name="Fighter" parent="Bots" index="13" instance=ExtResource( 26 )]
+[node name="Fighter" parent="Bots" index="12" instance=ExtResource( 26 )]
 position = Vector2( 1649.87, 3041.22 )
 destructible = false
 hostile = false
 
-[node name="Dummy" parent="Bots" index="14" instance=ExtResource( 17 )]
+[node name="Dummy" parent="Bots" index="13" instance=ExtResource( 17 )]
 position = Vector2( 459.349, 1386.86 )
+physics_material_override = SubResource( 3 )
 destructible = true
 
-[node name="Slasher" parent="Bots" index="15" instance=ExtResource( 29 )]
+[node name="Slasher" parent="Bots" index="14" instance=ExtResource( 29 )]
 position = Vector2( 972.685, 1613.9 )
 
-[node name="Slasher2" parent="Bots" index="16" instance=ExtResource( 29 )]
+[node name="Slasher2" parent="Bots" index="15" instance=ExtResource( 29 )]
 position = Vector2( 1272.1, 1691.33 )
 
-[node name="Slasher3" parent="Bots" index="17" instance=ExtResource( 29 )]
+[node name="Slasher3" parent="Bots" index="16" instance=ExtResource( 29 )]
 position = Vector2( 590.677, 1660.36 )
 
 [editable path="Access/Depot"]
-
-[editable path="Bots/Dummy2"]

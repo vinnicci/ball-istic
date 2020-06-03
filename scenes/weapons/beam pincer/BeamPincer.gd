@@ -7,10 +7,9 @@ var _knockback: float = 800
 
 func _process(delta: float) -> void:
 	if _parent_node is Global.CLASS_BOT && _parent_node.is_alive() == false:
-		if $Beams/Anim.is_playing() == true:
-			$Beams/Anim.stop()
 		$Beams/Beam1/HurtBox.monitoring = false
 		$Beams/Beam2/HurtBox.monitoring = false
+		$Beams.hide()
 
 
 func _fire_other() -> void:
@@ -35,4 +34,5 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
-	_parent_node.set_control_state(true)
+	if _parent_node.is_alive() == true:
+		_parent_node.set_control_state(true)
