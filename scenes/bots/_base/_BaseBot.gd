@@ -383,7 +383,7 @@ func _peak_charge_roll() -> void:
 
 #use tween so we can transfer this to _process loop
 func _end_charging_effect() -> void:
-	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR && _is_in_control == false:
 		#hostility color hardcoded for now, as a result no customization for outline color
 		if hostile == true:
 			_body_outline.color = lerp(_body_outline.color, HOSTILE_COLOR, 0.8)

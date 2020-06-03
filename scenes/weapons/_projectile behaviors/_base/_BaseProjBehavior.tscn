@@ -59,6 +59,7 @@ tree = {
 "type": 0
 }
 }
+run_on = 1
 
 [node name="DetectionRange" type="Area2D" parent="."]
 monitoring = false
