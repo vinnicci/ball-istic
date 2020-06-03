@@ -8,9 +8,8 @@ var _path_points: Array = []
 var _next_path_point
 var _velocity: Vector2
 var _flee_routes: Dictionary = {}
-
-onready var _parent_node: = get_parent()
-onready var _level_node: = _parent_node.get_parent().get_parent()
+var _parent_node: Global.CLASS_BOT
+var _level_node: Node = null
 
 
 func _ready() -> void:
@@ -21,7 +20,13 @@ func _ready() -> void:
 		ray.get_node("Pos").position = ray.cast_to
 
 
+func set_parent_node(new_parent: Global.CLASS_BOT):
+	_parent_node = new_parent
+
+
 func _process(delta: float) -> void:
+	if _level_node == null:
+		_level_node = Global.current_level
 	$FleeRays.global_rotation = 0
 	$Rays.global_rotation = 0
 
@@ -53,10 +58,10 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 	return distance
 
 
-func control_ai(delta):
+func _physics_process(delta: float) -> void:
 	if _parent_node.get_control_state() == true:
 		_parent_node.velocity = _velocity
-	if _check_if_valid_bot(_enemy) == true:
+	if _check_if_valid_bot(_enemy) == true && _parent_node.get_control_state() == true:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
@@ -66,6 +71,7 @@ func set_master(bot: Global.CLASS_BOT) -> void:
 	_master = bot
 
 
+#make this dynamic
 func _get_new_target_enemy() -> void:
 	if _enemies.size() != 0 && _enemy == null:
 		for bot in _enemies:

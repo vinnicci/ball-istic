@@ -9,7 +9,7 @@ export (float) var shield_recovery_per_sec: = 1.0 setget , get_shield_recovery_p
 export (float, 0.1, 1.0) var transform_speed: = 0.6 setget , get_transform_speed
 export (float, 0.5, 5.0) var charge_cooldown: = 3.0 setget , get_charge_cooldown
 export (float, 0, 1.0) var knockback_resist: = 0.5 setget , get_knockback_resist
-export (float, 0.01, 0.15) var charge_damage_factor: = 0.05 setget , get_charge_damage_factor
+export (float) var charge_base_damage: = 20 setget , get_charge_base_damage
 export (float, 0.1, 1.5) var charge_force_factor: = 0.5 setget , get_charge_force_factor
 export (bool) var destructible: = true setget , is_destructible
 export (bool) var hostile: = true setget , is_hostile
@@ -33,7 +33,7 @@ var current_shield_recovery: float
 var current_transform_speed: float
 var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
-var current_charge_damage_factor: float
+var current_charge_base_damage: float
 var current_charge_force_factor: float
 var current_weapon: Node
 var velocity: Vector2
@@ -80,8 +80,8 @@ func get_charge_cooldown():
 func get_knockback_resist():
 	return knockback_resist
 
-func get_charge_damage_factor():
-	return charge_damage_factor
+func get_charge_base_damage():
+	return charge_base_damage
 
 func get_charge_force_factor():
 	return charge_force_factor
@@ -91,6 +91,7 @@ func is_destructible():
 
 func is_hostile():
 	return hostile
+
 
 ####################
 # current properties
@@ -114,6 +115,8 @@ func is_charge_rolling():
 func is_transforming():
 	return _is_transforming
 
+#false means losing control to rolling, shooting, charging and switching mode
+#lose control to switching weapon slot on transforming only
 func set_control_state(state: bool):
 	_is_in_control = state
 
@@ -131,15 +134,21 @@ func _ready() -> void:
 
 
 func _init_bot() -> void:
-	#error no explosion
-	if has_node("Explosion") == false:
-		push_error(name + "has no explosion node. Please attach one.")
+	#initialize AI component
+	if has_node("AI") == true:
+		$AI.set_parent_node(self)
 	
-	#weapons initialized here, some ai will have multiple weapons
+	#error: no explosion component
+	if has_node("Explosion") == false:
+		push_error(name + " has no explosion node. Please attach one.")
+	
+	#weapon components initialized here, some ai will have multiple weapons
+	#must be child of Weapons
 	var initialized_selected_weap: = false
 	var i: = -1
 	for weapon in $Weapons.get_children():
 		i += 1
+		weapon.set_parent_node(self)
 		_arr_weapons[i] = weapon
 		if initialized_selected_weap == false:
 			current_weapon = weapon
@@ -156,7 +165,7 @@ func _init_bot() -> void:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
 	
-	#bot's body look set up
+	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	_body_texture.position = Vector2(-bot_radius, -bot_radius)
 	_bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
@@ -212,7 +221,7 @@ func reset_bot_vars() -> void:
 	
 	current_charge_cooldown = charge_cooldown
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
-	current_charge_damage_factor = charge_damage_factor
+	current_charge_base_damage = charge_base_damage
 	current_charge_force_factor = charge_force_factor
 	
 	current_roll_speed = roll_speed
@@ -231,7 +240,6 @@ func _cap_current_vars() -> void:
 	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
-	current_charge_damage_factor = clamp(current_charge_damage_factor, 0.01, 0.1)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
 
 
@@ -244,42 +252,26 @@ func _process(delta: float) -> void:
 
 #60 fps
 func _physics_process(delta: float) -> void:
-	#everything charge roll
-	#graphical feedback/effects
-	#in physics_process for now, due to lerp func
+	#in physics_process for now
+	#for consistency with lerp func
 	_end_charging_effect()
-	
-	#velocity calculations
-	if _is_in_control == true:
-		velocity = Vector2(0,0)
-		_control(delta)
 
 
-#false means losing control to rolling, shooting, charging and switching mode
-#lose control to switching weapon slot on transforming only
-func _on_Bot_control_updated(control_status: bool) -> void:
-	_is_in_control = control_status
-
-
-func _control(delta) -> void:
-	if has_node("AI") == true: #<- attached ai node should be named "AI"
-		$AI.control_ai(delta)
-
-
-func _integrate_forces(_state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
-	if _is_rolling == false:
+	if _is_in_control == false:
 		return
-	if velocity.is_normalized() == false:
+	if _is_rolling == true:
 		velocity = velocity.normalized()
-	velocity *= current_roll_speed
-	applied_force = velocity
+		velocity *= current_roll_speed
+		applied_force = velocity
+	velocity = Vector2(0,0)
 
 
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
 	if _is_rolling == false:
-		#magic number, i know
+		#magic number for now
 		#same as other lerp func i used
 		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
 		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
@@ -348,7 +340,6 @@ func _on_WeaponHatchTween_tween_all_completed() -> void:
 	_is_transforming = false
 
 
-#some weapons' shooting mode aren't auto, so will change this later
 func shoot_weapon() -> void:
 	if _is_in_control == true && _is_rolling == false:
 		current_weapon.fire()
@@ -376,7 +367,7 @@ func charge_roll(charge_direction: float) -> void:
 	_timer_charge_cooldown.start()
 
 
-#0.05 sec delay in order to get almost peak linear velocity
+#0.05 sec delay in order to get near peak linear velocity
 func _on_ChargeEffectDelay_timeout() -> void:
 	_peak_charge_roll()
 
@@ -390,6 +381,7 @@ func _peak_charge_roll() -> void:
 		_body_charge_effect.color.a = 255
 
 
+#use tween so we can transfer this to _process loop
 func _end_charging_effect() -> void:
 	if linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
@@ -470,7 +462,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$CollisionSpark.emitting = true
 	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
-	var damage = current_roll_speed as float * current_charge_damage_factor * current_charge_force_factor
+	var damage = (linear_velocity.length()/25 * current_charge_force_factor) + current_charge_base_damage
 	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
 		damage /= 8
 	body.take_damage(damage, Vector2(0,0))

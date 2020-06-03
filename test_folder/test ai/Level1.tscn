@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -22,7 +22,6 @@
 [ext_resource path="res://scenes/weapons/grenade launcher/GrenadeLauncher.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=24]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=25]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=26]
@@ -162,8 +161,6 @@ shape = SubResource( 3 )
 position = Vector2( 4013.65, 3041.78 )
 hostile = false
 
-[node name="AI" parent="Bots/Nuke" index="9" instance=ExtResource( 23 )]
-
 [node name="Fighter" parent="Bots" index="13" instance=ExtResource( 26 )]
 position = Vector2( 1649.87, 3041.22 )
 destructible = false
@@ -175,6 +172,12 @@ destructible = true
 
 [node name="Slasher" parent="Bots" index="15" instance=ExtResource( 29 )]
 position = Vector2( 972.685, 1613.9 )
+
+[node name="Slasher2" parent="Bots" index="16" instance=ExtResource( 29 )]
+position = Vector2( 1272.1, 1691.33 )
+
+[node name="Slasher3" parent="Bots" index="17" instance=ExtResource( 29 )]
+position = Vector2( 590.677, 1660.36 )
 
 [editable path="Access/Depot"]
 

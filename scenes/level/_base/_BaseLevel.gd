@@ -7,15 +7,11 @@ var _init_cam: bool = false
 
 
 func _ready() -> void:
-	Global.current_level = self
-	for bot in $Bots.get_children():
-		if bot is Global.CLASS_PLAYER:
-			Global.player = bot
-			break
+	if Global.current_level != self:
+		Global.current_level = self
 
 
 func _process(delta: float) -> void:
-	#busy waiting anti-pattern?
 	if _init_cam == false && is_instance_valid(Global.player) == true && Global.player.is_alive() == false:
 		$Camera2D.global_position = Global.player.global_position
 		$Camera2D.current = true

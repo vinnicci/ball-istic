@@ -31,10 +31,10 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 60, 8 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "attack"
 length = 0.4
 step = 0.05
@@ -203,9 +203,9 @@ process_material = SubResource( 3 )
 [node name="Beams" type="Node2D" parent="." index="2"]
 
 [node name="Beam1" type="Sprite" parent="Beams" index="0"]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 0, -5 )
-rotation = -1.74533
+position = Vector2( 18, 0 )
 texture = ExtResource( 4 )
 offset = Vector2( 60, 0 )
 flip_v = true
@@ -216,12 +216,12 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Beams/Beam1/HurtBox" index="0"]
 position = Vector2( 60, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Beam2" type="Sprite" parent="Beams" index="1"]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 0, 5 )
-rotation = 1.74533
+position = Vector2( 18, 0 )
 texture = ExtResource( 4 )
 offset = Vector2( 60, 0 )
 
@@ -231,10 +231,10 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Beams/Beam2/HurtBox" index="0"]
 position = Vector2( 60, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Anim" type="AnimationPlayer" parent="Beams" index="2"]
-anims/attack = SubResource( 6 )
+anims/attack = SubResource( 5 )
 
 [node name="Sprite" parent="." index="3"]
 texture = ExtResource( 1 )

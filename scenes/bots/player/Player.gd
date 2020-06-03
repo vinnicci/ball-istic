@@ -26,6 +26,10 @@ func _ready() -> void:
 
 
 func _init_player() -> void:
+	#global player ref
+	if Global.player != self:
+		Global.player = self
+	
 	#player bars initialize
 	_bar_weapon_heat.rect_position.x -= _bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
 	_bar_weapon_heat.max_value = current_weapon.heat_capacity
@@ -109,21 +113,21 @@ func _change_slot_selected(slot_num: int) -> void:
 	change_weapon(slot_num)
 
 
-#using _physics_process loop
-func _control(delta):
-	current_weapon.look_at(get_global_mouse_position())
+func _physics_process(delta: float) -> void:
+	if _is_in_control == true:
+		current_weapon.look_at(get_global_mouse_position())
 	
 	#lose control when inventory ui is open and in an access area
 	if (is_using_bot_station == true || ui_access != "") && ui_inventory.visible == true:
 		return
 	if Input.is_action_pressed("move_up"):
-		velocity.y = -1
+		velocity.y += -1
 	elif Input.is_action_pressed("move_down"):
-		velocity.y = 1
+		velocity.y += 1
 	if Input.is_action_pressed("move_left"):
-		velocity.x = -1
+		velocity.x += -1
 	elif Input.is_action_pressed("move_right"):
-		velocity.x = 1
+		velocity.x += 1
 	
 	#can't shoot/charge roll or transform when inventory is open
 	if ui_inventory.visible == true:
@@ -156,10 +160,6 @@ func _process(delta: float) -> void:
 	#can't close the ui if holding an item
 	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
 		ui_inventory.visible = !ui_inventory.visible
-
-
-func _physics_process(delta: float) -> void:
-	pass
 
 
 func _update_weapon_hud_elements() -> void:
@@ -472,11 +472,11 @@ func _manage_passives(slot_num: int) -> void:
 	_swap("passive", slot_num)
 
 
+#works from depot or from vault
 func _own_item(item: Node, new_parent: Node) -> void:
 	item.get_parent().remove_child(item)
 	new_parent.add_child(item)
-	if item.has_method("set_parent_node") == true:
-		item.set_parent_node(new_parent.get_parent())
+	item.set_parent_node(new_parent.get_parent())
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:

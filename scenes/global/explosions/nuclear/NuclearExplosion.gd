@@ -2,8 +2,8 @@ extends "res://scenes/global/explosions/_base/_BaseExplosion.gd"
 
 
 func start_explosion() -> void:
-	_flash_screen()
 	.start_explosion()
+	_flash_screen()
 
 
 func _flash_screen() -> void:

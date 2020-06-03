@@ -80,6 +80,57 @@ func _ready() -> void:
 		_timer_shoot_cooldown.wait_time = 0.05
 
 
+func _spawn_proj() -> void:
+	Global.current_level.spawn_projectile(Projectile.instance(), $Muzzle.global_position,
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+
+
+func _apply_recoil() -> void:
+	if _parent_node.has_node("Camera2D") == true:
+		_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
+	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
+
+
+func _process(_delta: float) -> void:
+	if current_heat > heat_capacity && _is_overheating == false:
+		current_heat = heat_capacity + (heat_capacity*0.05)
+		_is_overheating = true
+	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
+		_is_overheating = false
+
+
+func _on_DissipationCooldown_timeout() -> void:
+	if current_heat > 0:
+		current_heat -= heat_dissipation_per_sec/4 #<- rate 1sec/4
+	elif current_heat <= 0:
+		current_heat = 0
+
+
+func _on_ShootCooldown_timeout() -> void:
+	$Muzzle/MuzzleParticles.emitting = false
+
+
+func animate_transform(transform_speed: float) -> void:
+	if visible == true:
+		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,1), Color(1,1,1,0),
+			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	elif visible == false:
+		modulate = Color(1,1,1,0)
+		show()
+		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,0), Color(1,1,1,1),
+			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$WeaponTween.start()
+
+
+func _on_WeaponTween_tween_all_completed() -> void:
+	if visible == true && _parent_node.is_rolling() == true:
+		hide()
+		modulate = Color(1,1,1,1)
+
+
+######################
+# all the firing modes
+######################
 func fire() -> void:
 	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true:
 		return
@@ -91,17 +142,6 @@ func fire() -> void:
 		FireModes.BURST: _fire_burst()
 		FireModes.CHARGE: _fire_charged()
 		FireModes.OTHER: _fire_other()
-
-
-func _spawn_proj() -> void:
-	Global.current_level.spawn_projectile(Projectile.instance(), $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
-
-
-func _apply_recoil() -> void:
-	if _parent_node.has_node("Camera2D") == true:
-		_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
-	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
 
 
 ################################################################################
@@ -164,12 +204,10 @@ func _fire_charged() -> void:
 	_timer_charge_cancel_timer.start()
 
 
-#virtual
-#by default shoots burst
 func _charge_fire() -> void:
 	if _parent_node.is_rolling() == true:
 		return
-	_fire_burst()
+#	_fire_burst()
 
 
 func _on_ChargeCancelTimer_timeout() -> void:
@@ -188,40 +226,3 @@ func _cancel_charge() -> void:
 ################################################################################
 func _fire_other() -> void:
 	pass
-
-
-func animate_transform(transform_speed: float) -> void:
-	if visible == true:
-		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,1), Color(1,1,1,0),
-			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	elif visible == false:
-		modulate = Color(1,1,1,0)
-		show()
-		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,0), Color(1,1,1,1),
-			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$WeaponTween.start()
-
-
-func _on_WeaponTween_tween_all_completed() -> void:
-	if visible == true && _parent_node.is_rolling() == true:
-		hide()
-		modulate = Color(1,1,1,1)
-
-
-func _process(_delta: float) -> void:
-	if current_heat > heat_capacity && _is_overheating == false:
-		current_heat = heat_capacity + (heat_capacity*0.05)
-		_is_overheating = true
-	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
-		_is_overheating = false
-
-
-func _on_DissipationCooldown_timeout() -> void:
-	if current_heat > 0:
-		current_heat -= heat_dissipation_per_sec/4 #<- rate 1sec/4
-	elif current_heat <= 0:
-		current_heat = 0
-
-
-func _on_ShootCooldown_timeout() -> void:
-	$Muzzle/MuzzleParticles.emitting = false

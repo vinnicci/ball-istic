@@ -40,5 +40,8 @@ knockback = 800.0
 [node name="Particles2D" parent="." index="1"]
 process_material = SubResource( 3 )
 
+[node name="AreaOfEffect" parent="." index="2"]
+visible = true
+
 [node name="CollisionShape2D" parent="AreaOfEffect" index="0"]
 shape = SubResource( 4 )

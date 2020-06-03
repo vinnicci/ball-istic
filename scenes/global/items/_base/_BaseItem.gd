@@ -1,7 +1,7 @@
 extends Node2D
 
 
-onready var _parent_node: = get_parent().get_parent() setget set_parent_node, get_parent_node
+var _parent_node: Node
 
 
 func _ready() -> void:
