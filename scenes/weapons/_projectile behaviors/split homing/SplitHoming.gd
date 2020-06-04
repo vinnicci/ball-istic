@@ -5,4 +5,4 @@ func _ready() -> void:
 	var homing_range: = 300
 	_init_detector(homing_range)
 	_init_raycast(homing_range)
-	$SplitToThreeTimer.connect("timeout", self, "_on_SplitToThreeTimer_timeout")
+	_init_timer()

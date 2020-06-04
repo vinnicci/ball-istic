@@ -18,13 +18,13 @@ tree = {
 "to_port": 0
 }, {
 "from": "paralel",
-"from_port": 0,
-"to": "minim_node",
+"from_port": 1,
+"to": "minim_node2",
 "to_port": 0
 }, {
 "from": "paralel",
-"from_port": 1,
-"to": "minim_node2",
+"from_port": 0,
+"to": "minim_node",
 "to_port": 0
 } ],
 "nodes": [ {
@@ -51,11 +51,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -64,11 +64,11 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -185,11 +185,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -198,11 +198,11 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -294,65 +294,6 @@ tree = {
 "data": {
 "data": {
 "connection": [ {
-"from": "repeat",
-"from_port": 0,
-"to": "task",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat",
-"type": 8
-}, {
-"child": [  ],
-"data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
-"size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
-},
-"name": "task",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
-"size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
-},
-"name": "task",
-"type": 1
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat",
-"type": 8
-}
-},
-"label": "split",
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
 "from": "repeat2",
 "from_port": 0,
 "to": "task3",
@@ -407,6 +348,65 @@ tree = {
 },
 "name": "minim_node2",
 "type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "repeat",
+"from_port": 0,
+"to": "task",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 400, -100 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat",
+"type": 8
+}, {
+"child": [  ],
+"data": {
+"fn": "task_split",
+"offset": Vector2( 600, -100 ),
+"params": [ [ 0.5, 0 ] ],
+"size": Vector2( 267, 91 ),
+"values": [ 0.5 ]
+},
+"name": "task",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_split",
+"offset": Vector2( 600, -100 ),
+"params": [ [ 0.5, 0 ] ],
+"size": Vector2( 267, 91 ),
+"values": [ 0.5 ]
+},
+"name": "task",
+"type": 1
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 400, -100 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat",
+"type": 8
+}
+},
+"label": "split",
+"offset": Vector2( 400, -100 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node",
+"type": 99
 } ],
 "root": {
 "child": [ {
@@ -432,11 +432,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -445,11 +445,11 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 600, -100 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1

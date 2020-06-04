@@ -138,7 +138,7 @@ position = Vector2( 235.305, -100.626 )
 physics_material_override = SubResource( 2 )
 
 [node name="Nuke" parent="Bots" index="11" instance=ExtResource( 27 )]
-position = Vector2( 4013.65, 3041.78 )
+position = Vector2( 274.29, 3010.09 )
 physics_material_override = SubResource( 3 )
 hostile = false
 

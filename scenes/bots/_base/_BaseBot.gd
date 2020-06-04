@@ -41,7 +41,7 @@ var _is_rolling: bool = false setget , is_rolling
 var _is_alive: bool = true setget , is_alive
 var _is_charge_rolling: bool = false setget , is_charge_rolling
 var _is_transforming: bool = false setget , is_transforming
-var _is_in_control: bool = true setget set_control_state, get_control_state
+var _is_in_control: bool = true setget , get_control_state
 var _arr_weapons: Array = [null, null, null, null, null]
 
 onready var _body_outline: = $Body/Outline
@@ -119,7 +119,13 @@ func is_transforming():
 
 #false means losing control to rolling, shooting, charging and switching mode
 #lose control to switching weapon slot on transforming only
-func set_control_state(state: bool):
+var _control_id: String
+
+func set_control_state(state: bool, id: String):
+	if state == true && _control_id != id:
+		return
+	if state == false:
+		_control_id = id
 	_is_in_control = state
 
 func get_control_state():
@@ -297,7 +303,7 @@ func switch_mode() -> void:
 	if _is_in_control == false || _is_alive == false:
 		return
 	velocity = Vector2(0,0)
-	_is_in_control = false
+	set_control_state(false, "switch_mode")
 	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
@@ -347,7 +353,7 @@ func _animate_weapon_hatch() -> void:
 func _on_SwitchTween_tween_all_completed() -> void:
 	if _is_rolling == true:
 		_body_weapon_hatch.hide()
-	_is_in_control = true
+	set_control_state(true, "switch_mode")
 	_is_transforming = false
 
 
@@ -369,7 +375,7 @@ func change_weapon(slot_num: int) -> void:
 
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
-	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false:
+	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false || _is_alive == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
@@ -386,7 +392,7 @@ func _peak_charge_roll() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		$Timers/ChargeTrail.start()
 		if _is_in_control == true:
-			_is_in_control = false
+			set_control_state(false, "charge_roll")
 		_is_charge_rolling = true
 		_body_outline.modulate = Color(1, 0.24, 0.88) #--> bright pink
 		_body_charge_effect.modulate.a = 1.0
@@ -399,12 +405,7 @@ func _on_ChargeTrail_timeout() -> void:
 	Global.current_level.add_child(trail)
 	trail.get_node("RemoveTimer").start()
 	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
-	trail.get_node("RemoveTimer").connect("timeout", self, "_on_Trail_RemoveTimer_timeout", [trail])
-
-
-#trail effect cleanup
-func _on_Trail_RemoveTimer_timeout(trail_obj: Node) -> void:
-	trail_obj.queue_free()
+	trail.get_node("RemoveTimer").connect("timeout", Cleaner, "_on_Trail_RemoveTimer_timeout", [trail])
 
 
 func _end_charging_effect() -> void:
@@ -420,7 +421,7 @@ func _end_charging_effect() -> void:
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_charge_tween.start()
 		$Timers/ChargeTrail.stop()
-		_is_in_control = true
+		set_control_state(true, "charge_roll")
 		_is_charge_rolling = false
 
 
@@ -453,7 +454,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 
 func _explode() -> void:
 	_is_alive = false
-	_is_in_control = false
+	set_control_state(false, "explode")
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()

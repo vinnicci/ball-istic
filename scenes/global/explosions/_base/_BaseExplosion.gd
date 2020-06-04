@@ -31,14 +31,25 @@ func start_explosion() -> void:
 		Global.current_level.get_node("Camera2D").shake_camera(30, 0.1, 0.1, 1)
 	var bodies = $AreaOfEffect.get_overlapping_bodies()
 	for body in bodies:
-		$KnockBackDirection.look_at(body.global_position)
-		if body.has_method("take_damage") == true:
-			body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
+		if body == get_parent():
+			continue
+		_apply_effect(body)
 	$Blast.show()
-	$Blast/AnimationPlayer.play("blast")
+	var tween = $Blast/BlastTween
+	tween.interpolate_property($Blast, "scale", $Blast.scale, Vector2(2,2), 0.5,
+		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property($Blast, "modulate", $Blast.modulate, Color(1,1,1,0),
+		0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
 	$Particles2D.emitting = true
 	$RemoveParticles.start()
 	$Sound.play()
+
+
+func _apply_effect(body: Node) -> void:
+	$KnockBackDirection.look_at(body.global_position)
+	if body.has_method("take_damage") == true:
+		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 
 
 func _on_RemoveParticles_timeout() -> void:

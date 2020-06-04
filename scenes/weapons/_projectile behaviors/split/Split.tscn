@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/weapons/_projectile behaviors/_base/_BaseProjBehavior.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/weapons/_projectile behaviors/split to three/SplitToThree.gd" type="Script" id=2]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/split/Split.gd" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -21,11 +21,11 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -39,11 +39,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -52,11 +52,11 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
+"fn": "task_split",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 0.3, 0 ] ],
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1

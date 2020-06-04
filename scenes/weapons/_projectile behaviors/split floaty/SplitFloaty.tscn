@@ -106,7 +106,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -114,11 +114,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -127,18 +127,18 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -240,7 +240,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -248,11 +248,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -261,18 +261,18 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -298,6 +298,65 @@ tree = {
 "data": {
 "data": {
 "connection": [ {
+"from": "repeat",
+"from_port": 0,
+"to": "task2",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 600, -100 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat",
+"type": 8
+}, {
+"child": [  ],
+"data": {
+"fn": "task_curve_speed",
+"offset": Vector2( 800, -100 ),
+"params": [  ],
+"size": Vector2( 304, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_curve_speed",
+"offset": Vector2( 800, -100 ),
+"params": [  ],
+"size": Vector2( 304, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 600, -100 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat",
+"type": 8
+}
+},
+"label": "curve speed",
+"offset": Vector2( 400, -100 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
 "from": "repeat2",
 "from_port": 0,
 "to": "task",
@@ -307,7 +366,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -315,11 +374,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -328,18 +387,18 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -352,65 +411,6 @@ tree = {
 },
 "name": "minim_node2",
 "type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "repeat",
-"from_port": 0,
-"to": "task2",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 600, -100 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat",
-"type": 8
-}, {
-"child": [  ],
-"data": {
-"fn": "task_curve_speed",
-"offset": Vector2( 800, -100 ),
-"params": [  ],
-"size": Vector2( 304, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_curve_speed",
-"offset": Vector2( 800, -100 ),
-"params": [  ],
-"size": Vector2( 304, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 600, -100 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat",
-"type": 8
-}
-},
-"label": "curve speed",
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node",
-"type": 99
 } ],
 "root": {
 "child": [ {
@@ -487,7 +487,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",
@@ -495,11 +495,11 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
@@ -508,18 +508,18 @@ tree = {
 "child": [ {
 "child": [  ],
 "data": {
-"fn": "task_split_to_three",
-"offset": Vector2( 800, 100 ),
-"params": [ [ 0.3, 0 ] ],
+"fn": "task_split",
+"offset": Vector2( 600, 100 ),
+"params": [ [ 0.5, 0 ] ],
 "size": Vector2( 267, 91 ),
-"values": [ 0.3 ]
+"values": [ 0.5 ]
 },
 "name": "task",
 "type": 1
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 400, 100 ),
 "size": Vector2( 169, 53.0001 )
 },
 "name": "repeat2",

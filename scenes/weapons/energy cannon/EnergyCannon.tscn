@@ -34,7 +34,6 @@ color_ramp = SubResource( 2 )
 script = ExtResource( 4 )
 Projectile = ExtResource( 1 )
 heat_per_shot = 2.0
-heat_capacity = 5.0
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 2.5
 recoil = 100

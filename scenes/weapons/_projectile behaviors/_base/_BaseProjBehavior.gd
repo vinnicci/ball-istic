@@ -3,8 +3,7 @@ extends Node2D
 
 var _detected: Array = []
 var _target_bot: Global.CLASS_BOT = null
-
-onready var _parent_node: Area2D = get_parent()
+var _parent_node: Area2D
 
 
 func _init_detector(radius: float) -> void:
@@ -16,6 +15,14 @@ func _init_detector(radius: float) -> void:
 func _init_raycast(cast_to: float) -> void:
 	$TargetRay.cast_to = Vector2(cast_to, 0)
 	$TargetRay.enabled = true
+
+
+func _init_timer() -> void:
+	$SplitTimer.connect("timeout", self, "_on_SplitTimer_timeout")
+
+
+func set_parent_node(new_parent: Area2D) -> void:
+	_parent_node = new_parent
 
 
 func _physics_process(delta: float) -> void:
@@ -44,6 +51,7 @@ func task_homing(task):
 		task.succeed()
 		return
 	if _parent_node.is_stopped() == true:
+		task.failed()
 		return
 	var target_vector = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
 	var steer_vector = (target_vector - _parent_node.velocity).normalized() * task.get_param(0)
@@ -61,32 +69,36 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 ################
 # split to three
 ################
-var is_split: bool = false
+var split_count: int = 2
+var _is_split: bool = false
 
 
-func task_split_to_three(task):
-	if _parent_node.is_stopped() == true || is_split == true:
+func task_split(task):
+	if _parent_node.is_stopped() == true || split_count == 0:
+		task.failed()
 		return
-	is_split = true
-	$SplitToThreeTimer.wait_time = task.get_param(0)
-	$SplitToThreeTimer.start()
+	if _is_split == false:
+		$SplitTimer.wait_time = task.get_param(0)
+		$SplitTimer.start()
+		_is_split = true
 	task.succeed()
 	return
 
 
-func _on_SplitToThreeTimer_timeout() -> void:
+func _on_SplitTimer_timeout() -> void:
 	if _parent_node.is_stopped() == true:
 		return
-	var spread: = 10
+	var spread: = 5
 	for i in range(2):
 		spread *= -1
-		Global.current_level.spawn_projectile(_split(), _parent_node.global_position, 
+		Global.current_level.spawn_projectile(_split(split_count - 1), _parent_node.global_position, 
 			_parent_node.global_rotation + deg2rad(spread), _parent_node.origin())
+	_parent_node.queue_free()
 
 
-func _split() -> Node:
+func _split(count: int) -> Node:
 	var clone = _parent_node.duplicate(DUPLICATE_USE_INSTANCING)
-	clone.get_node("ProjBehavior").is_split = true
+	clone.get_node("ProjBehavior").split_count = count
 	return clone
 
 
@@ -98,6 +110,7 @@ export var speed_curve: Curve
 
 func task_curve_speed(task):
 	if _parent_node.is_stopped() == true:
+		task.failed()
 		return
 	var range_timer = _parent_node.get_node("RangeTimer")
 	_parent_node.current_speed = speed_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
@@ -117,6 +130,7 @@ onready var _random_dir = rand_range(0, 1.0)
 func task_curve_steer(task):
 	# for compatibility with homing, this behavior will stop if homing target is detected
 	if _target_bot != null || _parent_node.is_stopped() == true:
+		task.failed()
 		return
 	var range_timer = _parent_node.get_node("RangeTimer")
 	var y_val = steer_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time)
@@ -132,24 +146,25 @@ func task_curve_steer(task):
 #########
 # reflect
 #########
-var is_reflected: bool = false
+var reflect_count: int = 3
 
 
 func task_reflect(task):
-	if _parent_node.is_stopped() == true || is_reflected == true:
+	if _parent_node.is_stopped() == true || reflect_count == 0:
+		task.failed()
 		return
 	$TargetRay.global_rotation = _parent_node.global_rotation
 	var body = $TargetRay.get_collider()
 	if body is Global.CLASS_LEVEL_OBJECT:
-		is_reflected = true
-		Global.current_level.spawn_projectile(_reflect(), _parent_node.global_position, 
+		Global.current_level.spawn_projectile(_reflect(reflect_count - 1), _parent_node.global_position, 
 			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180),
 			_parent_node.origin())
+		reflect_count = 0
 	task.succeed()
 
 
-func _reflect() -> Node:
+func _reflect(count: int) -> Node:
 	var clone = _parent_node.duplicate(DUPLICATE_USE_INSTANCING)
-	clone.get_node("ProjBehavior").is_reflected = true
+	clone.get_node("ProjBehavior").reflect_count = count
 	clone.set_stopped_status(false)
 	return clone

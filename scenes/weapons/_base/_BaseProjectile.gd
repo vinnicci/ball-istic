@@ -30,6 +30,8 @@ func _ready() -> void:
 	for i in range(12):
 		circle.append(Vector2($CollisionShape.shape.radius, 0).rotated(deg2rad(i * 30)))
 	$HitBlast.polygon = circle
+	if has_node("ProjBehavior") == true:
+		$ProjBehavior.set_parent_node(self)
 
 
 func init_travel(pos, dir, origin) -> void:

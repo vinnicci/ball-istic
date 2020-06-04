@@ -32,6 +32,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://scenes/global/Global.gd"
+Cleaner="*res://scenes/global/Cleaner.gd"
 
 [display]
 

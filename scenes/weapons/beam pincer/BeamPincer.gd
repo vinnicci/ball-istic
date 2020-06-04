@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 
 func _fire_other() -> void:
-	_parent_node.set_control_state(false)
+	_parent_node.set_control_state(false, "beam_pincer")
 	$ShootingSound.play()
 	_apply_recoil()
 	$Beams/Anim.play("attack")
@@ -35,4 +35,4 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
 	if _parent_node.is_alive() == true:
-		_parent_node.set_control_state(true)
+		_parent_node.set_control_state(true, "beam_pincer")
