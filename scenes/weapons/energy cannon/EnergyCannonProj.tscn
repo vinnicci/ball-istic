@@ -16,6 +16,7 @@ proj_range = 1000
 knockback = 0.0
 
 [node name="Sprite" parent="." index="1"]
+modulate = Color( 0.313726, 1, 0, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( -25, 0 )
 

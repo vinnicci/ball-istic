@@ -13,6 +13,7 @@ script = ExtResource( 2 )
 proj_range = 3000
 
 [node name="Sprite" parent="." index="1"]
+modulate = Color( 0.0862745, 0.980392, 0.0117647, 1 )
 texture = ExtResource( 3 )
 offset = Vector2( -9, 1 )
 
