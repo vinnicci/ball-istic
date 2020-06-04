@@ -127,3 +127,29 @@ func task_curve_steer(task):
 		_parent_node.acceleration = _parent_node.velocity.rotated(deg2rad(10 * y_val))
 	task.succeed()
 	return
+
+
+#########
+# reflect
+#########
+var is_reflected: bool = false
+
+
+func task_reflect(task):
+	if _parent_node.is_stopped() == true || is_reflected == true:
+		return
+	$TargetRay.global_rotation = _parent_node.global_rotation
+	var body = $TargetRay.get_collider()
+	if body is Global.CLASS_LEVEL_OBJECT:
+		is_reflected = true
+		Global.current_level.spawn_projectile(_reflect(), _parent_node.global_position, 
+			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180),
+			_parent_node.origin())
+	task.succeed()
+
+
+func _reflect() -> Node:
+	var clone = _parent_node.duplicate(DUPLICATE_USE_INSTANCING)
+	clone.get_node("ProjBehavior").is_reflected = true
+	clone.set_stopped_status(false)
+	return clone

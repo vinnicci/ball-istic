@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/weapons/_projectile behaviors/reflect/Reflect.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/_base/_BaseProjBehavior.tscn" type="PackedScene" id=2]
+
+[node name="ProjBehavior" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="BTREE" parent="." index="0"]
+tree = {
+"connection": [ {
+"from": "root",
+"from_port": 0,
+"to": "task4",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_reflect",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 257, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}, {
+"child": [  ],
+"data": {
+"fn": "task_reflect",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 257, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_reflect",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 257, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}
+}

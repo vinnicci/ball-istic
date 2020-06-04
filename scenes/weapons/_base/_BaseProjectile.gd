@@ -10,12 +10,15 @@ var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
 var _origin: bool setget , origin
-var _is_stopped: bool = false setget , is_stopped
+var _is_stopped: bool = false setget set_stopped_status, is_stopped
 var _exploded: bool = false
 
 
 func origin():
 	return _origin
+
+func set_stopped_status(state: bool):
+	_is_stopped = state
 
 func is_stopped():
 	return _is_stopped
