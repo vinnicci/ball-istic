@@ -216,6 +216,9 @@ func _plot_circle_points(radius) -> Array:
 
 #use only for initialization or in bot stations
 func reset_bot_vars() -> void:
+	if _is_alive == false:
+		return
+	
 	current_shield = shield_capacity
 	_bar_shield.max_value = shield_capacity
 	_bar_shield.value = current_shield
@@ -269,7 +272,7 @@ func _physics_process(delta: float) -> void:
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
-	if _is_in_control == false:
+	if _is_in_control == false || _is_alive == false:
 		return
 	if _is_rolling == true:
 		velocity = velocity.normalized()
@@ -361,11 +364,10 @@ func change_weapon(slot_num: int) -> void:
 		current_weapon.visible = false
 	current_weapon = weap
 	if _is_rolling == false:
-		current_weapon.look_at(get_global_mouse_position())
 		current_weapon.visible = true
 
 
-#impulse depends on speed and force multiplier
+#charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
 	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false:
 		return
@@ -382,6 +384,7 @@ func _on_ChargeEffectDelay_timeout() -> void:
 
 func _peak_charge_roll() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+		$Timers/ChargeTrail.start()
 		if _is_in_control == true:
 			_is_in_control = false
 		_is_charge_rolling = true
@@ -389,7 +392,21 @@ func _peak_charge_roll() -> void:
 		_body_charge_effect.modulate.a = 1.0
 
 
-#use tween so we can transfer this to _process loop
+#trail effect
+func _on_ChargeTrail_timeout() -> void:
+	var trail = _body_charge_effect.duplicate()
+	trail.get_node("Anim").play("fade")
+	Global.current_level.add_child(trail)
+	trail.get_node("RemoveTimer").start()
+	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
+	trail.get_node("RemoveTimer").connect("timeout", self, "_on_Trail_RemoveTimer_timeout", [trail])
+
+
+#trail effect cleanup
+func _on_Trail_RemoveTimer_timeout(trail_obj: Node) -> void:
+	trail_obj.queue_free()
+
+
 func _end_charging_effect() -> void:
 	if _is_charge_rolling == true && _is_in_control == false && linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
@@ -402,8 +419,13 @@ func _end_charging_effect() -> void:
 		_charge_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_charge_tween.start()
+		$Timers/ChargeTrail.stop()
 		_is_in_control = true
 		_is_charge_rolling = false
+
+
+func apply_knockback(knockback: Vector2) -> void:
+	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 
 
 func take_damage(damage: float, knockback: Vector2) -> void:
@@ -429,10 +451,6 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		_explode()
 
 
-func apply_knockback(knockback: Vector2) -> void:
-	apply_central_impulse(knockback - (knockback*current_knockback_resist))
-
-
 func _explode() -> void:
 	_is_alive = false
 	_is_in_control = false
@@ -445,6 +463,9 @@ func _explode() -> void:
 func _on_ExplodeDelay_timeout() -> void:
 	if current_weapon != null:
 		current_weapon.hide()
+	for sound in $Sounds.get_children():
+		if sound.is_playing() == true:
+			sound.stop()
 	$Legs.hide()
 	$Body.hide()
 	$Bars.hide()
@@ -457,9 +478,6 @@ func _on_ExplodeDelay_timeout() -> void:
 
 
 func _on_ExplodeTimer_timeout() -> void:
-	for sound in $Sounds.get_children():
-		if sound.is_playing() == true:
-			sound.stop()
 	queue_free()
 
 
@@ -475,7 +493,12 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$CollisionSpark.emitting = true
 	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
-	var damage: float = (linear_velocity.length() * 0.25 * current_charge_force_factor) + current_charge_base_damage
+	
+	#force factor multiplicative -- base damage factor additive
+	#damage is 1/16 the current velocity magnitude times force factor then add the base damage
+	var damage: float = (linear_velocity.length() * 0.0625 * current_charge_force_factor) + current_charge_base_damage
+	
+	#if both are charging, the damage is reduced to 1/8
 	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
 		damage *= 0.125
 	body.take_damage(damage, Vector2(0,0))

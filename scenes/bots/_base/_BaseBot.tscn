@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
@@ -13,6 +13,22 @@
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
 bounce = 0.7
+
+[sub_resource type="Animation" id=6]
+resource_name = "fade"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
@@ -73,6 +89,13 @@ polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 [node name="ChargeEffect" type="Polygon2D" parent="Body"]
 modulate = Color( 1, 1, 1, 0 )
 
+[node name="Anim" type="AnimationPlayer" parent="Body/ChargeEffect"]
+anims/fade = SubResource( 6 )
+
+[node name="RemoveTimer" type="Timer" parent="Body/ChargeEffect"]
+wait_time = 0.2
+one_shot = true
+
 [node name="SwitchTween" type="Tween" parent="Body"]
 
 [node name="ChargeTween" type="Tween" parent="Body"]
@@ -107,6 +130,9 @@ __meta__ = {
 [node name="ChargeCooldown" type="Timer" parent="Timers"]
 wait_time = 2.0
 one_shot = true
+
+[node name="ChargeTrail" type="Timer" parent="Timers"]
+wait_time = 0.01
 
 [node name="ChargeEffectDelay" type="Timer" parent="Timers"]
 wait_time = 0.05
@@ -158,6 +184,7 @@ process_material = SubResource( 5 )
 [node name="Weapons" type="Node2D" parent="."]
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/SwitchTween" to="." method="_on_SwitchTween_tween_all_completed"]
+[connection signal="timeout" from="Timers/ChargeTrail" to="." method="_on_ChargeTrail_timeout"]
 [connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
 [connection signal="timeout" from="Timers/ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
