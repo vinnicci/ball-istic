@@ -4,8 +4,6 @@
 [ext_resource path="res://scenes/weapons/_base/_BaseBotProjectile.gd" type="Script" id=2]
 [ext_resource path="res://assets/bots/tex_explosive_bot.png" type="Texture" id=3]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
@@ -17,7 +15,6 @@ health_capacity = 5.0
 shield_recovery_per_sec = 0.0
 charge_cooldown = 2.0
 knockback_resist = 0.1
-charge_damage_factor = 0.02
 charge_force_factor = 0.6
 
 [node name="Texture" parent="Body" index="1"]
@@ -27,7 +24,7 @@ uv = PoolVector2Array( 104, 72, 99, 80, 94, 88, 89, 96, 84, 104, 74, 104, 64, 10
 [node name="Bars" parent="." index="2"]
 visible = false
 
-[node name="ExplodeDelay" parent="Timers" index="3"]
+[node name="ExplodeDelay" parent="Timers" index="4"]
 wait_time = 0.001
 
 [node name="Lifetime" type="Timer" parent="Timers" index="5"]

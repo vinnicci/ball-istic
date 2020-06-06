@@ -80,4 +80,3 @@ stream = ExtResource( 4 )
 [connection signal="timeout" from="Timers/ShootCooldown" to="." method="_on_ShootCooldown_timeout"]
 [connection signal="timeout" from="Timers/ChargeCancelTimer" to="." method="_on_ChargeCancelTimer_timeout"]
 [connection signal="timeout" from="Timers/DissipationCooldown" to="." method="_on_DissipationCooldown_timeout"]
-[connection signal="tween_all_completed" from="WeaponTween" to="." method="_on_WeaponTween_tween_all_completed"]

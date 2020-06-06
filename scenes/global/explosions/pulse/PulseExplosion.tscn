@@ -44,6 +44,3 @@ process_material = SubResource( 3 )
 
 [node name="CollisionShape2D" parent="AreaOfEffect" index="0"]
 shape = SubResource( 4 )
-
-[node name="StunTimer" type="Timer" parent="." index="6"]
-one_shot = true

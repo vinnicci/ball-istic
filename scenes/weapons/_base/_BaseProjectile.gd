@@ -58,7 +58,7 @@ func _on_Projectile_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT:
 		if body.is_hostile() == _origin:
 			return
-		elif body.is_hostile() != _origin && body.is_alive() == false:
+		elif body.is_hostile() != _origin && body.bot_state == Global.CLASS_BOT.BotState.DEAD:
 			return
 		else:
 			if has_node("Explosion") == true:

@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://assets/bots/sfx_Bot_Bump.wav" type="AudioStream" id=4]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Shield_Damage.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/sfx_Bot_Transform.wav" type="AudioStream" id=9]
+[ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
@@ -59,7 +60,7 @@ physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
-script = ExtResource( 1 )
+script = ExtResource( 15 )
 
 [node name="Legs" type="Node2D" parent="."]
 
@@ -149,6 +150,9 @@ one_shot = true
 [node name="ExplodeTimer" type="Timer" parent="Timers"]
 one_shot = true
 
+[node name="NoControlTimer" type="Timer" parent="Timers"]
+one_shot = true
+
 [node name="Sounds" type="Node2D" parent="."]
 
 [node name="Bump" type="AudioStreamPlayer2D" parent="Sounds"]
@@ -182,10 +186,37 @@ local_coords = false
 process_material = SubResource( 6 )
 
 [node name="Weapons" type="Node2D" parent="."]
+
+[node name="Labels" type="Node2D" parent="."]
+
+[node name="BotState" type="Label" parent="Labels"]
+margin_left = -18.3773
+margin_top = -122.025
+margin_right = 21.6227
+margin_bottom = -89.0253
+custom_fonts/font = ExtResource( 1 )
+text = "turret"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControlState" type="Label" parent="Labels"]
+margin_left = -18.3773
+margin_top = -75.7145
+margin_right = 21.6227
+margin_bottom = -42.7145
+custom_fonts/font = ExtResource( 1 )
+text = "in_control"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
+[connection signal="bot_state_changed" from="." to="." method="_on_BotState_changed"]
+[connection signal="control_state_changed" from="." to="." method="_on_ControlState_changed"]
 [connection signal="tween_all_completed" from="Body/SwitchTween" to="." method="_on_SwitchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ChargeTrail" to="." method="_on_ChargeTrail_timeout"]
 [connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
 [connection signal="timeout" from="Timers/ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
 [connection signal="timeout" from="Timers/ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]
+[connection signal="timeout" from="Timers/NoControlTimer" to="." method="_on_NoControlTimer_timeout"]

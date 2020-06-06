@@ -9,5 +9,7 @@ func init_travel(proj_position: Vector2, proj_direction: float, origin: bool) ->
 
 
 func _on_Lifetime_timeout() -> void:
-	if _is_alive == true:
-		_explode()
+	if bot_state != BotState.DEAD:
+		emit_signal("control_state_changed", false)
+		emit_signal("bot_state_changed", BotState.DEAD)
+		explode()

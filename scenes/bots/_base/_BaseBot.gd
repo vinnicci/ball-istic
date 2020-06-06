@@ -37,11 +37,6 @@ var current_charge_base_damage: float
 var current_charge_force_factor: float
 var current_weapon: Node
 var velocity: Vector2
-var _is_rolling: bool = false setget , is_rolling
-var _is_alive: bool = true setget , is_alive
-var _is_charge_rolling: bool = false setget , is_charge_rolling
-var _is_transforming: bool = false setget , is_transforming
-var _is_in_control: bool = true setget , get_control_state
 var _arr_weapons: Array = [null, null, null, null, null]
 
 onready var _body_outline: = $Body/Outline
@@ -53,6 +48,7 @@ onready var _charge_tween: = $Body/ChargeTween
 onready var _bar_shield: = $Bars/Shield
 onready var _bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
+onready var _timer_no_control: = $Timers/NoControlTimer
 
 
 ###########################
@@ -105,36 +101,67 @@ func set_current_charge_cooldown(new_charge_cooldown: float):
 func get_current_charge_cooldown():
 	return current_charge_cooldown
 
-func is_rolling():
-	return _is_rolling
-
-func is_alive():
-	return _is_alive
-
-func is_charge_rolling():
-	return _is_charge_rolling
-
-func is_transforming():
-	return _is_transforming
-
-#false means losing control to rolling, shooting, charging and switching mode
-#lose control to switching weapon slot on transforming only
-var _control_id: String
-
-func set_control_state(state: bool, id: String):
-	if state == true && _control_id != id:
-		return
-	if state == false:
-		_control_id = id
-	_is_in_control = state
-
-func get_control_state():
-	return _is_in_control
-
 func is_charge_roll_ready():
 	return _timer_charge_cooldown.is_stopped()
 
 
+############
+# bot states
+############
+#special states:
+#stun - a rather special status effect that interferes with control state
+#fire_weapon - some weapon needs commitment when shot so bot temporarily lose control
+enum BotState {
+	TURRET, ROLL, CHARGE_ROLL, TRANSFORM, DEAD
+}
+enum ControlState {
+	IN_CONTROL, NO_CONTROL
+}
+var control_state = ControlState.IN_CONTROL
+var bot_state = BotState.TURRET
+var prev_bot_state
+signal bot_state_changed
+signal control_state_changed
+
+
+func _on_ControlState_changed(new_control_state: bool, no_control_time: float = 0) -> void:
+	if bot_state == BotState.DEAD:
+		return
+	if new_control_state == false:
+		if no_control_time > _timer_no_control.time_left:
+			_timer_no_control.start(no_control_time)
+		control_state = ControlState.NO_CONTROL
+	elif new_control_state == true && _timer_no_control.is_stopped() == true:
+		control_state = ControlState.IN_CONTROL
+	match control_state:
+		ControlState.IN_CONTROL: $Labels/ControlState.text = "in_control"
+		ControlState.NO_CONTROL: $Labels/ControlState.text = "no_control"
+
+
+func _on_NoControlTimer_timeout() -> void:
+	control_state = ControlState.IN_CONTROL
+	match control_state:
+		ControlState.IN_CONTROL: $Labels/ControlState.text = "in_control"
+		ControlState.NO_CONTROL: $Labels/ControlState.text = "no_control"
+
+
+func _on_BotState_changed(new_bot_state) -> void:
+	if bot_state == BotState.DEAD:
+		return
+	if bot_state == BotState.ROLL || bot_state == BotState.TURRET:
+		prev_bot_state = bot_state
+	bot_state = new_bot_state
+	match bot_state:
+		BotState.TURRET: $Labels/BotState.text = "turret"
+		BotState.ROLL: $Labels/BotState.text = "roll"
+		BotState.TRANSFORM: $Labels/BotState.text = "transform"
+		BotState.CHARGE_ROLL: $Labels/BotState.text = "charge_roll"
+		BotState.DEAD: $Labels/BotState.text = "dead"
+
+
+################
+# core functions
+################
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
@@ -150,7 +177,7 @@ func _init_bot() -> void:
 	if has_node("Explosion") == false:
 		push_error(name + " has no explosion node. Please attach one.")
 	
-	#weapon components initialized here, some ai will have multiple weapons
+	#weapon components initialized here, some npc bots will have multiple weapons
 	#must be child of Weapons
 	var initialized_selected_weap: = false
 	var i: = -1
@@ -222,7 +249,7 @@ func _plot_circle_points(radius) -> Array:
 
 #use only for initialization or in bot stations
 func reset_bot_vars() -> void:
-	if _is_alive == false:
+	if bot_state == BotState.DEAD:
 		return
 	
 	current_shield = shield_capacity
@@ -261,6 +288,8 @@ func _cap_current_vars() -> void:
 
 
 func _process(delta: float) -> void:
+	$Labels.global_rotation = 0
+	
 	$Bars.global_rotation = 0
 	
 	#rolling ball graphical effect
@@ -278,9 +307,9 @@ func _physics_process(delta: float) -> void:
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
-	if _is_in_control == false || _is_alive == false:
+	if control_state == ControlState.NO_CONTROL:
 		return
-	if _is_rolling == true:
+	if bot_state == BotState.ROLL:
 		velocity = velocity.normalized()
 		velocity *= current_roll_speed
 		applied_force = velocity
@@ -289,43 +318,42 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
-	if _is_rolling == false:
+	if bot_state == BotState.TURRET:
 		#magic number for now
-		#same as other lerp func i used
+		#formula is used on other funcs that involves lerp
 		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
 		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
 		return
-	if _is_rolling == true:
+	if bot_state == BotState.ROLL:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
 
 
 func switch_mode() -> void:
-	if _is_in_control == false || _is_alive == false:
+	if control_state == ControlState.NO_CONTROL:
 		return
+	emit_signal("control_state_changed", false, current_transform_speed)
+	emit_signal("bot_state_changed", BotState.TRANSFORM)
 	velocity = Vector2(0,0)
-	set_control_state(false, "switch_mode")
-	_is_transforming = true
 	$Sounds/ChangeMode.play()
 	_animate_legs()
 	_animate_weapon_hatch()
-	_is_rolling = !_is_rolling
-	if _is_rolling == true:
+	if prev_bot_state == BotState.TURRET:
 		linear_damp = ROLL_MODE_DAMP
 		angular_damp = -1
 		mode = RigidBody2D.MODE_RIGID
-	elif _is_rolling == false:
+	elif prev_bot_state == BotState.ROLL:
 		linear_damp = TURRET_MODE_DAMP
 		angular_damp = TURRET_MODE_DAMP
 		mode = RigidBody2D.MODE_CHARACTER
 
 
 func _animate_legs() -> void:
-	if _is_rolling == false:
+	if prev_bot_state == BotState.TURRET:
 		for leg in _legs_position.keys():
 			_switch_tween.interpolate_property(leg, 'position', leg.position, Vector2(0,0),
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			_switch_tween.start()
-	elif _is_rolling == true:
+	elif prev_bot_state == BotState.ROLL:
 		for leg in _legs_position.keys():
 			_switch_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -333,13 +361,13 @@ func _animate_legs() -> void:
 
 
 func _animate_weapon_hatch() -> void:
-	if _is_rolling == false:
+	if prev_bot_state == BotState.TURRET:
 		if current_weapon != null:
 			current_weapon.global_rotation = _body_weapon_hatch.global_rotation
 			current_weapon.animate_transform(current_transform_speed)
 		_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	elif _is_rolling == true:
+	elif prev_bot_state == BotState.ROLL:
 		if current_weapon != null:
 			_body_weapon_hatch.global_rotation = current_weapon.global_rotation
 			current_weapon.animate_transform(current_transform_speed)
@@ -351,14 +379,17 @@ func _animate_weapon_hatch() -> void:
 
 #some weapons have fixed anim, so will change this later
 func _on_SwitchTween_tween_all_completed() -> void:
-	if _is_rolling == true:
+	if prev_bot_state == BotState.TURRET:
 		_body_weapon_hatch.hide()
-	set_control_state(true, "switch_mode")
-	_is_transforming = false
+		emit_signal("control_state_changed", true)
+		emit_signal("bot_state_changed", BotState.ROLL)
+	elif prev_bot_state == BotState.ROLL:
+		emit_signal("control_state_changed", true)
+		emit_signal("bot_state_changed", BotState.TURRET)
 
 
 func shoot_weapon() -> void:
-	if _is_in_control == true && _is_rolling == false:
+	if control_state == ControlState.IN_CONTROL && bot_state == BotState.TURRET:
 		current_weapon.fire()
 
 
@@ -366,16 +397,15 @@ func change_weapon(slot_num: int) -> void:
 	var weap = _arr_weapons[slot_num]
 	if weap == null:
 		return
-	if _is_rolling == false:
-		current_weapon.visible = false
+	current_weapon.modulate = Color(1,1,1,0)
 	current_weapon = weap
-	if _is_rolling == false:
-		current_weapon.visible = true
+	if bot_state == BotState.TURRET:
+		current_weapon.modulate = Color(1,1,1,1)
 
 
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
-	if _is_in_control == false || _timer_charge_cooldown.is_stopped() == false || _is_rolling == false || _is_alive == false:
+	if bot_state != BotState.ROLL || control_state == ControlState.NO_CONTROL || _timer_charge_cooldown.is_stopped() == false:
 		return
 	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
@@ -391,9 +421,8 @@ func _on_ChargeEffectDelay_timeout() -> void:
 func _peak_charge_roll() -> void:
 	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		$Timers/ChargeTrail.start()
-		if _is_in_control == true:
-			set_control_state(false, "charge_roll")
-		_is_charge_rolling = true
+		emit_signal("control_state_changed", false)
+		emit_signal("bot_state_changed", BotState.CHARGE_ROLL)
 		_body_outline.modulate = Color(1, 0.24, 0.88) #--> bright pink
 		_body_charge_effect.modulate.a = 1.0
 
@@ -409,7 +438,7 @@ func _on_ChargeTrail_timeout() -> void:
 
 
 func _end_charging_effect() -> void:
-	if _is_charge_rolling == true && _is_in_control == false && linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
+	if bot_state == BotState.CHARGE_ROLL && linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR:
 		#hostility color hardcoded for now, as a result no customization for outline color
 		if hostile == true:
 			_charge_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
@@ -421,8 +450,8 @@ func _end_charging_effect() -> void:
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_charge_tween.start()
 		$Timers/ChargeTrail.stop()
-		set_control_state(true, "charge_roll")
-		_is_charge_rolling = false
+		emit_signal("control_state_changed", true)
+		emit_signal("bot_state_changed", BotState.ROLL)
 
 
 func apply_knockback(knockback: Vector2) -> void:
@@ -434,7 +463,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
-	if _is_alive == false:
+	if bot_state == BotState.DEAD:
 		$Sounds/HealthDamage.play()
 		return
 	if current_shield - damage >= 0:
@@ -449,12 +478,12 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 	_bar_shield.value = current_shield
 	_bar_health.value = current_health
 	if current_health <= 0:
-		_explode()
+		emit_signal("control_state_changed", false)
+		emit_signal("bot_state_changed", BotState.DEAD)
+		explode()
 
 
-func _explode() -> void:
-	_is_alive = false
-	set_control_state(false, "explode")
+func explode() -> void:
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
@@ -483,7 +512,7 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func _on_Bot_body_entered(body: Node) -> void:
-	if _is_charge_rolling == false:
+	if bot_state != BotState.CHARGE_ROLL:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
@@ -491,7 +520,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
-	$CollisionSpark.emitting = true
+	$CollisionSpark.emitting = true	
 	if body is Global.CLASS_BOT && hostile == body.hostile:
 		return
 	
@@ -500,7 +529,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	var damage: float = (linear_velocity.length() * 0.0625 * current_charge_force_factor) + current_charge_base_damage
 	
 	#if both are charging, the damage is reduced to 1/8
-	if body is Global.CLASS_BOT && body._is_charge_rolling == true:
+	if body is Global.CLASS_BOT && body.bot_state == Global.CLASS_BOT.BotState.CHARGE_ROLL:
 		damage *= 0.125
 	body.take_damage(damage, Vector2(0,0))
 

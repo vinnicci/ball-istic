@@ -7,7 +7,7 @@ var _deg_increment: = 5
 func _charge_fire() -> void:
 	if _parent_node.is_rolling() == true:
 		return
-	_parent_node.set_control_state(false, "sweeper")
+	_parent_node.emit_signal("control_state_changed", false)
 	$Timers/BurstTimer.start()
 	global_rotation += deg2rad(10)
 
@@ -15,7 +15,7 @@ func _charge_fire() -> void:
 func _on_BurstTimer_timeout() -> void:
 	if _current_burst_count == burst_count || _parent_node.is_alive() == false:
 		_current_burst_count = 0
-		_parent_node.set_control_state(true, "sweeper")
+		_parent_node.emit_signal("control_state_changed", true)
 		return
 	$ShootingSound.play()
 	_fire_auto()
