@@ -104,13 +104,11 @@ func update_player_vars() -> void:
 
 
 func _change_slot_selected(slot_num: int) -> void:
-	var weap = _arr_weapons[slot_num]
-	if weap == null:
+	if change_weapon(slot_num) == false:
 		return
 	var selected_slot_pos = _hud_weapon_slots.get_node(slot_num as String + "/SelectPos")
 	var slot_selected = _hud_weapon_slots.get_node("SlotSelected")
 	slot_selected.position.x = selected_slot_pos.get_parent().position.x + selected_slot_pos.position.x
-	change_weapon(slot_num)
 
 
 func _physics_process(delta: float) -> void:
@@ -153,8 +151,8 @@ func _process(delta: float) -> void:
 	
 	_update_weapon_hud_elements()
 	
-	if state != State.TO_ROLL || state != State.TO_TURRET:
-		_control_player_weapon_hotkeys()
+	
+	_control_player_weapon_hotkeys()
 	
 	#inventory
 	#can't close the ui if holding an item

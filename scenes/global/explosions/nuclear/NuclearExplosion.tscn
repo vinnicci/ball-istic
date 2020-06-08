@@ -72,6 +72,9 @@ process_material = SubResource( 3 )
 [node name="CollisionShape2D" parent="AreaOfEffect" index="0"]
 shape = SubResource( 4 )
 
+[node name="RemoveParticles" parent="." index="5"]
+wait_time = 1.0
+
 [node name="LightFlash" type="CanvasLayer" parent="." index="6"]
 
 [node name="ColorRect" type="ColorRect" parent="LightFlash" index="0"]

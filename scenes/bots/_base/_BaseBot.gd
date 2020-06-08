@@ -44,7 +44,7 @@ onready var _body_texture: = $Body/Texture
 onready var _body_charge_effect: = $Body/ChargeEffect
 onready var _body_weapon_hatch: = $Body/WeaponHatch
 onready var _switch_tween: = $Body/SwitchTween
-onready var _charge_tween: = $Body/ChargeTween
+onready var _body_tween: = $Body/BodyTween
 onready var _bar_shield: = $Bars/Shield
 onready var _bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
@@ -140,11 +140,7 @@ func task_is_in_state(task):
 
 #states enter and process tasks
 func task_turret_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
+	if current_health <= 0 || timer_stun.is_stopped() == false:
 		_before_stun = state
 		state = State.STUN
 		task.succeed()
@@ -160,11 +156,7 @@ func task_turret_process(task):
 
 
 func task_roll_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
+	if current_health <= 0 || timer_stun.is_stopped() == false:
 		_before_stun = state
 		state = State.STUN
 		task.succeed()
@@ -186,11 +178,7 @@ func task_to_turret_enter(task):
 
 
 func task_to_turret_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
+	if current_health <= 0 || timer_stun.is_stopped() == false:
 		_before_stun = state
 		state = State.STUN
 		task.succeed()
@@ -208,11 +196,7 @@ func task_to_roll_enter(task):
 
 
 func task_to_roll_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
+	if current_health <= 0 || timer_stun.is_stopped() == false:
 		_before_stun = state
 		state = State.STUN
 		task.succeed()
@@ -224,11 +208,7 @@ func task_to_roll_process(task):
 
 
 func task_weap_commit_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
+	if current_health <= 0 || timer_stun.is_stopped() == false:
 		_before_stun = state
 		state = State.STUN
 		task.succeed()
@@ -435,19 +415,31 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	velocity = Vector2(0,0)
 
 
+var _unrolled: bool = false
+
+
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
-	if state == State.TO_TURRET || state == State.TURRET || (state == State.STUN &&
-		_before_stun == State.TURRET || _before_stun == State.TO_TURRET ||
-		_before_stun == State.WEAP_COMMIT):
-		#magic number for now
-		#formula is used on other funcs that involves lerp
-		var lerp_time: float = 35.0 * (1 - pow(0.5, delta))
-		_body_texture.texture_offset = lerp(_body_texture.texture_offset, Vector2(0,0), lerp_time)
-		return
-	if state == State.ROLL || (state == State.STUN && _before_stun == State.TO_ROLL ||
-		_before_stun == State.ROLL):
+	if _check_roll_state() == true && _unrolled == false:
+		_body_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
+			Vector2(0,0), 0.1, Tween.TRANS_LINEAR)
+		_body_tween.start()
+		_unrolled = true
+	else:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
+		_unrolled = false
+
+
+func _check_roll_state() -> bool:
+	var output
+	if (state == State.TO_TURRET || state == State.TURRET || state == State.WEAP_COMMIT ||
+		(state == State.STUN && _before_stun == State.TURRET ||
+		_before_stun == State.TO_TURRET || _before_stun == State.WEAP_COMMIT)):
+		output = true
+	elif (state == State.ROLL || state == State.DEAD || (state == State.STUN &&
+		_before_stun == State.TO_ROLL || _before_stun == State.ROLL)):
+		output = false
+	return output
 
 
 func switch_mode():
@@ -510,7 +502,6 @@ func _animate_weapon_hatch_to_roll() -> void:
 	_switch_tween.start()
 
 
-#some weapons have fixed anim, so will change this later
 func _on_SwitchTween_tween_all_completed() -> void:
 	if state == State.TO_ROLL:
 		_body_weapon_hatch.hide()
@@ -522,16 +513,19 @@ func shoot_weapon() -> void:
 		current_weapon.fire()
 
 
-func change_weapon(slot_num: int) -> void:
+#will change to animate weapon transform
+#some weapon has fixed anim -- will use shoot_commit var
+func change_weapon(slot_num: int) -> bool:
 	var weap = _arr_weapons[slot_num]
-	if weap == null:
-		return
+	if weap == null || state == State.TO_ROLL || state == State.TO_TURRET:
+		return false
 	current_weapon.modulate = Color(1,1,1,0)
 	if state == State.TURRET:
 		current_weapon = weap
 		current_weapon.modulate = Color(1,1,1,1)
 	elif state == State.ROLL:
 		current_weapon = weap
+	return true
 
 
 #charge strength depends on speed and force multiplier
@@ -573,14 +567,14 @@ func _end_charging_effect() -> void:
 		linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR):
 		#hostility color hardcoded for now, as a result no customization for outline color
 		if hostile == true:
-			_charge_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
+			_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
 				HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		elif hostile == false:
-			_charge_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
+			_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
 				NON_HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		_charge_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
+		_body_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		_charge_tween.start()
+		_body_tween.start()
 		$Timers/ChargeTrail.stop()
 		_charge_roll = false
 

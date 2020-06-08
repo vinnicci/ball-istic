@@ -3,14 +3,14 @@
 [ext_resource path="res://scenes/global/explosions/_base/_BaseExplosion.gd" type="Script" id=1]
 [ext_resource path="res://assets/global/sfx_Explosion.wav" type="AudioStream" id=2]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.508929, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticlesMaterial" id=3]
 resource_local_to_scene = true
 lifetime_randomness = 0.99
 flag_disable_z = true
@@ -26,7 +26,7 @@ damping = 800.0
 damping_random = 0.8
 scale = 10.0
 scale_random = 0.9
-color_ramp = SubResource( 3 )
+color_ramp = SubResource( 2 )
 
 [node name="Explosion" type="Node2D"]
 z_index = 5
@@ -45,7 +45,7 @@ amount = 700
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
-process_material = SubResource( 5 )
+process_material = SubResource( 3 )
 
 [node name="AreaOfEffect" type="Area2D" parent="."]
 visible = false
