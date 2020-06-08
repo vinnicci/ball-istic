@@ -114,7 +114,7 @@ func _change_slot_selected(slot_num: int) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if control_state == ControlState.IN_CONTROL:
+	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(get_global_mouse_position())
 	
 	#lose control when inventory ui is open and in an access area
@@ -132,10 +132,10 @@ func _physics_process(delta: float) -> void:
 	#can't shoot/charge roll or transform when inventory is open
 	if ui_inventory.visible == true:
 		return
-	if Input.is_action_just_released("change_mode"):
+	if Input.is_action_just_pressed("change_mode"):
 		switch_mode()
-	if Input.is_action_just_released("charge_roll"):
-		if $Timers/ChargeCooldown.is_stopped() == true && bot_state == BotState.ROLL && control_state == ControlState.IN_CONTROL:
+	if Input.is_action_just_pressed("charge_roll"):
+		if $Timers/ChargeCooldown.is_stopped() == true && state == State.ROLL:
 			_update_bar_charge_level()
 		charge_roll(current_weapon.global_rotation)
 	if Input.is_action_pressed("shoot"):
@@ -153,7 +153,7 @@ func _process(delta: float) -> void:
 	
 	_update_weapon_hud_elements()
 	
-	if bot_state != BotState.TRANSFORM:
+	if state != State.TO_ROLL || state != State.TO_TURRET:
 		_control_player_weapon_hotkeys()
 	
 	#inventory

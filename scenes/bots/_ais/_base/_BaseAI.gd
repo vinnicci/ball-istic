@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 func _check_if_valid_bot(bot: Node) -> bool:
 	var output: bool
 	if bot != null:
-		output = is_instance_valid(bot) == true && bot.bot_state != Global.CLASS_BOT.BotState.DEAD
+		output = is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
 	if output == false:
 		_velocity = Vector2(0,0)
 	return output
@@ -59,9 +59,9 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 
 
 func _physics_process(delta: float) -> void:
-	if _parent_node.control_state == _parent_node.ControlState.IN_CONTROL:
+	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		_parent_node.velocity = _velocity
-	if _check_if_valid_bot(_enemy) == true && _parent_node.control_state == _parent_node.ControlState.IN_CONTROL:
+	if _check_if_valid_bot(_enemy) == true:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
@@ -85,7 +85,8 @@ func _get_new_target_enemy() -> void:
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && body is Global.CLASS_BOT_PROJ == false && body.is_hostile() != _parent_node.is_hostile():
+	if (body is Global.CLASS_BOT && body is Global.CLASS_BOT_PROJ == false &&
+		body.is_hostile() != _parent_node.is_hostile()):
 		_enemies.append(body)
 
 
@@ -100,7 +101,8 @@ func _seek(target: Global.CLASS_BOT) -> void:
 		return
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 250:
 		_get_path_points(global_position, target.global_position)
-	if _next_path_point == null || (_path_points.size() != 0 && global_position.distance_to(_next_path_point) <= 100):
+	if _next_path_point == null || (_path_points.size() != 0 &&
+		global_position.distance_to(_next_path_point) <= 100):
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
@@ -196,7 +198,7 @@ func task_is_enemy_close(task):
 # transform
 ###########
 func task_is_in_roll_mode(task):
-	if _parent_node.bot_state == Global.CLASS_BOT.BotState.ROLL:
+	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		task.succeed()
 		return
 	else:
@@ -206,7 +208,7 @@ func task_is_in_roll_mode(task):
 
 func task_is_in_turret_mode(task):
 	_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
-	if _parent_node.bot_state == Global.CLASS_BOT.BotState.TURRET:
+	if _parent_node.state == Global.CLASS_BOT.State.TURRET:
 		task.succeed()
 		return
 	else:
@@ -215,11 +217,10 @@ func task_is_in_turret_mode(task):
 
 
 func task_switch_mode(task):
-	_parent_node.switch_mode()
-	$ResumeTimer.wait_time = _parent_node.current_transform_speed
 	if $ResumeTimer.is_stopped() == true:
-		$ResumeTimer.start()
-	yield(self, "resume")
+		$ResumeTimer.start(_parent_node.current_transform_speed)
+		_parent_node.switch_mode()
+		yield(self, "resume")
 	task.succeed()
 	return
 

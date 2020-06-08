@@ -22,6 +22,7 @@ export (float) var cam_shake_intensity: float = 0
 
 var current_heat: float
 var _is_overheating: bool = false setget , is_overheating
+var shoot_commit: bool = false
 
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
@@ -113,10 +114,10 @@ func _on_ShootCooldown_timeout() -> void:
 func animate_transform(transform_speed: float) -> void:
 	if modulate == Color(1,1,1,1):
 		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,1), Color(1,1,1,0),
-			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			transform_speed*0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	elif modulate == Color(1,1,1,0):
 		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,0), Color(1,1,1,1),
-			transform_speed/2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			transform_speed*0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$WeaponTween.start()
 
 
@@ -130,7 +131,8 @@ func animate_transform(transform_speed: float) -> void:
 # all the firing modes
 ######################
 func fire() -> void:
-	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true || _parent_node.bot_state == Global.CLASS_BOT.BotState.DEAD:
+	if (_timer_shoot_cooldown.is_stopped() == false || _is_overheating == true ||
+		_parent_node.state != Global.CLASS_BOT.State.TURRET):
 		return
 	_timer_shoot_cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
@@ -170,7 +172,7 @@ func _fire_burst() -> void:
 
 
 func _on_BurstTimer_timeout() -> void:
-	if _current_burst_count == burst_count || _parent_node.bot_state == Global.CLASS_BOT.BotState.ROLL || _parent_node.bot_state == Global.CLASS_BOT.BotState.DEAD:
+	if _current_burst_count == burst_count || _parent_node.state != Global.CLASS_BOT.State.TURRET:
 		_current_burst_count = 0
 		return
 	_fire_burst()
@@ -182,9 +184,7 @@ func _on_BurstTimer_timeout() -> void:
 # chargecanceltimer node is the delay of letting go to cancel charge
 ################################################################################
 func _fire_charged() -> void:
-	if _is_overheating == true || _parent_node.control_state == Global.CLASS_BOT.ControlState.NO_CONTROL:
-		return
-	if _parent_node.bot_state == Global.CLASS_BOT.BotState.ROLL:
+	if _is_overheating == true || _parent_node.state != Global.CLASS_BOT.State.TURRET:
 		_cancel_charge()
 		return
 	if current_heat == heat_capacity:
@@ -203,7 +203,7 @@ func _fire_charged() -> void:
 
 
 func _charge_fire() -> void:
-	if _parent_node.bot_state == Global.CLASS_BOT.BotState.ROLL:
+	if _parent_node.state != Global.CLASS_BOT.State.TURRET:
 		return
 
 
