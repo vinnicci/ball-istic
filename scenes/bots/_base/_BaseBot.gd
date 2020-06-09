@@ -420,7 +420,7 @@ var _unrolled: bool = false
 
 #make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
-	if _check_roll_state() == true && _unrolled == false:
+	if _check_if_turret() == true && _unrolled == false:
 		_body_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
 			Vector2(0,0), 0.1, Tween.TRANS_LINEAR)
 		_body_tween.start()
@@ -430,7 +430,7 @@ func _apply_rolling_effects(delta: float) -> void:
 		_unrolled = false
 
 
-func _check_roll_state() -> bool:
+func _check_if_turret() -> bool:
 	var output
 	if (state == State.TO_TURRET || state == State.TURRET || state == State.WEAP_COMMIT ||
 		(state == State.STUN && _before_stun == State.TURRET ||

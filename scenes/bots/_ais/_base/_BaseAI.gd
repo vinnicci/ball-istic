@@ -32,12 +32,9 @@ func _process(delta: float) -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
-	var output: bool
 	if bot != null:
-		output = is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
-	if output == false:
-		_velocity = Vector2(0,0)
-	return output
+		return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
+	return false
 
 
 func _get_path_points(start: Vector2, end: Vector2) -> void:
@@ -61,7 +58,7 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 func _physics_process(delta: float) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		_parent_node.velocity = _velocity
-	if _check_if_valid_bot(_enemy) == true:
+	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
@@ -197,32 +194,21 @@ func task_is_enemy_close(task):
 ###########
 # transform
 ###########
-func task_is_in_roll_mode(task):
+func task_to_roll(task):
 	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		task.succeed()
 		return
-	else:
-		task.failed()
-		return
+	if _parent_node.state == Global.CLASS_BOT.State.TURRET:
+		_parent_node.switch_mode()
 
 
-func task_is_in_turret_mode(task):
-	_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
+func task_to_turret(task):
 	if _parent_node.state == Global.CLASS_BOT.State.TURRET:
 		task.succeed()
 		return
-	else:
-		task.failed()
-		return
-
-
-func task_switch_mode(task):
-	if $ResumeTimer.is_stopped() == true:
-		$ResumeTimer.start(_parent_node.current_transform_speed)
+	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		_parent_node.switch_mode()
-		yield(self, "resume")
-	task.succeed()
-	return
+		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 
 
 #############
