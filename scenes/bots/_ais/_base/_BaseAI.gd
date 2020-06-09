@@ -20,13 +20,25 @@ func _ready() -> void:
 		ray.get_node("Pos").position = ray.cast_to
 
 
-func set_parent_node(new_parent: Global.CLASS_BOT):
+func set_parent(new_parent: Global.CLASS_BOT):
 	_parent_node = new_parent
 
 
+func set_master(bot: Global.CLASS_BOT) -> void:
+	if _check_if_valid_bot(bot) == false:
+		return
+	_master = bot
+
+
+func set_level(level: Node) -> void:
+	_level_node = level
+
+
+func clear_enemies() -> void:
+	_enemies = []
+
+
 func _process(delta: float) -> void:
-	if _level_node == null:
-		_level_node = Global.current_level
 	$FleeRays.global_rotation = 0
 	$Rays.global_rotation = 0
 
@@ -62,12 +74,6 @@ func _physics_process(delta: float) -> void:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
-func set_master(bot: Global.CLASS_BOT) -> void:
-	if _check_if_valid_bot(bot) == false:
-		return
-	_master = bot
-
-
 #make this dynamic
 func _get_new_target_enemy() -> void:
 	if _enemies.size() != 0 && _enemy == null:
@@ -82,7 +88,8 @@ func _get_new_target_enemy() -> void:
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if (body is Global.CLASS_BOT && body is Global.CLASS_BOT_PROJ == false &&
+	if ((body is Global.CLASS_PLAYER ||
+		body is Global.CLASS_BOT && body.has_node("AI") == true) &&
 		body.is_hostile() != _parent_node.is_hostile()):
 		_enemies.append(body)
 

@@ -474,7 +474,7 @@ func _manage_passives(slot_num: int) -> void:
 func _own_item(item: Node, new_parent: Node) -> void:
 	item.get_parent().remove_child(item)
 	new_parent.add_child(item)
-	item.set_parent_node(new_parent.get_parent())
+	item.set_parent(new_parent.get_parent())
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:

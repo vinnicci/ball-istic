@@ -12,7 +12,7 @@
 [ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=10]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id=5]
 friction = 0.5
 bounce = 0.7
 
@@ -39,7 +39,7 @@ resource_local_to_scene = true
 offsets = PoolRealArray( 0, 0.530612, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 0.972549, 0.0627451, 0.0627451, 0 )
 
-[sub_resource type="GradientTexture" id=5]
+[sub_resource type="GradientTexture" id=7]
 gradient = SubResource( 4 )
 
 [sub_resource type="ParticlesMaterial" id=6]
@@ -54,10 +54,10 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 10.0
 scale_random = 0.9
-color_ramp = SubResource( 5 )
+color_ramp = SubResource( 7 )
 
 [node name="Bot" type="RigidBody2D"]
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 5 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
@@ -3361,6 +3361,7 @@ process_material = SubResource( 6 )
 [node name="Weapons" type="Node2D" parent="."]
 
 [node name="Labels" type="Node2D" parent="."]
+visible = false
 
 [node name="BotState" type="Label" parent="Labels"]
 margin_left = -18.3773

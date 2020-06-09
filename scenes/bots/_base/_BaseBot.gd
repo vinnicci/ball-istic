@@ -15,8 +15,8 @@ export (bool) var destructible: = true setget , is_destructible
 export (bool) var hostile: = true setget , is_hostile
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.68
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.63
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.5
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.5
 const OUTLINE_SIZE: float = 4.5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: float = 2.0
@@ -251,6 +251,7 @@ func task_stun_process(task):
 
 func task_dead_enter(task):
 	current_health = 0
+	$Sounds/HealthDamage.play()
 	explode()
 	task.succeed()
 	return
@@ -272,7 +273,7 @@ func _ready() -> void:
 func _init_bot() -> void:
 	#initialize AI component
 	if has_node("AI") == true:
-		$AI.set_parent_node(self)
+		$AI.set_parent(self)
 	
 	#error: no explosion component
 	if has_node("Explosion") == false:
@@ -284,7 +285,7 @@ func _init_bot() -> void:
 	var i: = -1
 	for weapon in $Weapons.get_children():
 		i += 1
-		weapon.set_parent_node(self)
+		weapon.set_parent(self)
 		_arr_weapons[i] = weapon
 		if initialized_selected_weap == false:
 			current_weapon = weapon
@@ -589,7 +590,6 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/ShieldDamage.play()
 		return
 	if state == State.DEAD:
-		$Sounds/HealthDamage.play()
 		return
 	if current_shield - damage >= 0:
 		$Sounds/ShieldDamage.play()

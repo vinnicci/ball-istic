@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncher.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncherProj.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/weapons/tex_NukeLauncher.png" type="Texture" id=5]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[node name="FDroneLauncher" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+Projectile = ExtResource( 3 )
+heat_per_shot = 5.0
+heat_capacity = 9.0
+heat_dissipation_per_sec = 0.5
+shoot_cooldown = 0.5
+
+[node name="SlotIcon" parent="." index="0"]
+modulate = Color( 0.890196, 0.854902, 0.666667, 1 )
+scale = Vector2( 0.65, 0.65 )
+texture = ExtResource( 5 )
+offset = Vector2( -9, 0 )
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 10, 0 )
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
+process_material = SubResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+modulate = Color( 0.890196, 0.854902, 0.666667, 1 )
+texture = ExtResource( 5 )
+offset = Vector2( 18, 0 )

@@ -9,10 +9,14 @@ export (float) var knockback: = 50
 var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
+var _shooter: Node setget , shooter
 var _origin: bool setget , origin
 var _is_stopped: bool = false setget set_stopped_status, is_stopped
 var _exploded: bool = false
 
+
+func shooter():
+	return _shooter
 
 func origin():
 	return _origin
@@ -30,11 +34,14 @@ func _ready() -> void:
 	for i in range(12):
 		circle.append(Vector2($CollisionShape.shape.radius, 0).rotated(deg2rad(i * 30)))
 	$HitBlast.polygon = circle
+	#bullet behavior component
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_parent_node(self)
 
 
-func init_travel(pos, dir, origin) -> void:
+func init_travel(pos: Vector2, dir: float, origin: bool, shooter: Node) -> void:
+	if shooter != null:
+		_shooter = shooter
 	_origin = origin
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
 	$RangeTimer.start()

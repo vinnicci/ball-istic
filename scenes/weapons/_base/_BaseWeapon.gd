@@ -83,7 +83,8 @@ func _ready() -> void:
 
 func _spawn_proj() -> void:
 	Global.current_level.spawn_projectile(Projectile.instance(), $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile())
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)), _parent_node.is_hostile(),
+		_parent_node)
 
 
 func _apply_recoil() -> void:
