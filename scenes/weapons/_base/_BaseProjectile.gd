@@ -36,7 +36,7 @@ func _ready() -> void:
 	$HitBlast.polygon = circle
 	#bullet behavior component
 	if has_node("ProjBehavior") == true:
-		$ProjBehavior.set_parent_node(self)
+		$ProjBehavior.set_parent(self)
 
 
 func init_travel(pos: Vector2, dir: float, origin: bool, shooter: Node) -> void:
@@ -92,7 +92,7 @@ func _on_RangeTimer_timeout() -> void:
 	_stop_projectile()
 
 
-#common steps to stop and remove projectile
+#stop when max range or hitting something
 func _stop_projectile() -> void:
 	_is_stopped = true
 	set_deferred("monitoring", false)

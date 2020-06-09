@@ -21,7 +21,7 @@ func _init_timer() -> void:
 	$SplitTimer.connect("timeout", self, "_on_SplitTimer_timeout")
 
 
-func set_parent_node(new_parent: Area2D) -> void:
+func set_parent(new_parent: Area2D) -> void:
 	_parent_node = new_parent
 
 
@@ -113,7 +113,8 @@ func task_curve_speed(task):
 		task.failed()
 		return
 	var range_timer = _parent_node.get_node("RangeTimer")
-	_parent_node.current_speed = speed_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
+	_parent_node.current_speed = speed_curve.interpolate((range_timer.wait_time -
+		range_timer.time_left)/range_timer.wait_time) * _parent_node.speed
 	if _parent_node.current_speed == 0:
 		_parent_node.current_speed = 1
 	task.succeed()
