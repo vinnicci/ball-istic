@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -24,11 +24,10 @@
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/sweeper/Sweeper.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/bots/explosive/Explosive.tscn" type="PackedScene" id=24]
-[ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=25]
+[ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncher.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=29]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -92,6 +91,8 @@ shape = SubResource( 1 )
 
 [node name="FDroneLauncher" parent="Access/Depot/Items" index="12" instance=ExtResource( 28 )]
 
+[node name="Scattershot" parent="Access/Depot/Items" index="13" instance=ExtResource( 25 )]
+
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )
 
@@ -101,7 +102,6 @@ position = Vector2( 4926.25, 449.398 )
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 3825.75, 2786.09 )
 physics_material_override = SubResource( 2 )
-destructible = false
 
 [node name="StateMachine" parent="Bots/Player" index="0"]
 tree = {
@@ -3274,6 +3274,10 @@ tree = {
 }
 }
 
+[node name="RemoveTimer" type="Timer" parent="Bots/Player/Body/ChargeEffect" index="1"]
+wait_time = 0.2
+one_shot = true
+
 [node name="CollisionShape" parent="Bots/Player" index="7"]
 shape = SubResource( 3 )
 
@@ -3282,66 +3286,50 @@ position = Vector2( 3713, 278 )
 physics_material_override = SubResource( 2 )
 
 [node name="Charger2" parent="Bots" index="2" instance=ExtResource( 13 )]
-position = Vector2( 3088.84, 226.357 )
+position = Vector2( 1961.38, 1493.59 )
 physics_material_override = SubResource( 2 )
 
 [node name="Charger9" parent="Bots" index="3" instance=ExtResource( 13 )]
 position = Vector2( 3810, 389 )
 physics_material_override = SubResource( 2 )
 
-[node name="Charger10" parent="Bots" index="4" instance=ExtResource( 13 )]
-position = Vector2( 3614, 278 )
+[node name="Charger3" parent="Bots" index="4" instance=ExtResource( 13 )]
+position = Vector2( 1928.38, 1632.59 )
 physics_material_override = SubResource( 2 )
 
-[node name="Charger3" parent="Bots" index="5" instance=ExtResource( 13 )]
-position = Vector2( 3055.84, 365.357 )
-physics_material_override = SubResource( 2 )
-
-[node name="Charger4" parent="Bots" index="6" instance=ExtResource( 13 )]
+[node name="Charger4" parent="Bots" index="5" instance=ExtResource( 13 )]
 position = Vector2( 623, 958 )
 physics_material_override = SubResource( 2 )
 
-[node name="Charger5" parent="Bots" index="7" instance=ExtResource( 13 )]
+[node name="Charger5" parent="Bots" index="6" instance=ExtResource( 13 )]
 position = Vector2( 232.305, 25.3745 )
 physics_material_override = SubResource( 2 )
 
-[node name="Charger6" parent="Bots" index="8" instance=ExtResource( 13 )]
+[node name="Charger6" parent="Bots" index="7" instance=ExtResource( 13 )]
 position = Vector2( 629, 853 )
 physics_material_override = SubResource( 2 )
 
-[node name="Charger7" parent="Bots" index="9" instance=ExtResource( 13 )]
+[node name="Charger7" parent="Bots" index="8" instance=ExtResource( 13 )]
 position = Vector2( 235.305, -100.626 )
 physics_material_override = SubResource( 2 )
 
-[node name="Nuke" parent="Bots" index="10" instance=ExtResource( 27 )]
-position = Vector2( 3511.03, 2808.76 )
+[node name="Nuke" parent="Bots" index="9" instance=ExtResource( 27 )]
+position = Vector2( 1638.14, 2836.71 )
 physics_material_override = SubResource( 4 )
 hostile = false
 
-[node name="Fighter" parent="Bots" index="11" instance=ExtResource( 26 )]
+[node name="Fighter" parent="Bots" index="10" instance=ExtResource( 26 )]
 position = Vector2( 1649.87, 3041.22 )
 destructible = false
 hostile = false
 
-[node name="Dummy" parent="Bots" index="12" instance=ExtResource( 17 )]
+[node name="Dummy" parent="Bots" index="11" instance=ExtResource( 17 )]
 position = Vector2( 459.349, 1386.86 )
 physics_material_override = SubResource( 4 )
 destructible = true
 
-[node name="Slasher" parent="Bots" index="13" instance=ExtResource( 29 )]
-position = Vector2( 397.307, 401.181 )
-
-[node name="Slasher2" parent="Bots" index="14" instance=ExtResource( 29 )]
-position = Vector2( 696.722, 478.611 )
-
-[node name="Slasher3" parent="Bots" index="15" instance=ExtResource( 29 )]
-position = Vector2( 2702.04, 1391.92 )
-
-[node name="Explosive" parent="Bots" index="16" instance=ExtResource( 24 )]
-position = Vector2( 1982.3, 2271.39 )
-
-[node name="SirenBot" parent="Bots" index="17" instance=ExtResource( 25 )]
-position = Vector2( 2235.25, 1662.24 )
+[node name="Explosive" parent="Bots" index="12" instance=ExtResource( 24 )]
+position = Vector2( 1681.68, 2359.91 )
 
 [editable path="Access/Depot"]
 

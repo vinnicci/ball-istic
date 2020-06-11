@@ -7,7 +7,7 @@ var _deg_increment: = 5
 func _charge_fire() -> void:
 	if _parent_node.state != Global.CLASS_BOT.State.TURRET:
 		return
-	shoot_commit = true
+	weap_commit = true
 	$Timers/BurstTimer.start()
 	global_rotation += deg2rad(10)
 
@@ -15,7 +15,7 @@ func _charge_fire() -> void:
 func _on_BurstTimer_timeout() -> void:
 	if _current_burst_count == burst_count || _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		_current_burst_count = 0
-		shoot_commit = false
+		weap_commit = false
 		return
 	$ShootingSound.play()
 	_fire_auto()

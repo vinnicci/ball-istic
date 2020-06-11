@@ -1,11 +1,21 @@
 extends Node2D
 
 
-export (float) var explosion_radius: float = 100
-export (float) var damage: float = 15
-export (float) var knockback: float = 500
+export (float) var explosion_radius: float = 100 setget , get_radius
+export (float) var damage: float = 15 setget , get_damage
+export (float) var knockback: float = 500 setget , get_knockback
 
 const PARTICLEV_RADIUS_RATIO: float = 0.35
+
+
+func get_radius():
+	return explosion_radius
+
+func get_damage():
+	return damage
+
+func get_knockback():
+	return knockback
 
 
 func _ready() -> void:

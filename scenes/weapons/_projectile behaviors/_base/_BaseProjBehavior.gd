@@ -50,7 +50,7 @@ func task_homing(task):
 		_target_bot = null
 		task.succeed()
 		return
-	if _parent_node.is_stopped() == true:
+	if _parent_node.is_stopped == true:
 		task.failed()
 		return
 	var target_vector = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
@@ -74,7 +74,7 @@ var _is_split: bool = false
 
 
 func task_split(task):
-	if _parent_node.is_stopped() == true || split_count == 0:
+	if _parent_node.is_stopped == true || split_count == 0:
 		task.failed()
 		return
 	if _is_split == false:
@@ -86,7 +86,7 @@ func task_split(task):
 
 
 func _on_SplitTimer_timeout() -> void:
-	if _parent_node.is_stopped() == true:
+	if _parent_node.is_stopped == true:
 		return
 	var spread: = 5
 	for i in range(2):
@@ -109,7 +109,7 @@ export var speed_curve: Curve
 
 
 func task_curve_speed(task):
-	if _parent_node.is_stopped() == true:
+	if _parent_node.is_stopped == true:
 		task.failed()
 		return
 	var range_timer = _parent_node.get_node("RangeTimer")
@@ -130,7 +130,7 @@ onready var _random_dir = rand_range(0, 1.0)
 
 func task_curve_steer(task):
 	# for compatibility with homing, this behavior will stop if homing target is detected
-	if _target_bot != null || _parent_node.is_stopped() == true:
+	if _target_bot != null || _parent_node.is_stopped == true:
 		task.failed()
 		return
 	var range_timer = _parent_node.get_node("RangeTimer")
@@ -151,7 +151,7 @@ var reflect_count: int = 3
 
 
 func task_reflect(task):
-	if _parent_node.is_stopped() == true || reflect_count == 0:
+	if _parent_node.is_stopped == true || reflect_count == 0:
 		task.failed()
 		return
 	$TargetRay.global_rotation = _parent_node.global_rotation
@@ -167,5 +167,5 @@ func task_reflect(task):
 func _reflect(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").reflect_count = count
-	clone.set_stopped_status(false)
+	clone.is_stopped == false
 	return clone

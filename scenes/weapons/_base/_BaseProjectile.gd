@@ -1,31 +1,37 @@
 extends Area2D
 
 
-export (int) var speed: = 500
-export (float) var damage: = 5
-export (int) var proj_range: = 500
-export (float) var knockback: = 50
+export (int) var speed: = 500 setget , get_speed
+export (float) var damage: = 5 setget , get_damage
+export (int) var proj_range: = 500 setget , get_range
+export (float) var knockback: = 50 setget , get_knockback
 
 var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
 var _shooter: Node setget , shooter
 var _origin: bool setget , origin
-var _is_stopped: bool = false setget set_stopped_status, is_stopped
+var is_stopped: bool = false
 var _exploded: bool = false
 
+
+func get_speed():
+	return speed
+
+func get_damage():
+	return damage
+
+func get_range():
+	return proj_range
+
+func get_knockback():
+	return knockback
 
 func shooter():
 	return _shooter
 
 func origin():
 	return _origin
-
-func set_stopped_status(state: bool):
-	_is_stopped = state
-
-func is_stopped():
-	return _is_stopped
 
 
 func _ready() -> void:
@@ -51,7 +57,7 @@ func init_travel(pos: Vector2, dir: float, origin: bool, shooter: Node) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _is_stopped == true:
+	if is_stopped == true:
 		velocity = Vector2(0,0)
 		return
 	velocity += acceleration
@@ -94,7 +100,7 @@ func _on_RangeTimer_timeout() -> void:
 
 #stop when max range or hitting something
 func _stop_projectile() -> void:
-	_is_stopped = true
+	is_stopped = true
 	set_deferred("monitoring", false)
 	$Sprite.hide()
 	$RemoveTimer.start()

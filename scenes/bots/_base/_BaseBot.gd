@@ -149,7 +149,7 @@ func task_turret_process(task):
 		state = State.TO_ROLL
 		task.succeed()
 		return
-	if current_weapon.shoot_commit == true:
+	if current_weapon.weap_commit == true:
 		state = State.WEAP_COMMIT
 		task.succeed()
 		return
@@ -213,7 +213,7 @@ func task_weap_commit_process(task):
 		state = State.STUN
 		task.succeed()
 		return
-	if current_weapon.shoot_commit == false:
+	if current_weapon.weap_commit == false:
 		state = State.TURRET
 		task.succeed()
 		return
@@ -239,11 +239,10 @@ func task_stun_process(task):
 		return
 	if timer_stun.is_stopped() == true:
 		match _before_stun:
-			State.ROLL: state = State.ROLL
-			State.TO_ROLL: state = State.ROLL
-			State.TURRET: state = State.TURRET
-			State.TO_TURRET: state = State.TURRET
-			State.WEAP_COMMIT: state = State.TURRET
+			State.ROLL, State.TO_ROLL:
+				state = State.ROLL
+			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT:
+				state = State.TURRET
 		_before_stun = null
 		task.succeed()
 		return
@@ -280,7 +279,7 @@ func _init_bot() -> void:
 		push_error(name + " has no explosion node. Please attach one.")
 	
 	#weapon components initialized here, some npc bots will have multiple weapons
-	#must be child of Weapons
+	#must be child of Weapons node
 	var initialized_selected_weap: = false
 	var i: = -1
 	for weapon in $Weapons.get_children():
@@ -416,10 +415,9 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	velocity = Vector2(0,0)
 
 
+#make sure to import body texture with repeating enabled
 var _unrolled: bool = false
 
-
-#make sure to import body texture with repeating enabled
 func _apply_rolling_effects(delta: float) -> void:
 	if _check_if_turret() == true && _unrolled == false:
 		_body_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
@@ -433,13 +431,17 @@ func _apply_rolling_effects(delta: float) -> void:
 
 func _check_if_turret() -> bool:
 	var output
-	if (state == State.TO_TURRET || state == State.TURRET || state == State.WEAP_COMMIT ||
-		(state == State.STUN && _before_stun == State.TURRET ||
-		_before_stun == State.TO_TURRET || _before_stun == State.WEAP_COMMIT)):
-		output = true
-	elif (state == State.ROLL || state == State.DEAD || (state == State.STUN &&
-		_before_stun == State.TO_ROLL || _before_stun == State.ROLL)):
-		output = false
+	match state:
+		State.TO_TURRET, State.TURRET, State.WEAP_COMMIT:
+			output = true
+		State.ROLL:
+			output = false
+		State.DEAD, State.STUN:
+			match _before_stun:
+				State.TURRET, State.TO_TURRET, State.WEAP_COMMIT:
+					output = true
+				State.TO_ROLL, State.ROLL:
+					output = false
 	return output
 
 
@@ -558,9 +560,8 @@ func _on_ChargeTrail_timeout() -> void:
 	var trail = _body_charge_effect.duplicate()
 	trail.get_node("Anim").play("fade")
 	Global.current_level.add_child(trail)
-	trail.get_node("RemoveTimer").start()
 	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
-	trail.get_node("RemoveTimer").connect("timeout", Cleaner, "_on_Trail_RemoveTimer_timeout", [trail])
+	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
 
 
 func _end_charging_effect() -> void:
@@ -649,7 +650,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	var damage: float = ((linear_velocity.length() * 0.0625 * current_charge_force_factor) +
 		current_charge_base_damage)
 	
-	#if both are charging, the damage is reduced to 1/8
+	#if both bots are charging each other, damage is reduced to 1/8
 	if body is Global.CLASS_BOT && body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
 		damage *= 0.125
 	body.take_damage(damage, Vector2(0,0))

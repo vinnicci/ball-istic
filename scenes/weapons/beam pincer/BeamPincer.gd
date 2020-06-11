@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 
 func _fire_other() -> void:
-	shoot_commit = true
+	weap_commit = true
 	$ShootingSound.play()
 	_apply_recoil()
 	$Beams/Anim.play("attack")
@@ -34,4 +34,4 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
-	shoot_commit = false
+	weap_commit = false

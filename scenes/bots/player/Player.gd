@@ -151,7 +151,6 @@ func _process(delta: float) -> void:
 	
 	_update_weapon_hud_elements()
 	
-	
 	_control_player_weapon_hotkeys()
 	
 	#inventory
@@ -194,8 +193,8 @@ func _update_bar_charge_level() -> void:
 	_bar_charge_level.value = 0
 	_bar_charge_level.modulate = Color(0.6, 0.6, 0.6)
 	var tween: = _bar_charge_level.get_node("ChargeTween")
-	tween.interpolate_property(_bar_charge_level, 'value', _bar_charge_level.value, _bar_charge_level.max_value,
-		current_charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.interpolate_property(_bar_charge_level, 'value', _bar_charge_level.value,
+		_bar_charge_level.max_value, current_charge_cooldown, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	tween.start()
 
 
@@ -442,7 +441,8 @@ func _manage_all_items(slot_num: int) -> void:
 		if is_using_bot_station == false && _dict_held["from_slot"] != "all_item":
 			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 			return
-		elif is_using_bot_station == true && _dict_held["from_slot"] == "weapon" && _check_if_equipping_weapon() == false:
+		elif (is_using_bot_station == true && _dict_held["from_slot"] == "weapon" &&
+			_check_if_equipping_weapon() == false):
 			_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
 			return
 	_swap("all_item", slot_num)

@@ -8,8 +8,9 @@ export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipa
 #heat must be below this threshold to return firing
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
 export (float) var shoot_cooldown: float = 1.0 setget , get_shoot_cooldown
+
 enum FireModes {AUTO, BURST, CHARGE, OTHER}
-export (FireModes) var fire_mode setget , get_fire_mode
+export (FireModes) var fire_mode
 export (int) var proj_count_per_shot: int = 1 setget , get_proj_count_per_shot
 export (int) var burst_count: int = 1 setget , get_burst_count
 export (float) var spread: float = 0 setget , get_spread #degrees
@@ -22,7 +23,7 @@ export (float) var cam_shake_intensity: float = 0
 
 var current_heat: float
 var _is_overheating: bool = false setget , is_overheating
-var shoot_commit: bool = false
+var weap_commit: bool = false
 
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
