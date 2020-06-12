@@ -4,8 +4,6 @@
 [ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/passives/roll speed/RollSpeedIII.gd" type="Script" id=3]
 
-
-
 [node name="RollSpeedIII" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 

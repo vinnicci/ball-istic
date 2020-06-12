@@ -4,7 +4,7 @@ extends RigidBody2D
 export (float, 20.0, 100.0) var bot_radius: = 32.0 setget , get_bot_radius
 export (float) var shield_capacity: = 20 setget , get_shield_capacity
 export (float) var health_capacity: = 20 setget , get_health_capacity
-export (int, 0, 3000) var roll_speed: = 1200 setget , get_roll_speed
+export (int, 0, 3000) var speed: = 1200 setget , get_speed
 export (float) var shield_recovery_per_sec: = 1.0 setget , get_shield_recovery_per_sec
 export (float, 0.1, 1.0) var transform_speed: = 0.6 setget , get_transform_speed
 export (float, 0.5, 5.0) var charge_cooldown: = 3.0 setget , get_charge_cooldown
@@ -28,7 +28,7 @@ var _legs_position: Dictionary = {}
 
 var current_shield: float
 var current_health: float
-var current_roll_speed: int
+var current_speed: int
 var current_shield_recovery: float
 var current_transform_speed: float
 var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
@@ -63,8 +63,8 @@ func get_shield_capacity():
 func get_health_capacity():
 	return health_capacity
 
-func get_roll_speed():
-	return roll_speed
+func get_speed():
+	return speed
 
 func get_shield_recovery_per_sec():
 	return shield_recovery_per_sec
@@ -370,7 +370,7 @@ func reset_bot_vars() -> void:
 	current_charge_base_damage = charge_base_damage
 	current_charge_force_factor = charge_force_factor
 	
-	current_roll_speed = roll_speed
+	current_speed = speed
 	current_knockback_resist = knockback_resist
 	
 	for weap in _arr_weapons:
@@ -382,7 +382,7 @@ func reset_bot_vars() -> void:
 
 
 func _cap_current_vars() -> void:
-	current_roll_speed = clamp(current_roll_speed, 500, 3000)
+	current_speed = clamp(current_speed, 500, 3000)
 	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
@@ -410,7 +410,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	applied_force = Vector2(0,0)
 	if self.state == State.ROLL:
 		velocity = velocity.normalized()
-		velocity *= current_roll_speed
+		velocity *= current_speed
 		applied_force = velocity
 	velocity = Vector2(0,0)
 
@@ -450,7 +450,7 @@ func switch_mode():
 		_switch = true
 
 
-#from roll
+#state machine exclusive
 func _switch_to_turret() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
@@ -478,7 +478,7 @@ func _animate_weapon_hatch_to_turret() -> void:
 	_switch_tween.start()
 
 
-#from turret
+#state machine exclusive
 func _switch_to_roll() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
@@ -535,7 +535,7 @@ func change_weapon(slot_num: int) -> bool:
 func charge_roll(charge_direction: float) -> void:
 	if state != State.ROLL || is_charge_roll_ready() == false:
 		return
-	apply_central_impulse(Vector2(current_roll_speed,0).rotated(charge_direction) *
+	apply_central_impulse(Vector2(current_speed,0).rotated(charge_direction) *
 		current_charge_force_factor)
 	_charge_roll = true
 	$Timers/ChargeEffectDelay.start()
@@ -549,7 +549,7 @@ func _on_ChargeEffectDelay_timeout() -> void:
 
 
 func _peak_charge_roll() -> void:
-	if linear_velocity.length() > current_roll_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+	if linear_velocity.length() > current_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		$Timers/ChargeTrail.start()
 		_body_outline.modulate = Color(1, 0.24, 0.88) #--> bright pink
 		_body_charge_effect.modulate.a = 1.0
@@ -566,7 +566,7 @@ func _on_ChargeTrail_timeout() -> void:
 
 func _end_charging_effect() -> void:
 	if (state == State.DEAD || state == State.CHARGE_ROLL &&
-		linear_velocity.length() <= current_roll_speed * NO_EFFECT_VELOCITY_FACTOR):
+		linear_velocity.length() <= current_speed * NO_EFFECT_VELOCITY_FACTOR):
 		#hostility color hardcoded for now, as a result no customization for outline color
 		if hostile == true:
 			_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
