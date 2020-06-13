@@ -109,6 +109,7 @@ func _change_slot_selected(slot_num: int) -> void:
 	var selected_slot_pos = _hud_weapon_slots.get_node(slot_num as String + "/SelectPos")
 	var slot_selected = _hud_weapon_slots.get_node("SlotSelected")
 	slot_selected.position.x = selected_slot_pos.get_parent().position.x + selected_slot_pos.position.x
+	current_weapon.look_at(get_global_mouse_position())
 
 
 func _physics_process(delta: float) -> void:
@@ -133,9 +134,14 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("change_mode"):
 		switch_mode()
 	if Input.is_action_just_pressed("charge_roll"):
-		if $Timers/ChargeCooldown.is_stopped() == true && state == State.ROLL:
+		if _timer_charge_cooldown.is_stopped() == true && state == State.ROLL:
 			_update_bar_charge_level()
 		charge_roll(current_weapon.global_rotation)
+	if Input.is_action_just_pressed("discharge_parry"):
+		if _timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
+			state == State.TO_TURRET):
+			_update_bar_charge_level()
+		discharge_parry()
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 

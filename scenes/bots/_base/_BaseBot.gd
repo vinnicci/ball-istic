@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-export (float, 20.0, 100.0) var bot_radius: float = 32.0 setget , get_bot_radius
+export (float, 20.0, 150.0) var bot_radius: float = 32.0 setget , get_bot_radius
 export (float) var shield_capacity: float = 20 setget , get_shield_capacity
 export (float) var health_capacity: float = 20 setget , get_health_capacity
 export (int, 0, 3000) var speed: int = 1200 setget , get_speed
@@ -13,10 +13,11 @@ export (float, 0.1, 1.5) var charge_force_factor: float = 0.5 setget , get_charg
 export (float) var charge_damage_rate: float = 1.0 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0.13, 0.13) setget , get_faction
+export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
 const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.5
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.5
+const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.45
+const NO_EFFECT_VELOCITY_FACTOR: float = 0.45
 const OUTLINE_SIZE: float = 4.5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: float = 2.0
@@ -47,7 +48,7 @@ onready var _body_tween: = $Body/BodyTween
 onready var _bar_shield: = $Bars/Shield
 onready var _bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
-onready var timer_stun: = $Timers/StunTimer
+onready var timer_stun: = $Timers/Stun
 
 
 ###########################
@@ -89,6 +90,9 @@ func is_destructible():
 func get_faction():
 	return faction
 
+func get_charge_outline():
+	return charge_outline
+
 
 ####################
 # current properties
@@ -129,7 +133,10 @@ func task_is_in_state(task):
 		"CHARGE_ROLL": get_state = State.CHARGE_ROLL
 		"STUN": get_state = State.STUN
 		"DEAD": get_state = State.DEAD
-	$Labels/BotState.text = task.get_param(0)
+	if get_state == State.STUN && current_health > 0:
+		$Labels/BotState.text = "STUNNED!"
+	else:
+		$Labels/BotState.text = ""
 	if state == get_state:
 		task.succeed()
 	else:
@@ -304,17 +311,17 @@ func _init_bot() -> void:
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
-	_body_texture.position = Vector2(-bot_radius, -bot_radius)
+#	_body_texture.position = Vector2(-bot_radius, -bot_radius)
 	_bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
 	_bar_health.rect_position.y += _bar_shield.rect_position.y + 15 #-> hardcoded for now
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
-	_body_outline.position = Vector2(-outline, -outline)
-	_body_outline.offset = Vector2(outline, outline)
+#	_body_outline.position = Vector2(-outline, -outline)
+#	_body_outline.offset = Vector2(outline, outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
 	_body_charge_effect.polygon = cp
-	_body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
-	_body_charge_effect.offset = Vector2(bot_radius, bot_radius)
+#	_body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
+#	_body_charge_effect.offset = Vector2(bot_radius, bot_radius)
 	_body_weapon_hatch.polygon = [cp[0], cp[1], cp[2], cp[10], cp[11], cp[12],
 		cp[13], cp[14], cp[22], cp[23]]
 	_init_legs([cp[4], cp[12], cp[20]])
@@ -414,6 +421,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 
 #make sure to import body texture with repeating enabled
 var _unrolled: bool = false
+
 
 func _apply_rolling_effects(delta: float) -> void:
 	if _check_if_turret() == true && _unrolled == false:
@@ -548,21 +556,23 @@ func _on_ChargeEffectDelay_timeout() -> void:
 func _peak_charge_roll() -> void:
 	if linear_velocity.length() > current_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
 		$Timers/ChargeTrail.start()
-		_body_outline.modulate = Color(1, 0.24, 0.88) #--> bright pink
+		_body_outline.modulate = charge_outline
 		_body_charge_effect.modulate.a = 1.0
 
 
 #trail effect
 func _on_ChargeTrail_timeout() -> void:
-	var trail = _body_charge_effect.duplicate()
-	trail.get_node("Anim").play("fade")
+	var trail = _body_charge_effect.duplicate(DUPLICATE_USE_INSTANCING)
 	Global.current_level.add_child(trail)
-	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
+#	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
+	trail.global_position = Vector2(global_position.x, global_position.y)
+	trail.get_node("Anim").play("fade")
 	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
 
 
 func _end_charging_effect() -> void:
-	if (state == State.DEAD || state == State.CHARGE_ROLL &&
+	#stun state is included because of discharge parry
+	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
 		linear_velocity.length() <= current_speed * NO_EFFECT_VELOCITY_FACTOR):
 		#hostility color hardcoded for now, as a result no customization for outline color
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
@@ -626,6 +636,14 @@ func _on_ExplodeTimer_timeout() -> void:
 	queue_free()
 
 
+func discharge_parry() -> void:
+	if (state == State.TURRET || state == State.TO_TURRET) && _timer_charge_cooldown.is_stopped() == true:
+		_body_charge_effect.get_node("Anim").play("discharge_parry")
+		$Sounds/DischargeParry.play()
+		$Timers/DischargeParry.start()
+		_timer_charge_cooldown.start()
+
+
 func _on_Bot_body_entered(body: Node) -> void:
 	if state != State.CHARGE_ROLL:
 		if $Sounds/Bump.playing == false:
@@ -635,17 +653,21 @@ func _on_Bot_body_entered(body: Node) -> void:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
-	$CollisionSpark.emitting = true	
-	if body is Global.CLASS_BOT && current_faction == body.current_faction:
-		return
-	
-	#damage is 1/16 the current velocity magnitude times rate
-	var damage: float = ((linear_velocity.length() * 0.0625 * current_charge_force_factor) *
+	$CollisionSpark.emitting = true
+	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
 		current_charge_damage_rate)
-	#if both bots are charging each other, damage is reduced to 1/8
-	if body is Global.CLASS_BOT && body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-		damage *= 0.125
-		$Sounds/Clash.play()
+	if body is Global.CLASS_BOT:
+		if current_faction == body.current_faction:
+			return
+		#if both bots are charging each other, damage is reduced to 1/8
+		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
+			damage *= 0.125
+			$Sounds/Clash.play()
+		if body.get_node("Timers/DischargeParry").is_stopped() == false:
+			_charge_roll = false
+			timer_stun.start(2)
+			damage = 0
+			$Sounds/DischargeStun.play()
 	body.take_damage(damage, Vector2(0,0))
 
 
