@@ -3316,12 +3316,12 @@ physics_material_override = SubResource( 2 )
 [node name="Nuke" parent="Bots" index="9" instance=ExtResource( 27 )]
 position = Vector2( 1638.14, 2836.71 )
 physics_material_override = SubResource( 4 )
-faction_id = Color( 0, 1, 0.0627451, 1 )
+faction = Color( 0.129412, 1, 0.145098, 1 )
 
 [node name="Fighter" parent="Bots" index="10" instance=ExtResource( 26 )]
 position = Vector2( 1649.87, 3041.22 )
 destructible = false
-faction_id = Color( 0, 1, 0.0627451, 1 )
+faction = Color( 0.129412, 1, 0.145098, 1 )
 
 [node name="Dummy" parent="Bots" index="11" instance=ExtResource( 17 )]
 position = Vector2( 459.349, 1386.86 )

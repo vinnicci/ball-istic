@@ -10,12 +10,13 @@ resource_local_to_scene = true
 [node name="BotProjectile" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 bot_radius = 20.0
-shield_capacity = 0.0
-health_capacity = 5.0
+shield_capacity = 10.0
+health_capacity = 10.0
 shield_recovery_per_sec = 0.0
 charge_cooldown = 2.0
 knockback_resist = 0.1
 charge_force_factor = 0.6
+charge_damage_rate = 0.5
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

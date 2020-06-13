@@ -1,18 +1,18 @@
 extends RigidBody2D
 
 
-export (float, 20.0, 100.0) var bot_radius: = 32.0 setget , get_bot_radius
-export (float) var shield_capacity: = 20 setget , get_shield_capacity
-export (float) var health_capacity: = 20 setget , get_health_capacity
-export (int, 0, 3000) var speed: = 1200 setget , get_speed
-export (float) var shield_recovery_per_sec: = 1.0 setget , get_shield_recovery_per_sec
-export (float, 0.1, 1.0) var transform_speed: = 0.6 setget , get_transform_speed
-export (float, 0.5, 5.0) var charge_cooldown: = 3.0 setget , get_charge_cooldown
-export (float, 0, 1.0) var knockback_resist: = 0.5 setget , get_knockback_resist
-export (float) var charge_base_damage: = 20 setget , get_charge_base_damage
-export (float, 0.1, 1.5) var charge_force_factor: = 0.5 setget , get_charge_force_factor
-export (bool) var destructible: = true setget , is_destructible
-export (Color) var faction: = Color(1, 0.13, 0.13) setget , get_faction
+export (float, 20.0, 100.0) var bot_radius: float = 32.0 setget , get_bot_radius
+export (float) var shield_capacity: float = 20 setget , get_shield_capacity
+export (float) var health_capacity: float = 20 setget , get_health_capacity
+export (int, 0, 3000) var speed: int = 1200 setget , get_speed
+export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
+export (float, 0.1, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
+export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
+export (float, 0, 1.0) var knockback_resist: float = 0.5 setget , get_knockback_resist
+export (float, 0.1, 1.5) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
+export (float) var charge_damage_rate: float = 1.0 setget , get_charge_damage_rate
+export (bool) var destructible: bool = true setget , is_destructible
+export (Color) var faction: Color = Color(1, 0.13, 0.13) setget , get_faction
 
 const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.5
@@ -31,7 +31,7 @@ var current_shield_recovery: float
 var current_transform_speed: float
 var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
-var current_charge_base_damage: float
+var current_charge_damage_rate: float
 var current_charge_force_factor: float
 var current_faction: Color
 var current_weapon: Node
@@ -77,8 +77,8 @@ func get_charge_cooldown():
 func get_knockback_resist():
 	return knockback_resist
 
-func get_charge_base_damage():
-	return charge_base_damage
+func get_charge_damage_rate():
+	return charge_damage_rate
 
 func get_charge_force_factor():
 	return charge_force_factor
@@ -362,7 +362,7 @@ func reset_bot_vars() -> void:
 	
 	current_charge_cooldown = charge_cooldown
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
-	current_charge_base_damage = charge_base_damage
+	current_charge_damage_rate = charge_damage_rate
 	current_charge_force_factor = charge_force_factor
 	
 	current_speed = speed
@@ -639,13 +639,13 @@ func _on_Bot_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT && current_faction == body.current_faction:
 		return
 	
-	#damage is 1/16 the current velocity magnitude times force factor then add the base damage
-	var damage: float = ((linear_velocity.length() * 0.0625 * current_charge_force_factor) +
-		current_charge_base_damage)
-	
+	#damage is 1/16 the current velocity magnitude times rate
+	var damage: float = ((linear_velocity.length() * 0.0625 * current_charge_force_factor) *
+		current_charge_damage_rate)
 	#if both bots are charging each other, damage is reduced to 1/8
 	if body is Global.CLASS_BOT && body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
 		damage *= 0.125
+		$Sounds/Clash.play()
 	body.take_damage(damage, Vector2(0,0))
 
 

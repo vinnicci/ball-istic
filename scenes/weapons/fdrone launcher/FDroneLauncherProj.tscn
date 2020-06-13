@@ -13,8 +13,6 @@ resource_local_to_scene = true
 
 [node name="FDroneLauncherProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-health_capacity = 25.0
-charge_base_damage = 5.0
 charge_force_factor = 0.5
 
 [node name="StateMachine" parent="." index="0"]
@@ -3208,5 +3206,6 @@ shape = SubResource( 1 )
 explosion_radius = 100.0
 
 [node name="AutoBlaster" parent="Weapons" index="0" instance=ExtResource( 4 )]
+proj_damage_rate = 0.5
 
 [node name="AI" parent="." index="10" instance=ExtResource( 6 )]

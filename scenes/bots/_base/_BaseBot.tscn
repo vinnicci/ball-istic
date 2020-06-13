@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/sfx_Bot_Transform.wav" type="AudioStream" id=9]
 [ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=10]
+[ext_resource path="res://assets/bots/sfx_Bot_Clash.wav" type="AudioStream" id=11]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -3341,6 +3342,9 @@ stream = ExtResource( 8 )
 
 [node name="ChangeMode" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 9 )
+
+[node name="Clash" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 11 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )

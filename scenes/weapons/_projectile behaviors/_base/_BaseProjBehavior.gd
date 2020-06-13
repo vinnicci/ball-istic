@@ -167,5 +167,4 @@ func task_reflect(task):
 func _reflect(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").reflect_count = count
-	clone.is_stopped == false
 	return clone

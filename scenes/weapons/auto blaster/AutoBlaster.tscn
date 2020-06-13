@@ -37,6 +37,8 @@ heat_capacity = 15.0
 heat_dissipation_per_sec = 2.0
 shoot_cooldown = 0.1
 spread = 5.0
+recoil = 15
+cam_shake_intensity = 1.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 1 )

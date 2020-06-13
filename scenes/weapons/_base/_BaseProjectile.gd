@@ -1,10 +1,10 @@
 extends Area2D
 
 
-export (int) var speed: = 500 setget , get_speed
-export (float) var damage: = 5 setget , get_damage
-export (int) var proj_range: = 500 setget , get_range
-export (float) var knockback: = 50 setget , get_knockback
+export (int) var speed: int = 500 setget , get_speed
+export (float) var damage: float = 5
+export (int) var proj_range: int = 500 setget , get_range
+export (float) var knockback: float = 50 setget , get_knockback
 
 var velocity: Vector2
 var acceleration: Vector2
@@ -17,9 +17,6 @@ var _exploded: bool = false
 
 func get_speed():
 	return speed
-
-func get_damage():
-	return damage
 
 func get_range():
 	return proj_range
@@ -87,7 +84,10 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		_exploded = true
 	else:
 		$HitBlast.show()
-		$HitBlast/AnimationPlayer.play("blast")
+		if body.is_destructible() == true && body.current_shield <= 0:
+			$HitBlast/Anim.play("blast_big")
+		else:
+			$HitBlast/Anim.play("blast_small")
 		$OnHitParticles.emitting = true
 	_stop_projectile()
 

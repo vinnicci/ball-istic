@@ -17,6 +17,8 @@ radius = 1000.0
 
 [node name="SirenBot" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
+shield_capacity = 10.0
+health_capacity = 10.0
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

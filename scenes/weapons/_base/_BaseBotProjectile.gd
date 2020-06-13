@@ -13,8 +13,8 @@ func _ready() -> void:
 
 func init_travel(proj_position: Vector2, proj_direction: float, origin: Color, shooter: Node) -> void:
 	global_position = proj_position
-	faction_id = origin
-	current_faction = faction_id
+	faction = origin
+	current_faction = faction
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(shooter)

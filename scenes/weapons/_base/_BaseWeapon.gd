@@ -8,6 +8,7 @@ export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipa
 #heat must be below this threshold to return firing
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
 export (float) var shoot_cooldown: float = 1.0 setget , get_shoot_cooldown
+export (float) var proj_damage_rate: float = 1.0
 
 enum FireModes {AUTO, BURST, CHARGE, OTHER}
 export (FireModes) var fire_mode
@@ -83,9 +84,17 @@ func _ready() -> void:
 
 
 func _spawn_proj() -> void:
-	Global.current_level.spawn_projectile(Projectile.instance(), $Muzzle.global_position,
+	Global.current_level.spawn_projectile(_instance_proj(), $Muzzle.global_position,
 		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
 		_parent_node.current_faction, _parent_node)
+
+
+#do critical damage stuff here!
+func _instance_proj() -> Node:
+	var proj = Projectile.instance()
+	if proj is Global.CLASS_BOT_PROJ == false:
+		proj.damage *= proj_damage_rate
+	return proj
 
 
 func _apply_recoil() -> void:

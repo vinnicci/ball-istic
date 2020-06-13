@@ -42,8 +42,6 @@ radius = 1000.0
 
 [node name="Slasher" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
-shield_capacity = 60.0
-roll_speed = 1500
 transform_speed = 0.2
 
 [node name="StateMachine" parent="." index="0"]

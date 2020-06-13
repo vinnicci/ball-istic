@@ -33,7 +33,7 @@ resource_local_to_scene = true
 
 [node name="Player" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-faction_id = Color( 0, 1, 0.0627451, 1 )
+faction = Color( 0.129412, 1, 0.145098, 1 )
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

@@ -1,17 +1,17 @@
 extends Node
 
 
-export (bool) var destructible: = false setget , is_destructible
-export (float) var health_capacity: = 1000.0
+export (bool) var destructible: bool = false setget , is_destructible
+export (float) var health_capacity: float = 1000.0 setget , get_health_capacity
 
-var _current_health: float setget , get_current_health
+var current_health: float
 
 
 func is_destructible():
 	return destructible
 
-func get_current_health():
-	return _current_health
+func get_health_capacity():
+	return health_capacity
 
 
 func take_damage(damage, knockback):
