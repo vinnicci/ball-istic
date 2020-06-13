@@ -142,6 +142,8 @@ func _physics_process(delta: float) -> void:
 			state == State.TO_TURRET):
 			_update_bar_charge_level()
 		discharge_parry()
+	if Input.is_action_just_pressed("discharge_parry") && state == State.ROLL:
+		teleport(get_global_mouse_position())
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 

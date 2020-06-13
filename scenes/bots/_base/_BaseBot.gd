@@ -311,23 +311,17 @@ func _init_bot() -> void:
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
-#	_body_texture.position = Vector2(-bot_radius, -bot_radius)
 	_bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
 	_bar_health.rect_position.y += _bar_shield.rect_position.y + 15 #-> hardcoded for now
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
-#	_body_outline.position = Vector2(-outline, -outline)
-#	_body_outline.offset = Vector2(outline, outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
 	_body_charge_effect.polygon = cp
-#	_body_charge_effect.position = Vector2(-bot_radius, -bot_radius)
-#	_body_charge_effect.offset = Vector2(bot_radius, bot_radius)
 	_body_weapon_hatch.polygon = [cp[0], cp[1], cp[2], cp[10], cp[11], cp[12],
 		cp[13], cp[14], cp[22], cp[23]]
 	_init_legs([cp[4], cp[12], cp[20]])
 
 
-#four-legged bot variant later??
 func _init_legs(circle_points) -> void:
 	var leg_sprite: = $Legs/Sprite
 	var deg: = 360.0/POLY_SIDES as float
@@ -411,6 +405,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+	#teleport
+	if _teleporting == true:
+		state.transform.origin = _teleport_pos
+		_teleporting = false
+	#velocity
 	applied_force = Vector2(0,0)
 	if self.state == State.ROLL:
 		velocity = velocity.normalized()
@@ -562,19 +561,17 @@ func _peak_charge_roll() -> void:
 
 #trail effect
 func _on_ChargeTrail_timeout() -> void:
-	var trail = _body_charge_effect.duplicate(DUPLICATE_USE_INSTANCING)
+	var trail = _body_charge_effect.duplicate()
 	Global.current_level.add_child(trail)
-#	trail.global_position = Vector2(global_position.x - bot_radius, global_position.y - bot_radius)
 	trail.global_position = Vector2(global_position.x, global_position.y)
 	trail.get_node("Anim").play("fade")
 	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
 
 
 func _end_charging_effect() -> void:
-	#stun state is included because of discharge parry
+	#stun state is included because of discharge parry stun eventually
 	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
 		linear_velocity.length() <= current_speed * NO_EFFECT_VELOCITY_FACTOR):
-		#hostility color hardcoded for now, as a result no customization for outline color
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
 			current_faction, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
@@ -582,6 +579,16 @@ func _end_charging_effect() -> void:
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
 		_charge_roll = false
+
+
+#teleport
+var _teleporting: bool = false
+var _teleport_pos: Vector2
+
+
+func teleport(to_position: Vector2) -> void:
+	_teleporting = true
+	_teleport_pos = to_position
 
 
 func apply_knockback(knockback: Vector2) -> void:
@@ -659,15 +666,12 @@ func _on_Bot_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT:
 		if current_faction == body.current_faction:
 			return
-		#if both bots are charging each other, damage is reduced to 1/8
-		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-			damage *= 0.125
+		#if both bots are charging each other
+		#or a charging bot hit a discharging bot, damage is reduced to 1/8
+		if (body.state == Global.CLASS_BOT.State.CHARGE_ROLL ||
+			body.get_node("Timers/DischargeParry").is_stopped() == false):
+			damage = 5
 			$Sounds/Clash.play()
-		if body.get_node("Timers/DischargeParry").is_stopped() == false:
-			_charge_roll = false
-			timer_stun.start(2)
-			damage = 0
-			$Sounds/DischargeStun.play()
 	body.take_damage(damage, Vector2(0,0))
 
 

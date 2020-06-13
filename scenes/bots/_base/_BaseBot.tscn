@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
@@ -12,14 +12,13 @@
 [ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=10]
 [ext_resource path="res://assets/bots/sfx_Bot_Clash.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/bots/sfx_Bot_discharge_parry.wav" type="AudioStream" id=12]
-[ext_resource path="res://assets/bots/sfx_Bot_discharge_stun.wav" type="AudioStream" id=13]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=2]
 resource_name = "discharge_parry"
 length = 0.51
 step = 0.01
@@ -48,7 +47,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 4, 4 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=3]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -63,7 +62,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=10]
+[sub_resource type="CircleShape2D" id=4]
 resource_local_to_scene = true
 
 [sub_resource type="Gradient" id=5]
@@ -3294,8 +3293,8 @@ polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 modulate = Color( 1, 1, 1, 0 )
 
 [node name="Anim" type="AnimationPlayer" parent="Body/ChargeEffect"]
-anims/discharge_parry = SubResource( 8 )
-anims/fade = SubResource( 9 )
+anims/discharge_parry = SubResource( 2 )
+anims/fade = SubResource( 3 )
 
 [node name="SwitchTween" type="Tween" parent="Body"]
 
@@ -3383,11 +3382,8 @@ stream = ExtResource( 11 )
 [node name="DischargeParry" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 12 )
 
-[node name="DischargeStun" type="AudioStreamPlayer2D" parent="Sounds"]
-stream = ExtResource( 13 )
-
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource( 10 )
+shape = SubResource( 4 )
 
 [node name="CollisionSpark" type="Particles2D" parent="."]
 emitting = false
