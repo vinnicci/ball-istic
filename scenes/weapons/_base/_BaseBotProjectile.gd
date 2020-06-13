@@ -11,17 +11,16 @@ func _ready() -> void:
 	$Body.add_child(_glow)
 
 
-func init_travel(proj_position: Vector2, proj_direction: float, origin: bool, shooter: Node) -> void:
+func init_travel(proj_position: Vector2, proj_direction: float, origin: Color, shooter: Node) -> void:
 	global_position = proj_position
-	hostile = origin
+	faction_id = origin
+	current_faction = faction_id
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(shooter)
 		$AI.set_level(Global.current_level)
-	if hostile:
-		_body_outline.modulate = HOSTILE_COLOR
-	else:
-		_body_outline.modulate = NON_HOSTILE_COLOR
+	_body_outline.modulate = current_faction
+	_body_weapon_hatch.modulate = current_faction
 	apply_central_impulse(Vector2(2000, 0).rotated(proj_direction))
 	$Timers/Lifetime.start()
 

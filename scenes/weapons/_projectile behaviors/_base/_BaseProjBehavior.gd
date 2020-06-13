@@ -62,7 +62,7 @@ func task_homing(task):
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && _parent_node.origin() != body.is_hostile():
+	if body is Global.CLASS_BOT && _parent_node.origin() != body.current_faction:
 		_detected.append(body)
 
 

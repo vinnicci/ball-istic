@@ -12,7 +12,7 @@ export (float, 0, 1.0) var knockback_resist: = 0.5 setget , get_knockback_resist
 export (float) var charge_base_damage: = 20 setget , get_charge_base_damage
 export (float, 0.1, 1.5) var charge_force_factor: = 0.5 setget , get_charge_force_factor
 export (bool) var destructible: = true setget , is_destructible
-export (bool) var hostile: = true setget , is_hostile
+export (Color) var faction_id: = Color(1, 0.13, 0.13) setget , get_faction_id
 
 const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.5
@@ -22,8 +22,6 @@ const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: float = 2.0
 const TURRET_MODE_DAMP: float = 5.0
 const POLY_SIDES = 24 #bot polygon has 24 points
-const HOSTILE_COLOR = Color(1, 0.13, 0.13)       #eventually add factions for
-const NON_HOSTILE_COLOR = Color(0.4, 1, 0.4)     #customizable outline color
 var _legs_position: Dictionary = {}
 
 var current_shield: float
@@ -35,6 +33,7 @@ var current_charge_cooldown: float setget set_current_charge_cooldown, get_curre
 var current_knockback_resist: float
 var current_charge_base_damage: float
 var current_charge_force_factor: float
+var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
 var _arr_weapons: Array = [null, null, null, null, null]
@@ -87,8 +86,8 @@ func get_charge_force_factor():
 func is_destructible():
 	return destructible
 
-func is_hostile():
-	return hostile
+func get_faction_id():
+	return faction_id
 
 
 ####################
@@ -300,12 +299,8 @@ func _init_bot() -> void:
 	if destructible == false:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
-	if hostile == true:
-		_body_outline.modulate = HOSTILE_COLOR
-		_body_weapon_hatch.modulate = HOSTILE_COLOR
-	else:
-		_body_outline.modulate = NON_HOSTILE_COLOR
-		_body_weapon_hatch.modulate = NON_HOSTILE_COLOR
+	_body_outline.modulate = faction_id
+	_body_weapon_hatch.modulate = faction_id
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
@@ -372,6 +367,8 @@ func reset_bot_vars() -> void:
 	
 	current_speed = speed
 	current_knockback_resist = knockback_resist
+	
+	current_faction = faction_id
 	
 	for weap in _arr_weapons:
 		if weap == null:
@@ -568,12 +565,8 @@ func _end_charging_effect() -> void:
 	if (state == State.DEAD || state == State.CHARGE_ROLL &&
 		linear_velocity.length() <= current_speed * NO_EFFECT_VELOCITY_FACTOR):
 		#hostility color hardcoded for now, as a result no customization for outline color
-		if hostile == true:
-			_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
-				HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		elif hostile == false:
-			_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
-				NON_HOSTILE_COLOR, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
+			current_faction, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.start()
@@ -643,7 +636,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.look_at(body.global_position)
 	$CollisionSpark.emitting = true	
-	if body is Global.CLASS_BOT && hostile == body.hostile:
+	if body is Global.CLASS_BOT && current_faction == body.current_faction:
 		return
 	
 	#damage is 1/16 the current velocity magnitude times force factor then add the base damage

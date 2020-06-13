@@ -10,7 +10,7 @@ var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
 var _shooter: Node setget , shooter
-var _origin: bool setget , origin
+var _origin: Color setget , origin
 var is_stopped: bool = false
 var _exploded: bool = false
 
@@ -45,7 +45,7 @@ func _ready() -> void:
 		$ProjBehavior.set_parent(self)
 
 
-func init_travel(pos: Vector2, dir: float, origin: bool, shooter: Node) -> void:
+func init_travel(pos: Vector2, dir: float, origin: Color, shooter: Node) -> void:
 	if shooter != null:
 		_shooter = shooter
 	_origin = origin
@@ -69,9 +69,9 @@ func _physics_process(delta: float) -> void:
 
 func _on_Projectile_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT:
-		if body.is_hostile() == _origin:
+		if body.current_faction == _origin:
 			return
-		elif body.is_hostile() != _origin && body.state == Global.CLASS_BOT.State.DEAD:
+		elif body.current_faction != _origin && body.state == Global.CLASS_BOT.State.DEAD:
 			return
 		else:
 			if has_node("Explosion") == true:

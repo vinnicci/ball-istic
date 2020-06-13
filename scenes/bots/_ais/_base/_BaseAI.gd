@@ -90,12 +90,12 @@ func _get_new_target_enemy() -> void:
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if ((body is Global.CLASS_PLAYER ||
 		body is Global.CLASS_BOT && body.has_node("AI") == true) &&
-		body.is_hostile() != _parent_node.is_hostile()):
+		body.current_faction != _parent_node.current_faction):
 		_enemies.append(body)
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	if body is Global.CLASS_BOT && body.is_hostile() != _parent_node.is_hostile():
+	if body is Global.CLASS_BOT && body.current_faction != _parent_node.current_faction:
 		if _enemies.has(body) == true:
 			_enemies.erase(body)
 

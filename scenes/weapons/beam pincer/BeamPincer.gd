@@ -23,9 +23,9 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 	if _parent_node is Global.CLASS_BOT == false:
 		return
 	if body is Global.CLASS_BOT:
-		if body.is_hostile() == _parent_node.is_hostile():
+		if body.current_faction == _parent_node.current_faction:
 			return
-		elif body.is_hostile() != _parent_node.is_hostile() && body.state == Global.CLASS_BOT.State.DEAD:
+		elif body.current_faction != _parent_node.current_faction && body.state == Global.CLASS_BOT.State.DEAD:
 			return
 		else:
 			body.take_damage(_damage, Vector2(_knockback, 0).rotated(rotation))

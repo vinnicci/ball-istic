@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 
 
 func spawn_projectile(projectile, proj_position: Vector2, proj_direction: float,
-	origin: bool, shooter: Global.CLASS_BOT) -> void:
+	origin: Color, shooter: Global.CLASS_BOT) -> void:
 	add_child(projectile)
 	projectile.init_travel(proj_position, proj_direction, origin, shooter)
 
