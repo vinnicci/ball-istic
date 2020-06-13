@@ -12,7 +12,7 @@ export (float, 0, 1.0) var knockback_resist: = 0.5 setget , get_knockback_resist
 export (float) var charge_base_damage: = 20 setget , get_charge_base_damage
 export (float, 0.1, 1.5) var charge_force_factor: = 0.5 setget , get_charge_force_factor
 export (bool) var destructible: = true setget , is_destructible
-export (Color) var faction_id: = Color(1, 0.13, 0.13) setget , get_faction_id
+export (Color) var faction: = Color(1, 0.13, 0.13) setget , get_faction
 
 const DEFAULT_BOT_RADIUS: float = 32.0
 const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.5
@@ -86,8 +86,8 @@ func get_charge_force_factor():
 func is_destructible():
 	return destructible
 
-func get_faction_id():
-	return faction_id
+func get_faction():
+	return faction
 
 
 ####################
@@ -299,8 +299,8 @@ func _init_bot() -> void:
 	if destructible == false:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
-	_body_outline.modulate = faction_id
-	_body_weapon_hatch.modulate = faction_id
+	_body_outline.modulate = faction
+	_body_weapon_hatch.modulate = faction
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
@@ -368,7 +368,7 @@ func reset_bot_vars() -> void:
 	current_speed = speed
 	current_knockback_resist = knockback_resist
 	
-	current_faction = faction_id
+	current_faction = faction
 	
 	for weap in _arr_weapons:
 		if weap == null:
