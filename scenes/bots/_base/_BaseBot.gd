@@ -295,11 +295,11 @@ func _init_bot() -> void:
 		weapon.modulate = Color(1,1,1,0)
 	
 	#bot physics and properties
-	mass = bot_radius / DEFAULT_BOT_RADIUS
+	mass = mass * (bot_radius / DEFAULT_BOT_RADIUS)
 	#makes sure even heavy bots can charge although at a much shorter distance
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	$CollisionShape.shape.radius = bot_radius
-	$CollisionSpark/Particles2D.position = Vector2(bot_radius, 0)
+	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
@@ -390,8 +390,6 @@ func _process(delta: float) -> void:
 	$Labels.global_rotation = 0
 	
 	$Bars.global_rotation = 0
-	
-	$CollisionSpark.global_rotation = 0
 	
 	#rolling ball pseudo 3d effect
 	_apply_rolling_effects(delta)
@@ -550,6 +548,7 @@ func charge_roll(charge_direction: float) -> void:
 
 
 func _apply_charge_impulse(dir: float) -> void:
+	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
@@ -582,6 +581,7 @@ func _end_charging_effect() -> void:
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
+		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 		_charge_roll = null
 
 
@@ -672,6 +672,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
+	$CollisionSpark.look_at(body.global_position)
+	$Sounds/ChargeAttackHit.play()
 	if has_node("Camera2D") == true:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
@@ -686,14 +688,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 			damage *= 0.01
 			$Sounds/Clash.play()
 	body.take_damage(damage, Vector2(0,0))
-	$Sounds/ChargeAttackHit.play()
-	$CollisionSpark/Particles2D.look_at(body.global_position)
-	$CollisionSpark/SparkDelay.start()
-
-
-#delay the spark effect for accuracy
-func _on_SparkDelay_timeout() -> void:
-	$CollisionSpark/Particles2D.emitting = true
+	$CollisionSpark.emitting = true
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4

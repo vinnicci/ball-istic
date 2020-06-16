@@ -63,14 +63,14 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.530612, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 0.972549, 0.0627451, 0.0627451, 0 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=7]
+[sub_resource type="ParticlesMaterial" id=6]
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -82,9 +82,9 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 10.0
 scale_random = 0.9
-color_ramp = SubResource( 6 )
+color_ramp = SubResource( 5 )
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=7]
 resource_local_to_scene = true
 
 [node name="Bot" type="RigidBody2D"]
@@ -3386,23 +3386,17 @@ stream = ExtResource( 12 )
 [node name="Teleport" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource( 13 )
 
-[node name="CollisionSpark" type="Node2D" parent="."]
-
-[node name="Particles2D" type="Particles2D" parent="CollisionSpark"]
+[node name="CollisionSpark" type="Particles2D" parent="."]
 emitting = false
 amount = 100
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 7 )
-
-[node name="SparkDelay" type="Timer" parent="CollisionSpark"]
-wait_time = 0.05
-one_shot = true
+process_material = SubResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource( 4 )
+shape = SubResource( 7 )
 
 [node name="Weapons" type="Node2D" parent="."]
 z_index = 1
@@ -3425,4 +3419,3 @@ __meta__ = {
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
 [connection signal="timeout" from="Timers/ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
 [connection signal="timeout" from="Timers/ExplodeTimer" to="." method="_on_ExplodeTimer_timeout"]
-[connection signal="timeout" from="CollisionSpark/SparkDelay" to="." method="_on_SparkDelay_timeout"]

@@ -53,10 +53,10 @@ func task_homing(task):
 	if _parent_node.is_stopped == true:
 		task.failed()
 		return
-	var target_vector = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
-	var steer_vector = (target_vector - _parent_node.velocity).normalized() * task.get_param(0)
-	var final_vector = _parent_node.velocity + steer_vector
-	_parent_node.acceleration = final_vector
+	var target_v = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
+	var steer_v = (target_v - _parent_node.velocity).normalized() * task.get_param(0)
+	var final_v = _parent_node.velocity + steer_v
+	_parent_node.acceleration = final_v
 	task.succeed()
 	return
 
@@ -126,6 +126,7 @@ func task_curve_speed(task):
 #############
 export var steer_curve: Curve
 onready var _random_dir = rand_range(0, 1.0)
+var _old_v = null
 
 
 func task_curve_steer(task):
@@ -133,13 +134,14 @@ func task_curve_steer(task):
 	if _target_bot != null || _parent_node.is_stopped == true:
 		task.failed()
 		return
-	var range_timer = _parent_node.get_node("RangeTimer")
-	var y_val = steer_curve.interpolate((range_timer.wait_time - range_timer.time_left)/range_timer.wait_time)
-	#steer
-	if y_val != 0:
-		if _random_dir > 0.5:
-			y_val *= -1
-		_parent_node.acceleration = _parent_node.velocity.rotated(deg2rad(10 * y_val))
+	if _old_v == null:
+		_old_v = _parent_node.velocity
+	var r_timer = _parent_node.get_node("RangeTimer")
+	var x_val = (r_timer.wait_time - r_timer.time_left) / r_timer.wait_time
+	var y_val = steer_curve.interpolate(x_val)
+	if _random_dir <= 0.5:
+		y_val *= -1
+	_parent_node.velocity = _old_v.rotated(deg2rad(90*y_val))
 	task.succeed()
 	return
 
