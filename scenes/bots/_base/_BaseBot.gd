@@ -15,14 +15,14 @@ export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0.13, 0.13) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
-const DEFAULT_BOT_RADIUS: float = 32.0
-const CHARGE_EFFECT_VELOCITY_FACTOR: float = 0.45
-const NO_EFFECT_VELOCITY_FACTOR: float = 0.45
 const OUTLINE_SIZE: float = 4.5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: float = 2.0
 const TURRET_MODE_DAMP: float = 5.0
 const POLY_SIDES = 24 #bot polygon has 24 points
+const DEFAULT_BOT_RADIUS: float = 32.0
+const DEFAULT_COMMIT_VELOCITY: float = 0.45
+var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
 
 var current_shield: float
@@ -168,7 +168,7 @@ func task_roll_process(task):
 		state = State.TO_TURRET
 		task.succeed()
 		return
-	if _charge_roll == true:
+	if _charge_roll != null:
 		state = State.CHARGE_ROLL
 		task.succeed()
 		return
@@ -227,7 +227,7 @@ func task_charge_roll_process(task):
 		state = State.DEAD
 		task.succeed()
 		return
-	if _charge_roll == false:
+	if _charge_roll == null:
 		state = State.ROLL
 		task.succeed()
 		return
@@ -295,8 +295,11 @@ func _init_bot() -> void:
 		weapon.modulate = Color(1,1,1,0)
 	
 	#bot physics and properties
+	mass = bot_radius / DEFAULT_BOT_RADIUS
+	#makes sure even heavy bots can charge although at a much shorter distance
+	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	$CollisionShape.shape.radius = bot_radius
-	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
+	$CollisionSpark/Particles2D.position = Vector2(bot_radius, 0)
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
@@ -388,6 +391,8 @@ func _process(delta: float) -> void:
 	
 	$Bars.global_rotation = 0
 	
+	$CollisionSpark.global_rotation = 0
+	
 	#rolling ball pseudo 3d effect
 	_apply_rolling_effects(delta)
 	
@@ -402,9 +407,9 @@ func _physics_process(delta: float) -> void:
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	#teleport
-	if _teleporting == true:
+	if _teleport_pos != null:
 		state.transform.origin = _teleport_pos
-		_teleporting = false
+		_teleport_pos = null
 	#velocity
 	applied_force = Vector2(0,0)
 	if self.state == State.ROLL:
@@ -533,28 +538,31 @@ func change_weapon(slot_num: int) -> bool:
 	return true
 
 
-var _charge_roll: bool = false
+var _charge_roll = null
 
 
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
 	if state != State.ROLL || is_charge_roll_ready() == false:
 		return
-	apply_central_impulse(Vector2(current_speed,0).rotated(charge_direction) *
-		current_charge_force_factor)
-	_charge_roll = true
+	_charge_roll = charge_direction
+	_apply_charge_impulse(_charge_roll)
+
+
+func _apply_charge_impulse(dir: float) -> void:
+	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
 	_timer_charge_cooldown.start()
 
 
-#0.05 sec delay in order to get near peak linear velocity
+#0.05 sec delay in order to get almost peak linear velocity
 func _on_ChargeEffectDelay_timeout() -> void:
 	_peak_charge_roll()
 
 
 func _peak_charge_roll() -> void:
-	if linear_velocity.length() > current_speed * CHARGE_EFFECT_VELOCITY_FACTOR:
+	if linear_velocity.length() > current_speed * _charge_commit_velocity:
 		$Timers/ChargeTrail.start()
 		_body_outline.modulate = charge_outline
 		_body_charge_effect.modulate.a = 1.0
@@ -567,28 +575,27 @@ func _on_ChargeTrail_timeout() -> void:
 func _end_charging_effect() -> void:
 	#stun state is included because of discharge parry stun eventually
 	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
-		linear_velocity.length() <= current_speed * NO_EFFECT_VELOCITY_FACTOR):
+		linear_velocity.length() <= current_speed * _charge_commit_velocity):
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
 			current_faction, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
 			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
-		_charge_roll = false
+		_charge_roll = null
 
 
 #teleport
-var _teleporting: bool = false
-var _teleport_pos: Vector2
+var _teleport_pos = null
 
 
 func teleport(to_position: Vector2) -> void:
-	_teleporting = true
 	_teleport_pos = to_position
 	var current_pos = global_position
 	while current_pos.distance_to(to_position) > bot_radius * 3:
 		_leave_trail(current_pos)
 		current_pos = current_pos.move_toward(to_position, bot_radius * 3)
+	$Sounds/Teleport.play()
 
 
 #trail effect used by charge roll and teleport
@@ -667,9 +674,6 @@ func _on_Bot_body_entered(body: Node) -> void:
 		return
 	if has_node("Camera2D") == true:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
-	$Sounds/ChargeAttackHit.play()
-	$CollisionSpark.look_at(body.global_position)
-	$CollisionSpark.emitting = true
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
 		current_charge_damage_rate)
 	if body is Global.CLASS_BOT:
@@ -682,6 +686,14 @@ func _on_Bot_body_entered(body: Node) -> void:
 			damage *= 0.01
 			$Sounds/Clash.play()
 	body.take_damage(damage, Vector2(0,0))
+	$Sounds/ChargeAttackHit.play()
+	$CollisionSpark/Particles2D.look_at(body.global_position)
+	$CollisionSpark/SparkDelay.start()
+
+
+#delay the spark effect for accuracy
+func _on_SparkDelay_timeout() -> void:
+	$CollisionSpark/Particles2D.emitting = true
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
