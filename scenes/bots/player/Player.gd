@@ -38,7 +38,7 @@ func _init_player() -> void:
 	
 	update_player_vars()
 	
-	#connect inventory buttons
+	#inventory buttons
 	_connect_buttons()
 	
 	#initialize hud weapons
@@ -117,7 +117,7 @@ func _physics_process(delta: float) -> void:
 		current_weapon.look_at(get_global_mouse_position())
 	
 	#lose control when inventory ui is open and in an access area
-	if (is_using_bot_station == true || ui_access != "") && ui_inventory.visible == true:
+	if ui_access != "" && ui_inventory.visible == true:
 		return
 	if Input.is_action_pressed("move_up"):
 		velocity.y += -1
@@ -137,15 +137,13 @@ func _physics_process(delta: float) -> void:
 		if _timer_charge_cooldown.is_stopped() == true && state == State.ROLL:
 			_update_bar_charge_level()
 		charge_roll(current_weapon.global_rotation)
+	if Input.is_action_pressed("shoot"):
+		shoot_weapon()
 	if Input.is_action_just_pressed("discharge_parry"):
 		if _timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
 			state == State.TO_TURRET):
 			_update_bar_charge_level()
 		discharge_parry()
-	if Input.is_action_just_pressed("discharge_parry") && state == State.ROLL:
-		teleport(get_global_mouse_position())
-	if Input.is_action_pressed("shoot"):
-		shoot_weapon()
 
 
 func _process(delta: float) -> void:
@@ -157,7 +155,7 @@ func _process(delta: float) -> void:
 	
 	_update_bar_weapon_heat()
 	
-	_update_weapon_hud_elements()
+	_update_weapon_hud()
 	
 	_control_player_weapon_hotkeys()
 	
@@ -167,7 +165,7 @@ func _process(delta: float) -> void:
 		ui_inventory.visible = !ui_inventory.visible
 
 
-func _update_weapon_hud_elements() -> void:
+func _update_weapon_hud() -> void:
 	for i in _arr_weapons.size():
 		if _arr_weapons[i] == null:
 			continue
@@ -236,7 +234,6 @@ func _control_camera(delta: float) -> void:
 ################################################################################
 # inventory management
 ################################################################################
-var is_using_bot_station: bool = false
 var _dict_held: Dictionary = {
 	"item": null,
 	"from_slot": "",
@@ -361,7 +358,7 @@ func _manage_trash() -> void:
 	elif _dict_held["item"] is Global.CLASS_WEAPON && _check_if_equipping_weapon() == false:
 		_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
 		return
-	elif _dict_held["item"] != null && _dict_held["from_slot"] != "item" && is_using_bot_station == false:
+	elif _dict_held["item"] != null && _dict_held["from_slot"] != "item" && ui_access != "bot_station":
 		_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 		return
 	else:
@@ -409,7 +406,7 @@ func _manage_depot(slot_num: int) -> void:
 
 func _manage_vault(slot_num: int) -> void:
 	if _dict_held["item"] != null:
-		if is_using_bot_station == false && _dict_held["from_slot"] != "all_item":
+		if ui_access != "bot_station" && _dict_held["from_slot"] != "all_item":
 			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 			return
 		if _dict_held["item"] == _built_in_weapon:
@@ -446,10 +443,10 @@ func _swap(slot_name: String, slot_num: int) -> void:
 
 func _manage_all_items(slot_num: int) -> void:
 	if _dict_held["item"] != null:
-		if is_using_bot_station == false && _dict_held["from_slot"] != "all_item":
+		if ui_access != "bot_station" && _dict_held["from_slot"] != "all_item":
 			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 			return
-		elif (is_using_bot_station == true && _dict_held["from_slot"] == "weapon" &&
+		elif (ui_access == "bot_station" && _dict_held["from_slot"] == "weapon" &&
 			_check_if_equipping_weapon() == false):
 			_show_inventory_warning("EQUIP AT LEAST ONE WEAPON")
 			return
@@ -458,7 +455,7 @@ func _manage_all_items(slot_num: int) -> void:
 
 func _manage_weapons(slot_num: int) -> void:
 	if _dict_held["item"] != null:
-		if is_using_bot_station == false && _dict_held["from_slot"] == "all_item":
+		if ui_access != "bot_station" && _dict_held["from_slot"] == "all_item":
 			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 			return
 		if _dict_held["item"] is Global.CLASS_WEAPON == false:
@@ -469,7 +466,7 @@ func _manage_weapons(slot_num: int) -> void:
 
 func _manage_passives(slot_num: int) -> void:
 	if _dict_held["item"] != null:
-		if is_using_bot_station == false && _dict_held["from_slot"] == "all_item":
+		if ui_access != "bot_station" && _dict_held["from_slot"] == "all_item":
 			_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 			return
 		if _dict_held["item"] is Global.CLASS_PASSIVE == false:

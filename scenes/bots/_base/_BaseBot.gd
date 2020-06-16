@@ -115,9 +115,6 @@ enum State {
 	TURRET, ROLL, TO_TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
 var state = State.TURRET
-
-var _switch: bool = false
-var _charge_roll: bool = false
 var _before_stun = null
 
 
@@ -256,7 +253,6 @@ func task_stun_process(task):
 
 func task_dead_enter(task):
 	current_health = 0
-	$Sounds/HealthDamage.play()
 	explode()
 	task.succeed()
 	return
@@ -392,7 +388,7 @@ func _process(delta: float) -> void:
 	
 	$Bars.global_rotation = 0
 	
-	#rolling ball graphical effect
+	#rolling ball pseudo 3d effect
 	_apply_rolling_effects(delta)
 	
 	#reset colors after charging
@@ -447,6 +443,9 @@ func _check_if_turret() -> bool:
 				State.TO_ROLL, State.ROLL:
 					output = false
 	return output
+
+
+var _switch: bool = false
 
 
 func switch_mode():
@@ -520,7 +519,6 @@ func shoot_weapon() -> void:
 		current_weapon.fire()
 
 
-#will change to animate weapon transform
 #some weapon has fixed anim -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
 	var weap = _arr_weapons[slot_num]
@@ -533,6 +531,9 @@ func change_weapon(slot_num: int) -> bool:
 	elif state == State.ROLL:
 		current_weapon = weap
 	return true
+
+
+var _charge_roll: bool = false
 
 
 #charge strength depends on speed and force multiplier
@@ -559,13 +560,8 @@ func _peak_charge_roll() -> void:
 		_body_charge_effect.modulate.a = 1.0
 
 
-#trail effect
 func _on_ChargeTrail_timeout() -> void:
-	var trail = _body_charge_effect.duplicate()
-	Global.current_level.add_child(trail)
-	trail.global_position = Vector2(global_position.x, global_position.y)
-	trail.get_node("Anim").play("fade")
-	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
+	_leave_trail(global_position)
 
 
 func _end_charging_effect() -> void:
@@ -589,6 +585,19 @@ var _teleport_pos: Vector2
 func teleport(to_position: Vector2) -> void:
 	_teleporting = true
 	_teleport_pos = to_position
+	var current_pos = global_position
+	while current_pos.distance_to(to_position) > bot_radius * 3:
+		_leave_trail(current_pos)
+		current_pos = current_pos.move_toward(to_position, bot_radius * 3)
+
+
+#trail effect used by charge roll and teleport
+func _leave_trail(pos: Vector2) -> void:
+	var trail = _body_charge_effect.duplicate()
+	Global.current_level.add_child(trail)
+	trail.global_position = pos
+	trail.get_node("Anim").play("fade")
+	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
 
 
 func apply_knockback(knockback: Vector2) -> void:
@@ -633,7 +642,6 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Bars.hide()
 	$CollisionShape.disabled = true
 	mode = RigidBody2D.MODE_STATIC
-	
 	#explosion effects here
 	$Explosion.start_explosion()
 	$Timers/ExplodeTimer.start()
@@ -644,7 +652,8 @@ func _on_ExplodeTimer_timeout() -> void:
 
 
 func discharge_parry() -> void:
-	if (state == State.TURRET || state == State.TO_TURRET) && _timer_charge_cooldown.is_stopped() == true:
+	if ((state == State.TURRET || state == State.TO_TURRET || state == State.WEAP_COMMIT) &&
+		_timer_charge_cooldown.is_stopped() == true):
 		_body_charge_effect.get_node("Anim").play("discharge_parry")
 		$Sounds/DischargeParry.play()
 		$Timers/DischargeParry.start()
@@ -667,10 +676,10 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if current_faction == body.current_faction:
 			return
 		#if both bots are charging each other
-		#or a charging bot hit a discharging bot, damage is reduced to 1/8
+		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if (body.state == Global.CLASS_BOT.State.CHARGE_ROLL ||
 			body.get_node("Timers/DischargeParry").is_stopped() == false):
-			damage = 5
+			damage *= 0.01
 			$Sounds/Clash.play()
 	body.take_damage(damage, Vector2(0,0))
 

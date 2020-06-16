@@ -5,14 +5,14 @@
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.gd" type="Script" id=3]
 [ext_resource path="res://assets/weapons/sfx_Weap_Generic_Charging.wav" type="AudioStream" id=4]
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
 
-[sub_resource type="GradientTexture" id=2]
-gradient = SubResource( 1 )
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=4]
 resource_local_to_scene = true
 lifetime_randomness = 0.9
 emission_shape = 1
@@ -28,7 +28,7 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 15.0
 scale_random = 0.5
-color_ramp = SubResource( 2 )
+color_ramp = SubResource( 3 )
 
 [node name="Weapon" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
@@ -46,9 +46,10 @@ one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
 local_coords = false
-process_material = SubResource( 3 )
+process_material = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="." index="2"]
+z_index = 1
 
 [node name="Timers" type="Node2D" parent="." index="3"]
 

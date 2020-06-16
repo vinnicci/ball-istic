@@ -83,20 +83,6 @@ func _ready() -> void:
 		_timer_shoot_cooldown.wait_time = 0.05
 
 
-func _spawn_proj() -> void:
-	Global.current_level.spawn_projectile(_instance_proj(), $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
-		_parent_node.current_faction, _parent_node)
-
-
-#do critical damage stuff here!
-func _instance_proj() -> Node:
-	var proj = Projectile.instance()
-	if proj is Global.CLASS_BOT_PROJ == false:
-		proj.damage *= proj_damage_rate
-	return proj
-
-
 func _apply_recoil() -> void:
 	if _parent_node.has_node("Camera2D") == true:
 		_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
@@ -132,12 +118,6 @@ func animate_transform(transform_speed: float) -> void:
 	$WeaponTween.start()
 
 
-#func _on_WeaponTween_tween_all_completed() -> void:
-#	if visible == true && _parent_node.bot_state == Global.CLASS_BOT.BotState.ROLL:
-#		hide()
-#		modulate = Color(1,1,1,1)
-
-
 ######################
 # all the firing modes
 ######################
@@ -153,6 +133,20 @@ func fire() -> void:
 		FireModes.BURST: _fire_burst()
 		FireModes.CHARGE: _fire_charged()
 		FireModes.OTHER: _fire_other()
+
+
+func _spawn_proj() -> void:
+	Global.current_level.spawn_projectile(_instance_proj(), $Muzzle.global_position,
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
+		_parent_node.current_faction, _parent_node)
+
+
+#do critical damage stuff here!
+func _instance_proj() -> Node:
+	var proj = Projectile.instance()
+	if proj is Global.CLASS_BOT_PROJ == false:
+		proj.damage *= proj_damage_rate
+	return proj
 
 
 ################################################################################
