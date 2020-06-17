@@ -292,7 +292,8 @@ func update_ui_slot(slot_num: int, arr: String) -> void:
 			item = arr_external[slot_num]
 			slot_sprite = _ui_vault_slots.get_node("VaultSlots/" + slot_num_str + "/Sprite")
 	if item == null:
-		slot_sprite.texture = null
+		_clear_sprite(slot_sprite)
+#		slot_sprite.texture = null
 	else:
 		var item_sprite = item.get_node("SlotIcon")
 		_match_sprite(slot_sprite, item_sprite)
@@ -483,6 +484,9 @@ func _own_item(item: Node, new_parent: Node) -> void:
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
 	ui_sprite.texture = item_sprite.texture
+	if item_sprite.get_child_count() != 0:
+		for sprite in item_sprite.get_children():
+			ui_sprite.add_child(sprite.duplicate())
 	ui_sprite.modulate = item_sprite.modulate
 	ui_sprite.scale = item_sprite.scale
 	ui_sprite.rotation = item_sprite.rotation
@@ -501,7 +505,15 @@ func _show_held_item() -> void:
 	if _dict_held["item"] != null:
 		_match_sprite($PlayerUI/HeldItem/Sprite, _dict_held["item"].get_node("SlotIcon"))
 	elif _dict_held["item"] == null:
-		_held_item.get_node("Sprite").texture = null
+		_clear_sprite(_held_item.get_node("Sprite"))
+		
+
+
+func _clear_sprite(sprite: Sprite) -> void:
+	sprite.texture = null
+	if sprite.get_child_count() != 0:
+		for child_sprite in sprite.get_children():
+			sprite.remove_child(child_sprite)
 
 
 func _check_if_equipping_weapon() -> bool:

@@ -73,6 +73,11 @@ fire_mode = 3
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 
+[node name="Blob2" type="Sprite" parent="SlotIcon" index="0"]
+modulate = Color( 1, 1, 1, 0.392157 )
+self_modulate = Color( 0, 0.827451, 0.992157, 1 )
+texture = ExtResource( 4 )
+
 [node name="Muzzle" parent="." index="1"]
 visible = false
 

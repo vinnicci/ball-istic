@@ -61,30 +61,30 @@ tracks/1/keys = {
 
 [node name="HeatEdge" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
-heat_per_shot = 0.5
 heat_capacity = 20.0
-almost_overheating_threshold = 0.5
+almost_overheating_threshold = 0.75
 shoot_cooldown = 0.2
 spread = 5.0
 recoil = 10
 cam_shake_intensity = 3.0
 
 [node name="SlotIcon" parent="." index="0"]
+scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 offset = Vector2( 15, 0 )
 
-[node name="Barrel" type="Sprite" parent="SlotIcon" index="0"]
-position = Vector2( 34.5, 0 )
-texture = ExtResource( 1 )
-
-[node name="Tank1" type="Sprite" parent="SlotIcon" index="1"]
+[node name="Tank1" type="Sprite" parent="SlotIcon" index="0"]
 position = Vector2( -7.5, -25 )
 texture = ExtResource( 2 )
 
-[node name="Tank2" type="Sprite" parent="SlotIcon" index="2"]
+[node name="Tank2" type="Sprite" parent="SlotIcon" index="1"]
 position = Vector2( -7.5, 25 )
 texture = ExtResource( 2 )
 flip_v = true
+
+[node name="Barrel" type="Sprite" parent="SlotIcon" index="2"]
+position = Vector2( 34.5, 0 )
+texture = ExtResource( 1 )
 
 [node name="Muzzle" parent="." index="1"]
 position = Vector2( 48, 0 )
@@ -96,18 +96,18 @@ process_material = SubResource( 3 )
 texture = ExtResource( 3 )
 offset = Vector2( 15, 0 )
 
-[node name="Barrel" type="Sprite" parent="Sprite" index="0"]
-position = Vector2( 34.5, 0 )
-texture = ExtResource( 1 )
-
-[node name="Tank1" type="Sprite" parent="Sprite" index="1"]
+[node name="Tank1" type="Sprite" parent="Sprite" index="0"]
 position = Vector2( -6, -20 )
 texture = ExtResource( 2 )
 
-[node name="Tank2" type="Sprite" parent="Sprite" index="2"]
+[node name="Tank2" type="Sprite" parent="Sprite" index="1"]
 position = Vector2( -6, 20 )
 texture = ExtResource( 2 )
 flip_v = true
+
+[node name="Barrel" type="Sprite" parent="Sprite" index="2"]
+position = Vector2( 34.5, 0 )
+texture = ExtResource( 1 )
 
 [node name="Anim" type="AnimationPlayer" parent="Sprite" index="3"]
 autoplay = "tank_normal"
