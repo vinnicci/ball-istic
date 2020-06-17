@@ -21,7 +21,7 @@ const ROLL_MODE_DAMP: float = 2.0
 const TURRET_MODE_DAMP: float = 5.0
 const POLY_SIDES = 24 #bot polygon has 24 points
 const DEFAULT_BOT_RADIUS: float = 32.0
-const DEFAULT_COMMIT_VELOCITY: float = 0.45
+const DEFAULT_COMMIT_VELOCITY: float = 0.5
 var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
 
@@ -295,9 +295,6 @@ func _init_bot() -> void:
 		weapon.modulate = Color(1,1,1,0)
 	
 	#bot physics and properties
-	mass = mass * (bot_radius / DEFAULT_BOT_RADIUS)
-	#makes sure even heavy bots can charge although at a much shorter distance
-	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	$CollisionShape.shape.radius = bot_radius
 	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
@@ -349,6 +346,11 @@ func reset_bot_vars() -> void:
 	if state == State.DEAD:
 		return
 	
+	#for the upcoming core mod implementation be sure to always add mass
+	mass = mass * (bot_radius / DEFAULT_BOT_RADIUS)
+	#makes sure even heavy bots can charge although at a shorter distance
+	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
+	
 	current_shield = shield_capacity
 	_bar_shield.max_value = shield_capacity
 	_bar_shield.value = current_shield
@@ -374,6 +376,8 @@ func reset_bot_vars() -> void:
 		if weap == null:
 			continue
 		weap.current_heat = 0
+		weap.current_heat_per_shot = weap.get_heat_per_shot()
+		weap.current_heat_dissipation = weap.get_heat_dissipation()
 	
 	_cap_current_vars()
 
@@ -631,6 +635,47 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 	_bar_health.value = current_health
 
 
+func discharge_parry() -> void:
+	if ((state == State.TURRET || state == State.TO_TURRET || state == State.WEAP_COMMIT) &&
+		_timer_charge_cooldown.is_stopped() == true):
+		_body_charge_effect.get_node("Anim").play("discharge_parry")
+		$Sounds/DischargeParry.play()
+		$Timers/DischargeParry.start()
+		_timer_charge_cooldown.start()
+
+
+func _on_Bot_body_entered(body: Node) -> void:
+	if state != State.CHARGE_ROLL:
+		if $Sounds/Bump.playing == false:
+			$Sounds/Bump.play()
+		return
+	$Sounds/ChargeAttackHit.play()
+	if has_node("Camera2D") == true:
+		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
+	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
+		current_charge_damage_rate)
+	if body is Global.CLASS_BOT:
+		if current_faction == body.current_faction:
+			return
+		#if both bots are charging each other
+		#or a charging bot hit a parrying bot, damage is reduced to 1%
+		if (body.state == Global.CLASS_BOT.State.CHARGE_ROLL ||
+			body.get_node("Timers/DischargeParry").is_stopped() == false):
+			damage *= 0.01
+			$Sounds/Clash.play()
+	$CollisionSpark.look_at(body.global_position)
+	body.take_damage(damage, Vector2(0,0))
+	$CollisionSpark.emitting = true
+
+
+func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
+	if current_shield + current_shield_recovery * 0.25 > shield_capacity:
+		current_shield = shield_capacity
+	elif current_shield + current_shield_recovery * 0.25 <= shield_capacity:
+		current_shield += current_shield_recovery * 0.25
+	_bar_shield.value = current_shield
+
+
 func explode() -> void:
 	$Legs.modulate = Color(0.18, 0.18, 0.18)
 	$Body.modulate = Color(0.18, 0.18, 0.18)
@@ -656,44 +701,3 @@ func _on_ExplodeDelay_timeout() -> void:
 
 func _on_ExplodeTimer_timeout() -> void:
 	queue_free()
-
-
-func discharge_parry() -> void:
-	if ((state == State.TURRET || state == State.TO_TURRET || state == State.WEAP_COMMIT) &&
-		_timer_charge_cooldown.is_stopped() == true):
-		_body_charge_effect.get_node("Anim").play("discharge_parry")
-		$Sounds/DischargeParry.play()
-		$Timers/DischargeParry.start()
-		_timer_charge_cooldown.start()
-
-
-func _on_Bot_body_entered(body: Node) -> void:
-	if state != State.CHARGE_ROLL:
-		if $Sounds/Bump.playing == false:
-			$Sounds/Bump.play()
-		return
-	$CollisionSpark.look_at(body.global_position)
-	$Sounds/ChargeAttackHit.play()
-	if has_node("Camera2D") == true:
-		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
-	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
-		current_charge_damage_rate)
-	if body is Global.CLASS_BOT:
-		if current_faction == body.current_faction:
-			return
-		#if both bots are charging each other
-		#or a charging bot hit a parrying bot, damage is reduced to 1%
-		if (body.state == Global.CLASS_BOT.State.CHARGE_ROLL ||
-			body.get_node("Timers/DischargeParry").is_stopped() == false):
-			damage *= 0.01
-			$Sounds/Clash.play()
-	body.take_damage(damage, Vector2(0,0))
-	$CollisionSpark.emitting = true
-
-
-func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
-	if current_shield + current_shield_recovery * 0.25 > shield_capacity:
-		current_shield = shield_capacity
-	elif current_shield + current_shield_recovery * 0.25 <= shield_capacity:
-		current_shield += current_shield_recovery * 0.25
-	_bar_shield.value = current_shield

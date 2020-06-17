@@ -1,7 +1,6 @@
 extends "res://scenes/bots/_base/_BaseBot.gd"
 
 
-const HEAT_BAR_WARNING_THRESHOLD: float = 0.75
 const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
 const WEAP_HEAT_COLOR: = Color(1, 0.7, 0.15) #orange
 
@@ -215,7 +214,7 @@ func _update_bar_weapon_heat() -> void:
 		_bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
 	elif current_weapon.is_overheating() == false && bar_weapon_heat_anim.is_playing() == false:
 		_bar_weapon_heat.modulate = WEAP_HEAT_COLOR
-	if current_weapon.current_heat > current_weapon.heat_capacity * HEAT_BAR_WARNING_THRESHOLD:
+	if current_weapon.is_almost_overheating() == true:
 		if bar_weapon_heat_anim.is_playing() == false && current_weapon.is_overheating() == false:
 			bar_weapon_heat_anim.play("too_much_heat")
 			$Sounds/CloseToOverheating.play()
@@ -483,8 +482,8 @@ func _own_item(item: Node, new_parent: Node) -> void:
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
-	ui_sprite.modulate = item_sprite.modulate
 	ui_sprite.texture = item_sprite.texture
+	ui_sprite.modulate = item_sprite.modulate
 	ui_sprite.scale = item_sprite.scale
 	ui_sprite.rotation = item_sprite.rotation
 	ui_sprite.offset = item_sprite.offset

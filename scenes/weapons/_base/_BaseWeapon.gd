@@ -6,10 +6,11 @@ export (float) var heat_per_shot: float = 1 setget , get_heat_per_shot
 export (float) var heat_capacity: float = 5 setget , get_heat_capacity
 export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipation
 #heat must be below this threshold to return firing
+export (float, 0, 1.0) var almost_overheating_threshold: float = 0.75 setget , get_almost_overheating_threshold
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
-export (float) var shoot_cooldown: float = 1.0 setget , get_shoot_cooldown
+export (float) var shoot_cooldown: float = 1.0 setget set_shoot_cooldown, get_shoot_cooldown
 export (float) var proj_damage_rate: float = 1.0
-
+#firemode related properties
 enum FireModes {AUTO, BURST, CHARGE, OTHER}
 export (FireModes) var fire_mode
 export (int) var proj_count_per_shot: int = 1 setget , get_proj_count_per_shot
@@ -22,7 +23,10 @@ export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
 export (float) var cam_shake_intensity: float = 0
 
+var current_heat_per_shot: float
 var current_heat: float
+var current_heat_dissipation: float
+var _is_almost_overheating: bool = false setget , is_almost_overheating
 var _is_overheating: bool = false setget , is_overheating
 var weap_commit: bool = false
 
@@ -42,8 +46,15 @@ func get_heat_capacity():
 func get_heat_dissipation():
 	return heat_dissipation_per_sec
 
+func get_almost_overheating_threshold():
+	return almost_overheating_threshold
+
 func get_heat_below_threshold():
 	return heat_below_threshold
+
+func set_shoot_cooldown(new_shoot_cooldown: float):
+	shoot_cooldown = new_shoot_cooldown
+	$Timers/ShootCooldown.wait_time = shoot_cooldown
 
 func get_shoot_cooldown():
 	return shoot_cooldown
@@ -69,17 +80,22 @@ func get_burst_timer():
 func get_charge_timer():
 	return charge_timer
 
+func is_almost_overheating():
+	return _is_almost_overheating
+
 func is_overheating():
 	return _is_overheating
 
 
 func _ready() -> void:
+	current_heat_per_shot = heat_per_shot
+	current_heat_dissipation = heat_dissipation_per_sec
 	_timer_shoot_cooldown.wait_time = shoot_cooldown
 	_timer_burst_timer.wait_time = burst_timer
 	#charge fire mode makes sure no heat per shot
 	#letting go for atleast 0.05 sec means cancelling charge
 	if fire_mode == FireModes.CHARGE:
-		heat_per_shot = 0
+		current_heat_per_shot = 0
 		_timer_shoot_cooldown.wait_time = 0.05
 
 
@@ -90,7 +106,15 @@ func _apply_recoil() -> void:
 
 
 func _process(_delta: float) -> void:
-	if current_heat > heat_capacity && _is_overheating == false:
+	#almost overheat state
+	#use this for weapons with effects that uses heat as risk
+	if _is_almost_overheating == false && current_heat > heat_capacity * almost_overheating_threshold:
+		_is_almost_overheating = true
+	elif _is_almost_overheating == true && current_heat <= heat_capacity * almost_overheating_threshold:
+		_is_almost_overheating = false
+	
+	#overheat state
+	if _is_overheating == false && current_heat > heat_capacity:
 		current_heat = heat_capacity + (heat_capacity*0.05)
 		_is_overheating = true
 	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
@@ -99,7 +123,7 @@ func _process(_delta: float) -> void:
 
 func _on_DissipationCooldown_timeout() -> void:
 	if current_heat > 0:
-		current_heat -= heat_dissipation_per_sec * 0.25 #<- rate 1sec/4
+		current_heat -= current_heat_dissipation * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
 		current_heat = 0
 
@@ -127,7 +151,7 @@ func fire() -> void:
 		return
 	_timer_shoot_cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
-	current_heat += heat_per_shot
+	current_heat += current_heat_per_shot
 	match fire_mode:
 		FireModes.AUTO: _fire_auto()
 		FireModes.BURST: _fire_burst()
