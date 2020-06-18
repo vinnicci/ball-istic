@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_energy_cannon_proj.png-8d342f16bd602b8785e8f4e897f7838a.s3tc.stex"
-path.etc2="res://.import/tex_energy_cannon_proj.png-8d342f16bd602b8785e8f4e897f7838a.etc2.stex"
+path.s3tc="res://.import/tex_generic_small_proj.png-fee50698b8f1b98671c2c11743505b29.s3tc.stex"
+path.etc2="res://.import/tex_generic_small_proj.png-fee50698b8f1b98671c2c11743505b29.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_energy_cannon_proj.png"
-dest_files=[ "res://.import/tex_energy_cannon_proj.png-8d342f16bd602b8785e8f4e897f7838a.s3tc.stex", "res://.import/tex_energy_cannon_proj.png-8d342f16bd602b8785e8f4e897f7838a.etc2.stex" ]
+source_file="res://assets/weapons/tex_generic_small_proj.png"
+dest_files=[ "res://.import/tex_generic_small_proj.png-fee50698b8f1b98671c2c11743505b29.s3tc.stex", "res://.import/tex_generic_small_proj.png-fee50698b8f1b98671c2c11743505b29.etc2.stex" ]
 
 [params]
 

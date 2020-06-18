@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_scattershot_proj.png-a15a201b5d2380212a5e05ef1a96a345.s3tc.stex"
-path.etc2="res://.import/tex_scattershot_proj.png-a15a201b5d2380212a5e05ef1a96a345.etc2.stex"
+path.s3tc="res://.import/tex_generic_big_proj.png-df5f3c1948b8ba9d1252688eed9e8c9c.s3tc.stex"
+path.etc2="res://.import/tex_generic_big_proj.png-df5f3c1948b8ba9d1252688eed9e8c9c.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_scattershot_proj.png"
-dest_files=[ "res://.import/tex_scattershot_proj.png-a15a201b5d2380212a5e05ef1a96a345.s3tc.stex", "res://.import/tex_scattershot_proj.png-a15a201b5d2380212a5e05ef1a96a345.etc2.stex" ]
+source_file="res://assets/weapons/tex_generic_big_proj.png"
+dest_files=[ "res://.import/tex_generic_big_proj.png-df5f3c1948b8ba9d1252688eed9e8c9c.s3tc.stex", "res://.import/tex_generic_big_proj.png-df5f3c1948b8ba9d1252688eed9e8c9c.etc2.stex" ]
 
 [params]
 

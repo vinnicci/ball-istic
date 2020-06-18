@@ -21,7 +21,7 @@ const ROLL_MODE_DAMP: float = 2.0
 const TURRET_MODE_DAMP: float = 5.0
 const POLY_SIDES = 24 #bot polygon has 24 points
 const DEFAULT_BOT_RADIUS: float = 32.0
-const DEFAULT_COMMIT_VELOCITY: float = 0.5
+const DEFAULT_COMMIT_VELOCITY: float = 0.45
 var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
 

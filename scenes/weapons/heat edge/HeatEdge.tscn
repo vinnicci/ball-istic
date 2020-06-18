@@ -62,29 +62,31 @@ tracks/1/keys = {
 [node name="HeatEdge" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 heat_capacity = 20.0
-almost_overheating_threshold = 0.75
 shoot_cooldown = 0.2
 spread = 5.0
 recoil = 10
 cam_shake_intensity = 3.0
 
 [node name="SlotIcon" parent="." index="0"]
-scale = Vector2( 0.7, 0.7 )
+scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 3 )
-offset = Vector2( 15, 0 )
+offset = Vector2( 10, 0 )
 
 [node name="Tank1" type="Sprite" parent="SlotIcon" index="0"]
 position = Vector2( -7.5, -25 )
 texture = ExtResource( 2 )
+offset = Vector2( -5, 0 )
 
 [node name="Tank2" type="Sprite" parent="SlotIcon" index="1"]
 position = Vector2( -7.5, 25 )
 texture = ExtResource( 2 )
+offset = Vector2( -5, 0 )
 flip_v = true
 
 [node name="Barrel" type="Sprite" parent="SlotIcon" index="2"]
 position = Vector2( 34.5, 0 )
 texture = ExtResource( 1 )
+offset = Vector2( -5, 0 )
 
 [node name="Muzzle" parent="." index="1"]
 position = Vector2( 48, 0 )
