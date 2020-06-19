@@ -37,7 +37,7 @@ func _init_explosion() -> void:
 func start_explosion() -> void:
 	if ((is_instance_valid(Global.player) && Global.player.state != Global.CLASS_BOT.State.DEAD) &&
 		global_position.distance_to(Global.player.global_position) < explosion_radius * 4):
-		Global.player.get_node("Camera2D").shake_camera(30, 0.1, 0.1, 1)
+		Global.player.get_node("Camera2D").shake_camera(30, 0.05, 0.05, 1)
 	elif global_position.distance_to(Global.current_level.get_node("Camera2D").global_position) < explosion_radius * 4:
 		Global.current_level.get_node("Camera2D").shake_camera(30, 0.1, 0.1, 1)
 	var bodies = $AreaOfEffect.get_overlapping_bodies()

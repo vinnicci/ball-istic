@@ -630,14 +630,14 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		current_health += current_shield - damage
 		current_shield = 0
 		if has_node("Camera2D") == true:
-			$Camera2D.shake_camera(10, 0.05, 0.05, 1)
+			$Camera2D.shake_camera(15, 0.05, 0.05, 1)
 	_bar_shield.value = current_shield
 	_bar_health.value = current_health
 
 
 func discharge_parry() -> void:
-	if ((state == State.TURRET || state == State.TO_TURRET || state == State.WEAP_COMMIT) &&
-		_timer_charge_cooldown.is_stopped() == true):
+	if (_timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
+		state == State.TO_TURRET || state == State.WEAP_COMMIT)):
 		_body_charge_effect.get_node("Anim").play("discharge_parry")
 		$Sounds/DischargeParry.play()
 		$Timers/DischargeParry.start()
@@ -651,7 +651,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		return
 	$Sounds/ChargeAttackHit.play()
 	if has_node("Camera2D") == true:
-		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
+		$Camera2D.shake_camera(30, 0.05, 0.05, 1)
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
 		current_charge_damage_rate)
 	if body is Global.CLASS_BOT:
@@ -661,7 +661,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if (body.state == Global.CLASS_BOT.State.CHARGE_ROLL ||
 			body.get_node("Timers/DischargeParry").is_stopped() == false):
-			damage *= 0.01
+			damage *= 0.05
 			$Sounds/Clash.play()
 	$CollisionSpark.look_at(body.global_position)
 	body.take_damage(damage, Vector2(0,0))

@@ -111,7 +111,30 @@ func _change_slot_selected(slot_num: int) -> void:
 	current_weapon.look_at(get_global_mouse_position())
 
 
+func _process(delta: float) -> void:
+	_control_camera(delta)
+	
+	if _held_item != null:
+		_held_item.position = get_viewport().get_mouse_position()
+		_held_item.global_rotation = 0
+	
+	_update_bar_weapon_heat()
+	
+	_update_weapon_hud()
+	
+	_control_player_weapon_hotkeys()
+	
+	#inventory
+	#can't close the ui if holding an item
+	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
+		ui_inventory.visible = !ui_inventory.visible
+
+
 func _physics_process(delta: float) -> void:
+	_player_control()
+
+
+func _player_control() -> void:
 	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(get_global_mouse_position())
 	
@@ -140,28 +163,9 @@ func _physics_process(delta: float) -> void:
 		shoot_weapon()
 	if Input.is_action_just_pressed("discharge_parry"):
 		if _timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
-			state == State.TO_TURRET):
+			state == State.TO_TURRET || state == State.WEAP_COMMIT):
 			_update_bar_charge_level()
 		discharge_parry()
-
-
-func _process(delta: float) -> void:
-	_control_camera(delta)
-	
-	if _held_item != null:
-		_held_item.position = get_viewport().get_mouse_position()
-		_held_item.global_rotation = 0
-	
-	_update_bar_weapon_heat()
-	
-	_update_weapon_hud()
-	
-	_control_player_weapon_hotkeys()
-	
-	#inventory
-	#can't close the ui if holding an item
-	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
-		ui_inventory.visible = !ui_inventory.visible
 
 
 func _update_weapon_hud() -> void:
@@ -259,8 +263,10 @@ func _update_ui_weapon_slot(slot_num: int) -> bool:
 	var hud_weap_heat: = _hud_weapon_slots.get_node(slot_num_str + "/SlotHeat")
 	var inv_weap_sprite: = _ui_loadout_slots.get_node("WeaponSlots/" + slot_num_str + "/Sprite")
 	if weap == null: #wipe empty weapon slot
-		hud_weap_sprite.texture = null
-		inv_weap_sprite.texture = null
+#		hud_weap_sprite.texture = null
+#		inv_weap_sprite.texture = null
+		_clear_sprite(hud_weap_sprite)
+		_clear_sprite(inv_weap_sprite)
 		hud_weap_heat.value = 0
 		return false
 	else:
@@ -483,6 +489,7 @@ func _own_item(item: Node, new_parent: Node) -> void:
 
 
 func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
+	_clear_sprite(ui_sprite)
 	ui_sprite.texture = item_sprite.texture
 	if item_sprite.get_child_count() != 0:
 		for sprite in item_sprite.get_children():
@@ -513,7 +520,7 @@ func _clear_sprite(sprite: Sprite) -> void:
 	sprite.texture = null
 	if sprite.get_child_count() != 0:
 		for child_sprite in sprite.get_children():
-			sprite.remove_child(child_sprite)
+			child_sprite.queue_free()
 
 
 func _check_if_equipping_weapon() -> bool:

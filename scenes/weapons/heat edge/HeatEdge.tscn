@@ -65,7 +65,7 @@ heat_capacity = 20.0
 shoot_cooldown = 0.2
 spread = 5.0
 recoil = 10
-cam_shake_intensity = 3.0
+cam_shake_intensity = 1.0
 
 [node name="SlotIcon" parent="." index="0"]
 scale = Vector2( 0.6, 0.6 )

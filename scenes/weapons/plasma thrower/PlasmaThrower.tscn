@@ -34,8 +34,7 @@ color_ramp = SubResource( 2 )
 [node name="PlasmaThrower" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 0.25
-heat_capacity = 10.0
+heat_capacity = 15.0
 heat_dissipation_per_sec = 0.5
 shoot_cooldown = 0.01
 proj_count_per_shot = 3

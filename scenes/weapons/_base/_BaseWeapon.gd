@@ -99,12 +99,6 @@ func _ready() -> void:
 		_timer_shoot_cooldown.wait_time = 0.05
 
 
-func _apply_recoil() -> void:
-	if _parent_node.has_node("Camera2D") == true:
-		_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.1, 0.1)
-	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
-
-
 func _process(_delta: float) -> void:
 	#almost overheat state
 	#use this for weapons with effects that uses heat as risk
@@ -171,6 +165,12 @@ func _instance_proj() -> Node:
 	if proj is Global.CLASS_BOT_PROJ == false:
 		proj.damage *= proj_damage_rate
 	return proj
+
+
+func _apply_recoil() -> void:
+	if _parent_node.has_node("Camera2D") == true:
+		_parent_node.get_node("Camera2D").shake_camera(cam_shake_intensity, 0.05, 0.05)
+	_parent_node.apply_knockback(Vector2(recoil, 0).rotated(global_rotation - deg2rad(180)))
 
 
 ################################################################################
