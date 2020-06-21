@@ -3,6 +3,19 @@ extends Camera2D
 
 var _amp: float
 var _priority: int = 0
+var _shaking: bool = false
+onready var _shake_tween = $ShakeTween
+
+
+#due to having the dynamic y-offset
+#process loop is used instead of returning it to V(0,0) offset
+func _process(delta: float) -> void:
+	if get_parent() is Global.CLASS_PLAYER == false || _shaking == true:
+		return
+	var v_distance: float = 0.5
+	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance
+	offset.x = lerp(offset.x, 0, delta * 5.0)
+	offset.y = lerp(offset.y, mouse_pos, delta * 1.0)
 
 
 func shake_camera(amplitude: float, frequency: float, duration: float, priority: int = 0) -> void:
@@ -10,6 +23,7 @@ func shake_camera(amplitude: float, frequency: float, duration: float, priority:
 		return
 	_amp = amplitude
 	_priority = priority
+	_shaking = true
 	$Frequency.wait_time = frequency
 	$Duration.wait_time = duration
 	$Frequency.start()
@@ -28,21 +42,16 @@ func _shake() -> void:
 		rand_y = -_amp
 	else:
 		rand_y = _amp
-#	print("x: " + rand_x as String + " y: " + rand_y as String)
 	var amp_vector: Vector2
 	amp_vector = Vector2(rand_x, rand_y + offset.y)
-	var shake_tween: = $ShakeTween
-	shake_tween.interpolate_property(self, "offset", offset,
-		amp_vector, $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	shake_tween.start()
+	_shake_tween.interpolate_property(self, "offset", offset, amp_vector,
+		$Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	_shake_tween.start()
 
 
 func _stop_shake() -> void:
 	_priority = 0
-	var shake_tween: = $ShakeTween
-	shake_tween.interpolate_property(self, "offset", offset, Vector2(0, offset.y),
-		$Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	shake_tween.start()
+	_shaking = false
 	$Frequency.stop()
 
 

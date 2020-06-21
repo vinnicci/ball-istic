@@ -1,10 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/weapons/scattershot/ScattershotProj.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/sweeper/SweeperProj.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/weapons/sweeper/Sweeper.gd" type="Script" id=3]
 [ext_resource path="res://assets/weapons/tex_scattershot.png" type="Texture" id=4]
-
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -42,7 +41,7 @@ burst_count = 25
 spread = 20.0
 recoil = 50
 charge_timer = 2.0
-cam_shake_intensity = 20.0
+cam_shake_intensity = 8.0
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.247059, 0.501961, 0.941176, 1 )

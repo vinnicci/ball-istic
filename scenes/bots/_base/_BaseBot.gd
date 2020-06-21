@@ -48,6 +48,7 @@ onready var _body_tween: = $Body/BodyTween
 onready var _bar_shield: = $Bars/Shield
 onready var _bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
+onready var _timer_discharge_parry: = $Timers/DischargeParry
 onready var timer_stun: = $Timers/Stun
 
 
@@ -426,12 +427,20 @@ var _unrolled: bool = false
 
 
 func _apply_rolling_effects(delta: float) -> void:
-	if _check_if_turret() == true && _unrolled == false:
+	if _unrolled == false && _check_if_turret() == true:
+		while _body_texture.texture_offset.x <= -bot_radius:
+			_body_texture.texture_offset.x += bot_radius
+		while _body_texture.texture_offset.x > bot_radius:
+			_body_texture.texture_offset.x -= bot_radius
+		while _body_texture.texture_offset.y <= -bot_radius:
+			_body_texture.texture_offset.y += bot_radius
+		while _body_texture.texture_offset.y > bot_radius:
+			_body_texture.texture_offset.y -= bot_radius
 		_body_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
-			Vector2(0,0), 0.1, Tween.TRANS_LINEAR)
+			Vector2(0,0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 		_body_tween.start()
 		_unrolled = true
-	else:
+	elif _check_if_turret() == false:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
 		_unrolled = false
 
@@ -441,7 +450,7 @@ func _check_if_turret() -> bool:
 	match state:
 		State.TO_TURRET, State.TURRET, State.WEAP_COMMIT:
 			output = true
-		State.ROLL:
+		State.ROLL, State.TO_ROLL:
 			output = false
 		State.DEAD, State.STUN:
 			match _before_stun:
@@ -630,7 +639,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		current_health += current_shield - damage
 		current_shield = 0
 		if has_node("Camera2D") == true:
-			$Camera2D.shake_camera(15, 0.05, 0.05, 1)
+			$Camera2D.shake_camera(15, 0.1, 0.1, 1)
 	_bar_shield.value = current_shield
 	_bar_health.value = current_health
 
@@ -640,18 +649,23 @@ func discharge_parry() -> void:
 		state == State.TO_TURRET || state == State.WEAP_COMMIT)):
 		_body_charge_effect.get_node("Anim").play("discharge_parry")
 		$Sounds/DischargeParry.play()
-		$Timers/DischargeParry.start()
+		_timer_discharge_parry.start()
 		_timer_charge_cooldown.start()
 
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if state != State.CHARGE_ROLL:
-		if $Sounds/Bump.playing == false:
+		if (has_node("Camera2D") == true && body is Global.CLASS_BOT &&
+			body.state == State.CHARGE_ROLL && _timer_discharge_parry.is_stopped() == false):
+			if has_node("Camera2D") == true:
+				$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+		elif $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	$Sounds/ChargeAttackHit.play()
+	if $Sounds/ChargeAttackHit.playing == false:
+		$Sounds/ChargeAttackHit.play()
 	if has_node("Camera2D") == true:
-		$Camera2D.shake_camera(30, 0.05, 0.05, 1)
+		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
 		current_charge_damage_rate)
 	if body is Global.CLASS_BOT:

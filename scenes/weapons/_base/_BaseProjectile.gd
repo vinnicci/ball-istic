@@ -2,7 +2,7 @@ extends Area2D
 
 
 export (int) var speed: int = 500 setget , get_speed
-export (float) var damage: float = 5
+export (float) var damage: float = 1
 export (int) var proj_range: int = 500 setget , get_range
 export (float) var knockback: float = 50 setget , get_knockback
 

@@ -112,11 +112,11 @@ func _change_slot_selected(slot_num: int) -> void:
 
 
 func _process(delta: float) -> void:
-	_control_camera(delta)
-	
 	if _held_item != null:
 		_held_item.position = get_viewport().get_mouse_position()
 		_held_item.global_rotation = 0
+	
+#	_control_camera(delta)
 	
 	_update_bar_weapon_heat()
 	
@@ -131,10 +131,10 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_player_control()
+	_control_player()
 
 
-func _player_control() -> void:
+func _control_player() -> void:
 	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(get_global_mouse_position())
 	
@@ -225,13 +225,13 @@ func _update_bar_weapon_heat() -> void:
 	_bar_weapon_heat.value = current_weapon.current_heat
 
 
-func _control_camera(delta: float) -> void:
-	if has_node("Camera2D") == false:
-		return
-	var mouse_pos: = get_global_mouse_position().y - global_position.y
-	var lerp_time: = 3.0 * (1 - pow(0.5, delta))
-	var v_distance: = 0.5
-	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos * v_distance, lerp_time)
+#func _control_camera(delta: float) -> void:
+#	if has_node("Camera2D") == false:
+#		return
+#	var v_distance: float = 0.5
+#	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance
+#	var speed: float = 1.0
+#	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos, delta * speed)
 
 
 ################################################################################

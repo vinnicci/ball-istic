@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -10,8 +10,10 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/weapons/burst blaster/BurstBlaster.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/cdrone launcher/CDroneLauncher.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/weapons/charge blaster/ChargeBlaster.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/stun grenade launcher/StunGrenadeLauncher.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/weapons/beam pincer/BeamPincer.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=17]
@@ -74,6 +76,10 @@ shape = SubResource( 1 )
 heat_per_shot = 0.5
 proj_count_per_shot = 2
 
+[node name="BurstBlaster" parent="Access/Depot/Items" index="12" instance=ExtResource( 11 )]
+
+[node name="ChargeBlaster" parent="Access/Depot/Items" index="13" instance=ExtResource( 14 )]
+
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )
 
@@ -85,18 +91,26 @@ position = Vector2( 3751.07, 2914.15 )
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
 position = Vector2( 1384.24, 2432.66 )
-charge_damage_rate = 0.5
+shield_capacity = 8.0
+health_capacity = 8.0
+charge_damage_rate = 0.3
 
 [node name="Charger2" parent="Bots" index="2" instance=ExtResource( 13 )]
 position = Vector2( 3046.97, 810.888 )
-charge_damage_rate = 0.5
+shield_capacity = 8.0
+health_capacity = 8.0
+charge_damage_rate = 0.3
 
 [node name="Charger3" parent="Bots" index="3" instance=ExtResource( 13 )]
 position = Vector2( 3456.51, 1548.06 )
-charge_damage_rate = 0.5
+shield_capacity = 8.0
+health_capacity = 8.0
+charge_damage_rate = 0.3
 
 [node name="Charger4" parent="Bots" index="4" instance=ExtResource( 13 )]
 position = Vector2( 1163.09, 1556.25 )
-charge_damage_rate = 0.5
+shield_capacity = 8.0
+health_capacity = 8.0
+charge_damage_rate = 0.3
 
 [editable path="Access/Depot"]

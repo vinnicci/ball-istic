@@ -15,10 +15,11 @@ func _process(delta: float) -> void:
 		if _timer_shoot_cooldown.is_stopped() == true && _is_overheating == false:
 			$Line2D.show()
 			$Line2D.points[1] = $TeleLine.cast_to
-			if $TeleLine.is_colliding() == true && _is_line_colliding == false:
+			if $TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT && _is_line_colliding == false:
 				$Line2D/Anim.play("shift_color")
 				_is_line_colliding = true
-			elif $TeleLine.is_colliding() == false && _is_line_colliding == true:
+			elif ($TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT == false &&
+				_is_line_colliding == true):
 				$Line2D/Anim.play_backwards("shift_color")
 				_is_line_colliding = false
 		else:
@@ -28,7 +29,7 @@ func _process(delta: float) -> void:
 
 
 func _fire_other(to_pos = null) -> void:
-	if $TeleLine.is_colliding() == true:
+	if $TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT:
 		current_heat -= heat_per_shot
 		_timer_shoot_cooldown.stop()
 		return

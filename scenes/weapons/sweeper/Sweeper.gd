@@ -5,10 +5,9 @@ var _deg_increment: = 5
 
 
 func _charge_fire() -> void:
-	if _parent_node.state != Global.CLASS_BOT.State.TURRET:
-		return
+	._charge_fire()
 	weap_commit = true
-	$Timers/BurstTimer.start()
+	_fire_burst()
 	global_rotation += deg2rad(10)
 
 

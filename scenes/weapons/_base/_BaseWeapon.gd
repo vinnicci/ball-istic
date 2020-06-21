@@ -95,8 +95,10 @@ func _ready() -> void:
 	#charge fire mode makes sure no heat per shot
 	#letting go for atleast 0.05 sec means cancelling charge
 	if fire_mode == FireModes.CHARGE:
-		current_heat_per_shot = 0
-		_timer_shoot_cooldown.wait_time = 0.05
+		heat_per_shot = 0
+		current_heat_per_shot = heat_per_shot
+		shoot_cooldown = 0.05
+		_timer_shoot_cooldown.wait_time = shoot_cooldown
 
 
 func _process(_delta: float) -> void:
@@ -217,7 +219,7 @@ func _fire_charged() -> void:
 		_cancel_charge()
 		return
 	if current_heat == heat_capacity:
-		_is_overheating = true
+		current_heat += 1
 		_timer_charge_cancel_timer.stop()
 		_charge_fire()
 		_cancel_charge()

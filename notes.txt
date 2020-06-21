@@ -1,0 +1,3 @@
+z index:
+everything - 0
+weapon sprites - 1
