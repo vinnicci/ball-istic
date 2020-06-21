@@ -469,7 +469,7 @@ func switch_mode():
 		_switch = true
 
 
-#state machine exclusive
+#state machine exclusive func
 func _switch_to_turret() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
@@ -497,7 +497,7 @@ func _animate_weapon_hatch_to_turret() -> void:
 	_switch_tween.start()
 
 
-#state machine exclusive
+#state machine exclusive func
 func _switch_to_roll() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
@@ -655,15 +655,13 @@ func discharge_parry() -> void:
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if state != State.CHARGE_ROLL:
-		if (has_node("Camera2D") == true && body is Global.CLASS_BOT &&
+		if (has_node("Camera2D") && body is Global.CLASS_BOT &&
 			body.state == State.CHARGE_ROLL && _timer_discharge_parry.is_stopped() == false):
-			if has_node("Camera2D") == true:
-				$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+			$Camera2D.shake_camera(20, 0.1, 0.1, 1)
 		elif $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	if $Sounds/ChargeAttackHit.playing == false:
-		$Sounds/ChargeAttackHit.play()
+	$Sounds/ChargeAttackHit.play()
 	if has_node("Camera2D") == true:
 		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *

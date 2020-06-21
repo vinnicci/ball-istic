@@ -225,15 +225,6 @@ func _update_bar_weapon_heat() -> void:
 	_bar_weapon_heat.value = current_weapon.current_heat
 
 
-#func _control_camera(delta: float) -> void:
-#	if has_node("Camera2D") == false:
-#		return
-#	var v_distance: float = 0.5
-#	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance
-#	var speed: float = 1.0
-#	$Camera2D.offset.y = lerp($Camera2D.offset.y, mouse_pos, delta * speed)
-
-
 ################################################################################
 # inventory management
 ################################################################################

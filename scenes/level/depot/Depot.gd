@@ -17,7 +17,7 @@ func _init_ui_node() -> void:
 	for i in $Items.get_children().size():
 		var item = $Items.get_child(i)
 		_arr_items[i] = item
-		item.modulate = Color(1,1,1,0)
+		item.modulate.a = 0
 
 
 func _on_Area2D_body_entered(body: Node) -> void:
