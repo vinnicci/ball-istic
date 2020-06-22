@@ -1,5 +1,6 @@
 extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
+#charge damage rate
 func _apply_effects() -> void:
-	_parent_node.current_charge_cooldown -= 0.5
+	pass

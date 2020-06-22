@@ -13,6 +13,8 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 script = ExtResource( 3 )
 
 [node name="SlotIcon" parent="." index="0"]
+visible = true
+self_modulate = Color( 1, 0.647059, 0.145098, 1 )
 texture = SubResource( 1 )
 
 [node name="Effect" parent="SlotIcon" index="0"]

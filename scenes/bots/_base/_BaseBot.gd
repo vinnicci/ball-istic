@@ -25,7 +25,9 @@ const DEFAULT_COMMIT_VELOCITY: float = 0.45
 var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
 
+var current_shield_cap: float
 var current_shield: float
+var current_health_cap: float
 var current_health: float
 var current_speed: int
 var current_shield_recovery: float
@@ -45,8 +47,8 @@ onready var _body_charge_effect: = $Body/ChargeEffect
 onready var _body_weapon_hatch: = $Body/WeaponHatch
 onready var _switch_tween: = $Body/SwitchTween
 onready var _body_tween: = $Body/BodyTween
-onready var _bar_shield: = $Bars/Shield
-onready var _bar_health: = $Bars/Health
+onready var bar_shield: = $Bars/Shield
+onready var bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
 onready var _timer_discharge_parry: = $Timers/DischargeParry
 onready var timer_stun: = $Timers/Stun
@@ -308,8 +310,8 @@ func _init_bot() -> void:
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
-	_bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
-	_bar_health.rect_position.y += _bar_shield.rect_position.y + 15 #-> hardcoded for now
+	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
+	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
@@ -352,14 +354,16 @@ func reset_bot_vars() -> void:
 	#makes sure even heavy bots can charge although at a shorter distance
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	
-	current_shield = shield_capacity
-	_bar_shield.max_value = shield_capacity
-	_bar_shield.value = current_shield
+	current_shield_cap = shield_capacity
+	current_shield = current_shield_cap
+	bar_shield.max_value = current_shield_cap
+	bar_shield.value = current_shield
 	current_shield_recovery = shield_recovery_per_sec
 	
-	current_health = health_capacity
-	_bar_health.max_value = health_capacity
-	_bar_health.value = current_health
+	current_health_cap = health_capacity
+	current_health = current_health_cap
+	bar_health.max_value = current_health_cap
+	bar_health.value = current_health
 	
 	current_transform_speed = transform_speed
 	
@@ -376,8 +380,8 @@ func reset_bot_vars() -> void:
 	for weap in _arr_weapons:
 		if weap == null:
 			continue
-		weap.current_heat = 0
-		weap.current_heat_per_shot = weap.get_heat_per_shot()
+#		weap.current_heat = 0
+#		weap.current_heat_per_shot = weap.get_heat_per_shot()
 		weap.current_heat_dissipation = weap.get_heat_dissipation()
 	
 	_cap_current_vars()
@@ -640,8 +644,8 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		current_shield = 0
 		if has_node("Camera2D") == true:
 			$Camera2D.shake_camera(15, 0.1, 0.1, 1)
-	_bar_shield.value = current_shield
-	_bar_health.value = current_health
+	bar_shield.value = current_shield
+	bar_health.value = current_health
 
 
 func discharge_parry() -> void:
@@ -681,11 +685,11 @@ func _on_Bot_body_entered(body: Node) -> void:
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
-	if current_shield + current_shield_recovery * 0.25 > shield_capacity:
-		current_shield = shield_capacity
-	elif current_shield + current_shield_recovery * 0.25 <= shield_capacity:
+	if current_shield + current_shield_recovery * 0.25 > current_shield_cap:
+		current_shield = current_shield_cap
+	elif current_shield + current_shield_recovery * 0.25 <= current_shield_cap:
 		current_shield += current_shield_recovery * 0.25
-	_bar_shield.value = current_shield
+	bar_shield.value = current_shield
 
 
 func explode() -> void:

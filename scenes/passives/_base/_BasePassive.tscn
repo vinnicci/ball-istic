@@ -12,6 +12,7 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 script = ExtResource( 1 )
 
 [node name="SlotIcon" parent="." index="0"]
+visible = true
 scale = Vector2( 1, 1 )
 texture = SubResource( 1 )
 

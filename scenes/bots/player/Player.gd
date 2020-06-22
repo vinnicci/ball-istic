@@ -116,8 +116,6 @@ func _process(delta: float) -> void:
 		_held_item.position = get_viewport().get_mouse_position()
 		_held_item.global_rotation = 0
 	
-#	_control_camera(delta)
-	
 	_update_bar_weapon_heat()
 	
 	_update_weapon_hud()
@@ -486,6 +484,7 @@ func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
 		for sprite in item_sprite.get_children():
 			ui_sprite.add_child(sprite.duplicate())
 	ui_sprite.modulate = item_sprite.modulate
+	ui_sprite.self_modulate = item_sprite.self_modulate
 	ui_sprite.scale = item_sprite.scale
 	ui_sprite.rotation = item_sprite.rotation
 	ui_sprite.offset = item_sprite.offset
