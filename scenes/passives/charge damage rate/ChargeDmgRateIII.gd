@@ -1,6 +1,8 @@
 extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
-#charge damage rate
+const EFFECT: float = 0.15
+
+
 func _apply_effects() -> void:
-	pass
+	_parent_node.current_charge_damage_rate += EFFECT

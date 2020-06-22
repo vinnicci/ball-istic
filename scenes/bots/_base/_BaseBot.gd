@@ -3,14 +3,14 @@ extends RigidBody2D
 
 export (float, 20.0, 150.0) var bot_radius: float = 32.0 setget , get_bot_radius
 export (float) var shield_capacity: float = 20 setget , get_shield_capacity
+export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
 export (float) var health_capacity: float = 20 setget , get_health_capacity
 export (int, 0, 3000) var speed: int = 1200 setget , get_speed
-export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
-export (float, 0.1, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
+export (float, 0, 1.0) var knockback_resist: float = 0.3 setget , get_knockback_resist
+export (float, 0.05, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
 export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
-export (float, 0, 1.0) var knockback_resist: float = 0.5 setget , get_knockback_resist
 export (float, 0.1, 1.5) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
-export (float) var charge_damage_rate: float = 1.0 setget , get_charge_damage_rate
+export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0.13, 0.13) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
@@ -39,7 +39,7 @@ var current_charge_force_factor: float
 var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
-var _arr_weapons: Array = [null, null, null, null, null]
+var arr_weapons: Array = [null, null, null, null, null]
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -290,7 +290,7 @@ func _init_bot() -> void:
 	for weapon in $Weapons.get_children():
 		i += 1
 		weapon.set_parent(self)
-		_arr_weapons[i] = weapon
+		arr_weapons[i] = weapon
 		if initialized_selected_weap == false:
 			current_weapon = weapon
 			initialized_selected_weap = true
@@ -377,11 +377,11 @@ func reset_bot_vars() -> void:
 	
 	current_faction = faction
 	
-	for weap in _arr_weapons:
+	for weap in arr_weapons:
 		if weap == null:
 			continue
-#		weap.current_heat = 0
-#		weap.current_heat_per_shot = weap.get_heat_per_shot()
+		weap.current_heat = 0
+		weap.current_heat_per_shot = weap.get_heat_per_shot()
 		weap.current_heat_dissipation = weap.get_heat_dissipation()
 	
 	_cap_current_vars()
@@ -389,10 +389,10 @@ func reset_bot_vars() -> void:
 
 func _cap_current_vars() -> void:
 	current_speed = clamp(current_speed, 500, 3000)
-	current_transform_speed = clamp(current_transform_speed, 0.1, 1.0)
+	current_transform_speed = clamp(current_transform_speed, 0.05, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
-	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
+	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 1.5)
 
 
 func _process(delta: float) -> void:
@@ -541,7 +541,7 @@ func shoot_weapon() -> void:
 
 #some weapon has fixed anim -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
-	var weap = _arr_weapons[slot_num]
+	var weap = arr_weapons[slot_num]
 	if weap == null || state == State.TO_ROLL || state == State.TO_TURRET:
 		return false
 	current_weapon.modulate = Color(1,1,1,0)

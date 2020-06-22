@@ -87,7 +87,7 @@ func _connect_buttons() -> void:
 func _init_weap_and_slot_selected() -> void:
 	var non_empty_slot_found: = false
 	var slot_initialized: = false
-	for slot_num in _arr_weapons.size():
+	for slot_num in arr_weapons.size():
 		non_empty_slot_found = _update_ui_weapon_slot(slot_num)
 		if non_empty_slot_found == true && slot_initialized == false: #initialize first selected slot
 			_change_slot_selected(slot_num)
@@ -167,15 +167,15 @@ func _control_player() -> void:
 
 
 func _update_weapon_hud() -> void:
-	for i in _arr_weapons.size():
-		if _arr_weapons[i] == null:
+	for i in arr_weapons.size():
+		if arr_weapons[i] == null:
 			continue
 		var hud_weap_heat = _hud_weapon_slots.get_node(i as String + "/SlotHeat")
-		if _arr_weapons[i].is_overheating() == true:
+		if arr_weapons[i].is_overheating() == true:
 			hud_weap_heat.modulate = WEAP_OVERHEAT_COLOR
 		else:
 			hud_weap_heat.modulate = WEAP_HEAT_COLOR
-		hud_weap_heat.value = _arr_weapons[i].current_heat
+		hud_weap_heat.value = arr_weapons[i].current_heat
 
 
 func _control_player_weapon_hotkeys() -> void:
@@ -246,7 +246,7 @@ onready var _held_item = $PlayerUI/HeldItem
 
 #similar to upddate_ui_slot func but with extra steps and returns bool value
 func _update_ui_weapon_slot(slot_num: int) -> bool:
-	var weap = _arr_weapons[slot_num]
+	var weap = arr_weapons[slot_num]
 	var slot_num_str: = slot_num as String
 	var hud_weap_sprite: = _hud_weapon_slots.get_node(slot_num_str + "/WeaponSprite")
 	var hud_weap_heat: = _hud_weapon_slots.get_node(slot_num_str + "/SlotHeat")
@@ -311,7 +311,7 @@ func _on_ItemSlot_pressed(slot_name: String) -> void:
 
 
 func _on_WeaponSlot_pressed(slot_name: String) -> void:
-	_match_slot(slot_name as int, "weapon", _arr_weapons)
+	_match_slot(slot_name as int, "weapon", arr_weapons)
 
 
 func _on_PassiveSlot_pressed(slot_name: String) -> void:
@@ -422,7 +422,7 @@ func _swap(slot_name: String, slot_num: int) -> void:
 	var arr_slot: Array
 	match slot_name:
 		"all_item": arr_slot = _arr_all_items
-		"weapon": arr_slot = _arr_weapons
+		"weapon": arr_slot = arr_weapons
 		"passive": arr_slot = _arr_passives
 	var temp_hold = arr_slot[slot_num]
 	arr_slot[slot_num] = _dict_held["item"]
@@ -514,7 +514,7 @@ func _clear_sprite(sprite: Sprite) -> void:
 
 
 func _check_if_equipping_weapon() -> bool:
-	for weap in _arr_weapons:
+	for weap in arr_weapons:
 		if weap != null:
 			return true
 	return false

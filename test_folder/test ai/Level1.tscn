@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -15,21 +15,24 @@
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/charge blaster/ChargeBlaster.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/stun grenade launcher/StunGrenadeLauncher.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/weapons/plasma thrower/PlasmaThrower.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/passives/roll speed/RollSpeedIII.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedIII.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationII.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryI.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryII.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/sweeper/Sweeper.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationIII.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/passives/knockback resist/KnockbackResistIII.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryIII.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateI.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncher.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationIII.tscn" type="PackedScene" id=29]
+[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateIII.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryIII.tscn" type="PackedScene" id=31]
+[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.tscn" type="PackedScene" id=32]
+[ext_resource path="res://scenes/weapons/energy cannon/EnergyCannon.tscn" type="PackedScene" id=33]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -82,6 +85,8 @@ proj_count_per_shot = 2
 
 [node name="ChargeBlaster" parent="Access/Depot/Items" index="9" instance=ExtResource( 14 )]
 
+[node name="EnergyCannon" parent="Access/Depot/Items" index="10" instance=ExtResource( 33 )]
+
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )
 
@@ -94,29 +99,29 @@ position = Vector2( 4926.15, 3007.37 )
 [node name="CollisionShape2D" parent="Access/Depot2/Area2D" index="0"]
 shape = SubResource( 2 )
 
-[node name="HealthCapacityIII" parent="Access/Depot2/Items" index="0" instance=ExtResource( 22 )]
+[node name="KnockbackResistI" parent="Access/Depot2/Items" index="0" instance=ExtResource( 20 )]
 
-[node name="ShieldCapacityIII" parent="Access/Depot2/Items" index="1" instance=ExtResource( 24 )]
+[node name="KnockbackResistII" parent="Access/Depot2/Items" index="1" instance=ExtResource( 32 )]
 
-[node name="RollSpeedIII" parent="Access/Depot2/Items" index="2" instance=ExtResource( 20 )]
-position = Vector2( -381.271, -380.713 )
+[node name="KnockbackResistIII" parent="Access/Depot2/Items" index="2" instance=ExtResource( 26 )]
 
-[node name="KnockbackResistIII" parent="Access/Depot2/Items" index="3" instance=ExtResource( 26 )]
+[node name="ChargeDmgRateI" parent="Access/Depot2/Items" index="3" instance=ExtResource( 27 )]
 
-[node name="ShieldRecoveryIII" parent="Access/Depot2/Items" index="4" instance=ExtResource( 27 )]
+[node name="ChargeDmgRateII" parent="Access/Depot2/Items" index="4" instance=ExtResource( 29 )]
 
-[node name="HeatDissipationIII" parent="Access/Depot2/Items" index="5" instance=ExtResource( 29 )]
+[node name="ChargeDmgRateIII" parent="Access/Depot2/Items" index="5" instance=ExtResource( 30 )]
 
-[node name="ChargeForceIII" parent="Access/Depot2/Items" index="6" instance=ExtResource( 19 )]
-position = Vector2( -381.271, -380.713 )
+[node name="ShieldRecoveryI" parent="Access/Depot2/Items" index="6" instance=ExtResource( 21 )]
 
-[node name="ChargeDmgRateIII" parent="Access/Depot2/Items" index="7" instance=ExtResource( 30 )]
+[node name="ShieldRecoveryII" parent="Access/Depot2/Items" index="7" instance=ExtResource( 22 )]
 
-[node name="TransformSpeedIII" parent="Access/Depot2/Items" index="8" instance=ExtResource( 21 )]
-position = Vector2( -381.271, -380.713 )
+[node name="ShieldRecoveryIII" parent="Access/Depot2/Items" index="8" instance=ExtResource( 31 )]
 
-[node name="ChargeCooldownIII" parent="Access/Depot2/Items" index="9" instance=ExtResource( 16 )]
-position = Vector2( -381.271, -380.713 )
+[node name="HeatDissipationI" parent="Access/Depot2/Items" index="9" instance=ExtResource( 16 )]
+
+[node name="HeatDissipationII" parent="Access/Depot2/Items" index="10" instance=ExtResource( 19 )]
+
+[node name="HeatDissipationIII" parent="Access/Depot2/Items" index="11" instance=ExtResource( 24 )]
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 3751.07, 2914.15 )
@@ -125,25 +130,21 @@ position = Vector2( 3751.07, 2914.15 )
 position = Vector2( 1384.24, 2432.66 )
 shield_capacity = 8.0
 health_capacity = 8.0
-charge_damage_rate = 0.3
 
 [node name="Charger2" parent="Bots" index="2" instance=ExtResource( 13 )]
 position = Vector2( 3046.97, 810.888 )
 shield_capacity = 8.0
 health_capacity = 8.0
-charge_damage_rate = 0.3
 
 [node name="Charger3" parent="Bots" index="3" instance=ExtResource( 13 )]
 position = Vector2( 3456.51, 1548.06 )
 shield_capacity = 8.0
 health_capacity = 8.0
-charge_damage_rate = 0.3
 
 [node name="Charger4" parent="Bots" index="4" instance=ExtResource( 13 )]
 position = Vector2( 1163.09, 1556.25 )
 shield_capacity = 8.0
 health_capacity = 8.0
-charge_damage_rate = 0.3
 
 [editable path="Access/Depot"]
 

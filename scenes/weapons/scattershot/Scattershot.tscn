@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/weapons/tex_scattershot.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/scattershot/ScattershotProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.672414, 1 )
 colors = PoolColorArray( 0.984375, 0.44268, 0.230713, 1, 0.664063, 0.664063, 0.664063, 1, 1, 1, 1, 0 )

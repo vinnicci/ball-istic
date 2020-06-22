@@ -1,6 +1,8 @@
 extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
-#knockback resist +0.08
+const EFFECT: float = 0.15
+
+
 func _apply_effects() -> void:
-	_parent_node.current_knockback_resist += 0.08
+	_parent_node.current_knockback_resist += EFFECT
