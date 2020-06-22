@@ -26,35 +26,15 @@ func _apply_effects() -> void:
 		_pick_effect(effect)
 
 
-func _pick_effect(num: int) -> void:
+func _pick_effect(num: int, positive_eff = 1) -> void:
 	match num:
-		0:
-			_apply_charge_cooldown(CHARGE_COOLDOWN)
-#			print("charge cooldown much faster")
-		1: 
-			_apply_charge_damage_rate(CHARGE_DMG)
-#			print("charge damage increased")
-		2: 
-			_apply_charge_force(CHARGE_FORCE)
-#			print("charge force increased")
-		3: 
-			_apply_health_cap(HEALTH_CAP)
-#			print("health capacity increased")
-		4: 
-			_apply_heat_dissipation(HEAT_DISSIPATION)
-#			print("heat dissipation increased")
-		5: 
-			_apply_knockback_resist(KNOCKBACK_RESIST)
-#			print("knockback resist increased")
-		6: 
-			_apply_shield_cap(SHIELD_CAP)
-#			print("shield capacity increased")
-		7: 
-			_apply_shield_recovery(SHIELD_RECOVERY)
-#			print("shield recovery increased")
-		8: 
-			_apply_speed(SPEED)
-#			print("speed increased")
-		9: 
-			_apply_transform_speed(TRANSFORM_SPEED)
-#			print("transform speed much faster")
+		0: _apply_charge_cooldown(CHARGE_COOLDOWN * positive_eff)
+		1: _apply_charge_damage_rate(CHARGE_DMG * positive_eff)
+		2: _apply_charge_force(CHARGE_FORCE * positive_eff)
+		3: _apply_health_cap(HEALTH_CAP * positive_eff)
+		4: _apply_heat_dissipation(HEAT_DISSIPATION * positive_eff)
+		5: _apply_knockback_resist(KNOCKBACK_RESIST * positive_eff)
+		6: _apply_shield_cap(SHIELD_CAP * positive_eff)
+		7: _apply_shield_recovery(SHIELD_RECOVERY * positive_eff)
+		8: _apply_speed(SPEED * positive_eff)
+		9: _apply_transform_speed(TRANSFORM_SPEED * positive_eff)

@@ -685,6 +685,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
+	if current_shield_recovery <= 0 || current_shield_cap <= 0:
+		return
 	if current_shield + current_shield_recovery * 0.25 > current_shield_cap:
 		current_shield = current_shield_cap
 	elif current_shield + current_shield_recovery * 0.25 <= current_shield_cap:

@@ -3333,7 +3333,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="ChargeTrail" type="Timer" parent="Timers"]
-wait_time = 0.01
+wait_time = 0.03
 
 [node name="ChargeEffectDelay" type="Timer" parent="Timers"]
 wait_time = 0.05
