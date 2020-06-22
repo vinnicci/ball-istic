@@ -5,4 +5,4 @@ const EFFECT: int = 400
 
 
 func _apply_effects() -> void:
-	_parent_node.current_speed += EFFECT
+	_apply_speed(EFFECT)

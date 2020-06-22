@@ -5,4 +5,4 @@ const EFFECT: float = 0.08
 
 
 func _apply_effects() -> void:
-	_parent_node.current_charge_force_factor += EFFECT
+	_apply_charge_force(EFFECT)

@@ -5,4 +5,4 @@ const EFFECT: float = 0.05
 
 
 func _apply_effects() -> void:
-	_parent_node.current_knockback_resist += EFFECT
+	_apply_knockback_resist(EFFECT)

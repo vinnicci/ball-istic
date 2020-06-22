@@ -5,4 +5,4 @@ const EFFECT: float = 0.11
 
 
 func _apply_effects() -> void:
-	_parent_node.current_transform_speed -= EFFECT
+	_apply_transform_speed(EFFECT)

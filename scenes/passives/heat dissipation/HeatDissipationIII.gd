@@ -5,8 +5,4 @@ const EFFECT: float = 1.25
 
 
 func _apply_effects() -> void:
-	for weapon in _parent_node.arr_weapons:
-		if weapon == null:
-			continue
-		if weapon.get_heat_dissipation() != 0:
-			weapon.current_heat_dissipation += weapon.get_heat_dissipation() * EFFECT
+	_apply_heat_dissipation(EFFECT)

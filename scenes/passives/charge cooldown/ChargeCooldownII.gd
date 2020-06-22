@@ -5,4 +5,4 @@ const EFFECT: float = 0.35
 
 
 func _apply_effects() -> void:
-	_parent_node.current_charge_cooldown -= EFFECT
+	_apply_charge_cooldown(EFFECT)
