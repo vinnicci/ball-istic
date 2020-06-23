@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/burst blaster/BurstBlaster.gd" type="Script" id=2]
-[ext_resource path="res://assets/weapons/tex_intro_weap.png" type="Texture" id=3]
+[ext_resource path="res://assets/weapons/tex_blaster.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/auto blaster/AutoBlasterProj.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Gradient" id=1]
@@ -46,7 +46,7 @@ modulate = Color( 0.992157, 0.458824, 0.458824, 1 )
 texture = ExtResource( 3 )
 
 [node name="Muzzle" parent="." index="1"]
-position = Vector2( 22, 0 )
+position = Vector2( 10, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false
@@ -55,4 +55,4 @@ process_material = SubResource( 3 )
 [node name="Sprite" parent="." index="2"]
 modulate = Color( 0.992157, 0.458824, 0.458824, 1 )
 texture = ExtResource( 3 )
-offset = Vector2( 10, 0 )
+offset = Vector2( 3, 0 )

@@ -412,14 +412,14 @@ func _physics_process(delta: float) -> void:
 	pass
 
 
-func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+func _integrate_forces(pstate: Physics2DDirectBodyState) -> void:
 	#teleport
 	if _teleport_pos != null:
-		state.transform.origin = _teleport_pos
+		pstate.transform.origin = _teleport_pos
 		_teleport_pos = null
 	#velocity
 	applied_force = Vector2(0,0)
-	if self.state == State.ROLL:
+	if state == State.ROLL:
 		velocity = velocity.normalized()
 		velocity *= current_speed
 		applied_force = velocity

@@ -118,8 +118,6 @@ func _process(_delta: float) -> void:
 
 
 func _on_DissipationCooldown_timeout() -> void:
-	if current_heat_dissipation <= 0:
-		return
 	if current_heat > 0:
 		current_heat -= current_heat_dissipation * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
