@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/charge blaster/ChargeBlaster.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityII.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/weapons/plasma thrower/PlasmaThrower.tscn" type="PackedScene" id=18]
@@ -68,6 +69,8 @@ proj_count_per_shot = 2
 [node name="EnergyCannon" parent="Access/Depot/Items" index="6" instance=ExtResource( 33 )]
 
 [node name="HeavyBlaster" parent="Access/Depot/Items" index="7" instance=ExtResource( 12 )]
+
+[node name="Shotgun" parent="Access/Depot/Items" index="8" instance=ExtResource( 15 )]
 
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )

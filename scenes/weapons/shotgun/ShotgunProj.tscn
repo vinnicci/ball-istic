@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/weapons/shotgun/ShotgunProj.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/tex_generic_medium_proj.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 6.0
+
+[node name="ShotgunProj" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+speed = 800
+damage = 3.0
+proj_range = 700
+knockback = 100.0
+
+[node name="Sprite" parent="." index="1"]
+modulate = Color( 1, 0.635294, 0.0666667, 1 )
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 3 )
+offset = Vector2( -13, 0 )
+
+[node name="CollisionShape" parent="." index="2"]
+shape = SubResource( 1 )
