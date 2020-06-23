@@ -11,6 +11,7 @@ const CLASS_BOT_PROJ = preload("res://scenes/weapons/_base/_BaseBotProjectile.gd
 const CLASS_ITEM = preload("res://scenes/global/items/_base/_BaseItem.gd")
 const CLASS_WEAPON = preload("res://scenes/weapons/_base/_BaseWeapon.gd")
 const CLASS_PASSIVE = preload("res://scenes/passives/_base/_BasePassive.gd")
+const CLASS_PROJ = preload("res://scenes/weapons/_base/_BaseProjectile.gd")
 
 #level objects include: tilemap walls, static body walls, or rigid body objects
 const CLASS_LEVEL_OBJECT = preload("res://scenes/level/_base/_BaseLevelObject.gd")
