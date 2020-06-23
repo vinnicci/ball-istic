@@ -125,6 +125,7 @@ func task_curve_speed(task):
 # steer curve
 #############
 export var steer_curve: Curve
+export var randomize_direction: bool = false
 onready var _random_dir = rand_range(0, 1.0)
 var _old_v = null
 
@@ -139,7 +140,7 @@ func task_curve_steer(task):
 	var r_timer = _parent_node.get_node("RangeTimer")
 	var x_val = (r_timer.wait_time - r_timer.time_left) / r_timer.wait_time
 	var y_val = steer_curve.interpolate(x_val)
-	if _random_dir <= 0.5:
+	if randomize_direction == true && _random_dir <= 0.5:
 		y_val *= -1
 	_parent_node.velocity = _old_v.rotated(deg2rad(90*y_val))
 	task.succeed()

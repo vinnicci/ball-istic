@@ -1,18 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/weapons/_projectile behaviors/_base/_BaseProjBehavior.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/_projectile behaviors/curve steer/CurveSteer.gd" type="Script" id=2]
 
-[sub_resource type="Curve" id=3]
-min_value = -1.0
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.118483, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.146919, 1 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
 [node name="ProjBehavior" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-steer_curve = SubResource( 3 )
 
 [node name="BTREE" parent="." index="0"]
 tree = {
@@ -76,4 +71,4 @@ tree = {
 }
 
 [node name="CollisionShape2D" parent="DetectionRange" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 1 )
