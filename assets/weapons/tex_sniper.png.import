@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_intro_weap.png-e619205f911bed93bd01cead239ac4ce.s3tc.stex"
-path.etc2="res://.import/tex_intro_weap.png-e619205f911bed93bd01cead239ac4ce.etc2.stex"
+path.s3tc="res://.import/tex_sniper.png-1d361f8c0949887f6489790f04a2da59.s3tc.stex"
+path.etc2="res://.import/tex_sniper.png-1d361f8c0949887f6489790f04a2da59.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_intro_weap.png"
-dest_files=[ "res://.import/tex_intro_weap.png-e619205f911bed93bd01cead239ac4ce.s3tc.stex", "res://.import/tex_intro_weap.png-e619205f911bed93bd01cead239ac4ce.etc2.stex" ]
+source_file="res://assets/weapons/tex_sniper.png"
+dest_files=[ "res://.import/tex_sniper.png-1d361f8c0949887f6489790f04a2da59.s3tc.stex", "res://.import/tex_sniper.png-1d361f8c0949887f6489790f04a2da59.etc2.stex" ]
 
 [params]
 

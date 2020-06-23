@@ -109,6 +109,8 @@ func _change_slot_selected(slot_num: int) -> void:
 	var slot_selected = _hud_weapon_slots.get_node("SlotSelected")
 	slot_selected.position.x = selected_slot_pos.get_parent().position.x + selected_slot_pos.position.x
 	current_weapon.look_at(get_global_mouse_position())
+	_bar_weapon_heat.max_value = current_weapon.heat_capacity
+	_bar_weapon_heat.value = 0
 
 
 func _process(delta: float) -> void:
@@ -192,8 +194,6 @@ func _control_player_weapon_hotkeys() -> void:
 		slot_num = 4
 	if slot_num != -1:
 		_change_slot_selected(slot_num)
-		_bar_weapon_heat.max_value = current_weapon.heat_capacity
-		_bar_weapon_heat.value = 0
 
 
 func _update_bar_charge_level() -> void:
@@ -252,8 +252,6 @@ func _update_ui_weapon_slot(slot_num: int) -> bool:
 	var hud_weap_heat: = _hud_weapon_slots.get_node(slot_num_str + "/SlotHeat")
 	var inv_weap_sprite: = _ui_loadout_slots.get_node("WeaponSlots/" + slot_num_str + "/Sprite")
 	if weap == null: #wipe empty weapon slot
-#		hud_weap_sprite.texture = null
-#		inv_weap_sprite.texture = null
 		_clear_sprite(hud_weap_sprite)
 		_clear_sprite(inv_weap_sprite)
 		hud_weap_heat.value = 0

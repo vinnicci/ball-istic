@@ -19,7 +19,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 1, 0 ]
 [node name="SweeperProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 900
-damage = 10.0
+damage = 3.0
 proj_range = 600
 
 [node name="Sprite" parent="." index="1"]

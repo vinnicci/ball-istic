@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/weapons/tex_generic_small_proj.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 8.0
+radius = 6.0
 
 [node name="HeavyBlasterProj" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -13,7 +13,8 @@ speed = 600
 proj_range = 1300
 
 [node name="Sprite" parent="." index="1"]
-modulate = Color( 0.0862745, 0.980392, 0.0117647, 1 )
+modulate = Color( 1, 0.654902, 0, 1 )
+scale = Vector2( 0.7, 1 )
 texture = ExtResource( 3 )
 offset = Vector2( -9, 0 )
 

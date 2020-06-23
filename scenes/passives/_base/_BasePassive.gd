@@ -27,10 +27,9 @@ func _apply_health_cap(effect: float) -> void:
 
 func _apply_heat_dissipation(effect: float) -> void:
 	for weapon in _parent_node.arr_weapons:
-		if weapon == null:
+		if weapon == null || weapon.get_heat_dissipation() == 0:
 			continue
-		if weapon.get_heat_dissipation() != 0:
-			weapon.current_heat_dissipation += weapon.get_heat_dissipation() * effect
+		weapon.current_heat_dissipation += weapon.get_heat_dissipation() * effect
 
 
 func _apply_knockback_resist(effect: float) -> void:
