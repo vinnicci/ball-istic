@@ -4,6 +4,7 @@ extends Node2D
 var _detected: Array = []
 var _target_bot: Global.CLASS_BOT = null
 var _parent_node: Area2D
+var _level_node: Node = null
 
 
 func _init_detector(radius: float) -> void:
@@ -23,6 +24,10 @@ func _init_timer() -> void:
 
 func set_parent(new_parent: Area2D) -> void:
 	_parent_node = new_parent
+
+
+func set_level(new_level: Node) -> void:
+	_level_node = new_level
 
 
 func _physics_process(delta: float) -> void:
@@ -62,7 +67,7 @@ func task_homing(task):
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && _parent_node.origin() != body.current_faction:
+	if body is Global.CLASS_BOT && _parent_node.shooter_faction() != body.current_faction:
 		_detected.append(body)
 
 
@@ -91,8 +96,8 @@ func _on_SplitTimer_timeout() -> void:
 	var spread: = 5
 	for i in range(2):
 		spread *= -1
-		Global.current_level.spawn_projectile(_split(split_count - 1), _parent_node.global_position, 
-			_parent_node.global_rotation + deg2rad(spread), _parent_node.origin(), null)
+		_level_node.spawn_projectile(_split(split_count - 1), _parent_node.global_position, 
+			_parent_node.global_rotation + deg2rad(spread), _parent_node.shooter_faction(), null)
 	_parent_node.queue_free()
 
 
@@ -160,9 +165,9 @@ func task_reflect(task):
 	$TargetRay.global_rotation = _parent_node.global_rotation
 	var body = $TargetRay.get_collider()
 	if body is Global.CLASS_LEVEL_OBJECT:
-		Global.current_level.spawn_projectile(_reflect(reflect_count - 1), _parent_node.global_position, 
+		_level_node.spawn_projectile(_reflect(reflect_count - 1), _parent_node.global_position, 
 			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180),
-			_parent_node.origin(), null)
+			_parent_node.shooter_faction(), null)
 		_parent_node.queue_free()
 	task.succeed()
 

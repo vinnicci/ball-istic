@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var _parent_node: Node
+var _parent_node = null
 
 
 func _ready() -> void:

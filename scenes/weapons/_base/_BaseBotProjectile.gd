@@ -11,17 +11,18 @@ func _ready() -> void:
 	$Body.add_child(_glow)
 
 
-func init_travel(proj_position: Vector2, proj_direction: float, origin: Color, shooter: Node) -> void:
-	global_position = proj_position
-	faction = origin
+func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
+	global_position = pos
+	faction = shooter_faction
 	current_faction = faction
+	level_node = shooter.level_node
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(shooter)
-		$AI.set_level(Global.current_level)
+		$AI.set_level(level_node)
 	_body_outline.modulate = current_faction
 	_body_weapon_hatch.modulate = current_faction
-	apply_central_impulse(Vector2(2000, 0).rotated(proj_direction))
+	apply_central_impulse(Vector2(2000, 0).rotated(dir))
 	$Timers/Lifetime.start()
 
 

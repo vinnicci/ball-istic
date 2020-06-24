@@ -6,7 +6,8 @@ export (float) var damage: float = 15 setget , get_damage
 export (float) var knockback: float = 500 setget , get_knockback
 
 const PARTICLEV_RADIUS_RATIO: float = 0.35
-
+var _player: Global.CLASS_PLAYER = null
+var _level_cam: Node = null
 
 func get_radius():
 	return explosion_radius
@@ -22,6 +23,14 @@ func _ready() -> void:
 	_init_explosion()
 
 
+func set_player(player: Global.CLASS_PLAYER) -> void:
+	_player = player
+
+
+func set_level_cam(level_cam: Camera2D) -> void:
+	_level_cam = level_cam
+
+
 func _init_explosion() -> void:
 	#set radius
 	$AreaOfEffect/CollisionShape2D.shape.radius = explosion_radius
@@ -35,11 +44,11 @@ func _init_explosion() -> void:
 
 
 func start_explosion() -> void:
-	if ((is_instance_valid(Global.player) && Global.player.state != Global.CLASS_BOT.State.DEAD) &&
-		global_position.distance_to(Global.player.global_position) < explosion_radius * 4):
-		Global.player.get_node("Camera2D").shake_camera(30, 0.05, 0.05, 1)
-	elif global_position.distance_to(Global.current_level.get_node("Camera2D").global_position) < explosion_radius * 4:
-		Global.current_level.get_node("Camera2D").shake_camera(30, 0.1, 0.1, 1)
+	if ((is_instance_valid(_player) && _player.state != Global.CLASS_BOT.State.DEAD) &&
+		global_position.distance_to(_player.global_position) < explosion_radius * 4):
+		_player.get_node("Camera2D").shake_camera(20, 0.05, 0.05, 1)
+	elif global_position.distance_to(_level_cam.global_position) < explosion_radius * 4:
+		_level_cam.shake_camera(20, 0.1, 0.1, 1)
 	var bodies = $AreaOfEffect.get_overlapping_bodies()
 	for body in bodies:
 		if body == get_parent():

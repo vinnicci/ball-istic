@@ -29,6 +29,3 @@ var arr_vault: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
-
-var player: Node = null
-var current_level: Node = null

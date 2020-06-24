@@ -10,9 +10,10 @@ var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
 var _shooter: Node setget , shooter
-var _origin: Color setget , origin
+var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
 var _exploded: bool = false
+var level_node: Node = null
 
 
 func get_speed():
@@ -27,8 +28,8 @@ func get_knockback():
 func shooter():
 	return _shooter
 
-func origin():
-	return _origin
+func shooter_faction():
+	return _shooter_faction
 
 
 func _ready() -> void:
@@ -42,10 +43,16 @@ func _ready() -> void:
 		$ProjBehavior.set_parent(self)
 
 
-func init_travel(pos: Vector2, dir: float, origin: Color, shooter: Node) -> void:
+func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
 	if shooter != null:
 		_shooter = shooter
-	_origin = origin
+		level_node = shooter.level_node
+	_shooter_faction = shooter_faction
+	if has_node("ProjBehavior") == true:
+		$ProjBehavior.set_level(level_node)
+	if has_node("Explosion") == true:
+		$Explosion.set_level_cam(level_node.get_node("Camera2D"))
+		$Explosion.set_player(level_node.get_player())
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
 	$RangeTimer.start()
 	position = pos
@@ -65,31 +72,46 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT:
-		if body.current_faction == _origin:
-			return
-		elif body.current_faction != _origin && body.state == Global.CLASS_BOT.State.DEAD:
-			return
-		else:
-			if has_node("Explosion") == true:
-				$Explosion.start_explosion()
-			else:
-				body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+	if body is Global.CLASS_BOT && _damage_bot(body) == false:
+		return
+	else:
+		_damage_object(body)
+	if has_node("Explosion") == true:
+		_exploded = true
+	else:
+		#blast graphics upon object hit
+		_play_hit_blast_anim(body)
+	_stop_projectile()
+
+
+func _damage_bot(bot: Node) -> bool:
+	if bot.current_faction == _shooter_faction:
+		return false
+	elif bot.current_faction != _shooter_faction && bot.state == Global.CLASS_BOT.State.DEAD:
+		return false
 	else:
 		if has_node("Explosion") == true:
 			$Explosion.start_explosion()
 		else:
-			body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+		return true
+
+
+#environment object such as walls or objects
+func _damage_object(object: Node) -> void:
 	if has_node("Explosion") == true:
-		_exploded = true
+		$Explosion.start_explosion()
 	else:
-		$HitBlast.show()
-		if body.is_destructible() == true && body.current_shield <= 0:
-			$HitBlast/Anim.play("blast_big")
-		else:
-			$HitBlast/Anim.play("blast_small")
-		$OnHitParticles.emitting = true
-	_stop_projectile()
+		object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+
+
+func _play_hit_blast_anim(object) -> void:
+	$HitBlast.show()
+	if object is Global.CLASS_BOT && object.current_shield <= 0:
+		$HitBlast/Anim.play("blast_big")
+	else:
+		$HitBlast/Anim.play("blast_small")
+	$OnHitParticles.emitting = true
 
 
 func _on_RangeTimer_timeout() -> void:

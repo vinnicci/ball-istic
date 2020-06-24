@@ -40,6 +40,7 @@ var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
 var arr_weapons: Array = [null, null, null, null, null]
+var level_node: Node = null
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -536,6 +537,8 @@ func _on_SwitchTween_tween_all_completed() -> void:
 
 func shoot_weapon() -> void:
 	if state == State.TURRET:
+		if current_weapon.level_node != level_node:
+			current_weapon.level_node = level_node
 		current_weapon.fire()
 
 
@@ -618,10 +621,10 @@ func teleport(to_position: Vector2) -> void:
 #trail effect used by charge roll and teleport
 func _leave_trail(pos: Vector2) -> void:
 	var trail = _body_charge_effect.duplicate()
-	Global.current_level.add_child(trail)
+	level_node.add_child(trail)
 	trail.global_position = pos
 	trail.get_node("Anim").play("fade")
-	trail.get_node("Anim").connect("animation_finished", Cleaner, "_on_Trail_anim_finished", [trail])
+	trail.get_node("Anim").connect("animation_finished", level_node, "_on_Trail_anim_finished", [trail])
 
 
 func apply_knockback(knockback: Vector2) -> void:
@@ -642,8 +645,6 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
-		if has_node("Camera2D") == true:
-			$Camera2D.shake_camera(15, 0.1, 0.1, 1)
 	bar_shield.value = current_shield
 	bar_health.value = current_health
 
@@ -659,15 +660,12 @@ func discharge_parry() -> void:
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if state != State.CHARGE_ROLL:
-		if (has_node("Camera2D") && body is Global.CLASS_BOT &&
-			body.state == State.CHARGE_ROLL && _timer_discharge_parry.is_stopped() == false):
-			$Camera2D.shake_camera(20, 0.1, 0.1, 1)
-		elif $Sounds/Bump.playing == false:
+		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
+	$CollisionSpark.look_at(body.global_position)
 	$Sounds/ChargeAttackHit.play()
-	if has_node("Camera2D") == true:
-		$Camera2D.shake_camera(20, 0.1, 0.1, 1)
+	$CollisionSpark.emitting = true
 	var damage: float = ((current_speed * 0.0625 * current_charge_force_factor) *
 		current_charge_damage_rate)
 	if body is Global.CLASS_BOT:
@@ -679,9 +677,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 			body.get_node("Timers/DischargeParry").is_stopped() == false):
 			damage *= 0.05
 			$Sounds/Clash.play()
-	$CollisionSpark.look_at(body.global_position)
 	body.take_damage(damage, Vector2(0,0))
-	$CollisionSpark.emitting = true
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
@@ -699,6 +695,7 @@ func explode() -> void:
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
+	$Explosion.set_level_cam(level_node.get_node("Camera2D"))
 
 
 func _on_ExplodeDelay_timeout() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -23,7 +23,9 @@
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/weapons/cdrone launcher/CDroneLauncher.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=25]
+[ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncher.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/weapons/energy cannon/EnergyCannon.tscn" type="PackedScene" id=33]
 [ext_resource path="res://scenes/passives/combination/ChaosPassive.tscn" type="PackedScene" id=35]
 
@@ -83,6 +85,12 @@ heat_capacity = 25.0
 
 [node name="Fortress" parent="Access/Depot/Items" index="11" instance=ExtResource( 22 )]
 
+[node name="PlasmaThrower2" parent="Access/Depot/Items" index="12" instance=ExtResource( 18 )]
+
+[node name="CDroneLauncher" parent="Access/Depot/Items" index="13" instance=ExtResource( 24 )]
+
+[node name="FDroneLauncher" parent="Access/Depot/Items" index="14" instance=ExtResource( 26 )]
+
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )
 
@@ -133,7 +141,13 @@ shield_capacity = 8.0
 health_capacity = 8.0
 
 [node name="Fighter" parent="Bots" index="5" instance=ExtResource( 23 )]
-position = Vector2( 234.578, 2965.42 )
+position = Vector2( 1525.1, 319.142 )
+
+[node name="Fighter2" parent="Bots" index="6" instance=ExtResource( 23 )]
+position = Vector2( 3519.13, 1404.68 )
+
+[node name="Fighter3" parent="Bots" index="7" instance=ExtResource( 23 )]
+position = Vector2( 1007.96, 1605.01 )
 
 [editable path="Access/Depot"]
 

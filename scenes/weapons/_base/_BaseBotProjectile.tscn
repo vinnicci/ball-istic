@@ -11,10 +11,10 @@ resource_local_to_scene = true
 script = ExtResource( 2 )
 bot_radius = 20.0
 shield_capacity = 10.0
-health_capacity = 10.0
 shield_recovery_per_sec = 0.0
-charge_cooldown = 2.0
+health_capacity = 10.0
 knockback_resist = 0.1
+charge_cooldown = 2.0
 charge_force_factor = 0.6
 charge_damage_rate = 0.5
 
@@ -3207,6 +3207,6 @@ wait_time = 0.001
 wait_time = 1.5
 one_shot = true
 
-[node name="CollisionShape" parent="." index="6"]
+[node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
 [connection signal="timeout" from="Timers/Lifetime" to="." method="_on_Lifetime_timeout"]

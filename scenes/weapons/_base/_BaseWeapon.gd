@@ -29,7 +29,7 @@ var current_heat_dissipation: float
 var _is_almost_overheating: bool = false setget , is_almost_overheating
 var _is_overheating: bool = false setget , is_overheating
 var weap_commit: bool = false
-
+var level_node: Node = null
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
 onready var _timer_burst_timer: Node = $Timers/BurstTimer
@@ -158,7 +158,7 @@ func fire() -> void:
 
 
 func _spawn_proj() -> void:
-	Global.current_level.spawn_projectile(_instance_proj(), $Muzzle.global_position,
+	level_node.spawn_projectile(_instance_proj(), $Muzzle.global_position,
 		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
 		_parent_node.current_faction, _parent_node)
 
