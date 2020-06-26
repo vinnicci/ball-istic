@@ -406,7 +406,7 @@ func _process(delta: float) -> void:
 	
 	$Bars.global_rotation = 0
 	
-	#rolling ball pseudo 3d effect
+	#rolling ball sliding texture
 	_apply_rolling_effects(delta)
 	
 	#reset colors after charging
@@ -597,7 +597,7 @@ func _on_ChargeTrail_timeout() -> void:
 
 
 func _end_charging_effect() -> void:
-	#stun state is included because of discharge parry stun eventually
+	#stun state is included because of discharge parry/stun riposte?? eventually
 	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
 		linear_velocity.length() <= current_speed * _charge_commit_velocity):
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,

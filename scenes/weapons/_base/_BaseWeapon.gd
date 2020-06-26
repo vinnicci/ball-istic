@@ -163,12 +163,17 @@ func _spawn_proj() -> void:
 		_parent_node.current_faction, _parent_node)
 
 
-#do critical damage stuff here!
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
+	_modify_proj(proj)
 	if proj is Global.CLASS_BOT_PROJ == false:
 		proj.damage *= proj_damage_rate
 	return proj
+
+
+#do stuff here like adding critical effect, z index modification, etc.!
+func _modify_proj(proj) -> void:
+	pass
 
 
 func _apply_recoil() -> void:
