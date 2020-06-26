@@ -389,10 +389,15 @@ func reset_bot_vars() -> void:
 
 
 func _cap_current_vars() -> void:
+	current_health_cap = clamp(current_health_cap, 1, 9999)
+	current_health = clamp(current_health, 1, 9999)
+	current_shield_cap = clamp(current_shield_cap, 0, 9999)
+	current_shield = clamp(current_shield, 0, 9999)
 	current_speed = clamp(current_speed, 500, 3000)
 	current_transform_speed = clamp(current_transform_speed, 0.05, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
+	current_charge_damage_rate = clamp(current_charge_damage_rate, 0, 1.0)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 1.5)
 
 
@@ -695,7 +700,7 @@ func explode() -> void:
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	$Explosion.set_level_cam(level_node.get_node("Camera2D"))
+	$Explosion.set_player(level_node.get_player())
 
 
 func _on_ExplodeDelay_timeout() -> void:

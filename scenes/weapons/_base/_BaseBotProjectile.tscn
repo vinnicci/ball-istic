@@ -3209,4 +3209,7 @@ one_shot = true
 
 [node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
+
+[node name="Labels" parent="." index="9"]
+visible = false
 [connection signal="timeout" from="Timers/Lifetime" to="." method="_on_Lifetime_timeout"]

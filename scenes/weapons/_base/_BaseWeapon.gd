@@ -103,7 +103,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	#almost overheat state
-	#use this for weapons with effects that uses heat as risk
+	#use this for weapons that make use of heat mechanics
 	if _is_almost_overheating == false && current_heat > heat_capacity * almost_overheating_threshold:
 		_is_almost_overheating = true
 	elif _is_almost_overheating == true && current_heat <= heat_capacity * almost_overheating_threshold:

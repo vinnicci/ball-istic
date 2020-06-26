@@ -20,8 +20,6 @@ func _apply_charge_force(effect: float) -> void:
 func _apply_health_cap(effect: float) -> void:
 	_parent_node.current_health_cap += effect
 	_parent_node.current_health = _parent_node.current_health_cap
-	_parent_node.bar_health.max_value = _parent_node.current_health_cap
-	_parent_node.bar_health.value = _parent_node.current_health
 
 
 func _apply_heat_dissipation(effect: float) -> void:
@@ -38,8 +36,6 @@ func _apply_knockback_resist(effect: float) -> void:
 func _apply_shield_cap(effect: float) -> void:
 	_parent_node.current_shield_cap += effect
 	_parent_node.current_shield = _parent_node.current_shield_cap
-	_parent_node.bar_shield.max_value = _parent_node.current_shield_cap
-	_parent_node.bar_shield.value = _parent_node.current_shield
 
 
 func _apply_shield_recovery(effect: float) -> void:

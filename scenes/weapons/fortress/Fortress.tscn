@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/fortress/Fortress.gd" type="Script" id=2]
 [ext_resource path="res://assets/weapons/tex_fortress.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/fortress/FortressProj.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/weapons/tex_fortress_front_shield.png" type="Texture" id=5]
+[ext_resource path="res://assets/bots/sfx_Bot_Shield_Damage.wav" type="AudioStream" id=6]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -30,6 +31,34 @@ orbit_velocity_random = 0.0
 scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "catch_proj"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("S1:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("S2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="Fortress" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -70,7 +99,13 @@ position = Vector2( 72, 39 )
 texture = ExtResource( 5 )
 flip_v = true
 
+[node name="Anim" type="AnimationPlayer" parent="FrontShield" index="3"]
+anims/catch_proj = SubResource( 4 )
+
 [node name="Sprite" parent="." index="3"]
 texture = ExtResource( 3 )
 offset = Vector2( 13, 0 )
+
+[node name="ShieldHit" type="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource( 6 )
 [connection signal="area_entered" from="FrontShield" to="." method="_on_FrontShield_area_entered"]

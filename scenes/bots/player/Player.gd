@@ -99,6 +99,11 @@ func update_player_vars() -> void:
 		if _arr_passives[i] != null:
 			_arr_passives[i]._apply_effects()
 	_cap_current_vars()
+	bar_health.max_value = current_health_cap
+	bar_health.value = current_health
+	if current_shield_cap != 0:
+		bar_shield.max_value = current_shield_cap
+	bar_shield.value = current_shield
 
 
 func _change_slot_selected(slot_num: int) -> void:

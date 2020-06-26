@@ -44,7 +44,7 @@ func _init_explosion() -> void:
 
 
 func start_explosion() -> void:
-	if ((is_instance_valid(_player) && _player.state != Global.CLASS_BOT.State.DEAD) &&
+	if is_instance_valid(_player) && (_player.state != Global.CLASS_BOT.State.DEAD &&
 		global_position.distance_to(_player.global_position) < explosion_radius * 4):
 		_player.get_node("Camera2D").shake_camera(20, 0.05, 0.05, 1)
 	elif global_position.distance_to(_level_cam.global_position) < explosion_radius * 4:
@@ -54,13 +54,7 @@ func start_explosion() -> void:
 		if body == get_parent():
 			continue
 		_apply_effect(body)
-	$Blast.show()
-	var tween = $Blast/BlastTween
-	tween.interpolate_property($Blast, "scale", $Blast.scale, Vector2(2,2), 0.5,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.interpolate_property($Blast, "modulate", $Blast.modulate, Color(1,1,1,0),
-		0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	tween.start()
+	$Blast/Anim.play("explode")
 	$Particles2D.emitting = true
 	$RemoveParticles.start()
 	$Sound.play()

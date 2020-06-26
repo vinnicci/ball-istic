@@ -11,9 +11,9 @@ var acceleration: Vector2
 var current_speed: int
 var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
+var level_node: Node = null
 var is_stopped: bool = false
 var _exploded: bool = false
-var level_node: Node = null
 
 
 func get_speed():
@@ -44,15 +44,7 @@ func _ready() -> void:
 
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
-	if shooter != null:
-		_shooter = shooter
-		level_node = shooter.level_node
 	_shooter_faction = shooter_faction
-	if has_node("ProjBehavior") == true:
-		$ProjBehavior.set_level(level_node)
-	if has_node("Explosion") == true:
-		$Explosion.set_level_cam(level_node.get_node("Camera2D"))
-		$Explosion.set_player(level_node.get_player())
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
 	$RangeTimer.start()
 	position = pos
@@ -76,6 +68,8 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		return
 	else:
 		_damage_object(body)
+	
+	#if projectile is explosive or not
 	if has_node("Explosion") == true:
 		_exploded = true
 	else:

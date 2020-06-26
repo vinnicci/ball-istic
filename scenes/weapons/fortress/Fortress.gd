@@ -1,12 +1,16 @@
 extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if (_parent_node is Global.CLASS_BOT && _parent_node.state == Global.CLASS_BOT.State.TURRET &&
 		_parent_node.current_weapon == self):
 		$FrontShield.monitoring = true
 	else:
 		$FrontShield.monitoring = false
+	if _is_overheating == true:
+		$FrontShield.hide()
+	else:
+		$FrontShield.show()
 
 
 func _on_FrontShield_area_entered(area: Area2D) -> void:
@@ -17,4 +21,6 @@ func _on_FrontShield_area_entered(area: Area2D) -> void:
 		current_heat += area.get_node("Explosion").get_damage()
 	else:
 		current_heat += area.damage
+	$FrontShield/Anim.play("catch_proj")
+	$ShieldHit.play()
 	area.queue_free()

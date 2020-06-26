@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if _is_almost_overheating == true || _is_overheating == true:
+	if _is_almost_overheating == true:
 		Projectile = super_proj
 		current_heat_per_shot = 0.25
 		self.shoot_cooldown = 0.05

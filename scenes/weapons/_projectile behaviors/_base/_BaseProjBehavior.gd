@@ -31,6 +31,7 @@ func set_level(new_level: Node) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	#only used by homing effect
 	if $TargetRay.enabled == true && _detected.size() != 0 && _target_bot == null:
 		for target in _detected:
 			if is_instance_valid(target) == false:
@@ -42,6 +43,7 @@ func _physics_process(delta: float) -> void:
 				return
 
 
+#refactor to simply get values rather than recalculating
 #############
 # btree tasks
 #############

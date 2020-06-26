@@ -2,7 +2,6 @@ extends "res://scenes/bots/_base/_BaseBotRolling.gd"
 
 
 onready var _lifetime: = $Timers/Lifetime
-var _dying: bool = false
 var _glow: Node
 
 
@@ -24,6 +23,9 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node
 	_body_weapon_hatch.modulate = current_faction
 	apply_central_impulse(Vector2(2000, 0).rotated(dir))
 	$Timers/Lifetime.start()
+
+
+var _dying: bool = false
 
 
 func _process(delta: float) -> void:
