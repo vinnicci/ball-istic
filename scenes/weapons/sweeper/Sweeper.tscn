@@ -34,7 +34,6 @@ color_ramp = SubResource( 2 )
 script = ExtResource( 3 )
 Projectile = ExtResource( 2 )
 heat_capacity = 8.0
-heat_dissipation_per_sec = 0.5
 fire_mode = 2
 proj_count_per_shot = 2
 burst_count = 25

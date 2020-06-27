@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncherProj.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=5]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -34,9 +33,8 @@ color_ramp = SubResource( 2 )
 [node name="FDroneLauncher" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
-heat_per_shot = 5.0
-heat_capacity = 9.0
-heat_dissipation_per_sec = 0.5
+heat_per_shot = 10.0
+heat_capacity = 15.0
 shoot_cooldown = 0.5
 
 [node name="SlotIcon" parent="." index="0"]

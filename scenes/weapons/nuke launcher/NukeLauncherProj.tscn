@@ -52,6 +52,7 @@ shape = SubResource( 4 )
 wait_time = 1.0
 
 [node name="Explosion" parent="." index="7" instance=ExtResource( 2 )]
+damage = 125.0
 
 [node name="ProjBehavior" parent="." index="8" instance=ExtResource( 5 )]
 speed_curve = SubResource( 5 )

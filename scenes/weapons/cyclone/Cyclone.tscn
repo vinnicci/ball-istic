@@ -33,7 +33,7 @@ color_ramp = SubResource( 2 )
 [node name="Cyclone" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
-heat_capacity = 30.0
+heat_capacity = 13.0
 fire_mode = 2
 proj_count_per_shot = 3
 burst_count = 50

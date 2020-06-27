@@ -21,7 +21,7 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node
 		$AI.set_level(level_node)
 	_body_outline.modulate = current_faction
 	_body_weapon_hatch.modulate = current_faction
-	apply_central_impulse(Vector2(2000, 0).rotated(dir))
+	apply_central_impulse(Vector2(1250, 0).rotated(dir))
 	$Timers/Lifetime.start()
 
 

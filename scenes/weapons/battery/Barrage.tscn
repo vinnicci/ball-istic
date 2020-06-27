@@ -33,14 +33,13 @@ color_ramp = SubResource( 2 )
 [node name="Barrage" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 10.0
-heat_capacity = 29.0
-heat_dissipation_per_sec = 0.5
+heat_per_shot = 5.0
+heat_capacity = 10.0
 fire_mode = 1
 burst_count = 10
 spread = 5.0
 burst_timer = 0.1
-cam_shake_intensity = 2.0
+cam_shake_intensity = 3.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 2 )

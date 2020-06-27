@@ -33,7 +33,8 @@ color_ramp = SubResource( 2 )
 [node name="BurstBlaster" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
-heat_dissipation_per_sec = 0.5
+heat_per_shot = 3.0
+heat_capacity = 14.0
 shoot_cooldown = 0.5
 fire_mode = 1
 burst_count = 6

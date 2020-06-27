@@ -35,7 +35,6 @@ script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
 heat_per_shot = 5.0
 heat_capacity = 12.0
-heat_dissipation_per_sec = 0.5
 shoot_cooldown = 2.0
 recoil = 500
 cam_shake_intensity = 15.0
