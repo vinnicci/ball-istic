@@ -16,7 +16,3 @@ func _modify_proj(proj) -> void:
 		proj_behavior.steer_curve = _left_curve
 	else:
 		proj_behavior.steer_curve = _right_curve
-
-
-#func _fire_burst() -> void:
-#	._fire_burst()
