@@ -1,0 +1,5 @@
+[gd_resource type="Curve" format=2]
+
+[resource]
+resource_local_to_scene = true
+_data = [ Vector2( 0, 0 ), 0.0, 28.8125, 0, 1, Vector2( 0.0173536, 0.5 ), 18.8934, 18.8934, 0, 0, Vector2( 0.0737527, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 1, 0 ]

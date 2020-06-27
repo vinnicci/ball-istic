@@ -25,10 +25,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.976471, 0.572549, 0.45098, 0.776471 ), Color( 0.372549, 0.345098, 0.345098, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.976471, 0.572549, 0.45098, 0.776471 ), Color( 0.372549, 0.345098, 0.345098, 0 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:scale")

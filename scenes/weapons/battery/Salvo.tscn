@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://assets/weapons/tex_RBarrage.png" type="Texture" id=1]
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/weapons/rbarrage/RBarrage.gd" type="Script" id=3]
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/weapons/tex_RBarrage.png" type="Texture" id=2]
+[ext_resource path="res://scenes/weapons/battery/Salvo.gd" type="Script" id=3]
+[ext_resource path="res://scenes/weapons/battery/BatteryProj.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -29,26 +30,27 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="RBarrage" instance=ExtResource( 2 )]
+[node name="Salvo" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+Projectile = ExtResource( 4 )
 heat_per_shot = 10.0
 heat_capacity = 19.0
 heat_dissipation_per_sec = 0.5
-fire_mode = 1
-burst_count = 5
+proj_count_per_shot = 10
 spread = 5.0
-burst_timer = 0.2
 cam_shake_intensity = 2.0
 
 [node name="SlotIcon" parent="." index="0"]
-texture = ExtResource( 1 )
+modulate = Color( 0.188235, 0.196078, 0.211765, 1 )
+texture = ExtResource( 2 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-texture = ExtResource( 1 )
+modulate = Color( 0.188235, 0.196078, 0.211765, 1 )
+texture = ExtResource( 2 )
 
 [node name="MuzzlePos" type="Node2D" parent="." index="4"]
 

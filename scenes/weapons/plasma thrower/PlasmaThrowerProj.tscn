@@ -9,7 +9,6 @@
 radius = 15.0
 
 [sub_resource type="Curve" id=2]
-resource_local_to_scene = true
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 1, Vector2( 0.0710901, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.175355, 0.573771 ), -4.94145, -4.94145, 0, 0, Vector2( 0.445498, 0.0737705 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0655738 ), -0.0147821, 0.0, 1, 0 ]
 
 [node name="PlasmaThrowerProj" instance=ExtResource( 2 )]
@@ -31,4 +30,3 @@ shape = SubResource( 1 )
 
 [node name="ProjBehavior" parent="." index="6" instance=ExtResource( 4 )]
 speed_curve = SubResource( 2 )
-steer_curve = null

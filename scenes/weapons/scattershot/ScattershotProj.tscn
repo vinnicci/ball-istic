@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/weapons/scattershot/ScattershotProj.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
@@ -6,15 +6,6 @@
 [ext_resource path="res://scenes/weapons/_projectile behaviors/reflect/Reflect.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-
-[sub_resource type="Curve" id=2]
-resource_local_to_scene = true
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 1, Vector2( 1, 1 ), 0.0, 0.0, 1, 0 ]
-
-[sub_resource type="Curve" id=3]
-resource_local_to_scene = true
-min_value = -1.0
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 1, 0 ), 0.0, 0.0, 1, 0 ]
 
 [node name="ScattershotProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -31,5 +22,3 @@ offset = Vector2( -10, 0 )
 shape = SubResource( 1 )
 
 [node name="ProjBehavior" parent="." index="6" instance=ExtResource( 4 )]
-speed_curve = SubResource( 2 )
-steer_curve = SubResource( 3 )
