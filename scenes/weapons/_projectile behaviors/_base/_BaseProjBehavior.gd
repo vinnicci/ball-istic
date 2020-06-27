@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 # homing
 ########
 func task_homing(task):
-	if is_instance_valid(_target_bot) == false || _target_bot.is_alive() == false:
+	if is_instance_valid(_target_bot) == false || _target_bot.state == Global.CLASS_BOT.State.DEAD:
 		_target_bot = null
 		task.succeed()
 		return

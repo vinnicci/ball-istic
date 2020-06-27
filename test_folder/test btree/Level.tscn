@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=5]
 [ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/weapons/auto blaster/AutoBlaster.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/weapons/blaster/AutoBlaster.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=10]
@@ -14,6 +14,7 @@
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/explosive/Explosive.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=14]
+
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true

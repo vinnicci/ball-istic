@@ -23,9 +23,9 @@ tree = {
 "data": {
 "fn": "task_homing",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 100, 0 ] ],
+"params": [ [ 250, 0 ] ],
 "size": Vector2( 238, 91 ),
-"values": [ 100 ]
+"values": [ 250 ]
 },
 "name": "task2",
 "type": 1
@@ -41,9 +41,9 @@ tree = {
 "data": {
 "fn": "task_homing",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 100, 0 ] ],
+"params": [ [ 250, 0 ] ],
 "size": Vector2( 238, 91 ),
-"values": [ 100 ]
+"values": [ 250 ]
 },
 "name": "task2",
 "type": 1
@@ -54,9 +54,9 @@ tree = {
 "data": {
 "fn": "task_homing",
 "offset": Vector2( 200, 0 ),
-"params": [ [ 100, 0 ] ],
+"params": [ [ 250, 0 ] ],
 "size": Vector2( 238, 91 ),
-"values": [ 100 ]
+"values": [ 250 ]
 },
 "name": "task2",
 "type": 1

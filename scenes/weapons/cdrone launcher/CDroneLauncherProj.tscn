@@ -6,6 +6,8 @@
 [ext_resource path="res://assets/bots/tex_charger.png" type="Texture" id=4]
 [ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=5]
 
+
+
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 

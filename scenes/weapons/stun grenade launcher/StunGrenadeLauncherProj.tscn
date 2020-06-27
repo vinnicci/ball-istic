@@ -3190,4 +3190,4 @@ uv = PoolVector2Array( 72, 32, 67, 40, 62, 48, 57, 56, 52, 64, 42, 64, 32, 64, 2
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
-stun_time = 3.0
+stun_time = 5.0
