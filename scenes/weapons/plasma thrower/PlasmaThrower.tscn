@@ -34,10 +34,12 @@ color_ramp = SubResource( 2 )
 [node name="PlasmaThrower" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
+heat_per_shot = 0.5
 heat_capacity = 15.0
 shoot_cooldown = 0.01
 proj_count_per_shot = 3
-spread = 15.0
+spread = 30.0
+burst_timer = 0.03
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 1 )

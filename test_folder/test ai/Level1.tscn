@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=1]
 [ext_resource path="res://test_folder/test ai/Level1.gd" type="Script" id=2]
@@ -41,6 +41,7 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityI.tscn" type="PackedScene" id=39]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=40]
 [ext_resource path="res://scenes/weapons/scattershot/ScattershotHomingProj.tscn" type="PackedScene" id=41]
+[ext_resource path="res://scenes/bots/explosive/PulseExplosive.tscn" type="PackedScene" id=42]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -183,6 +184,9 @@ position = Vector2( 1007.96, 1605.01 )
 
 [node name="Nuke" parent="Bots" index="8" instance=ExtResource( 27 )]
 position = Vector2( 1944.79, 2902.13 )
+
+[node name="PulseExplosive" parent="Bots" index="9" instance=ExtResource( 42 )]
+position = Vector2( 1940, 3117 )
 
 [editable path="Access/Depot"]
 

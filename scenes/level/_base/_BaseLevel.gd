@@ -33,14 +33,6 @@ func _process(delta: float) -> void:
 func spawn_projectile(proj, proj_position: Vector2, proj_direction: float,
 	shooter_faction: Color, shooter: Global.CLASS_BOT) -> void:
 	add_child(proj)
-	var has_explosion: bool = proj.has_node("Explosion")
-	if proj is Global.CLASS_PROJ:
-		if proj.has_node("ProjBehavior") == true:
-			proj.get_node("ProjBehavior").set_level(self)
-	if has_explosion == true:
-		var explosion_node = proj.get_node("Explosion")
-		explosion_node.set_player(_player)
-		explosion_node.set_level_cam(get_node("Camera2D"))
 	proj.init_travel(proj_position, proj_direction, shooter_faction, shooter)
 
 

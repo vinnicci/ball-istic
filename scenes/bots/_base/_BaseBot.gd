@@ -12,7 +12,7 @@ export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_co
 export (float, 0.1, 1.5) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
-export (Color) var faction: Color = Color(1, 0.13, 0.13) setget , get_faction
+export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
 const OUTLINE_SIZE: float = 4.5
@@ -700,7 +700,7 @@ func explode() -> void:
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	$Explosion.set_player(level_node.get_player())
+	$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
 
 
 func _on_ExplodeDelay_timeout() -> void:

@@ -53,4 +53,4 @@ process_material = SubResource( 3 )
 [node name="Sprite" parent="." index="2"]
 modulate = Color( 0.0313726, 0.972549, 0.929412, 1 )
 texture = ExtResource( 2 )
-offset = Vector2( 19, 0 )
+offset = Vector2( 18, 0 )

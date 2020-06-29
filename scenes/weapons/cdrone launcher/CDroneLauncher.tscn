@@ -5,8 +5,6 @@
 [ext_resource path="res://scenes/weapons/cdrone launcher/CDroneLauncherProj.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=5]
 
-
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -46,7 +44,7 @@ texture = ExtResource( 5 )
 offset = Vector2( -9, 0 )
 
 [node name="Muzzle" parent="." index="1"]
-position = Vector2( 10, 0 )
+position = Vector2( 15, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false

@@ -11,9 +11,9 @@ var acceleration: Vector2
 var current_speed: int
 var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
-var level_node: Node = null
 var is_stopped: bool = false
 var _exploded: bool = false
+var _level_node: Node = null
 
 
 func get_speed():
@@ -41,6 +41,12 @@ func _ready() -> void:
 	#bullet behavior component
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_parent(self)
+
+
+func set_level(new_level: Node) -> void:
+	_level_node = new_level
+	if has_node("ProjBehavior") == true:
+		$ProjBehavior.set_level(_level_node)
 
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:

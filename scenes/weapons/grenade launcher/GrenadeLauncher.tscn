@@ -44,7 +44,7 @@ texture = ExtResource( 5 )
 offset = Vector2( -9, 0 )
 
 [node name="Muzzle" parent="." index="1"]
-position = Vector2( 10, 0 )
+position = Vector2( 15, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false

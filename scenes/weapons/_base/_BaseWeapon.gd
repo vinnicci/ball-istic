@@ -166,7 +166,12 @@ func _spawn_proj() -> void:
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
 	_modify_proj(proj)
-	if proj is Global.CLASS_BOT_PROJ == false:
+	if proj.has_node("Explosion") == true:
+		var explosion_node = proj.get_node("Explosion")
+		explosion_node.set_player_cam(level_node.get_player().get_node("Camera2D"))
+		explosion_node.set_level_cam(level_node.get_node("Camera2D"))
+	if proj is Global.CLASS_PROJ:
+		proj.set_level(level_node)
 		proj.damage *= proj_damage_rate
 	return proj
 

@@ -13,5 +13,5 @@ func set_parent(new_parent: Node):
 	_parent_node = new_parent
 
 
-func get_parent_node():
-	return _parent_node
+#func get_parent_node():
+#	return _parent_node

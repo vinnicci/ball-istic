@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _init_player() -> void:
 	#explosion initialize
-	$Explosion.set_player(self)
+	$Explosion.set_player_cam($Camera2D)
 	
 	#player bars initialize
 	_bar_weapon_heat.rect_position.x -= _bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
@@ -229,7 +229,7 @@ func _update_bar_weapon_heat() -> void:
 
 func take_damage(damage: float, knockback: Vector2) -> void:
 	if current_shield <= 0:
-		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
+		$Camera2D.shake_camera(10, 0.05, 0.05, 1)
 	.take_damage(damage, knockback)
 
 
