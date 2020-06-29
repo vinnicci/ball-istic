@@ -381,9 +381,7 @@ func reset_bot_vars() -> void:
 	for weap in arr_weapons:
 		if weap == null:
 			continue
-		weap.current_heat = 0
-		weap.current_heat_per_shot = weap.get_heat_per_shot()
-		weap.current_heat_dissipation = weap.get_heat_dissipation()
+		weap.reset_weap_vars()
 	
 	_cap_current_vars()
 

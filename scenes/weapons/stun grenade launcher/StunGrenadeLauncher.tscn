@@ -34,7 +34,7 @@ color_ramp = SubResource( 2 )
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
 heat_per_shot = 5.0
-heat_capacity = 14.0
+heat_capacity = 15.0
 shoot_cooldown = 0.5
 
 [node name="SlotIcon" parent="." index="0"]

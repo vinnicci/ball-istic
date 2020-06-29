@@ -68,6 +68,9 @@ one_shot = true
 wait_time = 0.25
 autostart = true
 
+[node name="ChargeCooldown" type="Timer" parent="Timers" index="4"]
+one_shot = true
+
 [node name="ChargingTween" type="Tween" parent="." index="4"]
 
 [node name="WeaponTween" type="Tween" parent="." index="5"]

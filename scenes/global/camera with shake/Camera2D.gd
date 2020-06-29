@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance
 	offset.x = lerp(offset.x, 0, delta * 5.0)
 	offset.y = lerp(offset.y, mouse_pos, delta * 1.0)
+	offset.y = clamp(offset.y, -400, 400)
 
 
 func shake_camera(amplitude: float, frequency: float, duration: float, priority: int = 0) -> void:

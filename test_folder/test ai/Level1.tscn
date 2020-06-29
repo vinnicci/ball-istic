@@ -18,7 +18,7 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityII.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/energy cannon/EnergyCannon.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/weapons/plasma thrower/PlasmaThrower.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/weapons/blaster/ChargeBlaster.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=22]
@@ -72,35 +72,34 @@ position = Vector2( 4544.88, 2626.66 )
 [node name="CollisionShape2D" parent="Access/Depot/Area2D" index="0"]
 shape = SubResource( 1 )
 
-[node name="Phaser" parent="Access/Depot/Items" index="0" instance=ExtResource( 6 )]
+[node name="Cyclone" parent="Access/Depot/Items" index="0" instance=ExtResource( 21 )]
 
-[node name="BurstBlaster" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
+[node name="Sweeper" parent="Access/Depot/Items" index="1" instance=ExtResource( 22 )]
+Projectile = ExtResource( 41 )
 
-[node name="Shotgun" parent="Access/Depot/Items" index="2" instance=ExtResource( 15 )]
+[node name="ChargeBlaster" parent="Access/Depot/Items" index="2" instance=ExtResource( 19 )]
 
-[node name="HeavyBlaster" parent="Access/Depot/Items" index="3" instance=ExtResource( 12 )]
+[node name="Phaser" parent="Access/Depot/Items" index="3" instance=ExtResource( 6 )]
 
-[node name="StunGrenadeLauncher" parent="Access/Depot/Items" index="4" instance=ExtResource( 28 )]
+[node name="BurstBlaster" parent="Access/Depot/Items" index="4" instance=ExtResource( 11 )]
 
-[node name="PlasmaThrower2" parent="Access/Depot/Items" index="5" instance=ExtResource( 18 )]
+[node name="Shotgun" parent="Access/Depot/Items" index="5" instance=ExtResource( 15 )]
 
-[node name="Cyclone" parent="Access/Depot/Items" index="6" instance=ExtResource( 21 )]
-heat_capacity = 25.0
+[node name="HeavyBlaster" parent="Access/Depot/Items" index="6" instance=ExtResource( 12 )]
 
-[node name="NukeLauncher" parent="Access/Depot/Items" index="7" instance=ExtResource( 19 )]
+[node name="StunGrenadeLauncher" parent="Access/Depot/Items" index="7" instance=ExtResource( 28 )]
 
-[node name="Barrage" parent="Access/Depot/Items" index="8" instance=ExtResource( 24 )]
+[node name="PlasmaThrower2" parent="Access/Depot/Items" index="8" instance=ExtResource( 18 )]
+
+[node name="Barrage" parent="Access/Depot/Items" index="9" instance=ExtResource( 24 )]
 Projectile = ExtResource( 30 )
 
-[node name="BarrageEco" parent="Access/Depot/Items" index="9" instance=ExtResource( 25 )]
+[node name="BarrageEco" parent="Access/Depot/Items" index="10" instance=ExtResource( 25 )]
 Projectile = ExtResource( 29 )
 
-[node name="Salvo" parent="Access/Depot/Items" index="10" instance=ExtResource( 14 )]
+[node name="Salvo" parent="Access/Depot/Items" index="11" instance=ExtResource( 14 )]
 
-[node name="SalvoEco" parent="Access/Depot/Items" index="11" instance=ExtResource( 26 )]
-
-[node name="Sweeper" parent="Access/Depot/Items" index="12" instance=ExtResource( 22 )]
-Projectile = ExtResource( 41 )
+[node name="SalvoEco" parent="Access/Depot/Items" index="12" instance=ExtResource( 26 )]
 
 [node name="Sniper" parent="Access/Depot/Items" index="13" instance=ExtResource( 20 )]
 Projectile = ExtResource( 34 )

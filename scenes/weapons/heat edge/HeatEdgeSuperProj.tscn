@@ -4,13 +4,12 @@
 [ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/weapons/tex_generic_medium_proj.png" type="Texture" id=3]
 
-
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="HeatEdgeSuperProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 1300
-damage = 5.0
+damage = 2.5
 proj_range = 1500
 knockback = 100.0
 

@@ -6,14 +6,11 @@
 [ext_resource path="res://assets/bots/tex_charger.png" type="Texture" id=4]
 [ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=5]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
 [node name="CDroneLauncherProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-roll_speed = 1250
 
 [node name="StateMachine" parent="." index="0"]
 tree = {
@@ -3191,9 +3188,9 @@ texture = ExtResource( 4 )
 uv = PoolVector2Array( 72, 32, 67, 40, 62, 48, 57, 56, 52, 64, 42, 64, 32, 64, 22, 64, 12, 64, 7, 56, 2, 48, -3, 40, -8, 32, -3, 24, 2, 16, 7, 8, 12, 0, 22, 0, 32, 0, 42, 0, 52, 0, 57, 8, 62, 16, 67, 24, 47, 56, 37, 56, 27, 56, 17, 56, 52, 48, 42, 48, 32, 48, 22, 48, 12, 48, 7, 40, 17, 40, 27, 40, 37, 40, 47, 40, 57, 40, 2, 32, 12, 32, 22, 32, 32, 32, 42, 32, 52, 32, 62, 32, 57, 24, 47, 24, 37, 24, 27, 24, 17, 24, 7, 24, 52, 16, 42, 16, 32, 16, 22, 16, 12, 16, 17, 8, 27, 8, 37, 8, 47, 8 )
 
 [node name="Lifetime" parent="Timers" index="5"]
-wait_time = 10.0
+wait_time = 30.0
 
-[node name="CollisionShape" parent="." index="6"]
+[node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]

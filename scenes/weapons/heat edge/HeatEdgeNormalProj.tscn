@@ -4,12 +4,12 @@
 [ext_resource path="res://scenes/weapons/heat edge/HeatEdgeNormalProj.gd" type="Script" id=2]
 [ext_resource path="res://assets/weapons/tex_generic_small_proj.png" type="Texture" id=3]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
 [node name="HeatEdgeNormalProj" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+damage = 0.5
 proj_range = 1000
 
 [node name="Sprite" parent="." index="1"]

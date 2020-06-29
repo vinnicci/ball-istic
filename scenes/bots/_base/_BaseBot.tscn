@@ -3354,7 +3354,7 @@ one_shot = true
 one_shot = true
 
 [node name="DischargeParry" type="Timer" parent="Timers"]
-wait_time = 0.3
+wait_time = 0.15
 one_shot = true
 
 [node name="Sounds" type="Node2D" parent="."]

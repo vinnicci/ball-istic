@@ -23,9 +23,10 @@ export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
 export (float) var cam_shake_intensity: float = 0
 
-var current_heat_per_shot: float
-var current_heat: float
+var current_heat_per_shot: float = 0
+var current_heat: float = 0
 var current_heat_dissipation: float
+var current_shoot_cooldown: float
 var _is_almost_overheating: bool = false setget , is_almost_overheating
 var _is_overheating: bool = false setget , is_overheating
 var weap_commit: bool = false
@@ -88,17 +89,25 @@ func is_overheating():
 
 
 func _ready() -> void:
-	current_heat_per_shot = heat_per_shot
-	current_heat_dissipation = heat_dissipation_per_sec
-	_timer_shoot_cooldown.wait_time = shoot_cooldown
-	_timer_burst_timer.wait_time = burst_timer
-	#charge fire mode makes sure no heat per shot
-	#letting go for atleast 0.05 sec means cancelling charge
+	reset_weap_vars()
+
+
+func reset_weap_vars() -> void:
 	if fire_mode == FireModes.CHARGE:
-		heat_per_shot = 0
+		#charge fire mode uses another var actual_heat
+		#makes sure there's no heat per shot
+		#and letting go for atleast 0.05 sec means cancelling charge
+		_actual_heat = 0
+		current_shoot_cooldown = 0.05
+		_timer_shoot_cooldown.wait_time = current_shoot_cooldown
+	else:
 		current_heat_per_shot = heat_per_shot
-		shoot_cooldown = 0.05
-		_timer_shoot_cooldown.wait_time = shoot_cooldown
+		current_shoot_cooldown = shoot_cooldown
+		_timer_shoot_cooldown.wait_time = current_shoot_cooldown
+	current_heat_dissipation = heat_dissipation_per_sec
+	_timer_burst_timer.wait_time = burst_timer
+	current_heat = 0
+	current_heat = clamp(current_heat, 0, heat_capacity + 1)
 
 
 func _process(_delta: float) -> void:
@@ -111,7 +120,6 @@ func _process(_delta: float) -> void:
 	
 	#overheat state
 	if _is_overheating == false && current_heat > heat_capacity:
-		current_heat = heat_capacity + (heat_capacity*0.05)
 		_is_overheating = true
 	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
 		_is_overheating = false
@@ -226,17 +234,28 @@ func _on_BurstTimer_timeout() -> void:
 # shoot by charging and then releasing, shootcooldown node is the time to charge,
 # chargecanceltimer node is the delay of letting go to cancel charge
 ################################################################################
+var _actual_heat: float = 0
+onready var _timer_charge_cooldown = $Timers/ChargeCooldown
+
+
 func _fire_charged() -> void:
-	if _is_overheating == true || _parent_node.state != Global.CLASS_BOT.State.TURRET:
+	if (_is_overheating == true || _parent_node.state != Global.CLASS_BOT.State.TURRET ||
+		_timer_charge_cooldown.is_stopped() == false):
 		_cancel_charge()
 		return
 	if current_heat == heat_capacity:
-		current_heat += 1
+		if heat_dissipation_per_sec <= 0:
+			_actual_heat += heat_per_shot
+			current_heat = _actual_heat
+			_timer_charge_cooldown.start(shoot_cooldown)
+		else:
+			current_heat += 1
 		_timer_charge_cancel_timer.stop()
 		_charge_fire()
 		_cancel_charge()
 		return
-	if current_heat == 0:
+	if current_heat == _actual_heat:
+		current_heat = 0
 		$ChargingSound.play()
 		_timer_dissipation_cooldown.paused = true
 		$ChargingTween.interpolate_property(self, "current_heat", current_heat,
@@ -252,7 +271,10 @@ func _charge_fire() -> void:
 
 func _on_ChargeCancelTimer_timeout() -> void:
 	_cancel_charge()
-	current_heat = 0
+	if heat_dissipation_per_sec <= 0:
+		current_heat = _actual_heat
+	else:
+		current_heat = 0
 
 
 func _cancel_charge() -> void:

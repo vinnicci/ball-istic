@@ -49,8 +49,9 @@ tracks/0/keys = {
 [node name="SalvoEco" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 5.0
-heat_capacity = 24.0
+heat_per_shot = 1.0
+heat_capacity = 3.1
+heat_dissipation_per_sec = 0.0
 proj_count_per_shot = 5
 spread = 5.0
 cam_shake_intensity = 10.0
