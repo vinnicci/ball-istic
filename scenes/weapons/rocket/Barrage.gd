@@ -1,8 +1,8 @@
 extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
-var _left_curve: Resource = preload("res://scenes/weapons/battery/BatteryProjLeftCurve.tres")
-var _right_curve: Resource = preload("res://scenes/weapons/battery/BatteryProjRightCurve.tres")
+var _left_curve: Resource = preload("res://scenes/weapons/rocket/RocketProjLeftCurve.tres")
+var _right_curve: Resource = preload("res://scenes/weapons/rocket/RocketProjRightCurve.tres")
 
 
 func _ready() -> void:

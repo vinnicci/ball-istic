@@ -33,7 +33,6 @@ color_ramp = SubResource( 2 )
 [node name="Sniper" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 1.0
 heat_capacity = 4.1
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 2.0

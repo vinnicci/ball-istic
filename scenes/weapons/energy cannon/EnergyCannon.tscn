@@ -37,6 +37,7 @@ heat_capacity = 4.1
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 2.5
 recoil = 100
+cam_shake_intensity = 15.0
 
 [node name="SlotIcon" parent="." index="0"]
 scale = Vector2( 0.7, 0.7 )
@@ -52,4 +53,4 @@ process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
 texture = ExtResource( 2 )
-offset = Vector2( 17, 0 )
+offset = Vector2( 16, 0 )
