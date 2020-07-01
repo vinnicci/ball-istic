@@ -53,6 +53,7 @@ offset = Vector2( 3, 3 )
 position = Vector2( 20, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]

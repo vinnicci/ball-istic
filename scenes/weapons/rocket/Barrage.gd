@@ -6,13 +6,13 @@ var _right_curve: Resource = preload("res://scenes/weapons/rocket/RocketProjRigh
 
 
 func _ready() -> void:
-	$Muzzle.position = $MuzzlePos/P0.position
+	$Muzzle.position = $MuzzlePos/P1.position
 
 
 func _modify_proj(proj) -> void:
 	$Muzzle.transform = get_node("MuzzlePos/P" + _current_burst_count as String).transform
 	var proj_behavior = proj.get_node("ProjBehavior")
 	if _current_burst_count % 2 == 0:
-		proj_behavior.steer_curve = _left_curve
-	else:
 		proj_behavior.steer_curve = _right_curve
+	else:
+		proj_behavior.steer_curve = _left_curve

@@ -176,7 +176,8 @@ func _instance_proj() -> Node:
 	_modify_proj(proj)
 	if proj.has_node("Explosion") == true:
 		var explosion_node = proj.get_node("Explosion")
-		explosion_node.set_player_cam(level_node.get_player().get_node("Camera2D"))
+		if is_instance_valid(level_node.get_player()) == true:
+			explosion_node.set_player_cam(level_node.get_player().get_node("Camera2D"))
 		explosion_node.set_level_cam(level_node.get_node("Camera2D"))
 	if proj is Global.CLASS_PROJ:
 		proj.set_level(level_node)
@@ -217,9 +218,9 @@ var _current_burst_count: int = 0
 
 func _fire_burst() -> void:
 	$ShootingSound.play()
+	_current_burst_count += 1
 	_fire_auto()
 	_apply_recoil()
-	_current_burst_count += 1
 	_timer_burst_timer.start()
 
 

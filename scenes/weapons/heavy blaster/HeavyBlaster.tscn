@@ -33,7 +33,7 @@ color_ramp = SubResource( 2 )
 [node name="HeavyBlaster" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 0.2
+heat_per_shot = 0.1
 heat_capacity = 10.0
 shoot_cooldown = 0.03
 spread = 15.0

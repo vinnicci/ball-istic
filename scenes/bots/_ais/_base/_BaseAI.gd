@@ -72,26 +72,20 @@ func _physics_process(delta: float) -> void:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
-#func _on_LookAt_timeout() -> void:
-#	if _check_if_valid_bot(_enemy) == false && _enemies.size() != 0:
-#		_get_new_target_enemy(_enemies.pop_front())
-
-
-#look if target enemy is in sight
-#if target enemy is blocked by wall/level object return
-#if target enemy is blocked by another enemy,
-#engage that blocking enemy instead
 func _get_new_target_enemy(bot) -> void:
 	if _check_if_valid_bot(bot) == false:
 		_enemies.erase(bot)
 		return
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
+	#if target bot is within line of sight
 	if potential_enemy == bot:
 		_enemy = bot
 		if $FoundTarget.is_playing() == false:
 			$FoundTarget.play()
 		return
+	#if target bot is blocked by another enemy bot,
+	#engage the blocking bot instead
 	if (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
 		_enemies.erase(potential_enemy)
@@ -101,12 +95,11 @@ func _get_new_target_enemy(bot) -> void:
 	_enemies.append(bot)
 
 
-#bot aggro when attacked or charged
 func engage_attacker(bot) -> void:
-	#return if attacker is dead or attacker is current enemy or
-	#attacker's distance is more than current enemy distance
+	#if attacker is dead or the same target, continue engaging current enemy
 	if _check_if_valid_bot(bot) == false || _enemy == bot:
 		return
+	#if attacker's distance is more than the current enemy distance, return
 	if (_enemy != null &&
 		_get_distance(bot.global_position, global_position) >
 		_get_distance(_enemy.global_position, global_position)):
@@ -130,7 +123,7 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	if _enemies.has(body) == true:
+	if body != _enemy && _enemies.has(body) == true:
 		_enemies.erase(body)
 
 
@@ -170,6 +163,7 @@ func _flee() -> void:
 	_next_path_point = null
 
 
+#coroutine signal
 signal resume
 
 
@@ -185,7 +179,6 @@ func _on_ResumeTimer_timeout() -> void:
 #############
 # enemy found
 #############
-#aggro on enemy found
 func task_get_enemy(task):
 	if _enemies.size() != 0:
 		_get_new_target_enemy(_enemies.pop_front())
@@ -368,22 +361,3 @@ func task_special(task):
 #virtual func for bots with special tasks
 func _special() -> void:
 	pass
-
-
-#seek area with allies within and decent distance from enemy
-#func find_ally() -> bool:
-#	var dict_dist_ally = {}
-#	var arr_dist = []
-#	for bot in parent_node.get_parent().get_children():
-#		if bot.is_hostile() != parent_node.is_hostile() && bot == self:
-#			continue
-#		var dist = get_dist(global_position, bot.global_position)
-#		if dist < 500:
-#			continue
-#		dict_dist_ally[dist] = bot
-#		arr_dist.append(dist)
-#	if arr_dist.size() == 0:
-#		return false
-#	arr_dist.sort()
-#	ally = dict_dist_ally[arr_dist.pop_front()]
-#	return true
