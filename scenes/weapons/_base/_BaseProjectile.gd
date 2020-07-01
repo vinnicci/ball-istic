@@ -9,7 +9,7 @@ export (float) var knockback: float = 50 setget , get_knockback
 var velocity: Vector2
 var acceleration: Vector2
 var current_speed: int
-var _shooter: Node setget , shooter
+var _shooter: Node
 var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
 var _exploded: bool = false
@@ -24,9 +24,6 @@ func get_range():
 
 func get_knockback():
 	return knockback
-
-func shooter():
-	return _shooter
 
 func shooter_faction():
 	return _shooter_faction
@@ -47,6 +44,10 @@ func set_level(new_level: Node) -> void:
 	_level_node = new_level
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_level(_level_node)
+
+
+func set_shooter(shooter: Node) -> void:
+	_shooter = shooter
 
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
@@ -94,6 +95,8 @@ func _damage_bot(bot: Node) -> bool:
 			$Explosion.start_explosion()
 		else:
 			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+		if bot.has_node("AI") == true && is_instance_valid(_shooter):
+			bot.get_node("AI").engage_attacker(_shooter)
 		return true
 
 

@@ -180,6 +180,7 @@ func _instance_proj() -> Node:
 		explosion_node.set_level_cam(level_node.get_node("Camera2D"))
 	if proj is Global.CLASS_PROJ:
 		proj.set_level(level_node)
+		proj.set_shooter(_parent_node)
 		proj.damage *= proj_damage_rate
 	return proj
 

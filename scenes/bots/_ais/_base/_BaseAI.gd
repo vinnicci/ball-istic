@@ -44,9 +44,7 @@ func _process(delta: float) -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
-	if bot != null:
-		return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
-	return false
+	return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
 
 
 func _get_path_points(start: Vector2, end: Vector2) -> void:
@@ -74,30 +72,66 @@ func _physics_process(delta: float) -> void:
 		$Rays/Target.look_at(_enemy.global_position)
 
 
-#make this dynamic
-func _get_new_target_enemy() -> void:
-	if _enemies.size() != 0 && _enemy == null:
-		for bot in _enemies:
-			if _check_if_valid_bot(bot) == false:
-				_enemies.erase(bot)
-				continue
-			$Rays/LookAt.look_at(bot.global_position)
-			if $Rays/LookAt.get_collider() == bot:
-				_enemy = bot
-				$FoundTarget.play()
+#func _on_LookAt_timeout() -> void:
+#	if _check_if_valid_bot(_enemy) == false && _enemies.size() != 0:
+#		_get_new_target_enemy(_enemies.pop_front())
+
+
+#look if target enemy is in sight
+#if target enemy is blocked by wall/level object return
+#if target enemy is blocked by another enemy,
+#engage that blocking enemy instead
+func _get_new_target_enemy(bot) -> void:
+	if _check_if_valid_bot(bot) == false:
+		_enemies.erase(bot)
+		return
+	$Rays/LookAt.look_at(bot.global_position)
+	var potential_enemy = $Rays/LookAt.get_collider()
+	if potential_enemy == bot:
+		_enemy = bot
+		if $FoundTarget.is_playing() == false:
+			$FoundTarget.play()
+		return
+	if (potential_enemy is Global.CLASS_BOT &&
+		potential_enemy.current_faction != _parent_node.current_faction):
+		_enemies.erase(potential_enemy)
+		_enemy = potential_enemy
+		if $FoundTarget.is_playing() == false:
+			$FoundTarget.play()
+	_enemies.append(bot)
+
+
+#bot aggro when attacked or charged
+func engage_attacker(bot) -> void:
+	#return if attacker is dead or attacker is current enemy or
+	#attacker's distance is more than current enemy distance
+	if _check_if_valid_bot(bot) == false || _enemy == bot:
+		return
+	if (_enemy != null &&
+		_get_distance(bot.global_position, global_position) >
+		_get_distance(_enemy.global_position, global_position)):
+		return
+	if _check_if_valid_bot(_enemy) == true:
+		_enemies.append(_enemy)
+	if _enemies.has(bot) == true:
+		_enemies.erase(bot)
+	_enemy = bot
+	if $FoundTarget.is_playing() == false:
+		$FoundTarget.play()
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if ((body is Global.CLASS_PLAYER ||
-		body is Global.CLASS_BOT && body.has_node("AI") == true) &&
+	if (body.has_node("AI") == true &&
+		body.current_faction != _parent_node.current_faction):
+		_enemies.append(body)
+	elif (body is Global.CLASS_PLAYER &&
 		body.current_faction != _parent_node.current_faction):
 		_enemies.append(body)
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
-	if body is Global.CLASS_BOT && body.current_faction != _parent_node.current_faction:
-		if _enemies.has(body) == true:
-			_enemies.erase(body)
+	if _enemies.has(body) == true:
+		_enemies.erase(body)
 
 
 func _seek(target: Global.CLASS_BOT) -> void:
@@ -147,27 +181,21 @@ func _on_ResumeTimer_timeout() -> void:
 # btree tasks
 #############
 
+
 #############
 # enemy found
 #############
-#time based wait task using coroutine
-func task_timed_idle(task):
-	$ResumeTimer.wait_time = task.get_param(0)
-	if $ResumeTimer.is_stopped() == true:
-		$ResumeTimer.start()
-	yield(self, "resume")
-	task.succeed()
-	return
-
-
+#aggro on enemy found
 func task_get_enemy(task):
-	_get_new_target_enemy()
+	if _enemies.size() != 0:
+		_get_new_target_enemy(_enemies.pop_front())
 	task.succeed()
 	return
 
 
 func task_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
+		_enemies.erase(_enemy)
 		_enemy = null
 		_velocity = Vector2(0,0)
 		task.failed()
@@ -196,6 +224,16 @@ func task_is_enemy_close(task):
 	else:
 		task.failed()
 		return
+
+
+#time based wait task using coroutine
+func task_timed_idle(task):
+	$ResumeTimer.wait_time = task.get_param(0)
+	if $ResumeTimer.is_stopped() == true:
+		$ResumeTimer.start()
+	yield(self, "resume")
+	task.succeed()
+	return
 
 
 ###########
@@ -349,4 +387,3 @@ func _special() -> void:
 #	arr_dist.sort()
 #	ally = dict_dist_ally[arr_dist.pop_front()]
 #	return true
-

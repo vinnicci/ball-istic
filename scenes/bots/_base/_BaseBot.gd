@@ -548,7 +548,8 @@ func shoot_weapon() -> void:
 #some weapon has fixed anim -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
 	var weap = arr_weapons[slot_num]
-	if weap == null || state == State.TO_ROLL || state == State.TO_TURRET:
+	if (weap == null || state == State.TO_ROLL || state == State.TO_TURRET ||
+		state == State.STUN):
 		return false
 	current_weapon.modulate = Color(1,1,1,0)
 	if state == State.TURRET:
@@ -681,6 +682,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 			damage *= 0.05
 			$Sounds/Clash.play()
 	body.take_damage(damage, Vector2(0,0))
+	if body.has_node("AI") == true:
+		body.get_node("AI").engage_attacker(self)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
@@ -698,7 +701,8 @@ func explode() -> void:
 	$Body.modulate = Color(0.18, 0.18, 0.18)
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
+	if is_instance_valid(level_node.get_player()) == true:
+		$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
 
 
 func _on_ExplodeDelay_timeout() -> void:
