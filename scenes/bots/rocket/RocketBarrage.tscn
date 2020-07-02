@@ -17,8 +17,7 @@ radius = 1000.0
 
 [node name="RocketBarrage" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-shield_capacity = 35.0
-health_capacity = 35.0
+knockback_resist = 0.8
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

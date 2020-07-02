@@ -5,6 +5,7 @@
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
+[ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
@@ -22,7 +23,6 @@
 [ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/rocket/BarrageEco.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/weapons/rocket/SalvoEco.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/bots/sniper/Sniper.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scenes/weapons/stun grenade launcher/StunGrenadeLauncher.tscn" type="PackedScene" id=28]
 [ext_resource path="res://scenes/weapons/rocket/RocketEcoHomingProj.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/weapons/rocket/RocketHomingProj.tscn" type="PackedScene" id=30]
@@ -37,8 +37,6 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityI.tscn" type="PackedScene" id=39]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=40]
 [ext_resource path="res://scenes/bots/rocket/RocketBarrage.tscn" type="PackedScene" id=42]
-
-
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -149,33 +147,33 @@ shape = SubResource( 2 )
 position = Vector2( 3751.07, 2914.15 )
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
-position = Vector2( 1384.24, 2432.66 )
+position = Vector2( 1403.24, 1077.66 )
 shield_capacity = 8.0
 health_capacity = 8.0
 
 [node name="Charger5" parent="Bots" index="2" instance=ExtResource( 13 )]
-position = Vector2( 1412, 2177 )
+position = Vector2( 1431, 822 )
 shield_capacity = 8.0
 health_capacity = 8.0
 
 [node name="Charger6" parent="Bots" index="3" instance=ExtResource( 13 )]
-position = Vector2( 1272, 2309 )
+position = Vector2( 1291, 954 )
 shield_capacity = 8.0
 health_capacity = 8.0
 
 [node name="Charger4" parent="Bots" index="4" instance=ExtResource( 13 )]
-position = Vector2( 1163.09, 1556.25 )
+position = Vector2( 1527.09, 382.25 )
 shield_capacity = 8.0
 health_capacity = 8.0
 
 [node name="Fighter3" parent="Bots" index="5" instance=ExtResource( 23 )]
-position = Vector2( 1007.96, 1605.01 )
+position = Vector2( 1371.96, 431.01 )
 
 [node name="Fighter6" parent="Bots" index="6" instance=ExtResource( 23 )]
-position = Vector2( 1000, 1433 )
+position = Vector2( 1364, 259 )
 
 [node name="RocketBarrage" parent="Bots" index="7" instance=ExtResource( 42 )]
-position = Vector2( 261, 2233 )
+position = Vector2( 252, 239 )
 
 [node name="Charger7" parent="Bots" index="8" instance=ExtResource( 13 )]
 position = Vector2( 3584.24, 1275.66 )
@@ -206,25 +204,8 @@ position = Vector2( 3699, 1239 )
 [node name="RocketBarrage2" parent="Bots" index="14" instance=ExtResource( 42 )]
 position = Vector2( 3653, 815 )
 
-[node name="Sniper" parent="Bots" index="15" instance=ExtResource( 27 )]
-position = Vector2( 4001, 3132 )
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Fighter" parent="Bots" index="16" instance=ExtResource( 23 )]
-position = Vector2( 3357, 3101 )
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Fighter2" parent="Bots" index="17" instance=ExtResource( 23 )]
-position = Vector2( 3344, 2933 )
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Charger2" parent="Bots" index="18" instance=ExtResource( 13 )]
-position = Vector2( 3545, 3114 )
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Charger3" parent="Bots" index="19" instance=ExtResource( 13 )]
-position = Vector2( 3774, 3127 )
-faction = Color( 0, 1, 0, 1 )
+[node name="Nuke" parent="Bots" index="15" instance=ExtResource( 6 )]
+position = Vector2( 211, 2817 )
 
 [editable path="Access/Depot"]
 

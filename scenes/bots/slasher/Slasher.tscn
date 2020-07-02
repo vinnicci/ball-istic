@@ -42,7 +42,9 @@ radius = 1000.0
 
 [node name="Slasher" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
+speed = 1300
 transform_speed = 0.2
+charge_cooldown = 2.0
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

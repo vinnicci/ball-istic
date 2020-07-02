@@ -17,11 +17,9 @@ radius = 1000.0
 
 [node name="HeavyFighter" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
-shield_capacity = 15.0
-health_capacity = 75.0
-speed = 1000
 knockback_resist = 0.7
-charge_force_factor = 1.0
+transform_speed = 0.5
+charge_force_factor = 0.7
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

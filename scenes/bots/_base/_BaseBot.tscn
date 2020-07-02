@@ -3306,10 +3306,7 @@ z_index = 5
 
 [node name="Shield" type="TextureProgress" parent="Bars"]
 modulate = Color( 0.292969, 1, 0.968223, 1 )
-margin_left = -25.0
-margin_right = 25.0
 margin_bottom = 5.0
-value = 100.0
 texture_progress = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -3317,10 +3314,7 @@ __meta__ = {
 
 [node name="Health" type="TextureProgress" parent="Bars"]
 modulate = Color( 1, 0.13, 0.13, 1 )
-margin_left = -25.0
-margin_right = 25.0
 margin_bottom = 5.0
-value = 100.0
 texture_progress = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

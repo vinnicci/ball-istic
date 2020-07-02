@@ -313,6 +313,12 @@ func _init_bot() -> void:
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
 	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now
+	bar_shield.margin_left = -bot_radius
+	bar_shield.margin_right = bot_radius
+	bar_health.margin_left = -bot_radius
+	bar_health.margin_right = bot_radius
+	bar_shield.rect_scale.x = (bot_radius*2)/150
+	bar_health.rect_scale.x = (bot_radius*2)/150
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
@@ -548,14 +554,16 @@ func shoot_weapon() -> void:
 #some weapon has fixed anim -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
 	var weap = arr_weapons[slot_num]
-	if (weap == null || state == State.TO_ROLL || state == State.TO_TURRET ||
-		state == State.STUN):
+	if weap == null:
 		return false
+	match state:
+		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT:
+			return false
 	current_weapon.modulate = Color(1,1,1,0)
 	if state == State.TURRET:
 		current_weapon = weap
 		current_weapon.modulate = Color(1,1,1,1)
-	elif state == State.ROLL:
+	elif state == State.ROLL || state == State.CHARGE_ROLL:
 		current_weapon = weap
 	return true
 
@@ -601,8 +609,9 @@ func _end_charging_effect() -> void:
 		linear_velocity.length() <= current_speed * _charge_commit_velocity):
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
 			current_faction, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		_body_tween.interpolate_property(_body_charge_effect, "modulate", _body_charge_effect.modulate,
-			Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		_body_tween.interpolate_property(_body_charge_effect, "modulate",
+			_body_charge_effect.modulate, Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR,
+			Tween.EASE_IN_OUT)
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
@@ -654,8 +663,8 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 
 
 func discharge_parry() -> void:
-	if (_timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
-		state == State.TO_TURRET || state == State.WEAP_COMMIT)):
+	if ((state == State.TURRET || state == State.TO_TURRET || state == State.WEAP_COMMIT) &&
+		_timer_charge_cooldown.is_stopped() == true):
 		_body_charge_effect.get_node("Anim").play("discharge_parry")
 		$Sounds/DischargeParry.play()
 		_timer_discharge_parry.start()

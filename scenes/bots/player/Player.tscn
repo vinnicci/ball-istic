@@ -3218,10 +3218,11 @@ uv = PoolVector2Array( 71.9183, 32, 66.9285, 39.9837, 61.9387, 47.9673, 56.949, 
 
 [node name="WeaponHeat" type="TextureProgress" parent="Bars" index="2"]
 modulate = Color( 0.913725, 0.639216, 0.0588235, 1 )
-margin_top = 25.0
+margin_top = 32.0
 margin_right = 50.0
 margin_bottom = 30.0
 rect_rotation = -90.0
+rect_scale = Vector2( 0.42, 1 )
 rounded = true
 texture_progress = ExtResource( 4 )
 __meta__ = {
@@ -3233,10 +3234,11 @@ anims/too_much_heat = SubResource( 1 )
 
 [node name="ChargeLevel" type="TextureProgress" parent="Bars" index="3"]
 modulate = Color( 1, 0.239216, 0.878431, 1 )
-margin_top = 25.0
+margin_top = 32.0
 margin_right = 50.0
 margin_bottom = 30.0
 rect_rotation = -90.0
+rect_scale = Vector2( 0.42, 1 )
 value = 100.0
 rounded = true
 texture_progress = ExtResource( 4 )

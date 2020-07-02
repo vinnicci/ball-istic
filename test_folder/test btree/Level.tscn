@@ -89,11 +89,11 @@
 [ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=87]
 [ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=88]
 [ext_resource path="res://scenes/bots/cannoneer/Cannoneer.tscn" type="PackedScene" id=89]
-[ext_resource path="res://scenes/bots/cdrone spawner/CDroneSpawner.tscn" type="PackedScene" id=90]
-[ext_resource path="res://scenes/bots/fdrone spawner/FDroneSpawner.tscn" type="PackedScene" id=91]
-[ext_resource path="res://scenes/bots/explosive/PulseExplosive.tscn" type="PackedScene" id=92]
+[ext_resource path="res://scenes/bots/spawner/CDroneSpawner.tscn" type="PackedScene" id=90]
+[ext_resource path="res://scenes/bots/spawner/FDroneSpawner.tscn" type="PackedScene" id=91]
+[ext_resource path="res://scenes/bots/explosive/StunExplosive.tscn" type="PackedScene" id=92]
 [ext_resource path="res://scenes/bots/grenadier/Grenadier.tscn" type="PackedScene" id=93]
-[ext_resource path="res://scenes/bots/stun grenadier/StunGrenadier.tscn" type="PackedScene" id=94]
+[ext_resource path="res://scenes/bots/grenadier/StunGrenadier.tscn" type="PackedScene" id=94]
 [ext_resource path="res://scenes/bots/sniper/Sniper.tscn" type="PackedScene" id=95]
 [ext_resource path="res://scenes/bots/shotgunner/Shotgunner.tscn" type="PackedScene" id=96]
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=97]
@@ -102,6 +102,10 @@
 [ext_resource path="res://scenes/bots/rocket/RocketBarrage.tscn" type="PackedScene" id=100]
 
 [sub_resource type="CircleShape2D" id=1]
+resource_local_to_scene = true
+radius = 128.0
+
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 radius = 128.0
 
@@ -118,10 +122,6 @@ resource_local_to_scene = true
 radius = 128.0
 
 [sub_resource type="CircleShape2D" id=6]
-resource_local_to_scene = true
-radius = 128.0
-
-[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
 [node name="Level" instance=ExtResource( 1 )]
@@ -174,7 +174,7 @@ shape = SubResource( 1 )
 position = Vector2( -253, -255 )
 
 [node name="CollisionShape2D" parent="Access/Depot2/Area2D" index="0"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="EnergyCannon" parent="Access/Depot2/Items" index="0" instance=ExtResource( 20 )]
 
@@ -210,7 +210,7 @@ shape = SubResource( 3 )
 position = Vector2( 128, -255 )
 
 [node name="CollisionShape2D" parent="Access/Depot3/Area2D" index="0"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="Scattershot" parent="Access/Depot3/Items" index="0" instance=ExtResource( 39 )]
 
@@ -244,7 +244,7 @@ shape = SubResource( 4 )
 position = Vector2( 512, -253 )
 
 [node name="CollisionShape2D" parent="Access/Depot4/Area2D" index="0"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="ChargeCooldownI" parent="Access/Depot4/Items" index="0" instance=ExtResource( 52 )]
 
@@ -280,7 +280,7 @@ shape = SubResource( 5 )
 position = Vector2( 897, -256 )
 
 [node name="CollisionShape2D" parent="Access/Depot5/Area2D" index="0"]
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
 [node name="KnockbackResistI" parent="Access/Depot5/Items" index="0" instance=ExtResource( 67 )]
 
@@ -3491,7 +3491,7 @@ tree = {
 zoom = Vector2( 1, 1 )
 
 [node name="CollisionShape" parent="Bots/Player" index="8"]
-shape = SubResource( 2 )
+shape = SubResource( 6 )
 
 [node name="Dummy" parent="Bots" index="1" instance=ExtResource( 31 )]
 position = Vector2( -685, 298 )

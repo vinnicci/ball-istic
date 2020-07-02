@@ -16,10 +16,9 @@ radius = 1000.0
 
 [node name="Explosive" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
-shield_capacity = 10.0
-shield_recovery_per_sec = 0.0
-health_capacity = 10.0
-charge_force_factor = 0.8
+speed = 900
+charge_force_factor = 1.0
+charge_damage_rate = 0.2
 
 [node name="StateMachine" parent="." index="0"]
 tree = {

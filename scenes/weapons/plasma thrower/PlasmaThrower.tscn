@@ -38,7 +38,7 @@ heat_per_shot = 0.5
 heat_capacity = 25.0
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 0.01
-proj_count_per_shot = 3
+proj_count_per_shot = 2
 spread = 30.0
 burst_timer = 0.03
 

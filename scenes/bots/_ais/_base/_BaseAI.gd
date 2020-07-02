@@ -277,7 +277,7 @@ func task_is_charge_ready(task):
 
 ##############
 # flee
-# needs refinement
+# still needs refinement
 ##############
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
@@ -289,6 +289,15 @@ func task_flee(task):
 	_flee()
 	task.succeed()
 	return
+
+
+###############
+# switch weapon
+###############
+func task_switch_weapon(task):
+	if _parent_node.change_weapon(task.get_param(0)) == true:
+		task.succeed()
+		return
 
 
 ##############
@@ -358,6 +367,6 @@ func task_special(task):
 	return
 
 
-#virtual func for bots with special tasks
+#virtual func for bots with special tasks like self destruct and such
 func _special() -> void:
 	pass

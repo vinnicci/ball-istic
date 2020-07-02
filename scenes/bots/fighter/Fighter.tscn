@@ -14,8 +14,9 @@ resource_local_to_scene = true
 [node name="Fighter" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
 speed = 1500
+transform_speed = 0.5
 charge_cooldown = 2.0
-charge_force_factor = 0.8
+charge_force_factor = 0.7
 
 [node name="StateMachine" parent="." index="0"]
 tree = {
