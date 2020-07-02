@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bots/fighter/big weap/BlasterProjBig.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/tex_generic_small_proj.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 13.0
+
+[node name="BlasterProjBig" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+speed = 800
+proj_range = 2000
+
+[node name="Sprite" parent="." index="1"]
+modulate = Color( 1, 0.654902, 0, 1 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+offset = Vector2( -9, 0 )
+
+[node name="CollisionShape" parent="." index="2"]
+shape = SubResource( 1 )

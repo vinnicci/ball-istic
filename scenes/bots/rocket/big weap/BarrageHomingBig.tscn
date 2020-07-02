@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/weapons/tex_RBarrage.png" type="Texture" id=2]
+[ext_resource path="res://scenes/bots/rocket/big weap/BarrageHomingBig.gd" type="Script" id=3]
+[ext_resource path="res://scenes/weapons/rocket/RocketHomingProj.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/weapons/tex_siren_light.png" type="Texture" id=5]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[node name="BarrageHomingBig" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+Projectile = ExtResource( 4 )
+heat_capacity = 2.1
+heat_dissipation_per_sec = 0.375
+shoot_cooldown = 2.0
+fire_mode = 1
+burst_count = 10
+spread = 5.0
+burst_timer = 0.1
+cam_shake_intensity = 3.0
+
+[node name="SlotIcon" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="SlotIcon" index="0"]
+modulate = Color( 0.968627, 0.454902, 0.0784314, 1 )
+show_behind_parent = true
+texture = ExtResource( 5 )
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
+process_material = SubResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="MuzzlePos" type="Node2D" parent="." index="4"]
+
+[node name="P1" type="Position2D" parent="MuzzlePos" index="0"]
+position = Vector2( -58, -27 )
+rotation = -1.5708
+
+[node name="P2" type="Position2D" parent="MuzzlePos" index="1"]
+position = Vector2( -58, 27 )
+rotation = 1.5708
+
+[node name="P3" type="Position2D" parent="MuzzlePos" index="2"]
+position = Vector2( -30, -27 )
+rotation = -1.5708
+
+[node name="P4" type="Position2D" parent="MuzzlePos" index="3"]
+position = Vector2( -30, 27 )
+rotation = 1.5708
+
+[node name="P5" type="Position2D" parent="MuzzlePos" index="4"]
+position = Vector2( 0, -27 )
+rotation = -1.5708
+
+[node name="P6" type="Position2D" parent="MuzzlePos" index="5"]
+position = Vector2( 0, 27 )
+rotation = 1.5708
+
+[node name="P7" type="Position2D" parent="MuzzlePos" index="6"]
+position = Vector2( 30, -27 )
+rotation = -1.5708
+
+[node name="P8" type="Position2D" parent="MuzzlePos" index="7"]
+position = Vector2( 30, 27 )
+rotation = 1.5708
+
+[node name="P9" type="Position2D" parent="MuzzlePos" index="8"]
+position = Vector2( 58, -27 )
+rotation = -1.5708
+
+[node name="P10" type="Position2D" parent="MuzzlePos" index="9"]
+position = Vector2( 58, 27 )
+rotation = 1.5708

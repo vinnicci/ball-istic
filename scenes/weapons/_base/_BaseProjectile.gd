@@ -60,9 +60,10 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node
 
 
 func _physics_process(delta: float) -> void:
-	if ($RangeTimer.is_stopped() == false && $RangeTimer.time_left <= 0.2):
+	if (is_stopped == false && $RangeTimer.is_stopped() == false &&
+		$RangeTimer.time_left <= 0.2):
 		$Sprite.modulate.a = lerp($Sprite.modulate.a, 0, 0.2)
-	elif is_stopped == true:
+	if is_stopped == true:
 		velocity = Vector2(0,0)
 		$Sprite.hide()
 		return

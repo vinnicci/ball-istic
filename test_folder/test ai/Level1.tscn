@@ -5,11 +5,12 @@
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://test_folder/test ai/TileMap.gd" type="Script" id=5]
-[ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/sniper/SniperBig.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/bots/spawner/ChargerSpawner.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/rocket/Salvo.tscn" type="PackedScene" id=14]
@@ -17,19 +18,18 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityII.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/weapons/plasma thrower/PlasmaThrower.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/bots/spawner/FighterSpawner.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/rocket/BarrageEco.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/weapons/rocket/SalvoEco.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/weapons/stun grenade launcher/StunGrenadeLauncher.tscn" type="PackedScene" id=28]
 [ext_resource path="res://scenes/weapons/rocket/RocketEcoHomingProj.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/weapons/rocket/RocketHomingProj.tscn" type="PackedScene" id=30]
 [ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryIII.tscn" type="PackedScene" id=31]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=32]
 [ext_resource path="res://scenes/weapons/cannon/PulseCannonProj.tscn" type="PackedScene" id=33]
-[ext_resource path="res://scenes/weapons/sniper/SniperPulseProj.tscn" type="PackedScene" id=34]
 [ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationIII.tscn" type="PackedScene" id=35]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityI.tscn" type="PackedScene" id=36]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityII.tscn" type="PackedScene" id=37]
@@ -68,38 +68,36 @@ position = Vector2( 4544.88, 2626.66 )
 shape = SubResource( 1 )
 
 [node name="Cyclone" parent="Access/Depot/Items" index="0" instance=ExtResource( 21 )]
+position = Vector2( 0, 1 )
 
-[node name="StunGrenadeLauncher" parent="Access/Depot/Items" index="1" instance=ExtResource( 28 )]
+[node name="PlasmaThrower2" parent="Access/Depot/Items" index="1" instance=ExtResource( 18 )]
 
-[node name="PlasmaThrower2" parent="Access/Depot/Items" index="2" instance=ExtResource( 18 )]
-
-[node name="Barrage" parent="Access/Depot/Items" index="3" instance=ExtResource( 24 )]
+[node name="Barrage" parent="Access/Depot/Items" index="2" instance=ExtResource( 24 )]
 Projectile = ExtResource( 30 )
 
-[node name="BarrageEco" parent="Access/Depot/Items" index="4" instance=ExtResource( 25 )]
+[node name="BarrageEco" parent="Access/Depot/Items" index="3" instance=ExtResource( 25 )]
 Projectile = ExtResource( 29 )
 
-[node name="Salvo" parent="Access/Depot/Items" index="5" instance=ExtResource( 14 )]
+[node name="Salvo" parent="Access/Depot/Items" index="4" instance=ExtResource( 14 )]
 
-[node name="SalvoEco" parent="Access/Depot/Items" index="6" instance=ExtResource( 26 )]
+[node name="SalvoEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 26 )]
 
-[node name="Sniper" parent="Access/Depot/Items" index="7" instance=ExtResource( 20 )]
-Projectile = ExtResource( 34 )
+[node name="Sniper" parent="Access/Depot/Items" index="6" instance=ExtResource( 20 )]
 
-[node name="EnergyCannon" parent="Access/Depot/Items" index="8" instance=ExtResource( 17 )]
+[node name="EnergyCannon" parent="Access/Depot/Items" index="7" instance=ExtResource( 17 )]
 Projectile = ExtResource( 33 )
 
-[node name="Siren" parent="Access/Depot/Items" index="9" instance=ExtResource( 15 )]
+[node name="Siren" parent="Access/Depot/Items" index="8" instance=ExtResource( 15 )]
 
-[node name="Fortress" parent="Access/Depot/Items" index="10" instance=ExtResource( 12 )]
+[node name="Fortress" parent="Access/Depot/Items" index="9" instance=ExtResource( 12 )]
 
-[node name="Fortress2" parent="Access/Depot/Items" index="11" instance=ExtResource( 12 )]
+[node name="Fortress2" parent="Access/Depot/Items" index="10" instance=ExtResource( 12 )]
 
-[node name="Fortress3" parent="Access/Depot/Items" index="12" instance=ExtResource( 12 )]
+[node name="Fortress3" parent="Access/Depot/Items" index="11" instance=ExtResource( 12 )]
 
-[node name="Fortress4" parent="Access/Depot/Items" index="13" instance=ExtResource( 12 )]
+[node name="Fortress4" parent="Access/Depot/Items" index="12" instance=ExtResource( 12 )]
 
-[node name="Fortress5" parent="Access/Depot/Items" index="14" instance=ExtResource( 12 )]
+[node name="Fortress5" parent="Access/Depot/Items" index="13" instance=ExtResource( 12 )]
 
 [node name="Vault" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( 4923.74, 2627.99 )
@@ -147,7 +145,7 @@ shape = SubResource( 2 )
 position = Vector2( 3751.07, 2914.15 )
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 13 )]
-position = Vector2( 1403.24, 1077.66 )
+position = Vector2( 1420, 1011 )
 shield_capacity = 8.0
 health_capacity = 8.0
 
@@ -204,8 +202,14 @@ position = Vector2( 3699, 1239 )
 [node name="RocketBarrage2" parent="Bots" index="14" instance=ExtResource( 42 )]
 position = Vector2( 3653, 815 )
 
-[node name="Nuke" parent="Bots" index="15" instance=ExtResource( 6 )]
-position = Vector2( 211, 2817 )
+[node name="SniperBig" parent="Bots" index="15" instance=ExtResource( 6 )]
+position = Vector2( 1001, 1798 )
+
+[node name="ChargerSpawner" parent="Bots" index="16" instance=ExtResource( 11 )]
+position = Vector2( 306, 2344 )
+
+[node name="FighterSpawner" parent="Bots" index="17" instance=ExtResource( 19 )]
+position = Vector2( 256, 2943 )
 
 [editable path="Access/Depot"]
 

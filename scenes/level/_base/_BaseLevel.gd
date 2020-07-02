@@ -12,12 +12,9 @@ func get_player():
 
 func _ready() -> void:
 	for bot in $Bots.get_children():
-		if bot.has_node("AI"):
-			bot.get_node("AI").set_level(self)
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
-		bot.level_node = self
-		bot.get_node("Explosion").set_level_cam($Camera2D)
+		bot.set_level(self)
 
 
 var _init_cam: bool = false

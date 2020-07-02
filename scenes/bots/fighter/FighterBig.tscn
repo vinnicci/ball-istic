@@ -1,322 +1,25 @@
-[gd_scene load_steps=107 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlaster.tscn" type="PackedScene" id=2]
-[ext_resource path="res://test_folder/test btree/Level.gd" type="Script" id=3]
-[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://test_folder/test ai/TestTileSet2.tres" type="TileSet" id=5]
-[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/weapons/blaster/BurstBlaster.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/weapons/blaster/ChargeBlaster.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlasterHoming.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/weapons/blaster/BurstBlasterHoming.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/weapons/blaster/ChargeBlasterHoming.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/weapons/blaster/ChargeBlasterReflecting.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/weapons/blaster/BurstBlasterReflecting.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/weapons/beam pincer/BeamPincerStun.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/weapons/beam pincer/BeamPincer.tscn" type="PackedScene" id=18]
-[ext_resource path="res://scenes/weapons/cannon/PulseCannon.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/weapons/cdrone launcher/CDroneLauncher.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/weapons/fdrone launcher/FDroneLauncher.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/weapons/grenade launcher/GrenadeLauncher.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/weapons/grenade launcher/PulseGrenadeLauncher.tscn" type="PackedScene" id=24]
-[ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=25]
-[ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=27]
-[ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlasterHoming.tscn" type="PackedScene" id=29]
-[ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlasterReflecting.tscn" type="PackedScene" id=30]
-[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=31]
-[ext_resource path="res://scenes/weapons/nuke launcher/NukeLauncher.tscn" type="PackedScene" id=32]
-[ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=33]
-[ext_resource path="res://scenes/weapons/plasma thrower/PlasmaThrower.tscn" type="PackedScene" id=34]
-[ext_resource path="res://scenes/weapons/rocket/BarrageHoming.tscn" type="PackedScene" id=35]
-[ext_resource path="res://scenes/weapons/rocket/BarrageEcoHoming.tscn" type="PackedScene" id=36]
-[ext_resource path="res://scenes/weapons/rocket/SalvoHoming.tscn" type="PackedScene" id=37]
-[ext_resource path="res://scenes/weapons/rocket/SalvoEcoHoming.tscn" type="PackedScene" id=38]
-[ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=39]
-[ext_resource path="res://scenes/weapons/scattershot/ScattershotHoming.tscn" type="PackedScene" id=40]
-[ext_resource path="res://scenes/weapons/scattershot/ScattershotReflecting.tscn" type="PackedScene" id=41]
-[ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=42]
-[ext_resource path="res://scenes/weapons/scattershot/SweeperHoming.tscn" type="PackedScene" id=43]
-[ext_resource path="res://scenes/weapons/scattershot/SweeperReflecting.tscn" type="PackedScene" id=44]
-[ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=45]
-[ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=46]
-[ext_resource path="res://scenes/weapons/sniper/PulseSniper.tscn" type="PackedScene" id=47]
-[ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=48]
-[ext_resource path="res://scenes/weapons/rocket/Salvo.tscn" type="PackedScene" id=49]
-[ext_resource path="res://scenes/weapons/rocket/BarrageEco.tscn" type="PackedScene" id=50]
-[ext_resource path="res://scenes/weapons/rocket/SalvoEco.tscn" type="PackedScene" id=51]
-[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownI.tscn" type="PackedScene" id=52]
-[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownII.tscn" type="PackedScene" id=53]
-[ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.tscn" type="PackedScene" id=54]
-[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateI.tscn" type="PackedScene" id=55]
-[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=56]
-[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateIII.tscn" type="PackedScene" id=57]
-[ext_resource path="res://scenes/passives/charge force/ChargeForceI.tscn" type="PackedScene" id=58]
-[ext_resource path="res://scenes/passives/charge force/ChargeForceII.tscn" type="PackedScene" id=59]
-[ext_resource path="res://scenes/passives/health capacity/HealthCapacityI.tscn" type="PackedScene" id=60]
-[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=61]
-[ext_resource path="res://scenes/passives/health capacity/HealthCapacityII.tscn" type="PackedScene" id=62]
-[ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=63]
-[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationI.tscn" type="PackedScene" id=64]
-[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationII.tscn" type="PackedScene" id=65]
-[ext_resource path="res://scenes/passives/heat dissipation/HeatDissipationIII.tscn" type="PackedScene" id=66]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.tscn" type="PackedScene" id=67]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.tscn" type="PackedScene" id=68]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistIII.tscn" type="PackedScene" id=69]
-[ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityI.tscn" type="PackedScene" id=70]
-[ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityII.tscn" type="PackedScene" id=71]
-[ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=72]
-[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryI.tscn" type="PackedScene" id=73]
-[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryII.tscn" type="PackedScene" id=74]
-[ext_resource path="res://scenes/passives/shield recovery/ShieldRecoveryIII.tscn" type="PackedScene" id=75]
-[ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=76]
-[ext_resource path="res://scenes/passives/speed/SpeedII.tscn" type="PackedScene" id=77]
-[ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=78]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=79]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedII.tscn" type="PackedScene" id=80]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedIII.tscn" type="PackedScene" id=81]
-[ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=82]
-[ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=83]
-[ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=84]
-[ext_resource path="res://scenes/bots/explosive/Explosive.tscn" type="PackedScene" id=85]
-[ext_resource path="res://scenes/bots/nuke/Nuke.tscn" type="PackedScene" id=86]
-[ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=87]
-[ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=88]
-[ext_resource path="res://scenes/bots/cannoneer/Cannoneer.tscn" type="PackedScene" id=89]
-[ext_resource path="res://scenes/bots/spawner/CDroneSpawner.tscn" type="PackedScene" id=90]
-[ext_resource path="res://scenes/bots/spawner/FDroneSpawner.tscn" type="PackedScene" id=91]
-[ext_resource path="res://scenes/bots/explosive/StunExplosive.tscn" type="PackedScene" id=92]
-[ext_resource path="res://scenes/bots/grenadier/Grenadier.tscn" type="PackedScene" id=93]
-[ext_resource path="res://scenes/bots/grenadier/StunGrenadier.tscn" type="PackedScene" id=94]
-[ext_resource path="res://scenes/bots/sniper/Sniper.tscn" type="PackedScene" id=95]
-[ext_resource path="res://scenes/bots/shotgunner/Shotgunner.tscn" type="PackedScene" id=96]
-[ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=97]
-[ext_resource path="res://scenes/bots/plasma/PlasmaBot.tscn" type="PackedScene" id=98]
-[ext_resource path="res://scenes/bots/rocket/RocketSalvo.tscn" type="PackedScene" id=99]
-[ext_resource path="res://scenes/bots/rocket/RocketBarrage.tscn" type="PackedScene" id=100]
+[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=1]
+[ext_resource path="res://assets/bots/tex_fighter.png" type="Texture" id=2]
+[ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bots/fighter/big weap/AutoBlasterBig.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/bots/fighter/FighterBig.gd" type="Script" id=5]
+[ext_resource path="res://scenes/bots/_ais/fighter ai/FighterAI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
-radius = 128.0
 
-[sub_resource type="CircleShape2D" id=2]
-resource_local_to_scene = true
-radius = 128.0
-
-[sub_resource type="CircleShape2D" id=3]
-resource_local_to_scene = true
-radius = 128.0
-
-[sub_resource type="CircleShape2D" id=4]
-resource_local_to_scene = true
-radius = 128.0
-
-[sub_resource type="CircleShape2D" id=5]
-resource_local_to_scene = true
-radius = 128.0
-
-[sub_resource type="CircleShape2D" id=6]
-resource_local_to_scene = true
-
-[node name="Level" instance=ExtResource( 1 )]
-script = ExtResource( 3 )
-
-[node name="TileMap" parent="Nav" index="0" instance=ExtResource( 6 )]
-tile_set = ExtResource( 5 )
-tile_data = PoolIntArray( -196615, 1, 0, -196614, 1, 0, -196613, 1, 0, -196612, 1, 0, -196611, 1, 0, -196610, 1, 0, -196609, 1, 0, -262144, 1, 0, -262143, 1, 0, -262142, 1, 0, -262141, 1, 0, -262140, 1, 0, -262139, 1, 0, -262138, 1, 0, -262137, 1, 0, -262136, 1, 0, -131079, 1, 0, -131078, 0, 0, -131077, 0, 0, -131076, 1, 0, -131075, 0, 0, -131074, 0, 0, -131073, 1, 0, -196608, 0, 0, -196607, 0, 0, -196606, 1, 0, -196605, 0, 0, -196604, 0, 0, -196603, 1, 0, -196602, 0, 0, -196601, 0, 0, -196600, 1, 0, -65546, 1, 0, -65545, 1, 0, -65544, 1, 0, -65543, 1, 0, -65542, 0, 0, -65541, 0, 0, -65540, 1, 0, -65539, 0, 0, -65538, 0, 0, -65537, 1, 0, -131072, 0, 0, -131071, 0, 0, -131070, 1, 0, -131069, 0, 0, -131068, 0, 0, -131067, 1, 0, -131066, 0, 0, -131065, 0, 0, -131064, 1, 0, -10, 1, 0, -9, 0, 0, -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -4, 0, 0, -3, 0, 0, -2, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 1, 0, 65526, 1, 0, 65527, 0, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 0, 65533, 0, 0, 65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 1, 0, 131062, 1, 0, 131063, 1, 0, 131064, 1, 0, 131065, 1, 0, 131066, 0, 0, 131067, 0, 0, 131068, 1, 0, 131069, 1, 0, 131070, 1, 0, 131071, 1, 0, 65536, 1, 0, 65537, 1, 0, 65538, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 1, 0, 65544, 1, 0, 196601, 1, 0, 196602, 0, 0, 196603, 0, 0, 196604, 1, 0, 262137, 1, 0, 262138, 0, 0, 262139, 0, 0, 262140, 1, 0, 327673, 1, 0, 327674, 0, 0, 327675, 0, 0, 327676, 1, 0, 393209, 1, 0, 393210, 0, 0, 393211, 0, 0, 393212, 1, 0, 458745, 1, 0, 458746, 0, 0, 458747, 0, 0, 458748, 1, 0, 524281, 1, 0, 524282, 0, 0, 524283, 0, 0, 524284, 1, 0, 589817, 1, 0, 589818, 0, 0, 589819, 0, 0, 589820, 1, 0, 655351, 1, 0, 655352, 1, 0, 655353, 1, 0, 655354, 0, 0, 655355, 0, 0, 655356, 1, 0, 655357, 1, 0, 655358, 1, 0, 720887, 1, 0, 720888, 0, 0, 720889, 0, 0, 720890, 0, 0, 720891, 0, 0, 720892, 0, 0, 720893, 0, 0, 720894, 1, 0, 786423, 1, 0, 786424, 1, 0, 786425, 0, 0, 786426, 0, 0, 786427, 0, 0, 786428, 0, 0, 786429, 1, 0, 786430, 1, 0, 851959, 1, 0, 851960, 0, 0, 851961, 0, 0, 851962, 0, 0, 851963, 0, 0, 851964, 0, 0, 851965, 0, 0, 851966, 1, 0, 917495, 1, 0, 917496, 1, 0, 917497, 0, 0, 917498, 0, 0, 917499, 0, 0, 917500, 0, 0, 917501, 1, 0, 917502, 1, 0, 983031, 1, 0, 983032, 0, 0, 983033, 0, 0, 983034, 0, 0, 983035, 0, 0, 983036, 0, 0, 983037, 0, 0, 983038, 1, 0, 1048567, 1, 0, 1048568, 1, 0, 1048569, 0, 0, 1048570, 0, 0, 1048571, 0, 0, 1048572, 0, 0, 1048573, 1, 0, 1048574, 1, 0, 1114103, 1, 0, 1114104, 0, 0, 1114105, 0, 0, 1114106, 0, 0, 1114107, 0, 0, 1114108, 0, 0, 1114109, 0, 0, 1114110, 1, 0, 1179639, 1, 0, 1179640, 1, 0, 1179641, 0, 0, 1179642, 0, 0, 1179643, 0, 0, 1179644, 0, 0, 1179645, 1, 0, 1179646, 1, 0, 1245175, 1, 0, 1245176, 0, 0, 1245177, 0, 0, 1245178, 0, 0, 1245179, 0, 0, 1245180, 0, 0, 1245181, 0, 0, 1245182, 1, 0, 1310711, 1, 0, 1310712, 1, 0, 1310713, 0, 0, 1310714, 0, 0, 1310715, 0, 0, 1310716, 0, 0, 1310717, 1, 0, 1310718, 1, 0, 1376247, 1, 0, 1376248, 0, 0, 1376249, 0, 0, 1376250, 0, 0, 1376251, 0, 0, 1376252, 0, 0, 1376253, 0, 0, 1376254, 1, 0, 1441783, 1, 0, 1441784, 1, 0, 1441785, 0, 0, 1441786, 0, 0, 1441787, 0, 0, 1441788, 0, 0, 1441789, 1, 0, 1441790, 1, 0, 1507319, 1, 0, 1507320, 0, 0, 1507321, 0, 0, 1507322, 0, 0, 1507323, 0, 0, 1507324, 0, 0, 1507325, 0, 0, 1507326, 1, 0, 1572855, 1, 0, 1572856, 1, 0, 1572857, 0, 0, 1572858, 0, 0, 1572859, 0, 0, 1572860, 0, 0, 1572861, 1, 0, 1572862, 1, 0, 1638391, 1, 0, 1638392, 0, 0, 1638393, 0, 0, 1638394, 0, 0, 1638395, 0, 0, 1638396, 0, 0, 1638397, 0, 0, 1638398, 1, 0, 1703927, 1, 0, 1703928, 1, 0, 1703929, 0, 0, 1703930, 0, 0, 1703931, 0, 0, 1703932, 0, 0, 1703933, 1, 0, 1703934, 1, 0, 1769463, 1, 0, 1769464, 0, 0, 1769465, 0, 0, 1769466, 0, 0, 1769467, 0, 0, 1769468, 0, 0, 1769469, 0, 0, 1769470, 1, 0, 1834999, 1, 0, 1835000, 1, 0, 1835001, 1, 0, 1835002, 1, 0, 1835003, 1, 0, 1835004, 1, 0, 1835005, 1, 0, 1835006, 1, 0 )
-
-[node name="BotStation" parent="Access" index="0" instance=ExtResource( 16 )]
-position = Vector2( -1024.21, -2.28384 )
-
-[node name="Depot" parent="Access" index="1" instance=ExtResource( 7 )]
-position = Vector2( -637.415, -247.355 )
-
-[node name="CollisionShape2D" parent="Access/Depot/Area2D" index="0"]
-shape = SubResource( 1 )
-
-[node name="AutoBlaster" parent="Access/Depot/Items" index="0" instance=ExtResource( 2 )]
-
-[node name="BurstBlaster" parent="Access/Depot/Items" index="1" instance=ExtResource( 8 )]
-
-[node name="ChargeBlaster" parent="Access/Depot/Items" index="2" instance=ExtResource( 9 )]
-
-[node name="AutoBlasterHoming" parent="Access/Depot/Items" index="3" instance=ExtResource( 10 )]
-
-[node name="BurstBlasterHoming" parent="Access/Depot/Items" index="4" instance=ExtResource( 11 )]
-
-[node name="ChargeBlasterHoming" parent="Access/Depot/Items" index="5" instance=ExtResource( 12 )]
-
-[node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="6" instance=ExtResource( 15 )]
-
-[node name="BurstBlasterReflecting" parent="Access/Depot/Items" index="7" instance=ExtResource( 14 )]
-
-[node name="ChargeBlasterReflecting" parent="Access/Depot/Items" index="8" instance=ExtResource( 13 )]
-
-[node name="BeamPincer" parent="Access/Depot/Items" index="9" instance=ExtResource( 18 )]
-
-[node name="BeamPincerStun" parent="Access/Depot/Items" index="10" instance=ExtResource( 17 )]
-
-[node name="CDroneLauncher" parent="Access/Depot/Items" index="11" instance=ExtResource( 21 )]
-
-[node name="FDroneLauncher" parent="Access/Depot/Items" index="12" instance=ExtResource( 22 )]
-
-[node name="GrenadeLauncher" parent="Access/Depot/Items" index="13" instance=ExtResource( 23 )]
-
-[node name="StunGrenadeLauncher" parent="Access/Depot/Items" index="14" instance=ExtResource( 24 )]
-
-[node name="Depot2" parent="Access" index="2" instance=ExtResource( 7 )]
-position = Vector2( -253, -255 )
-
-[node name="CollisionShape2D" parent="Access/Depot2/Area2D" index="0"]
-shape = SubResource( 2 )
-
-[node name="EnergyCannon" parent="Access/Depot2/Items" index="0" instance=ExtResource( 20 )]
-
-[node name="PulseCannon" parent="Access/Depot2/Items" index="1" instance=ExtResource( 19 )]
-
-[node name="Barrage" parent="Access/Depot2/Items" index="2" instance=ExtResource( 48 )]
-
-[node name="BarrageEco" parent="Access/Depot2/Items" index="3" instance=ExtResource( 50 )]
-
-[node name="Salvo" parent="Access/Depot2/Items" index="4" instance=ExtResource( 49 )]
-
-[node name="SalvoEco" parent="Access/Depot2/Items" index="5" instance=ExtResource( 51 )]
-
-[node name="BarrageHoming" parent="Access/Depot2/Items" index="6" instance=ExtResource( 35 )]
-
-[node name="BarrageEcoHoming" parent="Access/Depot2/Items" index="7" instance=ExtResource( 36 )]
-
-[node name="SalvoHoming" parent="Access/Depot2/Items" index="8" instance=ExtResource( 37 )]
-
-[node name="SalvoEcoHoming" parent="Access/Depot2/Items" index="9" instance=ExtResource( 38 )]
-
-[node name="NukeLauncher" parent="Access/Depot2/Items" index="10" instance=ExtResource( 32 )]
-
-[node name="Cyclone" parent="Access/Depot2/Items" index="11" instance=ExtResource( 25 )]
-
-[node name="HeatEdge" parent="Access/Depot2/Items" index="12" instance=ExtResource( 27 )]
-
-[node name="Fortress" parent="Access/Depot2/Items" index="13" instance=ExtResource( 26 )]
-
-[node name="Phaser" parent="Access/Depot2/Items" index="14" instance=ExtResource( 33 )]
-
-[node name="Depot3" parent="Access" index="3" instance=ExtResource( 7 )]
-position = Vector2( 128, -255 )
-
-[node name="CollisionShape2D" parent="Access/Depot3/Area2D" index="0"]
-shape = SubResource( 3 )
-
-[node name="Scattershot" parent="Access/Depot3/Items" index="0" instance=ExtResource( 39 )]
-
-[node name="ScattershotHoming" parent="Access/Depot3/Items" index="1" instance=ExtResource( 40 )]
-
-[node name="ScattershotReflecting" parent="Access/Depot3/Items" index="2" instance=ExtResource( 41 )]
-
-[node name="Sweeper" parent="Access/Depot3/Items" index="3" instance=ExtResource( 42 )]
-
-[node name="SweeperHoming" parent="Access/Depot3/Items" index="4" instance=ExtResource( 43 )]
-
-[node name="SweeperReflecting" parent="Access/Depot3/Items" index="5" instance=ExtResource( 44 )]
-
-[node name="HeavyBlaster" parent="Access/Depot3/Items" index="6" instance=ExtResource( 28 )]
-
-[node name="HeavyBlasterHoming" parent="Access/Depot3/Items" index="7" instance=ExtResource( 29 )]
-
-[node name="HeavyBlasterReflecting" parent="Access/Depot3/Items" index="8" instance=ExtResource( 30 )]
-
-[node name="Sniper" parent="Access/Depot3/Items" index="9" instance=ExtResource( 46 )]
-
-[node name="SniperPulse" parent="Access/Depot3/Items" index="10" instance=ExtResource( 47 )]
-
-[node name="Shotgun" parent="Access/Depot3/Items" index="11" instance=ExtResource( 45 )]
-
-[node name="PlasmaThrower" parent="Access/Depot3/Items" index="12" instance=ExtResource( 34 )]
-
-[node name="Siren" parent="Access/Depot3/Items" index="13" instance=ExtResource( 82 )]
-
-[node name="Depot4" parent="Access" index="4" instance=ExtResource( 7 )]
-position = Vector2( 512, -253 )
-
-[node name="CollisionShape2D" parent="Access/Depot4/Area2D" index="0"]
-shape = SubResource( 4 )
-
-[node name="ChargeCooldownI" parent="Access/Depot4/Items" index="0" instance=ExtResource( 52 )]
-
-[node name="ChargeCooldownII" parent="Access/Depot4/Items" index="1" instance=ExtResource( 53 )]
-
-[node name="ChargeCooldownIII" parent="Access/Depot4/Items" index="2" instance=ExtResource( 54 )]
-
-[node name="ChargeDmgRateI" parent="Access/Depot4/Items" index="3" instance=ExtResource( 55 )]
-
-[node name="ChargeDmgRateII" parent="Access/Depot4/Items" index="4" instance=ExtResource( 56 )]
-
-[node name="ChargeDmgRateIII" parent="Access/Depot4/Items" index="5" instance=ExtResource( 57 )]
-
-[node name="HealthCapacityI" parent="Access/Depot4/Items" index="6" instance=ExtResource( 60 )]
-
-[node name="HealthCapacityII" parent="Access/Depot4/Items" index="7" instance=ExtResource( 62 )]
-
-[node name="HealthCapacityIII" parent="Access/Depot4/Items" index="8" instance=ExtResource( 63 )]
-
-[node name="ChargeForceI" parent="Access/Depot4/Items" index="9" instance=ExtResource( 58 )]
-
-[node name="ChargeForceII" parent="Access/Depot4/Items" index="10" instance=ExtResource( 59 )]
-
-[node name="ChargeForceIII" parent="Access/Depot4/Items" index="11" instance=ExtResource( 61 )]
-
-[node name="HeatDissipationI" parent="Access/Depot4/Items" index="12" instance=ExtResource( 64 )]
-
-[node name="HeatDissipationII" parent="Access/Depot4/Items" index="13" instance=ExtResource( 65 )]
-
-[node name="HeatDissipationIII" parent="Access/Depot4/Items" index="14" instance=ExtResource( 66 )]
-
-[node name="Depot5" parent="Access" index="5" instance=ExtResource( 7 )]
-position = Vector2( 897, -256 )
-
-[node name="CollisionShape2D" parent="Access/Depot5/Area2D" index="0"]
-shape = SubResource( 5 )
-
-[node name="KnockbackResistI" parent="Access/Depot5/Items" index="0" instance=ExtResource( 67 )]
-
-[node name="KnockbackResistII" parent="Access/Depot5/Items" index="1" instance=ExtResource( 68 )]
-
-[node name="KnockbackResistIII" parent="Access/Depot5/Items" index="2" instance=ExtResource( 69 )]
-
-[node name="ShieldCapacityI" parent="Access/Depot5/Items" index="3" instance=ExtResource( 70 )]
-
-[node name="ShieldCapacityII" parent="Access/Depot5/Items" index="4" instance=ExtResource( 71 )]
-
-[node name="ShieldCapacityIII" parent="Access/Depot5/Items" index="5" instance=ExtResource( 72 )]
-
-[node name="ShieldRecoveryI" parent="Access/Depot5/Items" index="6" instance=ExtResource( 73 )]
-
-[node name="ShieldRecoveryII" parent="Access/Depot5/Items" index="7" instance=ExtResource( 74 )]
-
-[node name="ShieldRecoveryIII" parent="Access/Depot5/Items" index="8" instance=ExtResource( 75 )]
-
-[node name="SpeedI" parent="Access/Depot5/Items" index="9" instance=ExtResource( 76 )]
-
-[node name="SpeedII" parent="Access/Depot5/Items" index="10" instance=ExtResource( 77 )]
-
-[node name="SpeedIII" parent="Access/Depot5/Items" index="11" instance=ExtResource( 78 )]
-
-[node name="TransformSpeedI" parent="Access/Depot5/Items" index="12" instance=ExtResource( 79 )]
-
-[node name="TransformSpeedII" parent="Access/Depot5/Items" index="13" instance=ExtResource( 80 )]
-
-[node name="TransformSpeedIII" parent="Access/Depot5/Items" index="14" instance=ExtResource( 81 )]
-
-[node name="Player" parent="Bots" index="0" instance=ExtResource( 4 )]
-destructible = false
-faction = Color( 1, 0, 0, 1 )
-
-[node name="StateMachine" parent="Bots/Player" index="0"]
+[node name="FighterBig" instance=ExtResource( 3 )]
+script = ExtResource( 5 )
+bot_radius = 64.0
+speed = 2400
+transform_speed = 0.5
+charge_cooldown = 2.0
+charge_force_factor = 0.7
+
+[node name="StateMachine" parent="." index="0"]
 tree = {
 "connection": [ {
 "from": "selector",
@@ -3487,90 +3190,23 @@ tree = {
 }
 }
 
-[node name="Camera2D" parent="Bots/Player" index="6"]
-zoom = Vector2( 1, 1 )
+[node name="Sprite" parent="Legs" index="0"]
+modulate = Color( 0.717647, 0.694118, 0.411765, 1 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+offset = Vector2( 12, 0 )
 
-[node name="CollisionShape" parent="Bots/Player" index="8"]
-shape = SubResource( 6 )
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 2 )
 
-[node name="Dummy" parent="Bots" index="1" instance=ExtResource( 31 )]
-position = Vector2( -685, 298 )
+[node name="CollisionShape" parent="." index="7"]
+shape = SubResource( 1 )
 
-[node name="Dummy2" parent="Bots" index="2" instance=ExtResource( 31 )]
-position = Vector2( -580, 294 )
+[node name="Explosion" parent="." index="8" instance=ExtResource( 7 )]
+explosion_radius = 400.0
+damage = 10.0
+knockback = 1000.0
 
-[node name="Charger" parent="Bots" index="3" instance=ExtResource( 83 )]
-position = Vector2( -961, 1340 )
+[node name="AI" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="Fighter" parent="Bots" index="4" instance=ExtResource( 84 )]
-position = Vector2( -323, 1337 )
-rotation = 3.14159
-
-[node name="Explosive" parent="Bots" index="5" instance=ExtResource( 85 )]
-position = Vector2( -955, 1590 )
-
-[node name="Nuke" parent="Bots" index="6" instance=ExtResource( 86 )]
-position = Vector2( -318, 1588 )
-rotation = 3.14159
-
-[node name="Slasher" parent="Bots" index="7" instance=ExtResource( 87 )]
-position = Vector2( -968, 1852 )
-
-[node name="SirenBot" parent="Bots" index="8" instance=ExtResource( 88 )]
-position = Vector2( -323, 1855 )
-
-[node name="Cannoneer" parent="Bots" index="9" instance=ExtResource( 89 )]
-position = Vector2( -960, 2110 )
-
-[node name="CDroneSpawner" parent="Bots" index="10" instance=ExtResource( 90 )]
-position = Vector2( -963, 2368 )
-
-[node name="FDroneSpawner" parent="Bots" index="11" instance=ExtResource( 91 )]
-position = Vector2( -325, 2356 )
-rotation = 3.14159
-
-[node name="PulseExplosive" parent="Bots" index="12" instance=ExtResource( 92 )]
-position = Vector2( -324, 2109 )
-
-[node name="Grenadier" parent="Bots" index="13" instance=ExtResource( 93 )]
-position = Vector2( -972, 2618 )
-
-[node name="StunGrenadier" parent="Bots" index="14" instance=ExtResource( 94 )]
-position = Vector2( -325, 2616 )
-rotation = 3.14159
-
-[node name="Sniper" parent="Bots" index="15" instance=ExtResource( 95 )]
-position = Vector2( -963, 2877 )
-
-[node name="Shotgunner" parent="Bots" index="16" instance=ExtResource( 96 )]
-position = Vector2( -325, 2875 )
-rotation = 3.14159
-
-[node name="HeavyFighter" parent="Bots" index="17" instance=ExtResource( 97 )]
-position = Vector2( -310, 3385 )
-rotation = 3.14159
-
-[node name="PlasmaBot" parent="Bots" index="18" instance=ExtResource( 98 )]
-position = Vector2( -966, 3385 )
-
-[node name="RocketSalvo" parent="Bots" index="19" instance=ExtResource( 99 )]
-position = Vector2( -313, 3133 )
-
-[node name="RocketBarrage" parent="Bots" index="20" instance=ExtResource( 100 )]
-position = Vector2( -957, 3134 )
-
-[node name="Camera2D" parent="." index="3"]
-position = Vector2( 190, 190 )
-zoom = Vector2( 1.7, 1.7 )
-
-[editable path="Access/Depot"]
-
-[editable path="Access/Depot2"]
-
-[editable path="Access/Depot3"]
-
-[editable path="Access/Depot4"]
-
-[editable path="Access/Depot5"]
-
-[editable path="Bots/Player"]
+[node name="AutoBlasterBig" parent="Weapons" index="0" instance=ExtResource( 4 )]

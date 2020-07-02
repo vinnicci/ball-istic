@@ -275,6 +275,14 @@ func _ready() -> void:
 	reset_bot_vars()
 
 
+func set_level(new_level: Node) -> void:
+	level_node = new_level
+	if has_node("Explosion") == true:
+		$Explosion.set_level_cam(level_node.get_node("Camera2D"))
+	if has_node("AI") == true:
+		$AI.set_level(level_node)
+
+
 func _init_bot() -> void:
 	#initialize AI component
 	if has_node("AI") == true:
@@ -306,8 +314,6 @@ func _init_bot() -> void:
 	if destructible == false:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
-	_body_outline.modulate = faction
-	_body_weapon_hatch.modulate = faction
 	
 	#bot's body setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
@@ -383,6 +389,8 @@ func reset_bot_vars() -> void:
 	current_knockback_resist = knockback_resist
 	
 	current_faction = faction
+	_body_outline.modulate = current_faction
+	_body_weapon_hatch.modulate = current_faction
 	
 	for weap in arr_weapons:
 		if weap == null:
@@ -618,7 +626,6 @@ func _end_charging_effect() -> void:
 		_charge_roll = null
 
 
-#teleport
 var _teleport_pos = null
 
 

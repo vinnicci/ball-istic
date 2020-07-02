@@ -13,14 +13,11 @@ func _ready() -> void:
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
 	global_position = pos
 	faction = shooter_faction
-	current_faction = faction
-	level_node = shooter.level_node
+	set_level(shooter.level_node)
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(shooter)
-		$AI.set_level(level_node)
-	_body_outline.modulate = current_faction
-	_body_weapon_hatch.modulate = current_faction
+	reset_bot_vars()
 	apply_central_impulse(Vector2(1250, 0).rotated(dir))
 	$Timers/Lifetime.start()
 
