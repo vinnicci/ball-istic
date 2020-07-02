@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/scattershot/ScattershotHomingProj.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/scattershot/SweeperHoming.gd" type="Script" id=3]
+[ext_resource path="res://assets/weapons/tex_scattershot.png" type="Texture" id=4]
+[ext_resource path="res://assets/weapons/tex_siren_light.png" type="Texture" id=5]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+spread = 30.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[node name="SweeperHoming" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+Projectile = ExtResource( 2 )
+heat_capacity = 4.1
+heat_dissipation_per_sec = 0.0
+shoot_cooldown = 3.0
+fire_mode = 2
+proj_count_per_shot = 2
+burst_count = 25
+spread = 20.0
+recoil = 50
+charge_timer = 2.0
+cam_shake_intensity = 8.0
+
+[node name="SlotIcon" parent="." index="0"]
+self_modulate = Color( 0.247059, 0.501961, 0.941176, 1 )
+texture = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="SlotIcon" index="0"]
+modulate = Color( 0.968627, 0.454902, 0.0784314, 1 )
+show_behind_parent = true
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 5 )
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 33, 0 )
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
+process_material = SubResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+modulate = Color( 0.247059, 0.501961, 0.941176, 1 )
+texture = ExtResource( 4 )
+offset = Vector2( 8, 0 )

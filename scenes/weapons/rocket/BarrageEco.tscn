@@ -5,8 +5,6 @@
 [ext_resource path="res://scenes/weapons/rocket/BarrageEco.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/rocket/RocketEcoProj.tscn" type="PackedScene" id=4]
 
-
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -51,9 +49,9 @@ tracks/0/keys = {
 [node name="BarrageEco" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_per_shot = 1.0
 heat_capacity = 3.1
 heat_dissipation_per_sec = 0.0
+shoot_cooldown = 2.0
 fire_mode = 1
 burst_count = 5
 spread = 5.0

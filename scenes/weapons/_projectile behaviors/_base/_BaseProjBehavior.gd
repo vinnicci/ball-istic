@@ -106,6 +106,7 @@ func _on_SplitTimer_timeout() -> void:
 func _split(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").split_count = count
+	clone.get_node("ProjBehavior").set_level(_level_node)
 	return clone
 
 
@@ -177,4 +178,5 @@ func task_reflect(task):
 func _reflect(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").reflect_count = count
+	clone.get_node("ProjBehavior").set_level(_level_node)
 	return clone

@@ -140,4 +140,7 @@ weap_slot_4={
 
 [rendering]
 
+quality/filters/anisotropic_filter_level=2
+quality/shadows/filter_mode=0
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"
