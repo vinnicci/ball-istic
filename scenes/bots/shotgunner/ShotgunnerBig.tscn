@@ -18,7 +18,7 @@ radius = 1000.0
 [node name="ShotgunnerBig" instance=ExtResource( 4 )]
 script = ExtResource( 3 )
 bot_radius = 64.0
-speed = 2600
+speed = 2200
 knockback_resist = 0.5
 transform_speed = 0.4
 charge_force_factor = 0.8

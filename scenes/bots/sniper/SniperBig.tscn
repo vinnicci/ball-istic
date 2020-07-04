@@ -18,7 +18,7 @@ radius = 1500.0
 [node name="SniperBig" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 bot_radius = 64.0
-speed = 2800
+speed = 2400
 transform_speed = 0.4
 
 [node name="StateMachine" parent="." index="0"]
