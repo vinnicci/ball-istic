@@ -166,9 +166,10 @@ func _control_player() -> void:
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 	if Input.is_action_just_pressed("discharge_parry"):
-		if _timer_charge_cooldown.is_stopped() == true && (state == State.TURRET ||
-			state == State.TO_TURRET || state == State.WEAP_COMMIT):
-			_update_bar_charge_level()
+		if _timer_charge_cooldown.is_stopped() == true:
+			match state:
+				State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
+					_update_bar_charge_level()
 		discharge_parry()
 
 

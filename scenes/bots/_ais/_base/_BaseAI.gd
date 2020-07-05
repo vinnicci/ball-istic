@@ -44,6 +44,11 @@ func _process(delta: float) -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
+		$DetectionRange.monitoring = false
+		_enemy = null
+		clear_enemies()
+		return false
 	return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
 
 
