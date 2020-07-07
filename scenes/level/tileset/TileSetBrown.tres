@@ -60,6 +60,7 @@ outlines = [ PoolVector2Array( -16, -16, -9, -16, -16, -9 ) ]
 points = PoolVector2Array( -16, -1, -1, -16, 16, -16, 16, 16, -16, 16 )
 
 [resource]
+resource_local_to_scene = true
 0/name = "Ground"
 0/texture = ExtResource( 3 )
 0/tex_offset = Vector2( 0, 0 )

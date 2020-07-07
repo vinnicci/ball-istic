@@ -6,6 +6,7 @@
 
 [sub_resource type="Animation" id=1]
 resource_name = "open"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("DoorLeft:position")
 tracks/0/interp = 1
@@ -13,7 +14,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -8, -6.5 ), Vector2( -24, -6.5 ) ]
@@ -25,7 +26,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( -8, 6.5 ), Vector2( -24, 6.5 ) ]
@@ -37,7 +38,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 8, -6.5 ), Vector2( 24, -6.5 ) ]
@@ -49,7 +50,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 8, 6.5 ), Vector2( 24, 6.5 ) ]
@@ -70,10 +71,9 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2( 1, 4, 16, 13 )
 
-[node name="StaticBody2D" parent="DoorLeft" instance=ExtResource( 4 )]
-visible = false
+[node name="DoorCollision" parent="DoorLeft" instance=ExtResource( 4 )]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DoorLeft/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoorLeft/DoorCollision"]
 polygon = PoolVector2Array( -8, -6.5, 8, -6.5, 8, 19.5, -8, 19.5 )
 
 [node name="DoorLeft2" type="Sprite" parent="."]
@@ -105,11 +105,10 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2( 1, 4, 16, 13 )
 
-[node name="StaticBody2D" parent="DoorRight" instance=ExtResource( 4 )]
-visible = false
+[node name="DoorCollision" parent="DoorRight" instance=ExtResource( 4 )]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DoorRight/StaticBody2D"]
-polygon = PoolVector2Array( -8, -6.5, -8, 19.5, 8, 19.5, 8, -6.5 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoorRight/DoorCollision"]
+polygon = PoolVector2Array( -8, -6.5, 8, -6.5, 8, 19.5, -8, 19.5 )
 
 [node name="DoorRight2" type="Sprite" parent="."]
 modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
@@ -137,13 +136,13 @@ region_rect = Rect2( 0, 0, 17, 17 )
 [node name="StaticBody2D" parent="." instance=ExtResource( 4 )]
 visible = false
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PoolVector2Array( -33, -17, -16, -17, -16, 17, -33, 17 )
 
 [node name="StaticBody2D2" parent="." instance=ExtResource( 4 )]
 visible = false
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D2"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
 polygon = PoolVector2Array( 16, -17, 33, -17, 33, 17, 16, 17 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]

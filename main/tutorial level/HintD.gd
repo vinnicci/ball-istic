@@ -15,7 +15,7 @@ var _parry_count: = 0
 
 func on_bot_parried() -> void:
 	_parry_count += 1
-	$AccessUI/Label2.text = "Perform discharge parries: (%s/3)" % _parry_count
+	$AccessUI/Label2.text = "Deflect enemy charge rolls with parries: (%s/3)" % _parry_count
 	if _parry_count == 3:
 		dummy.remove_child(dummy.get_node("AI"))
 		$AccessUI/Label2.text = "Congratulations! You completed the tutorial."

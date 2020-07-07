@@ -21,7 +21,8 @@ var _init_cam: bool = false
 
 
 func _process(delta: float) -> void:
-	if _init_cam == false && _player != null && _player.state == Global.CLASS_BOT.State.DEAD:
+	if (_init_cam == false &&
+		_player != null && _player.state == Global.CLASS_BOT.State.DEAD):
 		$Camera2D.global_position = _player.global_position
 		$Camera2D.current = true
 		_init_cam = true

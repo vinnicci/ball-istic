@@ -1,7 +1,17 @@
-extends "res://scenes/level/_base/_BaseLevelObject.gd"
+extends RigidBody2D
 
 
 export (float) var knockback_resist: float = 0.2
+export (bool) var destructible: bool = false setget , is_destructible
+export (float) var health_capacity: float = 1000.0 setget , get_health_capacity
+var current_health: float
+
+
+func is_destructible():
+	return destructible
+
+func get_health_capacity():
+	return health_capacity
 
 
 func take_damage(damage, knockback) -> void:

@@ -15,7 +15,7 @@ var _clash_count: = 0
 
 func on_bot_clashed() -> void:
 	_clash_count += 1
-	$AccessUI/Label2.text = "Perform clashes: (%s/3)" % _clash_count
+	$AccessUI/Label2.text = "Deflect enemy charge rolls by clashing: (%s/3)" % _clash_count
 	if _clash_count == 3:
 		dummy.remove_child(dummy.get_node("AI"))
 		$AccessUI/Label2.text = "Great job! Move on to the final room."
