@@ -16,4 +16,5 @@ func on_bot_dead() -> void:
 	$AccessUI/Label2.text = "Destroy three bots with weapon: (%s/3)" % (3 - _current_bot_count)
 	if _current_bot_count == 0:
 		$AccessUI/Label2.text = "Great job! Move on to the next room."
+		_level.door_A.open()
 		$AccessUI/Label2/FadeTimer.start()

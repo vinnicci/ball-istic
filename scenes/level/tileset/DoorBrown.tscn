@@ -1,0 +1,157 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=2]
+[ext_resource path="res://scenes/level/tileset/DoorBrown.gd" type="Script" id=3]
+[ext_resource path="res://scenes/level/_base/_BaseStaticBody.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/path = NodePath("DoorLeft:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -8, -6.5 ), Vector2( -24, -6.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("DoorLeft2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -8, 6.5 ), Vector2( -24, 6.5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("DoorRight:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -6.5 ), Vector2( 24, -6.5 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("DoorRight2:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, 6.5 ), Vector2( 24, 6.5 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14, 2 )
+
+[node name="Door" type="Node2D"]
+scale = Vector2( 4, 4 )
+script = ExtResource( 3 )
+
+[node name="DoorLeft" type="Sprite" parent="."]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( -8, -6.5 )
+texture = ExtResource( 2 )
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 1, 4, 16, 13 )
+
+[node name="StaticBody2D" parent="DoorLeft" instance=ExtResource( 4 )]
+visible = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DoorLeft/StaticBody2D"]
+polygon = PoolVector2Array( -8, -6.5, 8, -6.5, 8, 19.5, -8, 19.5 )
+
+[node name="DoorLeft2" type="Sprite" parent="."]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( -8, 6.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1, 4, 16, 13 )
+
+[node name="LeftWall" type="Sprite" parent="."]
+position = Vector2( -24.5, -8.5 )
+texture = ExtResource( 2 )
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 17, 17 )
+
+[node name="LeftWall2" type="Sprite" parent="."]
+position = Vector2( -24.5, 8.5 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 17, 17 )
+
+[node name="DoorRight" type="Sprite" parent="."]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( 8, -6.5 )
+texture = ExtResource( 2 )
+flip_h = true
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 1, 4, 16, 13 )
+
+[node name="StaticBody2D" parent="DoorRight" instance=ExtResource( 4 )]
+visible = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DoorRight/StaticBody2D"]
+polygon = PoolVector2Array( -8, -6.5, -8, 19.5, 8, 19.5, 8, -6.5 )
+
+[node name="DoorRight2" type="Sprite" parent="."]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( 8, 6.5 )
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 1, 4, 16, 13 )
+
+[node name="RightWall" type="Sprite" parent="."]
+position = Vector2( 24.5, -8.5 )
+texture = ExtResource( 2 )
+flip_h = true
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 17, 17 )
+
+[node name="RightWall2" type="Sprite" parent="."]
+position = Vector2( 24.5, 8.5 )
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 17, 17 )
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( -33, -17, -16, -17, -16, 17, -33, 17 )
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D2"]
+polygon = PoolVector2Array( 16, -17, 33, -17, 33, 17, 16, 17 )
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/open = SubResource( 1 )
+
+[node name="Within" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Within"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Within" to="." method="_on_Within_body_entered"]
+[connection signal="body_exited" from="Within" to="." method="_on_Within_body_exited"]

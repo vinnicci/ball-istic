@@ -19,4 +19,5 @@ func on_bot_clashed() -> void:
 	if _clash_count == 3:
 		dummy.remove_child(dummy.get_node("AI"))
 		$AccessUI/Label2.text = "Great job! Move on to the final room."
+		_level.door_C.open()
 		$AccessUI/Label2/FadeTimer.start()

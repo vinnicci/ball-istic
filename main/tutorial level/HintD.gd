@@ -19,4 +19,11 @@ func on_bot_parried() -> void:
 	if _parry_count == 3:
 		dummy.remove_child(dummy.get_node("AI"))
 		$AccessUI/Label2.text = "Congratulations! You completed the tutorial."
+		_level.door_A.get_node("Area2D").monitoring = false
+		_level.door_A.open()
+		_level.door_B.get_node("Area2D").monitoring = false
+		_level.door_B.open()
+		_level.door_C.get_node("Area2D").monitoring = false
+		_level.door_C.open()
+		_level.door_D.open()
 		$AccessUI/Label2/FadeTimer.start()
