@@ -59,15 +59,25 @@ func _get_path_points(start: Vector2, end: Vector2) -> void:
 	_next_path_point = _path_points.pop_front()
 
 
+#func _get_distance(start: Vector2, end: Vector2) -> int:
+#	var arr: Array = _level_node.get_points(start, end)
+#	var arr_size: = arr.size()
+#	if arr_size == 2:
+#		return arr[0].distance_to(arr[1])
+#	var distance: int = arr.pop_front().distance_to(arr.front())
+#	for i in range(arr_size-2):
+#		distance += arr.pop_front().distance_to(arr.front())
+#	return distance
+
+
 func _get_distance(start: Vector2, end: Vector2) -> int:
 	var arr: Array = _level_node.get_points(start, end)
-	var arr_size: = arr.size()
-	if arr_size == 2:
-		return arr[0].distance_to(arr[1])
-	var distance: int = arr.pop_front().distance_to(arr.front())
-	for i in range(arr_size-2):
-		distance += arr.pop_front().distance_to(arr.front())
-	return distance
+	if arr.size() <= 1:
+		return 0
+	var dist: int = arr.pop_front().distance_to(arr.front())
+	while arr.size() != 1:
+		dist += arr.pop_front().distance_to(arr.front())
+	return dist
 
 
 func _physics_process(delta: float) -> void:

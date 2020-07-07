@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level/tileset/TileSetBrown.tres" type="TileSet" id=2]
+[ext_resource path="res://scenes/level/tileset/TileMapBrown.gd" type="Script" id=3]
+
+[node name="TileMap" instance=ExtResource( 1 )]
+scale = Vector2( 4, 4 )
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 32, 32 )
+script = ExtResource( 3 )

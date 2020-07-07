@@ -166,9 +166,11 @@ charge_damage_rate = 0.2
 
 [node name="Fighter4" parent="Bots" index="5" instance=ExtResource( 23 )]
 position = Vector2( 776, 2394 )
+charge_damage_rate = 0.2
 
 [node name="Fighter7" parent="Bots" index="6" instance=ExtResource( 23 )]
 position = Vector2( 1805, 1491 )
+charge_damage_rate = 0.2
 
 [node name="Charger11" parent="Bots" index="7" instance=ExtResource( 13 )]
 position = Vector2( 434.09, 1003.25 )
@@ -178,6 +180,7 @@ charge_damage_rate = 0.2
 
 [node name="Fighter8" parent="Bots" index="8" instance=ExtResource( 23 )]
 position = Vector2( 271, 880 )
+charge_damage_rate = 0.2
 
 [node name="Charger2" parent="Bots" index="9" instance=ExtResource( 13 )]
 position = Vector2( 3249, 3078 )
@@ -191,10 +194,12 @@ faction = Color( 0, 1, 0, 1 )
 
 [node name="Fighter" parent="Bots" index="11" instance=ExtResource( 23 )]
 position = Vector2( 3651, 3084 )
+charge_damage_rate = 0.2
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Fighter2" parent="Bots" index="12" instance=ExtResource( 23 )]
 position = Vector2( 3849, 3072 )
+charge_damage_rate = 0.2
 faction = Color( 0, 1, 0, 1 )
 
 [editable path="Access/Depot"]

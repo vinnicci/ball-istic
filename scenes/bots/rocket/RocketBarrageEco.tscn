@@ -3191,7 +3191,7 @@ tree = {
 }
 
 [node name="Sprite" parent="Legs" index="0"]
-modulate = Color( 0.447059, 0.247059, 0.247059, 1 )
+modulate = Color( 0.537255, 0.301961, 0.301961, 1 )
 texture = ExtResource( 4 )
 offset = Vector2( 13, 0 )
 
