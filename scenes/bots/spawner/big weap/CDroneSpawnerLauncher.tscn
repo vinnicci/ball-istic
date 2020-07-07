@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/bots/spawner/big weap/FighterLauncher.gd" type="Script" id=1]
+[ext_resource path="res://scenes/bots/spawner/big weap/CDroneSpawnerLauncher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bots/spawner/CDroneSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=5]
 
 [sub_resource type="Gradient" id=1]
@@ -30,11 +30,11 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="FighterLauncher" instance=ExtResource( 2 )]
+[node name="CDroneSpawnerLauncher" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
 heat_capacity = 1.1
-heat_dissipation_per_sec = 0.13
+heat_dissipation_per_sec = 0.015
 shoot_cooldown = 0.5
 fire_mode = 3
 
@@ -52,7 +52,7 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.890196, 0.854902, 0.666667, 1 )
+modulate = Color( 0.72549, 0.352941, 0.352941, 1 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 5 )
 offset = Vector2( 18, 0 )

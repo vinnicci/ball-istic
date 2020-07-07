@@ -44,11 +44,6 @@ func _process(delta: float) -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
-	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
-		$DetectionRange.monitoring = false
-		_enemy = null
-		clear_enemies()
-		return false
 	return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
 
 
@@ -85,6 +80,10 @@ func _physics_process(delta: float) -> void:
 		_parent_node.velocity = _velocity
 	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
 		$Rays/Target.look_at(_enemy.global_position)
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
+		$DetectionRange.monitoring = false
+		_enemy = null
+		clear_enemies()
 
 
 func _get_new_target_enemy(bot) -> void:

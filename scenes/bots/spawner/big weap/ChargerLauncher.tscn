@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/bots/spawner/big weap/ChargerLauncher.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=5]
 
 [sub_resource type="Gradient" id=1]
@@ -31,6 +32,7 @@ color_ramp = SubResource( 2 )
 
 [node name="ChargerLauncher" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+Projectile = ExtResource( 3 )
 heat_capacity = 1.1
 heat_dissipation_per_sec = 0.13
 shoot_cooldown = 0.5
