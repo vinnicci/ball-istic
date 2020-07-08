@@ -99,14 +99,14 @@ func _on_SplitTimer_timeout() -> void:
 	for i in range(2):
 		spread *= -1
 		_level_node.spawn_projectile(_split(split_count - 1), _parent_node.global_position, 
-			_parent_node.global_rotation + deg2rad(spread), _parent_node.shooter_faction(), null)
+			_parent_node.global_rotation + deg2rad(spread), _parent_node.shooter_faction())
 	_parent_node.queue_free()
 
 
 func _split(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").split_count = count
-	clone.get_node("ProjBehavior").set_level(_level_node)
+	clone.set_level(_level_node)
 	return clone
 
 
@@ -170,7 +170,7 @@ func task_reflect(task):
 	if body is Global.CLASS_LEVEL_OBJECT:
 		_level_node.spawn_projectile(_reflect(reflect_count - 1), _parent_node.global_position, 
 			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180),
-			_parent_node.shooter_faction(), null)
+			_parent_node.shooter_faction())
 		_parent_node.queue_free()
 	task.succeed()
 
@@ -178,5 +178,5 @@ func task_reflect(task):
 func _reflect(count: int) -> Node:
 	var clone = _parent_node.duplicate()
 	clone.get_node("ProjBehavior").reflect_count = count
-	clone.get_node("ProjBehavior").set_level(_level_node)
+	clone.set_level(_level_node)
 	return clone

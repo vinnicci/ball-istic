@@ -44,13 +44,12 @@ func set_level(new_level: Node) -> void:
 	_level_node = new_level
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_level(_level_node)
+	if has_node("Explosion") == true:
+		$Explosion.set_level_cam(_level_node.get_node("Camera2D"))
+		$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 
 
-func set_shooter(shooter: Node) -> void:
-	_shooter = shooter
-
-
-func init_travel(pos: Vector2, dir: float, shooter_faction: Color, shooter: Node) -> void:
+func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
 	$RangeTimer.start()

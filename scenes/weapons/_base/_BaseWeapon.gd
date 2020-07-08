@@ -168,21 +168,17 @@ func fire() -> void:
 func _spawn_proj() -> void:
 	level_node.spawn_projectile(_instance_proj(), $Muzzle.global_position,
 		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
-		_parent_node.current_faction, _parent_node)
+		_parent_node.current_faction)
 
 
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
 	_modify_proj(proj)
 	if proj is Global.CLASS_PROJ:
-		proj.set_level(level_node)
-		proj.set_shooter(_parent_node)
 		proj.damage *= proj_damage_rate
-		if proj.has_node("Explosion") == true:
-			var explosion_node = proj.get_node("Explosion")
-			if is_instance_valid(level_node.get_player()) == true:
-				explosion_node.set_player_cam(level_node.get_player().get_node("Camera2D"))
-			explosion_node.set_level_cam(level_node.get_node("Camera2D"))
+	elif proj is Global.CLASS_BOT_PROJ:
+		proj.set_shooter(_parent_node)
+	proj.set_level(level_node)
 	return proj
 
 

@@ -56,9 +56,9 @@ func _process(delta: float) -> void:
 
 
 func spawn_projectile(proj, proj_position: Vector2, proj_direction: float,
-	shooter_faction: Color, shooter: Global.CLASS_BOT) -> void:
+	shooter_faction: Color) -> void:
 	add_child(proj)
-	proj.init_travel(proj_position, proj_direction, shooter_faction, shooter)
+	proj.init_travel(proj_position, proj_direction, shooter_faction)
 
 
 func get_points(start: Vector2, end: Vector2) -> Array:
