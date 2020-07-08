@@ -5,6 +5,11 @@ const DUMMY_A = preload("res://main/tutorial level/DummyA.gd")
 const DUMMY_C = preload("res://main/tutorial level/DummyC.gd")
 
 
+func _ready() -> void:
+	faction = Color(0, 1, 0)
+	reset_bot_vars()
+
+
 signal clashed
 
 

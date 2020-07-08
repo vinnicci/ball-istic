@@ -4,6 +4,7 @@ extends Node2D
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
 var _player: Global.CLASS_PLAYER = null setget , get_player
+const MANAGER = preload("res://main/LevelManager.gd")
 
 
 func get_player():

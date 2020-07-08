@@ -14,3 +14,11 @@ onready var door_D: = $Nav/DoorD
 func _ready() -> void:
 	for hint in $Access.get_children():
 		hint.set_level(self)
+
+
+signal moved
+
+
+func _on_ToLvl1_body_entered(body: Node) -> void:
+	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.ROLL:
+		emit_signal("moved", "lvl_1", "PlayerPos1")
