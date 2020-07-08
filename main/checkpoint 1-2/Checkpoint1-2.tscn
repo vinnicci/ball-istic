@@ -245,10 +245,10 @@ margin_right = 570.0
 margin_bottom = 700.0
 custom_fonts/normal_font = ExtResource( 17 )
 bbcode_enabled = true
-bbcode_text = "[color=#00ff10]Bot Station:[/color] Repairs yourself and allows loadout customization.
+bbcode_text = "[color=#00ff10]Bot Station:[/color] Autorepairs and allows you to customize your loadout.
 [color=#ff8b0f]Depot:[/color] Get new equipment here.
 [color=#04ecfe]Vault:[/color] Store your excess items here."
-text = "Bot Station: Repairs yourself and allows loadout customization.
+text = "Bot Station: Autorepairs and allows you to customize your loadout.
 Depot: Get new equipment here.
 Vault: Store your excess items here."
 __meta__ = {

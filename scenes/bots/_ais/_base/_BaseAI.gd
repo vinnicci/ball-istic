@@ -54,17 +54,6 @@ func _get_path_points(start: Vector2, end: Vector2) -> void:
 	_next_path_point = _path_points.pop_front()
 
 
-#func _get_distance(start: Vector2, end: Vector2) -> int:
-#	var arr: Array = _level_node.get_points(start, end)
-#	var arr_size: = arr.size()
-#	if arr_size == 2:
-#		return arr[0].distance_to(arr[1])
-#	var distance: int = arr.pop_front().distance_to(arr.front())
-#	for i in range(arr_size-2):
-#		distance += arr.pop_front().distance_to(arr.front())
-#	return distance
-
-
 func _get_distance(start: Vector2, end: Vector2) -> int:
 	var arr: Array = _level_node.get_points(start, end)
 	if arr.size() <= 1:
@@ -75,15 +64,21 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 	return dist
 
 
+var _dead: bool = false
+
+
 func _physics_process(delta: float) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		_parent_node.velocity = _velocity
 	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
 		$Rays/Target.look_at(_enemy.global_position)
-	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD && _dead == false:
 		$DetectionRange.monitoring = false
+		if _enemy is Global.CLASS_PLAYER:
+			_level_node.set_engaging_player_count(false)
 		_enemy = null
 		clear_enemies()
+		_dead = true
 
 
 func _get_new_target_enemy(bot) -> void:
@@ -94,24 +89,20 @@ func _get_new_target_enemy(bot) -> void:
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is within line of sight
 	if potential_enemy == bot:
-		_enemy = bot
-		if $FoundTarget.is_playing() == false:
-			$FoundTarget.play()
+		_set_enemy(potential_enemy)
 		return
 	#if target bot is blocked by another enemy bot,
 	#engage the blocking bot instead
 	if (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
 		_enemies.erase(potential_enemy)
-		_enemy = potential_enemy
-		if $FoundTarget.is_playing() == false:
-			$FoundTarget.play()
+		_set_enemy(potential_enemy)
 	_enemies.append(bot)
 
 
 func engage_attacker(bot) -> void:
 	#if attacker is dead or the same target, continue engaging current enemy
-	if _check_if_valid_bot(bot) == false || _enemy == bot:
+	if _check_if_valid_bot(bot) == false:
 		return
 	#if attacker's distance is more than the current enemy distance, return
 	if (_enemy != null &&
@@ -122,6 +113,16 @@ func engage_attacker(bot) -> void:
 		_enemies.append(_enemy)
 	if _enemies.has(bot) == true:
 		_enemies.erase(bot)
+	_set_enemy(bot)
+
+
+func _set_enemy(bot) -> void:
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD || _enemy == bot:
+		return
+	if bot is Global.CLASS_PLAYER:
+		_level_node.set_engaging_player_count(true)
+	elif _enemy is Global.CLASS_PLAYER:
+		_level_node.set_engaging_player_count(false)
 	_enemy = bot
 	if $FoundTarget.is_playing() == false:
 		$FoundTarget.play()

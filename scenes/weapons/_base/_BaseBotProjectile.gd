@@ -1,4 +1,4 @@
-extends "res://scenes/bots/_base/_BaseBotRolling.gd"
+extends "res://scenes/bots/_base/_BaseBot.gd"
 
 
 onready var _lifetime: = $Timers/Lifetime

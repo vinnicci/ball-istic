@@ -13,7 +13,7 @@ signal moved
 
 func _on_ToTutorial_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.ROLL:
-		emit_signal("moved", "tut", "PlayerPos2")
+		emit_signal("moved", "tut", "PlayerPos1")
 
 
 func _on_ToCP12_body_entered(body: Node) -> void:

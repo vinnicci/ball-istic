@@ -8,7 +8,7 @@ resource_local_to_scene = true
 
 [node name="BotRolling" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-transform_speed = 0.1
+transform_speed = 0.05
 
 [node name="StateMachine" parent="." index="0"]
 tree = {
@@ -3181,5 +3181,5 @@ tree = {
 }
 }
 
-[node name="CollisionShape" parent="." index="6"]
+[node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )

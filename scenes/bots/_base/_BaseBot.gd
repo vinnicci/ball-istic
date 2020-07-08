@@ -118,7 +118,7 @@ func is_charge_roll_ready():
 enum State {
 	TURRET, ROLL, TO_TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
-var state = State.TURRET
+var state = State.ROLL
 var _before_stun = null
 
 
@@ -272,6 +272,14 @@ func task_dead_process(task):
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
+	
+	#when bot is initialized, turret is supposedly the default state
+	#but with lines below it now starts on roll state
+	current_transform_speed = 0
+	_switch_to_roll()
+	$Sounds/ChangeMode.stop()
+	
+	#apply export vars
 	reset_bot_vars()
 
 

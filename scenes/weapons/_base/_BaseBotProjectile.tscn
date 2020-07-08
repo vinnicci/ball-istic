@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/bots/_base/_BaseBotRolling.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseBotProjectile.gd" type="Script" id=2]
 [ext_resource path="res://assets/bots/tex_explosive_bot.png" type="Texture" id=3]
+
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
