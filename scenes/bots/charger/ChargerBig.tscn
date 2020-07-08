@@ -12,7 +12,7 @@ resource_local_to_scene = true
 [node name="ChargerBig" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 bot_radius = 64.0
-speed = 2500
+speed = 2000
 charge_cooldown = 2.0
 charge_force_factor = 0.8
 

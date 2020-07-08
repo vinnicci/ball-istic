@@ -14,7 +14,7 @@ resource_local_to_scene = true
 [node name="FighterBig" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
 bot_radius = 64.0
-speed = 2400
+speed = 2000
 transform_speed = 0.5
 charge_cooldown = 2.0
 charge_force_factor = 0.7

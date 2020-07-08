@@ -14,6 +14,7 @@ resource_local_to_scene = true
 [node name="FDroneLauncherProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 health_capacity = 15.0
+speed = 1000
 charge_damage_rate = 0.1
 
 [node name="StateMachine" parent="." index="0"]
