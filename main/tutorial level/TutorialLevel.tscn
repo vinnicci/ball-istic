@@ -241,11 +241,11 @@ extents = Vector2( 16, 1.5 )
 [sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 16, 1.5 )
 
-[sub_resource type="PhysicsMaterial" id=19]
+[sub_resource type="PhysicsMaterial" id=18]
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 14, 118 )
 
 [node name="TutorialLevel" instance=ExtResource( 1 )]
@@ -301,7 +301,7 @@ text = "WASD to move.
 Right Mouse Button to deploy as turret.
 Left Mouse Button to shoot.
 RMB again to roll.
-You can move to the left to skip the tutorial."
+You can skip the tutorial by going to the left."
 
 [node name="Label2" parent="Access/HintA/AccessUI" index="1"]
 text = "Destroy bots with weapon: (0/3)"
@@ -311,8 +311,9 @@ position = Vector2( 259, 1433 )
 script = ExtResource( 10 )
 
 [node name="Label" parent="Access/HintB/AccessUI" index="0"]
-text = "While in roll mode, build up speed
-and then press LMB to charge roll"
+text = "While rolling, you can boost your speed or
+collide with enemy by charge rolling to
+the direction of your cursor (press LMB)."
 
 [node name="Label2" parent="Access/HintB/AccessUI" index="1"]
 text = "Destroy bots by charging: (0/3)"
@@ -322,7 +323,7 @@ position = Vector2( 1154.6, -317.16 )
 script = ExtResource( 13 )
 
 [node name="Label" parent="Access/HintC/AccessUI" index="0"]
-text = "Defense: A clash occurs when both bots
+text = "Defense: A clash collision occurs when both bots
 are charging at each other. You get no
 damage as well as the enemy."
 
@@ -346,72 +347,64 @@ wait_time = 5.0
 
 [node name="DummyA" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -261, 1316 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 6 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyA2" parent="Bots" index="1" instance=ExtResource( 8 )]
 position = Vector2( -962, 805 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 6 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyA3" parent="Bots" index="2" instance=ExtResource( 8 )]
 position = Vector2( -1570, 168 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 6 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyB" parent="Bots" index="3" instance=ExtResource( 8 )]
 position = Vector2( 623, 1430 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 11 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyB2" parent="Bots" index="4" instance=ExtResource( 8 )]
 position = Vector2( 855, 786 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 11 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyB3" parent="Bots" index="5" instance=ExtResource( 8 )]
 position = Vector2( 1392, 100 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 11 )
 shield_capacity = 5.0
 health_capacity = 5.0
-transform_speed = 0.6
 destructible = true
 
 [node name="DummyC" parent="Bots" index="6" instance=ExtResource( 8 )]
 position = Vector2( 931, -745 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 16 )
-transform_speed = 0.6
 charge_damage_rate = 0.05
 
 [node name="AI" parent="Bots/DummyC" index="11" instance=ExtResource( 14 )]
 
 [node name="DummyD" parent="Bots" index="7" instance=ExtResource( 8 )]
 position = Vector2( -676, -1183 )
-physics_material_override = SubResource( 19 )
+physics_material_override = SubResource( 18 )
 script = ExtResource( 15 )
-transform_speed = 0.6
 charge_damage_rate = 0.05
 
 [node name="AI" parent="Bots/DummyD" index="11" instance=ExtResource( 14 )]
@@ -420,7 +413,7 @@ charge_damage_rate = 0.05
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ToLvl1" index="0"]
 position = Vector2( -2546, 192 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="PlayerPos1" type="Position2D" parent="." index="5"]
 position = Vector2( -2393, 193 )

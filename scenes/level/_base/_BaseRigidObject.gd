@@ -15,10 +15,8 @@ func get_health_capacity():
 
 
 func take_damage(damage, knockback) -> void:
-	.take_damage(damage, knockback)
-	get_node(".").apply_central_impulse(knockback)
-	if current_health - damage > 0:
-		current_health -= damage
-	if current_health - damage <= 0:
+	self.apply_central_impulse(knockback)
+	current_health -= damage
+	if current_health <= 0:
 		#apply breaking or explosion stuff here later
 		queue_free()

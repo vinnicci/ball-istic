@@ -46,7 +46,8 @@ func set_level(new_level: Node) -> void:
 		$ProjBehavior.set_level(_level_node)
 	if has_node("Explosion") == true:
 		$Explosion.set_level_cam(_level_node.get_node("Camera2D"))
-		$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
+		if is_instance_valid(_level_node.get_player()) == true:
+			$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:

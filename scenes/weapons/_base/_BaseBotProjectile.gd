@@ -6,6 +6,7 @@ var _glow: Node
 var _shooter: Node
 var _level: Node
 
+
 func _ready() -> void:
 	_glow = _body_charge_effect.duplicate()
 	$Body.add_child(_glow)
@@ -15,17 +16,12 @@ func set_shooter(shooter: Node) -> void:
 	_shooter = shooter
 
 
-func set_level(new_level: Node) -> void:
-	_level = new_level
-
-
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	global_position = pos
 	faction = shooter_faction
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(_shooter)
-		$AI.set_level(_level)
 	reset_bot_vars()
 	apply_central_impulse(Vector2(1250, 0).rotated(dir))
 	$Timers/Lifetime.start()
