@@ -116,7 +116,7 @@ func is_charge_roll_ready():
 # bot state machine
 ###################
 enum State {
-	TURRET, ROLL, TO_TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
+	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
 var state = State.ROLL
 var _before_stun = null
@@ -274,7 +274,7 @@ func _ready() -> void:
 	_init_bot()
 	
 	#when bot is initialized, turret is supposedly the default state
-	#but with lines below it now starts on roll state
+	#but with lines below, it now starts on roll state
 	current_transform_speed = 0
 	_switch_to_roll()
 	$Sounds/ChangeMode.stop()
@@ -324,15 +324,15 @@ func _init_bot() -> void:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
 	
-	#bot's body visual setup
+	#bot's body graphics setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
-	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
-	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now
+	bar_shield.rect_position.y += bot_radius + 15 #-> 15 is hardcoded for now
+	bar_health.rect_position.y += bar_shield.rect_position.y + 15
 	bar_shield.margin_left = -bot_radius
 	bar_shield.margin_right = bot_radius
 	bar_health.margin_left = -bot_radius
 	bar_health.margin_right = bot_radius
-	bar_shield.rect_scale.x = (bot_radius*2)/150
+	bar_shield.rect_scale.x = (bot_radius*2)/150 #-> 150 is the bar length in pixels
 	bar_health.rect_scale.x = (bot_radius*2)/150
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
@@ -348,9 +348,10 @@ func _init_legs(circle_points) -> void:
 	var deg: = 360.0/POLY_SIDES as float
 	for i in circle_points.size():
 		var leg_node = get_node("Legs/Leg" + i as String)
-		var leg_sprite_c = leg_sprite.duplicate(DUPLICATE_USE_INSTANCING)
+		var leg_sprite_c = leg_sprite.duplicate()
 		leg_node.add_child(leg_sprite_c)
 		leg_node.position = circle_points[i]
+		#store leg pos in dictionary
 		_legs_position[leg_node] = circle_points[i]
 		match i:
 			0: leg_node.rotation = deg2rad(4*deg) #<-- circle degrees * index from circle_points[index]
@@ -459,6 +460,7 @@ var _unrolled: bool = false
 
 func _apply_rolling_effects(delta: float) -> void:
 	if _unrolled == false && _check_if_turret() == true:
+		#while loops simply reset texture offset near Vector(0,0)
 		while _body_texture.texture_offset.x <= -bot_radius:
 			_body_texture.texture_offset.x += bot_radius
 		while _body_texture.texture_offset.x > bot_radius:
@@ -568,13 +570,14 @@ func shoot_weapon() -> void:
 		current_weapon.fire()
 
 
-#some weapon has fixed anim -- will use shoot_commit var
+#some weapon have longer deploy animation -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
 	var weap = arr_weapons[slot_num]
 	if weap == null:
 		return false
+	#can't switch weapon if in these states
 	match state:
-		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT:
+		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT, State.DEAD:
 			return false
 	current_weapon.modulate = Color(1,1,1,0)
 	if state == State.TURRET:
@@ -694,8 +697,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 			$Sounds/Bump.play()
 		return
 	$CollisionSpark.look_at(body.global_position)
-	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.emitting = true
+	$Sounds/ChargeAttackHit.play()
 	var damage: float = ((current_speed * 0.125 * current_charge_force_factor) *
 		current_charge_damage_rate)
 	if body is Global.CLASS_BOT:
@@ -727,8 +730,13 @@ func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
 
 
 func explode() -> void:
-	$Legs.modulate = Color(0.18, 0.18, 0.18)
-	$Body.modulate = Color(0.18, 0.18, 0.18)
+	var color = Color(0.18, 0.18, 0.18)
+	$Legs.modulate = color
+	$Body.modulate = color
+	if current_weapon != null && current_weapon.modulate.a > 0:
+		var alpha = current_weapon.modulate.a
+		current_weapon.modulate = color
+		current_weapon.modulate.a = alpha
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
 	if is_instance_valid(level_node.get_player()) == true:
@@ -738,9 +746,6 @@ func explode() -> void:
 func _on_ExplodeDelay_timeout() -> void:
 	if current_weapon != null:
 		current_weapon.hide()
-	for sound in $Sounds.get_children():
-		if sound.is_playing() == true:
-			sound.stop()
 	$Legs.hide()
 	$Body.hide()
 	$Bars.hide()

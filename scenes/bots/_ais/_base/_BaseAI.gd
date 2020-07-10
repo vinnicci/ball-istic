@@ -37,13 +37,30 @@ func set_level(level: Node) -> void:
 	_level_node = level
 
 
-func clear_enemies() -> void:
-	_enemies = []
+var _dead: bool = false
+
+
+func _physics_process(delta: float) -> void:
+	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
+		_parent_node.velocity = _velocity
+	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
+		$Rays/Target.look_at(_enemy.global_position)
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD && _dead == false:
+		$DetectionRange.monitoring = false
+		if _enemy is Global.CLASS_PLAYER:
+			_level_node.set_engaging_player_count(false)
+		clear_enemies()
+		_dead = true
 
 
 func _process(delta: float) -> void:
 	$FleeRays.global_rotation = 0
 	$Rays.global_rotation = 0
+
+
+func clear_enemies() -> void:
+	_enemy = null
+	_enemies = []
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
@@ -67,30 +84,13 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 	return dist
 
 
-var _dead: bool = false
-
-
-func _physics_process(delta: float) -> void:
-	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
-		_parent_node.velocity = _velocity
-	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
-		$Rays/Target.look_at(_enemy.global_position)
-	if _parent_node.state == Global.CLASS_BOT.State.DEAD && _dead == false:
-		$DetectionRange.monitoring = false
-		if _enemy is Global.CLASS_PLAYER:
-			_level_node.set_engaging_player_count(false)
-		_enemy = null
-		clear_enemies()
-		_dead = true
-
-
 func _get_new_target_enemy(bot) -> void:
 	if _check_if_valid_bot(bot) == false:
 		_enemies.erase(bot)
 		return
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
-	#if target bot is within line of sight
+	#if target bot is in line of sight
 	if potential_enemy == bot:
 		_set_enemy(potential_enemy)
 		return
@@ -104,10 +104,10 @@ func _get_new_target_enemy(bot) -> void:
 
 
 func engage_attacker(bot) -> void:
-	#if attacker is dead or the same target, continue engaging current enemy
 	if _check_if_valid_bot(bot) == false:
 		return
-	#if attacker's distance is more than the current enemy distance, return
+	#if attacker's distance is less than the current enemy distance,
+	#engage attacker
 	if (_enemy != null &&
 		_get_distance(bot.global_position, global_position) >
 		_get_distance(_enemy.global_position, global_position)):
@@ -158,23 +158,25 @@ func _seek(target: Global.CLASS_BOT) -> void:
 	_next_path_point = null
 
 
+#needs refinement
 func _flee() -> void:
-	if _check_if_valid_bot(_enemy) == false:
-		return
-	if _next_path_point != null && _get_distance(global_position, _next_path_point) <= 100:
-		_next_path_point = null
 	if _next_path_point == null:
 		_flee_routes = {}
 		for ray in $FleeRays.get_children():
 			var pos
-			if ray.is_colliding() == true && ray.get_collider() is Global.CLASS_LEVEL_OBJECT:
+			var ray_collide = ray.get_collider()
+			#skip ray that is colliding with walls or a rigid object
+			if (ray_collide is Global.CLASS_LEVEL_OBJECT ||
+				ray_collide is Global.CLASS_RIGID_OBJECT):
 				continue
 			else:
 				pos = ray.get_node("Pos").global_position
 			_flee_routes[_get_distance(pos, _enemy.global_position)] = pos
+		#if flee routes has way out
 		if _flee_routes.size() != 0:
 			_next_path_point = _flee_routes[_flee_routes.keys().max()]
 			$Rays/Velocity.look_at(_next_path_point)
+		#else just ran opposite the enemy
 		else:
 			$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
@@ -247,6 +249,12 @@ func task_timed_idle(task):
 	return
 
 
+func task_idle(task):
+	_velocity = Vector2(0,0)
+	task.succeed()
+	return
+
+
 ###########
 # transform
 ###########
@@ -299,6 +307,7 @@ func task_is_charge_ready(task):
 ##############
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
+		_flee_routes = {}
 		task.failed()
 		return
 	if $FleeRays/R0.enabled == false:

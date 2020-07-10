@@ -237,13 +237,17 @@ position = Vector2( 203, 65 )
 script = ExtResource( 15 )
 
 [node name="Label" parent="Access/Hint/AccessUI" index="0"]
-margin_right = 542.0
+margin_top = 450.0
+margin_right = 605.0
+margin_bottom = 650.0
 bbcode_enabled = true
-bbcode_text = "Stand in one of the access areas and press TAB to open inventory.
+bbcode_text = "Press TAB to open inventory.
+Stand in one of the logos to gain access of it's funtionalities and containers.
 [color=#00ff10]Bot Station:[/color] Autorepairs and allows you to customize your loadout.
 [color=#ff8b0f]Depot:[/color] Get new equipment here.
 [color=#04ecfe]Vault:[/color] Store your items here. Bounty rewards are also sent here."
-text = "Stand in one of the access areas and press TAB to open inventory.
+text = "Press TAB to open inventory.
+Stand in one of the logos to gain access of it's funtionalities and containers.
 Bot Station: Autorepairs and allows you to customize your loadout.
 Depot: Get new equipment here.
 Vault: Store your items here. Bounty rewards are also sent here."

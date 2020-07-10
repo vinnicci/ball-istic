@@ -54,42 +54,42 @@ texture = ExtResource( 2 )
 
 [node name="MuzzlePos" type="Node2D" parent="." index="4"]
 
-[node name="P1" type="Position2D" parent="MuzzlePos" index="0"]
+[node name="P0" type="Position2D" parent="MuzzlePos" index="0"]
 position = Vector2( -33, -13 )
 rotation = -1.5708
 
-[node name="P2" type="Position2D" parent="MuzzlePos" index="1"]
+[node name="P1" type="Position2D" parent="MuzzlePos" index="1"]
 position = Vector2( -33, 13 )
 rotation = 1.5708
 
-[node name="P3" type="Position2D" parent="MuzzlePos" index="2"]
+[node name="P2" type="Position2D" parent="MuzzlePos" index="2"]
 position = Vector2( -17, -13 )
 rotation = -1.5708
 
-[node name="P4" type="Position2D" parent="MuzzlePos" index="3"]
+[node name="P3" type="Position2D" parent="MuzzlePos" index="3"]
 position = Vector2( -17, 13 )
 rotation = 1.5708
 
-[node name="P5" type="Position2D" parent="MuzzlePos" index="4"]
+[node name="P4" type="Position2D" parent="MuzzlePos" index="4"]
 position = Vector2( 0, -13 )
 rotation = -1.5708
 
-[node name="P6" type="Position2D" parent="MuzzlePos" index="5"]
+[node name="P5" type="Position2D" parent="MuzzlePos" index="5"]
 position = Vector2( 0, 13 )
 rotation = 1.5708
 
-[node name="P7" type="Position2D" parent="MuzzlePos" index="6"]
+[node name="P6" type="Position2D" parent="MuzzlePos" index="6"]
 position = Vector2( 17, -13 )
 rotation = -1.5708
 
-[node name="P8" type="Position2D" parent="MuzzlePos" index="7"]
+[node name="P7" type="Position2D" parent="MuzzlePos" index="7"]
 position = Vector2( 17, 13 )
 rotation = 1.5708
 
-[node name="P9" type="Position2D" parent="MuzzlePos" index="8"]
+[node name="P8" type="Position2D" parent="MuzzlePos" index="8"]
 position = Vector2( 33, -13 )
 rotation = -1.5708
 
-[node name="P10" type="Position2D" parent="MuzzlePos" index="9"]
+[node name="P9" type="Position2D" parent="MuzzlePos" index="9"]
 position = Vector2( 33, 13 )
 rotation = 1.5708

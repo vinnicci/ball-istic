@@ -176,13 +176,8 @@ func _spawn_proj() -> void:
 
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
-	_modify_proj(proj)
 	if proj is Global.CLASS_PROJ:
-		if rand_range(0, 1.0) <= crit_chance:
-			proj.damage *= proj_damage_rate * crit_mult
-			#add critical feedback here
-		else:
-			proj.damage *= proj_damage_rate
+		_modify_proj(proj)
 	elif proj is Global.CLASS_BOT_PROJ:
 		proj.set_shooter(_parent_node)
 	proj.set_level(level_node)
@@ -191,7 +186,19 @@ func _instance_proj() -> Node:
 
 #do stuff here like adding critical effect, z index modification, etc.!
 func _modify_proj(proj) -> void:
-	pass
+	_apply_crit(proj)
+
+
+func _apply_crit(proj) -> void:
+	if rand_range(0, 1.0) <= crit_chance:
+		var multiplier = proj_damage_rate * crit_mult
+		if proj.has_node("Explosion") == true:
+			proj.get_node("Explosion").damage *= multiplier
+		else:
+			proj.damage *= multiplier
+		#add critical feedback here
+	else:
+		proj.damage *= proj_damage_rate
 
 
 func _apply_recoil() -> void:

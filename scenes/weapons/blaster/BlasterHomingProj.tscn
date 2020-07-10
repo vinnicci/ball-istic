@@ -21,3 +21,4 @@ offset = Vector2( -9, 0 )
 shape = SubResource( 1 )
 
 [node name="ProjBehavior" parent="." index="6" instance=ExtResource( 2 )]
+homing_steer_magnitude = 200.0

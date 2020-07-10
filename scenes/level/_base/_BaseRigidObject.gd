@@ -15,7 +15,7 @@ func get_health_capacity():
 
 
 func take_damage(damage, knockback) -> void:
-	self.apply_central_impulse(knockback)
+	apply_central_impulse(knockback)
 	current_health -= damage
 	if current_health <= 0:
 		#apply breaking or explosion stuff here later

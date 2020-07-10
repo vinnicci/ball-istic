@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
 [ext_resource path="res://scenes/weapons/sniper/PulseSniper.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/bots/sniper/StunSniper.gd" type="Script" id=5]
+[ext_resource path="res://scenes/bots/sniper/StunSniperBot.gd" type="Script" id=5]
 [ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=7]
 
@@ -15,7 +15,7 @@ resource_local_to_scene = true
 resource_local_to_scene = true
 radius = 1000.0
 
-[node name="StunSniper" instance=ExtResource( 4 )]
+[node name="StunSniperBot" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 speed = 1800
 transform_speed = 0.4

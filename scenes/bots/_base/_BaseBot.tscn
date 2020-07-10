@@ -95,24 +95,29 @@ script = ExtResource( 15 )
 script = ExtResource( 10 )
 tree = {
 "connection": [ {
-"from": "selector",
+"from": "root",
 "from_port": 0,
-"to": "minim_node",
-"to_port": 0
-}, {
-"from": "selector",
-"from_port": 1,
-"to": "minim_node2",
-"to_port": 0
-}, {
-"from": "selector",
-"from_port": 2,
-"to": "minim_node3",
+"to": "selector",
 "to_port": 0
 }, {
 "from": "selector",
 "from_port": 3,
 "to": "minim_node4",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 0,
+"to": "minim_node2",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 1,
+"to": "minim_node3",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 2,
+"to": "minim_node",
 "to_port": 0
 }, {
 "from": "selector",
@@ -134,101 +139,10 @@ tree = {
 "from_port": 7,
 "to": "minim_node8",
 "to_port": 0
-}, {
-"from": "root",
-"from_port": 0,
-"to": "selector",
-"to_port": 0
 } ],
 "nodes": [ {
 "child": [ {
 "child": [ {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence",
-"from_port": 0,
-"to": "task",
-"to_port": 0
-}, {
-"from": "sequence",
-"from_port": 1,
-"to": "task2",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}
-},
-"label": "turret",
-"offset": Vector2( 100, -300 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node",
-"type": 99
-}, {
 "child": [  ],
 "data": {
 "data": {
@@ -247,7 +161,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
@@ -256,9 +170,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -267,7 +181,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -280,9 +194,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -291,7 +205,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -301,15 +215,15 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
 "type": 2
 }
 },
-"label": "roll",
-"offset": Vector2( 100, -200 ),
+"label": "ROLL",
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node2",
@@ -338,7 +252,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
@@ -347,9 +261,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -358,7 +272,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -369,7 +283,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -382,9 +296,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -393,7 +307,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -404,7 +318,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -414,18 +328,104 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
 "type": 2
 }
 },
-"label": "to turret",
-"offset": Vector2( 100, -100 ),
+"label": "TO TURRET",
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node3",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence",
+"from_port": 0,
+"to": "task",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 1,
+"to": "task2",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 271, 84.9999 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 271, 84.9999 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+}
+},
+"label": "TURRET",
+"offset": Vector2( 100, -100 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node",
 "type": 99
 }, {
 "child": [  ],
@@ -451,7 +451,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
@@ -460,9 +460,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -471,7 +471,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -482,7 +482,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -495,9 +495,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -506,7 +506,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -517,7 +517,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -527,14 +527,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
 "type": 2
 }
 },
-"label": "to roll",
+"label": "TO ROLL",
 "offset": Vector2( 100, 0 ),
 "size": Vector2( 236, 83 )
 },
@@ -559,7 +559,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
@@ -568,9 +568,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -579,7 +579,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -592,9 +592,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -603,7 +603,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -613,14 +613,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
 "type": 2
 }
 },
-"label": "weap commit",
+"label": "WEAPON COMMIT",
 "offset": Vector2( 100, 100 ),
 "size": Vector2( 236, 83 )
 },
@@ -645,7 +645,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
@@ -654,9 +654,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -665,7 +665,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -678,9 +678,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -689,7 +689,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -699,14 +699,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
 "type": 2
 }
 },
-"label": "charge roll",
+"label": "CHARGE ROLL",
 "offset": Vector2( 100, 200 ),
 "size": Vector2( 236, 83 )
 },
@@ -731,7 +731,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
@@ -740,9 +740,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -751,7 +751,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -764,9 +764,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -775,7 +775,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -785,16 +785,16 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
 "type": 2
 }
 },
-"label": "stun",
+"label": "STUN",
 "offset": Vector2( 100, 300 ),
-"size": Vector2( 236, 83.0001 )
+"size": Vector2( 236, 83 )
 },
 "name": "minim_node7",
 "type": 99
@@ -822,7 +822,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
@@ -831,9 +831,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -842,7 +842,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -853,7 +853,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -866,9 +866,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -877,7 +877,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -888,7 +888,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -898,14 +898,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
 "type": 2
 }
 },
-"label": "dead",
+"label": "DEAD",
 "offset": Vector2( 100, 400 ),
 "size": Vector2( 236, 83 )
 },
@@ -932,92 +932,6 @@ tree = {
 "data": {
 "data": {
 "connection": [ {
-"from": "sequence",
-"from_port": 0,
-"to": "task",
-"to_port": 0
-}, {
-"from": "sequence",
-"from_port": 1,
-"to": "task2",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}
-},
-"label": "turret",
-"offset": Vector2( 100, -300 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
 "from": "sequence2",
 "from_port": 0,
 "to": "task3",
@@ -1032,7 +946,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
@@ -1041,9 +955,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -1052,7 +966,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -1065,9 +979,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -1076,7 +990,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -1086,15 +1000,15 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
 "type": 2
 }
 },
-"label": "roll",
-"offset": Vector2( 100, -200 ),
+"label": "ROLL",
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node2",
@@ -1123,7 +1037,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
@@ -1132,9 +1046,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -1143,7 +1057,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -1154,7 +1068,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -1167,9 +1081,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -1178,7 +1092,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -1189,7 +1103,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -1199,18 +1113,104 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
 "type": 2
 }
 },
-"label": "to turret",
-"offset": Vector2( 100, -100 ),
+"label": "TO TURRET",
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node3",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence",
+"from_port": 0,
+"to": "task",
+"to_port": 0
+}, {
+"from": "sequence",
+"from_port": 1,
+"to": "task2",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 271, 84.9999 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 271, 84.9999 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 119, 91 )
+},
+"name": "sequence",
+"type": 2
+}
+},
+"label": "TURRET",
+"offset": Vector2( 100, -100 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node",
 "type": 99
 }, {
 "child": [  ],
@@ -1236,7 +1236,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
@@ -1245,9 +1245,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -1256,7 +1256,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -1267,7 +1267,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -1280,9 +1280,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -1291,7 +1291,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -1302,7 +1302,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -1312,14 +1312,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
 "type": 2
 }
 },
-"label": "to roll",
+"label": "TO ROLL",
 "offset": Vector2( 100, 0 ),
 "size": Vector2( 236, 83 )
 },
@@ -1344,7 +1344,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
@@ -1353,9 +1353,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -1364,7 +1364,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -1377,9 +1377,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -1388,7 +1388,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -1398,14 +1398,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
 "type": 2
 }
 },
-"label": "weap commit",
+"label": "WEAPON COMMIT",
 "offset": Vector2( 100, 100 ),
 "size": Vector2( 236, 83 )
 },
@@ -1430,7 +1430,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
@@ -1439,9 +1439,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -1450,7 +1450,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -1463,9 +1463,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -1474,7 +1474,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -1484,14 +1484,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
 "type": 2
 }
 },
-"label": "charge roll",
+"label": "CHARGE ROLL",
 "offset": Vector2( 100, 200 ),
 "size": Vector2( 236, 83 )
 },
@@ -1516,7 +1516,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
@@ -1525,9 +1525,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -1536,7 +1536,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -1549,9 +1549,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -1560,7 +1560,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -1570,16 +1570,16 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
 "type": 2
 }
 },
-"label": "stun",
+"label": "STUN",
 "offset": Vector2( 100, 300 ),
-"size": Vector2( 236, 83.0001 )
+"size": Vector2( 236, 83 )
 },
 "name": "minim_node7",
 "type": 99
@@ -1607,7 +1607,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
@@ -1616,9 +1616,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -1627,7 +1627,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -1638,7 +1638,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -1651,9 +1651,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -1662,7 +1662,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -1673,7 +1673,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -1683,14 +1683,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
 "type": 2
 }
 },
-"label": "dead",
+"label": "DEAD",
 "offset": Vector2( 100, 400 ),
 "size": Vector2( 236, 83 )
 },
@@ -1723,7 +1723,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 119, 91 )
 },
 "name": "sequence",
@@ -1732,9 +1732,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
+"offset": Vector2( 300, -300 ),
 "params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TURRET" ]
 },
 "name": "task",
@@ -1743,7 +1743,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 271, 84.9999 ),
 "values": [  ]
@@ -1756,9 +1756,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
+"offset": Vector2( 300, -300 ),
 "params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TURRET" ]
 },
 "name": "task",
@@ -1767,7 +1767,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 271, 84.9999 ),
 "values": [  ]
@@ -1777,18 +1777,131 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 119, 91 )
 },
 "name": "sequence",
 "type": 2
 }
 },
-"label": "turret",
-"offset": Vector2( 100, -300 ),
+"label": "TURRET",
+"offset": Vector2( 100, -100 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence3",
+"from_port": 0,
+"to": "task5",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 1,
+"to": "task6",
+"to_port": 0
+}, {
+"from": "sequence3",
+"from_port": 2,
+"to": "task7",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -400 ),
+"params": [ [ "TO_TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TO_TURRET" ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_turret_enter",
+"offset": Vector2( 300, -300 ),
+"params": [  ],
+"size": Vector2( 274, 84.9999 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 285, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -400 ),
+"params": [ [ "TO_TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TO_TURRET" ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_turret_enter",
+"offset": Vector2( 300, -300 ),
+"params": [  ],
+"size": Vector2( 274, 84.9999 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_turret_process",
+"offset": Vector2( 300, -200 ),
+"params": [  ],
+"size": Vector2( 285, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+}
+},
+"label": "TO TURRET",
+"offset": Vector2( 100, -200 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node3",
 "type": 99
 }, {
 "child": [  ],
@@ -1809,7 +1922,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
@@ -1818,9 +1931,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -1829,7 +1942,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -1842,9 +1955,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
+"offset": Vector2( 300, -200 ),
 "params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "ROLL" ]
 },
 "name": "task3",
@@ -1853,7 +1966,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"offset": Vector2( 300, -100 ),
 "params": [  ],
 "size": Vector2( 273, 85 ),
 "values": [  ]
@@ -1863,15 +1976,588 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence2",
 "type": 2
 }
 },
-"label": "roll",
+"label": "ROLL",
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node2",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence4",
+"from_port": 0,
+"to": "task8",
+"to_port": 0
+}, {
+"from": "sequence4",
+"from_port": 1,
+"to": "task9",
+"to_port": 0
+}, {
+"from": "sequence4",
+"from_port": 2,
+"to": "task10",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, 0 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -100 ),
+"params": [ [ "TO_ROLL", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TO_ROLL" ]
+},
+"name": "task8",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_roll_enter",
+"offset": Vector2( 300, 0 ),
+"params": [  ],
+"size": Vector2( 262, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_roll_process",
+"offset": Vector2( 300, 100 ),
+"params": [  ],
+"size": Vector2( 273, 85.0001 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -100 ),
+"params": [ [ "TO_ROLL", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TO_ROLL" ]
+},
+"name": "task8",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_roll_enter",
+"offset": Vector2( 300, 0 ),
+"params": [  ],
+"size": Vector2( 262, 85 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_roll_process",
+"offset": Vector2( 300, 100 ),
+"params": [  ],
+"size": Vector2( 273, 85.0001 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, 0 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence4",
+"type": 2
+}
+},
+"label": "TO ROLL",
+"offset": Vector2( 100, 0 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node4",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence5",
+"from_port": 0,
+"to": "task11",
+"to_port": 0
+}, {
+"from": "sequence5",
+"from_port": 1,
+"to": "task12",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 100 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 100 ),
+"params": [ [ "WEAP_COMMIT", 1 ] ],
+"size": Vector2( 296, 92 ),
+"values": [ "WEAP_COMMIT" ]
+},
+"name": "task11",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_weap_commit_process",
+"offset": Vector2( 300, 200 ),
+"params": [  ],
+"size": Vector2( 309, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 100 ),
+"params": [ [ "WEAP_COMMIT", 1 ] ],
+"size": Vector2( 296, 92 ),
+"values": [ "WEAP_COMMIT" ]
+},
+"name": "task11",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_weap_commit_process",
+"offset": Vector2( 300, 200 ),
+"params": [  ],
+"size": Vector2( 309, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 100 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence5",
+"type": 2
+}
+},
+"label": "WEAPON COMMIT",
+"offset": Vector2( 100, 100 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node5",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence6",
+"from_port": 0,
+"to": "task13",
+"to_port": 0
+}, {
+"from": "sequence6",
+"from_port": 1,
+"to": "task14",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 200 ),
+"params": [ [ "CHARGE_ROLL", 1 ] ],
+"size": Vector2( 278, 94 ),
+"values": [ "CHARGE_ROLL" ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_charge_roll_process",
+"offset": Vector2( 300, 300 ),
+"params": [  ],
+"size": Vector2( 296, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 200 ),
+"params": [ [ "CHARGE_ROLL", 1 ] ],
+"size": Vector2( 278, 94 ),
+"values": [ "CHARGE_ROLL" ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_charge_roll_process",
+"offset": Vector2( 300, 300 ),
+"params": [  ],
+"size": Vector2( 296, 85 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+}
+},
+"label": "CHARGE ROLL",
+"offset": Vector2( 100, 200 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node6",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence8",
+"from_port": 0,
+"to": "task15",
+"to_port": 0
+}, {
+"from": "sequence8",
+"from_port": 1,
+"to": "task16",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 300 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence8",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 300 ),
+"params": [ [ "STUN", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "STUN" ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_stun_process",
+"offset": Vector2( 300, 400 ),
+"params": [  ],
+"size": Vector2( 264, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 300 ),
+"params": [ [ "STUN", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "STUN" ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_stun_process",
+"offset": Vector2( 300, 400 ),
+"params": [  ],
+"size": Vector2( 264, 85 ),
+"values": [  ]
+},
+"name": "task16",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, 300 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence8",
+"type": 2
+}
+},
+"label": "STUN",
+"offset": Vector2( 100, 300 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node7",
+"type": 99
+}, {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence7",
+"from_port": 0,
+"to": "task17",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 1,
+"to": "task18",
+"to_port": 0
+}, {
+"from": "sequence7",
+"from_port": 2,
+"to": "task19",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, 400 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 300 ),
+"params": [ [ "DEAD", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "DEAD" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_dead_enter",
+"offset": Vector2( 300, 400 ),
+"params": [  ],
+"size": Vector2( 259, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_dead_process",
+"offset": Vector2( 300, 500 ),
+"params": [  ],
+"size": Vector2( 267, 85 ),
+"values": [  ]
+},
+"name": "task19",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, 300 ),
+"params": [ [ "DEAD", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "DEAD" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_dead_enter",
+"offset": Vector2( 300, 400 ),
+"params": [  ],
+"size": Vector2( 259, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_dead_process",
+"offset": Vector2( 300, 500 ),
+"params": [  ],
+"size": Vector2( 267, 85 ),
+"values": [  ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 100, 400 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence7",
+"type": 2
+}
+},
+"label": "DEAD",
+"offset": Vector2( 100, 400 ),
+"size": Vector2( 236, 83 )
+},
+"name": "minim_node8",
+"type": 99
+} ],
+"root": {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"data": {
+"connection": [ {
+"from": "sequence2",
+"from_port": 0,
+"to": "task3",
+"to_port": 0
+}, {
+"from": "sequence2",
+"from_port": 1,
+"to": "task4",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [  ],
+"data": {
+"count": 2,
 "offset": Vector2( 100, -200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence2",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -200 ),
+"params": [ [ "ROLL", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "ROLL" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_roll_process",
+"offset": Vector2( 300, -100 ),
+"params": [  ],
+"size": Vector2( 273, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_in_state",
+"offset": Vector2( 300, -200 ),
+"params": [ [ "ROLL", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "ROLL" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_roll_process",
+"offset": Vector2( 300, -100 ),
+"params": [  ],
+"size": Vector2( 273, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 100, -200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence2",
+"type": 2
+}
+},
+"label": "ROLL",
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node2",
@@ -1900,7 +2586,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
@@ -1909,9 +2595,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -1920,7 +2606,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -1931,7 +2617,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -1944,9 +2630,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
+"offset": Vector2( 300, -400 ),
 "params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_TURRET" ]
 },
 "name": "task5",
@@ -1955,7 +2641,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
+"offset": Vector2( 300, -300 ),
 "params": [  ],
 "size": Vector2( 274, 84.9999 ),
 "values": [  ]
@@ -1966,7 +2652,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
+"offset": Vector2( 300, -200 ),
 "params": [  ],
 "size": Vector2( 285, 85 ),
 "values": [  ]
@@ -1976,507 +2662,20 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, -100 ),
+"offset": Vector2( 100, -300 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence3",
 "type": 2
 }
 },
-"label": "to turret",
-"offset": Vector2( 100, -100 ),
+"label": "TO TURRET",
+"offset": Vector2( 100, -200 ),
 "size": Vector2( 236, 83 )
 },
 "name": "minim_node3",
 "type": 99
 }, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence4",
-"from_port": 0,
-"to": "task8",
-"to_port": 0
-}, {
-"from": "sequence4",
-"from_port": 1,
-"to": "task9",
-"to_port": 0
-}, {
-"from": "sequence4",
-"from_port": 2,
-"to": "task10",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, 200 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence4",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
-"params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TO_ROLL" ]
-},
-"name": "task8",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
-"params": [  ],
-"size": Vector2( 262, 85 ),
-"values": [  ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
-"params": [  ],
-"size": Vector2( 273, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
-"params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TO_ROLL" ]
-},
-"name": "task8",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
-"params": [  ],
-"size": Vector2( 262, 85 ),
-"values": [  ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
-"params": [  ],
-"size": Vector2( 273, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, 200 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence4",
-"type": 2
-}
-},
-"label": "to roll",
-"offset": Vector2( 100, 0 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node4",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence5",
-"from_port": 0,
-"to": "task11",
-"to_port": 0
-}, {
-"from": "sequence5",
-"from_port": 1,
-"to": "task12",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence5",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
-"params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "WEAP_COMMIT" ]
-},
-"name": "task11",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
-"params": [  ],
-"size": Vector2( 309, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
-"params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "WEAP_COMMIT" ]
-},
-"name": "task11",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
-"params": [  ],
-"size": Vector2( 309, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence5",
-"type": 2
-}
-},
-"label": "weap commit",
-"offset": Vector2( 100, 100 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node5",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence6",
-"from_port": 0,
-"to": "task13",
-"to_port": 0
-}, {
-"from": "sequence6",
-"from_port": 1,
-"to": "task14",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 600 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
-"params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "CHARGE_ROLL" ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
-"params": [  ],
-"size": Vector2( 296, 85 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
-"params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "CHARGE_ROLL" ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
-"params": [  ],
-"size": Vector2( 296, 85 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 600 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-}
-},
-"label": "charge roll",
-"offset": Vector2( 100, 200 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node6",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence8",
-"from_port": 0,
-"to": "task15",
-"to_port": 0
-}, {
-"from": "sequence8",
-"from_port": 1,
-"to": "task16",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence8",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
-"params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "STUN" ]
-},
-"name": "task15",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
-"params": [  ],
-"size": Vector2( 264, 85 ),
-"values": [  ]
-},
-"name": "task16",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
-"params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "STUN" ]
-},
-"name": "task15",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
-"params": [  ],
-"size": Vector2( 264, 85 ),
-"values": [  ]
-},
-"name": "task16",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, 800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence8",
-"type": 2
-}
-},
-"label": "stun",
-"offset": Vector2( 100, 300 ),
-"size": Vector2( 236, 83.0001 )
-},
-"name": "minim_node7",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence7",
-"from_port": 0,
-"to": "task17",
-"to_port": 0
-}, {
-"from": "sequence7",
-"from_port": 1,
-"to": "task18",
-"to_port": 0
-}, {
-"from": "sequence7",
-"from_port": 2,
-"to": "task19",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, 1100 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence7",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
-"params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "DEAD" ]
-},
-"name": "task17",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
-"params": [  ],
-"size": Vector2( 259, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
-"params": [  ],
-"size": Vector2( 267, 85 ),
-"values": [  ]
-},
-"name": "task19",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
-"params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "DEAD" ]
-},
-"name": "task17",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
-"params": [  ],
-"size": Vector2( 259, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
-"params": [  ],
-"size": Vector2( 267, 85 ),
-"values": [  ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, 1100 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence7",
-"type": 2
-}
-},
-"label": "dead",
-"offset": Vector2( 100, 400 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node8",
-"type": 99
-} ],
-"root": {
-"child": [ {
-"child": [ {
 "child": [  ],
 "data": {
 "data": {
@@ -2495,118 +2694,32 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -600 ),
-"params": [ [ "TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TURRET" ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_turret_process",
-"offset": Vector2( 600, -500 ),
-"params": [  ],
-"size": Vector2( 271, 84.9999 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -600 ),
-"size": Vector2( 119, 91 )
-},
-"name": "sequence",
-"type": 2
-}
-},
-"label": "turret",
 "offset": Vector2( 100, -300 ),
-"size": Vector2( 236, 83 )
+"size": Vector2( 119, 91 )
 },
-"name": "minim_node",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence2",
-"from_port": 0,
-"to": "task3",
-"to_port": 0
-}, {
-"from": "sequence2",
-"from_port": 1,
-"to": "task4",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 2,
-"offset": Vector2( 400, -400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence2",
+"name": "sequence",
 "type": 2
 }, {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
-"params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "ROLL" ]
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
 },
-"name": "task3",
+"name": "task",
 "type": 1
 }, {
 "child": [  ],
 "data": {
-"fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
 "params": [  ],
-"size": Vector2( 273, 85 ),
+"size": Vector2( 271, 84.9999 ),
 "values": [  ]
 },
-"name": "task4",
+"name": "task2",
 "type": 1
 } ],
 "root": {
@@ -2614,152 +2727,39 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, -400 ),
-"params": [ [ "ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "ROLL" ]
+"offset": Vector2( 300, -300 ),
+"params": [ [ "TURRET", 1 ] ],
+"size": Vector2( 252, 91 ),
+"values": [ "TURRET" ]
 },
-"name": "task3",
+"name": "task",
 "type": 1
 }, {
 "child": [  ],
 "data": {
-"fn": "task_roll_process",
-"offset": Vector2( 600, -300 ),
+"fn": "task_turret_process",
+"offset": Vector2( 300, -200 ),
 "params": [  ],
-"size": Vector2( 273, 85 ),
+"size": Vector2( 271, 84.9999 ),
 "values": [  ]
 },
-"name": "task4",
+"name": "task2",
 "type": 1
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, -400 ),
-"size": Vector2( 125, 91 )
+"offset": Vector2( 100, -300 ),
+"size": Vector2( 119, 91 )
 },
-"name": "sequence2",
+"name": "sequence",
 "type": 2
 }
 },
-"label": "roll",
-"offset": Vector2( 100, -200 ),
-"size": Vector2( 236, 83 )
-},
-"name": "minim_node2",
-"type": 99
-}, {
-"child": [  ],
-"data": {
-"data": {
-"connection": [ {
-"from": "sequence3",
-"from_port": 0,
-"to": "task5",
-"to_port": 0
-}, {
-"from": "sequence3",
-"from_port": 1,
-"to": "task6",
-"to_port": 0
-}, {
-"from": "sequence3",
-"from_port": 2,
-"to": "task7",
-"to_port": 0
-} ],
-"nodes": [ {
-"child": [  ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
-"params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TO_TURRET" ]
-},
-"name": "task5",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
-"params": [  ],
-"size": Vector2( 274, 84.9999 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
-"params": [  ],
-"size": Vector2( 285, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"root": {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_in_state",
-"offset": Vector2( 600, -200 ),
-"params": [ [ "TO_TURRET", 1 ] ],
-"size": Vector2( 259, 91 ),
-"values": [ "TO_TURRET" ]
-},
-"name": "task5",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_turret_enter",
-"offset": Vector2( 600, -100 ),
-"params": [  ],
-"size": Vector2( 274, 84.9999 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_turret_process",
-"offset": Vector2( 600, 0 ),
-"params": [  ],
-"size": Vector2( 285, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, -100 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-}
-},
-"label": "to turret",
+"label": "TURRET",
 "offset": Vector2( 100, -100 ),
 "size": Vector2( 236, 83 )
 },
-"name": "minim_node3",
+"name": "minim_node",
 "type": 99
 }, {
 "child": [  ],
@@ -2785,7 +2785,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
@@ -2794,9 +2794,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -2805,7 +2805,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -2816,7 +2816,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -2829,9 +2829,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 100 ),
+"offset": Vector2( 300, -100 ),
 "params": [ [ "TO_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "TO_ROLL" ]
 },
 "name": "task8",
@@ -2840,7 +2840,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_enter",
-"offset": Vector2( 600, 200 ),
+"offset": Vector2( 300, 0 ),
 "params": [  ],
 "size": Vector2( 262, 85 ),
 "values": [  ]
@@ -2851,7 +2851,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_to_roll_process",
-"offset": Vector2( 600, 300 ),
+"offset": Vector2( 300, 100 ),
 "params": [  ],
 "size": Vector2( 273, 85.0001 ),
 "values": [  ]
@@ -2861,14 +2861,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 200 ),
+"offset": Vector2( 100, 0 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence4",
 "type": 2
 }
 },
-"label": "to roll",
+"label": "TO ROLL",
 "offset": Vector2( 100, 0 ),
 "size": Vector2( 236, 83 )
 },
@@ -2893,7 +2893,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
@@ -2902,9 +2902,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -2913,7 +2913,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -2926,9 +2926,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 400 ),
+"offset": Vector2( 300, 100 ),
 "params": [ [ "WEAP_COMMIT", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 296, 92 ),
 "values": [ "WEAP_COMMIT" ]
 },
 "name": "task11",
@@ -2937,7 +2937,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_weap_commit_process",
-"offset": Vector2( 600, 500 ),
+"offset": Vector2( 300, 200 ),
 "params": [  ],
 "size": Vector2( 309, 85 ),
 "values": [  ]
@@ -2947,14 +2947,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 400 ),
+"offset": Vector2( 100, 100 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence5",
 "type": 2
 }
 },
-"label": "weap commit",
+"label": "WEAPON COMMIT",
 "offset": Vector2( 100, 100 ),
 "size": Vector2( 236, 83 )
 },
@@ -2979,7 +2979,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
@@ -2988,9 +2988,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -2999,7 +2999,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -3012,9 +3012,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 600 ),
+"offset": Vector2( 300, 200 ),
 "params": [ [ "CHARGE_ROLL", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 278, 94 ),
 "values": [ "CHARGE_ROLL" ]
 },
 "name": "task13",
@@ -3023,7 +3023,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_charge_roll_process",
-"offset": Vector2( 600, 700 ),
+"offset": Vector2( 300, 300 ),
 "params": [  ],
 "size": Vector2( 296, 85 ),
 "values": [  ]
@@ -3033,14 +3033,14 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 600 ),
+"offset": Vector2( 100, 200 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence6",
 "type": 2
 }
 },
-"label": "charge roll",
+"label": "CHARGE ROLL",
 "offset": Vector2( 100, 200 ),
 "size": Vector2( 236, 83 )
 },
@@ -3065,7 +3065,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
@@ -3074,9 +3074,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -3085,7 +3085,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -3098,9 +3098,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 800 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "STUN", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "STUN" ]
 },
 "name": "task15",
@@ -3109,7 +3109,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_stun_process",
-"offset": Vector2( 600, 900 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 264, 85 ),
 "values": [  ]
@@ -3119,16 +3119,16 @@ tree = {
 } ],
 "data": {
 "count": 2,
-"offset": Vector2( 400, 800 ),
+"offset": Vector2( 100, 300 ),
 "size": Vector2( 125, 91 )
 },
 "name": "sequence8",
 "type": 2
 }
 },
-"label": "stun",
+"label": "STUN",
 "offset": Vector2( 100, 300 ),
-"size": Vector2( 236, 83.0001 )
+"size": Vector2( 236, 83 )
 },
 "name": "minim_node7",
 "type": 99
@@ -3156,7 +3156,7 @@ tree = {
 "child": [  ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
@@ -3165,9 +3165,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -3176,7 +3176,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -3187,7 +3187,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -3200,9 +3200,9 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_is_in_state",
-"offset": Vector2( 600, 1000 ),
+"offset": Vector2( 300, 300 ),
 "params": [ [ "DEAD", 1 ] ],
-"size": Vector2( 259, 91 ),
+"size": Vector2( 252, 91 ),
 "values": [ "DEAD" ]
 },
 "name": "task17",
@@ -3211,7 +3211,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_enter",
-"offset": Vector2( 600, 1100 ),
+"offset": Vector2( 300, 400 ),
 "params": [  ],
 "size": Vector2( 259, 85 ),
 "values": [  ]
@@ -3222,7 +3222,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_dead_process",
-"offset": Vector2( 600, 1200 ),
+"offset": Vector2( 300, 500 ),
 "params": [  ],
 "size": Vector2( 267, 85 ),
 "values": [  ]
@@ -3232,14 +3232,14 @@ tree = {
 } ],
 "data": {
 "count": 3,
-"offset": Vector2( 400, 1100 ),
+"offset": Vector2( 100, 400 ),
 "size": Vector2( 125, 112 )
 },
 "name": "sequence7",
 "type": 2
 }
 },
-"label": "dead",
+"label": "DEAD",
 "offset": Vector2( 100, 400 ),
 "size": Vector2( 236, 83 )
 },

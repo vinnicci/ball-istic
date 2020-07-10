@@ -33,7 +33,7 @@ func set_level(new_level: Node) -> void:
 
 func _physics_process(delta: float) -> void:
 	#only used by homing effect
-	if _target_bot == null && $TargetRay.enabled == true && _detected.size() != 0:
+	if $TargetRay.enabled == true && _target_bot == null && _detected.size() != 0:
 		for target in _detected:
 			if is_instance_valid(target) == false:
 				_detected.erase(target)
@@ -53,6 +53,9 @@ func _physics_process(delta: float) -> void:
 ########
 # homing
 ########
+export (float) var homing_steer_magnitude: float = 100
+
+
 func task_homing(task):
 	if is_instance_valid(_target_bot) == false || _target_bot.state == Global.CLASS_BOT.State.DEAD:
 		_target_bot = null
@@ -62,7 +65,7 @@ func task_homing(task):
 		task.failed()
 		return
 	var target_v = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
-	var steer_v = (target_v - _parent_node.velocity).normalized() * task.get_param(0)
+	var steer_v = (target_v - _parent_node.velocity).normalized() * homing_steer_magnitude
 	var final_v = _parent_node.velocity + steer_v
 	_parent_node.acceleration = final_v
 	task.succeed()
