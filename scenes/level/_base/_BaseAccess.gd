@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 
 func _access(body: Node, arr: Array, access_name: String, arr_count: int) -> void:
@@ -22,3 +22,11 @@ func _exit_access(body: Node) -> void:
 	body.ui_loadout_access_button.disabled = true
 	body.ui_loadout.visible = true
 	body.arr_external = []
+
+
+func _on_Access_body_entered(body: Node) -> void:
+	pass # Replace with function body.
+
+
+func _on_Access_body_exited(body: Node) -> void:
+	pass # Replace with function body.

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/level/tex_access_hint.png" type="Texture" id=1]
 [ext_resource path="res://scenes/level/hint/Hint.gd" type="Script" id=2]
@@ -21,10 +21,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 0.843137, 0, 1 ), Color( 1, 0.843137, 0, 0.196078 ), Color( 1, 0.843137, 0, 1 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 128.0
-
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "fade_in"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -65,32 +62,25 @@ texture = ExtResource( 1 )
 autoplay = "fading"
 anims/fading = SubResource( 1 )
 
-[node name="CollisionShape2D" parent="Area2D" index="0"]
-shape = SubResource( 2 )
-
 [node name="Label" parent="AccessUI" index="0"]
-margin_left = 30.0
-margin_top = 500.0
-margin_right = 120.0
-margin_bottom = 533.0
 text = "Tutorial hint"
 
-[node name="Label2" type="Label" parent="AccessUI" index="1"]
+[node name="Label2" type="RichTextLabel" parent="AccessUI" index="1"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 30.0
 margin_top = 95.0
-margin_right = 95.0
-margin_bottom = 109.0
-custom_fonts/font = ExtResource( 4 )
+margin_right = 550.0
+margin_bottom = 295.0
+custom_fonts/normal_font = ExtResource( 4 )
 text = "OBJECTIVE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Anim" type="AnimationPlayer" parent="AccessUI/Label2" index="0"]
-anims/fade_in = SubResource( 3 )
+[node name="Anim" type="AnimationPlayer" parent="AccessUI/Label2" index="1"]
+anims/fade_in = SubResource( 2 )
 
-[node name="FadeTimer" type="Timer" parent="AccessUI/Label2" index="1"]
+[node name="FadeTimer" type="Timer" parent="AccessUI/Label2" index="2"]
 wait_time = 2.0
 one_shot = true
 [connection signal="timeout" from="AccessUI/Label2/FadeTimer" to="." method="_on_FadeTimer_timeout"]

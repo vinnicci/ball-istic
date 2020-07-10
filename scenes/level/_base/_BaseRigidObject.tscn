@@ -8,4 +8,4 @@ destructible = true
 
 [node name="RigidObjectSprite" type="Sprite" parent="."]
 
-[node name="RigidObjectCollision" type="CollisionShape2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

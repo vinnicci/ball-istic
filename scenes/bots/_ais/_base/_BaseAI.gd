@@ -1,6 +1,7 @@
 extends Node2D
 
 
+export(int) var detection_range: int = 1000
 var _enemies: Array = []
 var _enemy: Global.CLASS_BOT = null
 var _master: Global.CLASS_BOT = null
@@ -13,6 +14,8 @@ var _level_node: Node = null
 
 
 func _ready() -> void:
+	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
+	$DetectionRange/CollisionShape2D.shape.radius = detection_range
 	var ray_len: = 180
 	for i in range(8):
 		var ray = $FleeRays.get_node("R" + i as String)

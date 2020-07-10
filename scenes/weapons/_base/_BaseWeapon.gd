@@ -10,6 +10,8 @@ export (float, 0, 1.0) var almost_overheating_threshold: float = 0.75 setget , g
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
 export (float) var shoot_cooldown: float = 1.0 setget set_shoot_cooldown, get_shoot_cooldown
 export (float) var proj_damage_rate: float = 1.0
+export (float) var crit_mult: float = 2.0
+export (float) var crit_chance: float = 0.05
 #firemode related properties
 enum FireModes {AUTO, BURST, CHARGE, OTHER}
 export (FireModes) var fire_mode
@@ -89,6 +91,7 @@ func is_overheating():
 
 
 func _ready() -> void:
+	randomize()
 	reset_weap_vars()
 
 
@@ -175,7 +178,11 @@ func _instance_proj() -> Node:
 	var proj = Projectile.instance()
 	_modify_proj(proj)
 	if proj is Global.CLASS_PROJ:
-		proj.damage *= proj_damage_rate
+		if rand_range(0, 1.0) <= crit_chance:
+			proj.damage *= proj_damage_rate * crit_mult
+			#add critical feedback here
+		else:
+			proj.damage *= proj_damage_rate
 	elif proj is Global.CLASS_BOT_PROJ:
 		proj.set_shooter(_parent_node)
 	proj.set_level(level_node)

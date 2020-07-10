@@ -20,13 +20,13 @@ func _init_ui_node() -> void:
 		item.modulate.a = 0
 
 
-func _on_Area2D_body_entered(body: Node) -> void:
+func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		_access(body, _arr_items, "depot", _arr_items.size())
 		body.ui_depot.visible = true
 
 
-func _on_Area2D_body_exited(body: Node) -> void:
+func _on_Access_body_exited(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		_exit_access(body)
 		body.ui_depot.visible = false

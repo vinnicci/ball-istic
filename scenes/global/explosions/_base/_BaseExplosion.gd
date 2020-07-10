@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 
 export (float) var explosion_radius: float = 100 setget , get_radius
@@ -33,7 +33,8 @@ func set_level_cam(level_cam: Camera2D) -> void:
 
 func _init_explosion() -> void:
 	#set radius
-	$AreaOfEffect/CollisionShape2D.shape.radius = explosion_radius
+	$CollisionShape2D.shape = CircleShape2D.new()
+	$CollisionShape2D.shape.radius = explosion_radius
 	$KnockBackDirection.cast_to = Vector2(explosion_radius, 0)
 	var circle: Array = []
 	for i in range(24):
@@ -49,11 +50,10 @@ func start_explosion() -> void:
 		_player_cam.shake_camera(20, 0.05, 0.05, 1)
 	elif global_position.distance_to(_level_cam.global_position) < explosion_radius * 3:
 		_level_cam.shake_camera(20, 0.1, 0.1, 1)
-	var bodies = $AreaOfEffect.get_overlapping_bodies()
+	var bodies = get_overlapping_bodies()
 	for body in bodies:
-		if body == get_parent():
-			continue
-		_apply_effect(body)
+		if body != get_parent():
+			_apply_effect(body)
 	$Blast/Anim.play("explode")
 	$Particles2D.emitting = true
 	$RemoveParticles.start()

@@ -315,6 +315,7 @@ func _init_bot() -> void:
 		weapon.modulate = Color(1,1,1,0)
 	
 	#bot physics and properties
+	$CollisionShape.shape = CircleShape2D.new()
 	$CollisionShape.shape.radius = bot_radius
 	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
@@ -323,7 +324,7 @@ func _init_bot() -> void:
 		$Bars/Shield.hide()
 		$Bars/Health.hide()
 	
-	#bot's body setup
+	#bot's body visual setup
 	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
 	bar_shield.rect_position.y += bot_radius + 15 #-> hardcoded for now
 	bar_health.rect_position.y += bar_shield.rect_position.y + 15 #-> hardcoded for now

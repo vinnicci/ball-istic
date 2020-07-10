@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_plasma.png-ecd66778bb156eb8d81a1235364aee09.s3tc.stex"
-path.etc2="res://.import/tex_plasma.png-ecd66778bb156eb8d81a1235364aee09.etc2.stex"
+path.s3tc="res://.import/tex_incinerator.png-bb266e5aef637660ffd042795aec2301.s3tc.stex"
+path.etc2="res://.import/tex_incinerator.png-bb266e5aef637660ffd042795aec2301.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_plasma.png"
-dest_files=[ "res://.import/tex_plasma.png-ecd66778bb156eb8d81a1235364aee09.s3tc.stex", "res://.import/tex_plasma.png-ecd66778bb156eb8d81a1235364aee09.etc2.stex" ]
+source_file="res://assets/weapons/tex_incinerator.png"
+dest_files=[ "res://.import/tex_incinerator.png-bb266e5aef637660ffd042795aec2301.s3tc.stex", "res://.import/tex_incinerator.png-bb266e5aef637660ffd042795aec2301.etc2.stex" ]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_plasma_bot.png-3834fec92ed234a8e283da2d649154b3.s3tc.stex"
-path.etc2="res://.import/tex_plasma_bot.png-3834fec92ed234a8e283da2d649154b3.etc2.stex"
+path.s3tc="res://.import/tex_incinerator_bot.png-f5771d9e873c16cf0772007a0eb32b97.s3tc.stex"
+path.etc2="res://.import/tex_incinerator_bot.png-f5771d9e873c16cf0772007a0eb32b97.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/bots/tex_plasma_bot.png"
-dest_files=[ "res://.import/tex_plasma_bot.png-3834fec92ed234a8e283da2d649154b3.s3tc.stex", "res://.import/tex_plasma_bot.png-3834fec92ed234a8e283da2d649154b3.etc2.stex" ]
+source_file="res://assets/bots/tex_incinerator_bot.png"
+dest_files=[ "res://.import/tex_incinerator_bot.png-f5771d9e873c16cf0772007a0eb32b97.s3tc.stex", "res://.import/tex_incinerator_bot.png-f5771d9e873c16cf0772007a0eb32b97.etc2.stex" ]
 
 [params]
 

@@ -342,7 +342,7 @@ discharge parry (press E)."
 [node name="Label2" parent="Access/HintD/AccessUI" index="1"]
 text = "Deflect enemy charge rolls with parries: (0/3)"
 
-[node name="FadeTimer" parent="Access/HintD/AccessUI/Label2" index="1"]
+[node name="FadeTimer" parent="Access/HintD/AccessUI/Label2" index="2"]
 wait_time = 5.0
 
 [node name="DummyA" parent="Bots" index="0" instance=ExtResource( 8 )]

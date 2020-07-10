@@ -1,11 +1,18 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
-func _on_Area2D_body_entered(body: Node) -> void:
+func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
+
+
+func _on_Access_body_exited(body: Node) -> void:
+	if body is Global.CLASS_PLAYER:
+		$AccessUI/Label.visible = !$AccessUI/Label.visible
+		_animate_objective()
+		$Sprite/Anim.play("fading")
 
 
 var _objective_shown: bool = false
@@ -22,13 +29,6 @@ var _level: Node
 
 func set_level(level) -> void:
 	_level = level
-
-
-func _on_Area2D_body_exited(body: Node) -> void:
-	if body is Global.CLASS_PLAYER:
-		$AccessUI/Label.visible = !$AccessUI/Label.visible
-		_animate_objective()
-		$Sprite/Anim.play("fading")
 
 
 func _on_FadeTimer_timeout() -> void:

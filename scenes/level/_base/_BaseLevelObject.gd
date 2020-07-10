@@ -29,4 +29,5 @@ func take_damage(damage, _knockback) -> void:
 
 
 func destroy() -> void:
+	#apply graphical effects here(explosion and such)
 	pass

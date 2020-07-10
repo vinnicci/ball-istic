@@ -1,7 +1,7 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
-func _on_Area2D_body_entered(body: Node) -> void:
+func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$EnterSound.play()
@@ -10,7 +10,7 @@ func _on_Area2D_body_entered(body: Node) -> void:
 		body.ui_access = "bot_station"
 
 
-func _on_Area2D_body_exited(body: Node) -> void:
+func _on_Access_body_exited(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$ExitSound.play()

@@ -8,6 +8,7 @@ var _level_node: Node = null
 
 
 func _init_detector(radius: float) -> void:
+	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = radius
 	$DetectionRange.monitoring = true
 	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
@@ -76,7 +77,7 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 ################
 # split to three
 ################
-var split_count: int = 2
+export var split_count: int = 2
 var _is_split: bool = false
 
 
@@ -133,7 +134,7 @@ func task_curve_speed(task):
 # steer curve
 #############
 export var steer_curve: Curve
-export var randomize_direction: bool = false
+export var steer_curve_randomize_dir: bool = false
 onready var _random_dir = rand_range(0, 1.0)
 var _old_v = null
 
@@ -148,7 +149,7 @@ func task_curve_steer(task):
 	var r_timer = _parent_node.get_node("RangeTimer")
 	var x_val = (r_timer.wait_time - r_timer.time_left) / r_timer.wait_time
 	var y_val = steer_curve.interpolate(x_val)
-	if randomize_direction == true && _random_dir <= 0.5:
+	if steer_curve_randomize_dir == true && _random_dir <= 0.5:
 		y_val *= -1
 	_parent_node.velocity = _old_v.rotated(deg2rad(90*y_val))
 	task.succeed()
@@ -158,7 +159,7 @@ func task_curve_steer(task):
 #########
 # reflect
 #########
-var reflect_count: int = 3
+export var reflect_count: int = 3
 
 
 func task_reflect(task):

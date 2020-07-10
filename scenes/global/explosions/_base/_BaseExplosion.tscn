@@ -28,9 +28,11 @@ scale = 10.0
 scale_random = 0.9
 color_ramp = SubResource( 2 )
 
-[node name="Explosion" type="Node2D"]
+[node name="Explosion" type="Area2D"]
 z_index = 5
 script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Blast" type="Polygon2D" parent="."]
 visible = false
@@ -42,12 +44,6 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 3 )
-
-[node name="AreaOfEffect" type="Area2D" parent="."]
-visible = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaOfEffect"]
 
 [node name="KnockBackDirection" type="RayCast2D" parent="."]
 visible = false

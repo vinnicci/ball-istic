@@ -66,3 +66,6 @@ tree = {
 "type": 0
 }
 }
+
+[node name="TargetRay" parent="." index="2"]
+cast_to = Vector2( 30, 0 )
