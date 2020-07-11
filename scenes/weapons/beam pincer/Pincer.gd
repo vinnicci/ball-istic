@@ -26,9 +26,31 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 		elif body.current_faction != _parent_node.current_faction && body.state == Global.CLASS_BOT.State.DEAD:
 			return
 		else:
-			body.take_damage(damage * proj_damage_rate, Vector2(knockback, 0).rotated(rotation))
+			damage = _apply_crit_a(body, damage)
+			body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	else:
-		body.take_damage(damage * proj_damage_rate, Vector2(knockback, 0).rotated(rotation))
+		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+
+
+func _apply_crit_a(body, damage) -> float:
+	if rand_range(0, 1.0) <= crit_chance:
+		damage *= proj_damage_rate * crit_mult
+		_play_crit_effect(body.global_position)
+	else:
+		damage *= proj_damage_rate
+	return damage
+
+
+func _play_crit_effect(pos: Vector2) -> void:
+	var crit_node = $Critical.duplicate()
+	level_node.add_child(crit_node)
+	var crit_anim = crit_node.get_node("Anim")
+	crit_node.show()
+	crit_node.global_position = pos
+	crit_node.global_rotation = 0
+	crit_anim.connect("animation_finished", level_node, "_on_Crit_anim_finished",
+		[crit_node])
+	crit_anim.play("feedback")
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:

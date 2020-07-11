@@ -5,11 +5,11 @@ export (float, 20.0, 150.0) var bot_radius: float = 32.0 setget , get_bot_radius
 export (float) var shield_capacity: float = 20 setget , get_shield_capacity
 export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
 export (float) var health_capacity: float = 20 setget , get_health_capacity
-export (int, 0, 3000) var speed: int = 1200 setget , get_speed
+export (int, 0, 4000) var speed: int = 1200 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.3 setget , get_knockback_resist
 export (float, 0.05, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
 export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
-export (float, 0.1, 1.5) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
+export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
@@ -415,12 +415,12 @@ func _cap_current_vars() -> void:
 	current_health = clamp(current_health, 1, 9999)
 	current_shield_cap = clamp(current_shield_cap, 0, 9999)
 	current_shield = clamp(current_shield, 0, 9999)
-	current_speed = clamp(current_speed, 500, 3000)
+	current_speed = clamp(current_speed, 500, 4000)
 	current_transform_speed = clamp(current_transform_speed, 0.05, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 	current_charge_damage_rate = clamp(current_charge_damage_rate, 0, 1.0)
-	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 1.5)
+	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
 
 
 func _process(delta: float) -> void:
@@ -435,9 +435,17 @@ func _process(delta: float) -> void:
 	_end_charging_effect()
 
 
-#60 fps
+var _is_ccd_on: bool = false
+
+
+#ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(delta: float) -> void:
-	pass
+	if linear_velocity.length() > 2500 && _is_ccd_on == false:
+		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
+		_is_ccd_on = true
+	elif linear_velocity.length() <= 2500 && _is_ccd_on == true:
+		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
+		_is_ccd_on = false
 
 
 func _integrate_forces(pstate: Physics2DDirectBodyState) -> void:
@@ -600,7 +608,6 @@ func charge_roll(charge_direction: float) -> void:
 
 
 func _apply_charge_impulse(dir: float) -> void:
-	continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_factor)
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
@@ -634,7 +641,6 @@ func _end_charging_effect() -> void:
 			Tween.EASE_IN_OUT)
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
-		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 		_charge_roll = null
 
 

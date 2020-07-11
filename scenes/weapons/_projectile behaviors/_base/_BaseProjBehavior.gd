@@ -81,6 +81,7 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 # split to three
 ################
 export var split_count: int = 2
+export var split_delay: float = 0.5
 var _is_split: bool = false
 
 
@@ -89,7 +90,7 @@ func task_split(task):
 		task.failed()
 		return
 	if _is_split == false:
-		$SplitTimer.wait_time = task.get_param(0)
+		$SplitTimer.wait_time = split_delay
 		$SplitTimer.start()
 		_is_split = true
 	task.succeed()

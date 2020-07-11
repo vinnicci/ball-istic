@@ -14,6 +14,7 @@ var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
 var _exploded: bool = false
 var _level_node: Node = null
+var crit_node: Node = null
 
 
 func get_speed():
@@ -54,6 +55,8 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
 	$RangeTimer.start()
+	if crit_node != null && has_node("Explosion") == true:
+		$Explosion.crit_node = crit_node
 	position = pos
 	rotation = dir
 	velocity = Vector2(current_speed, 0).rotated(rotation)
@@ -99,9 +102,24 @@ func _damage_bot(bot: Node) -> bool:
 			$Explosion.start_explosion()
 		else:
 			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+			if crit_node != null:
+				_play_crit_effect(bot.global_position)
 		if bot.has_node("AI") == true && is_instance_valid(_shooter):
 			bot.get_node("AI").engage_attacker(_shooter)
 		return true
+
+
+#crit feedback only works on bots
+#although damage also works on walls
+func _play_crit_effect(pos: Vector2) -> void:
+	_level_node.add_child(crit_node)
+	var crit_anim = crit_node.get_node("Anim")
+	crit_node.show()
+	crit_node.global_position = pos
+	crit_node.global_rotation = 0
+	crit_anim.connect("animation_finished", _level_node, "_on_Crit_anim_finished",
+		[crit_node])
+	crit_anim.play("feedback")
 
 
 #environment object such as walls or objects

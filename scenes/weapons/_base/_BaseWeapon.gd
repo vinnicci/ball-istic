@@ -176,9 +176,8 @@ func _spawn_proj() -> void:
 
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
-	if proj is Global.CLASS_PROJ:
-		_modify_proj(proj)
-	elif proj is Global.CLASS_BOT_PROJ:
+	_modify_proj(proj)
+	if proj is Global.CLASS_BOT_PROJ:
 		proj.set_shooter(_parent_node)
 	proj.set_level(level_node)
 	return proj
@@ -191,13 +190,15 @@ func _modify_proj(proj) -> void:
 
 func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= crit_chance:
-		var multiplier = proj_damage_rate * crit_mult
+		var mult = proj_damage_rate * crit_mult
 		if proj.has_node("Explosion") == true:
-			proj.get_node("Explosion").damage *= multiplier
+			proj.get_node("Explosion").damage *= mult
 		else:
-			proj.damage *= multiplier
-		#add critical feedback here
-	else:
+			proj.damage *= mult
+		#crit feedback display
+		var crit = $Critical.duplicate()
+		proj.crit_node = crit
+	elif proj is Global.CLASS_PROJ:
 		proj.damage *= proj_damage_rate
 
 

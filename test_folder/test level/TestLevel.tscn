@@ -13,9 +13,9 @@
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/weapons/scattershot/SweeperHoming.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/weapons/scattershot/SweeperReflecting.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/bots/spawner/FighterSpawner.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/weapons/beam pincer/BeamPincer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/weapons/grenade launcher/GrenadeLauncher.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/TestLevel.gd" type="Script" id=18]
 
@@ -239,10 +239,16 @@ position = Vector2( 700, -192 )
 position = Vector2( 323, -190 )
 
 [node name="Sweeper" parent="Access/Depot/Items" index="0" instance=ExtResource( 9 )]
+crit_chance = 0.5
 
-[node name="SweeperHoming" parent="Access/Depot/Items" index="1" instance=ExtResource( 14 )]
+[node name="GrenadeLauncher" parent="Access/Depot/Items" index="1" instance=ExtResource( 16 )]
+crit_chance = 0.5
 
-[node name="SweeperReflecting" parent="Access/Depot/Items" index="2" instance=ExtResource( 15 )]
+[node name="EnergyCannon" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
+crit_chance = 0.5
+
+[node name="BeamPincer" parent="Access/Depot/Items" index="3" instance=ExtResource( 15 )]
+crit_chance = 1.0
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( 531.85, 266.985 )
@@ -256,8 +262,5 @@ position = Vector2( -177.99, 125.017 )
 
 [node name="Dummy3" parent="Bots" index="3" instance=ExtResource( 17 )]
 position = Vector2( -207.655, -118.66 )
-
-[node name="FighterSpawner" parent="Bots" index="4" instance=ExtResource( 16 )]
-position = Vector2( 650, 1669 )
 
 [editable path="Access/Depot"]

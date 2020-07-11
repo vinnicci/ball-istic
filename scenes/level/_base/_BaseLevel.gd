@@ -69,3 +69,8 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 #trail effect cleanup
 func _on_Trail_anim_finished(anim_name: String, trail_obj: Node) -> void:
 	trail_obj.queue_free()
+
+
+#crit effect cleanup
+func _on_Crit_anim_finished(anim_name: String, crit_obj: Node) -> void:
+	crit_obj.queue_free()

@@ -311,9 +311,9 @@ position = Vector2( 259, 1433 )
 script = ExtResource( 10 )
 
 [node name="Label" parent="Access/HintB/AccessUI" index="0"]
-text = "While rolling, you can boost your speed or
-collide with enemy by charge rolling to
-the direction of your cursor (press LMB)."
+text = "While rolling, you can boost your speed or collide with
+enemy and deal damage by charge rolling to the direction
+of your cursor (press LMB)."
 
 [node name="Label2" parent="Access/HintB/AccessUI" index="1"]
 text = "Destroy bots by charging: (0/3)"

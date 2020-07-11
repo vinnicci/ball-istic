@@ -8,6 +8,8 @@ export (float) var knockback: float = 500 setget , get_knockback
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
+var crit_node: Node = null
+
 
 func get_radius():
 	return explosion_radius
@@ -64,6 +66,23 @@ func _apply_effect(body: Node) -> void:
 	$KnockBackDirection.look_at(body.global_position)
 	if body.has_method("take_damage") == true:
 		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
+		if crit_node != null && body is Global.CLASS_BOT:
+			_play_crit_effect(body.global_position)
+
+
+#crit feedback only works on bots
+#although damage also works on walls
+func _play_crit_effect(pos: Vector2) -> void:
+	var level_node = _level_cam.get_parent()
+	var crit_clone = crit_node.duplicate()
+	level_node.add_child(crit_clone)
+	var crit_anim = crit_clone.get_node("Anim")
+	crit_clone.show()
+	crit_clone.global_position = pos
+	crit_clone.global_rotation = 0
+	crit_anim.connect("animation_finished", level_node, "_on_Crit_anim_finished",
+		[crit_clone])
+	crit_anim.play("feedback")
 
 
 func _on_RemoveParticles_timeout() -> void:
