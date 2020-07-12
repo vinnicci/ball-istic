@@ -79,10 +79,10 @@ func _play_crit_effect(pos: Vector2) -> void:
 	var crit_anim = crit_clone.get_node("Anim")
 	crit_clone.show()
 	crit_clone.global_position = pos
-	crit_clone.global_rotation = 0
-	crit_anim.connect("animation_finished", level_node, "_on_Crit_anim_finished",
+#	crit_clone.global_rotation = 0
+	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
 		[crit_clone])
-	crit_anim.play("feedback")
+	crit_anim.play("critical")
 
 
 func _on_RemoveParticles_timeout() -> void:

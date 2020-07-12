@@ -6,6 +6,8 @@ extends Node2D
 var _player: Global.CLASS_PLAYER = null setget , get_player
 var _doors: Array
 var _engaging_player_count: int = 0
+var valid_bots: Array
+signal moved
 
 
 func get_player():
@@ -17,10 +19,16 @@ func _ready() -> void:
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
 		bot.set_level(self)
+		add_bot(bot)
 	for access in $Access.get_children():
 		if access.is_in_group("Doors"):
 			_doors.append(access)
 	open_doors()
+
+
+func add_bot(bot) -> void:
+	valid_bots.append(bot)
+	bot.connect("dead", self, "_on_bot_dead", [bot])
 
 
 func set_engaging_player_count(value: bool) -> void:
@@ -44,20 +52,15 @@ func close_doors() -> void:
 		door.close()
 
 
-var _init_cam: bool = false
-
-
 func _process(delta: float) -> void:
-	if (_init_cam == false &&
-		_player != null && _player.state == Global.CLASS_BOT.State.DEAD):
-		$Camera2D.global_position = _player.global_position
-		$Camera2D.current = true
-		_init_cam = true
+	pass
 
 
 func spawn_projectile(proj, proj_position: Vector2, proj_direction: float,
 	shooter_faction: Color) -> void:
 	add_child(proj)
+	if proj is Global.CLASS_BOT == true:
+		add_bot(proj)
 	proj.init_travel(proj_position, proj_direction, shooter_faction)
 
 
@@ -66,11 +69,13 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 	return points
 
 
-#trail effect cleanup
-func _on_Trail_anim_finished(anim_name: String, trail_obj: Node) -> void:
-	trail_obj.queue_free()
+func _on_bot_dead(bot) -> void:
+	if bot == _player:
+		$Camera2D.global_position = _player.global_position
+		$Camera2D.current = true
+	valid_bots.erase(bot)
 
 
-#crit effect cleanup
-func _on_Crit_anim_finished(anim_name: String, crit_obj: Node) -> void:
-	crit_obj.queue_free()
+#anim effect cleanup -> critical, deflected, stunned, charge and teleport trail
+func _on_Anim_finished(anim_name: String, anim_obj: Node) -> void:
+	anim_obj.queue_free()

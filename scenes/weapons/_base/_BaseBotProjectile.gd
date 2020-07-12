@@ -35,7 +35,7 @@ var _dying: bool = false
 
 func _process(delta: float) -> void:
 	#glow upon dying
-	if _lifetime.time_left <= _lifetime.wait_time*0.2 && _dying == false:
+	if _lifetime.time_left <= _lifetime.wait_time * 0.2 && _dying == false:
 		_body_tween.interpolate_property(_glow, "modulate", _glow.modulate,
 			Color(1,1,1,0.75), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.start()

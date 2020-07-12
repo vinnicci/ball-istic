@@ -10,6 +10,8 @@ export (float, 0, 1.0) var knockback_resist: float = 0.3 setget , get_knockback_
 export (float, 0.05, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
 export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
+export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
+export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
@@ -36,6 +38,8 @@ var current_charge_cooldown: float setget set_current_charge_cooldown, get_curre
 var current_knockback_resist: float
 var current_charge_damage_rate: float
 var current_charge_force_factor: float
+var current_charge_crit_mult: float
+var current_charge_crit_chance: float
 var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
@@ -87,6 +91,12 @@ func get_charge_damage_rate():
 
 func get_charge_force_factor():
 	return charge_force_factor
+
+func get_charge_crit_mult():
+	return charge_crit_mult
+
+func get_charge_crit_chance():
+	return charge_crit_chance
 
 func is_destructible():
 	return destructible
@@ -317,7 +327,7 @@ func _init_bot() -> void:
 	#bot physics and properties
 	$CollisionShape.shape = CircleShape2D.new()
 	$CollisionShape.shape.radius = bot_radius
-	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
+#	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
@@ -394,6 +404,8 @@ func reset_bot_vars() -> void:
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
 	current_charge_damage_rate = charge_damage_rate
 	current_charge_force_factor = charge_force_factor
+	current_charge_crit_mult = charge_crit_mult
+	current_charge_crit_chance = charge_crit_chance
 	
 	current_speed = speed
 	current_knockback_resist = knockback_resist
@@ -440,10 +452,10 @@ var _is_ccd_on: bool = false
 
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() > 2500 && _is_ccd_on == false:
+	if linear_velocity.length() > 3000 && _is_ccd_on == false:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 		_is_ccd_on = true
-	elif linear_velocity.length() <= 2500 && _is_ccd_on == true:
+	elif linear_velocity.length() <= 3000 && _is_ccd_on == true:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 		_is_ccd_on = false
 
@@ -531,7 +543,7 @@ func _animate_legs_to_turret() -> void:
 func _animate_weapon_hatch_to_turret() -> void:
 	if current_weapon != null:
 		_body_weapon_hatch.global_rotation = current_weapon.global_rotation
-		current_weapon.animate_transform(current_transform_speed)
+		current_weapon.animate_transform(current_transform_speed, true)
 	_body_weapon_hatch.show()
 	_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,0), Vector2(1,1),
 		current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
@@ -559,7 +571,7 @@ func _animate_legs_to_roll() -> void:
 func _animate_weapon_hatch_to_roll() -> void:
 	if current_weapon != null:
 		current_weapon.global_rotation = _body_weapon_hatch.global_rotation
-		current_weapon.animate_transform(current_transform_speed)
+		current_weapon.animate_transform(current_transform_speed, false)
 	_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
 		current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	_switch_tween.start()
@@ -627,7 +639,7 @@ func _peak_charge_roll() -> void:
 
 
 func _on_ChargeTrail_timeout() -> void:
-	_leave_trail(global_position)
+	_play_anim(global_position, _body_charge_effect.duplicate(), "trail")
 
 
 func _end_charging_effect() -> void:
@@ -651,18 +663,9 @@ func teleport(to_position: Vector2) -> void:
 	_teleport_pos = to_position
 	var current_pos = global_position
 	while current_pos.distance_to(to_position) > bot_radius * 3:
-		_leave_trail(current_pos)
+		_play_anim(current_pos, _body_charge_effect.duplicate(), "trail")
 		current_pos = current_pos.move_toward(to_position, bot_radius * 3)
 	$Sounds/Teleport.play()
-
-
-#trail effect used by charge roll and teleport
-func _leave_trail(pos: Vector2) -> void:
-	var trail = _body_charge_effect.duplicate()
-	level_node.add_child(trail)
-	trail.global_position = pos
-	trail.get_node("Anim").play("fade")
-	trail.get_node("Anim").connect("animation_finished", level_node, "_on_Trail_anim_finished", [trail])
 
 
 func apply_knockback(knockback: Vector2) -> void:
@@ -702,27 +705,49 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	$CollisionSpark.look_at(body.global_position)
+	$CollisionSpark.position = (
+		(body.position - position).normalized() * bot_radius)
 	$CollisionSpark.emitting = true
 	$Sounds/ChargeAttackHit.play()
 	var damage: float = ((current_speed * 0.125 * current_charge_force_factor) *
 		current_charge_damage_rate)
+	#apply crit dmg
+	if rand_range(0, 1.0) <= current_charge_crit_chance:
+		damage *= current_charge_crit_mult
+		if body is Global.CLASS_BOT:
+			_play_anim(body.global_position, _crit_feedback.instance(), "critical")
 	if body is Global.CLASS_BOT:
 		if current_faction == body.current_faction:
 			return
 		#if both bots are charging each other
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
+			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
 			$Sounds/Clash.play()
 			return
 		elif body.get_node("Timers/DischargeParry").is_stopped() == false:
 			var dir: float = (global_position - body.global_position).angle()
 			apply_knockback(Vector2(1500, 0).rotated(dir))
+			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
 			$Sounds/Clash.play()
 			return
 	body.take_damage(damage, Vector2(0,0))
 	if body.has_node("AI") == true:
 		body.get_node("AI").engage_attacker(self)
+
+
+var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
+var _deflect_feedback = preload("res://scenes/global/feedback/Deflect.tscn")
+
+
+func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:
+	level_node.add_child(anim_instance)
+	var anim = anim_instance.get_node("Anim")
+	anim_instance.global_position = pos
+#	crit_node.global_rotation = 0
+	anim.connect("animation_finished", level_node, "_on_Anim_finished",
+		[anim_instance])
+	anim.play(anim_name)
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
@@ -735,32 +760,35 @@ func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
 	bar_shield.value = current_shield
 
 
+signal dead
+
+
 func explode() -> void:
 	var color = Color(0.18, 0.18, 0.18)
-	$Legs.modulate = color
-	$Body.modulate = color
 	if current_weapon != null && current_weapon.modulate.a > 0:
 		var alpha = current_weapon.modulate.a
 		current_weapon.modulate = color
 		current_weapon.modulate.a = alpha
+	$Legs.modulate = color
+	$Body.modulate = color
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
+	emit_signal("dead")
 	if is_instance_valid(level_node.get_player()) == true:
 		$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
 
 
 func _on_ExplodeDelay_timeout() -> void:
+	$CollisionShape.disabled = true
 	if current_weapon != null:
 		current_weapon.hide()
 	$Legs.hide()
 	$Body.hide()
-	$Bars.hide()
-	$CollisionShape.disabled = true
 	mode = RigidBody2D.MODE_STATIC
 	#explosion effects here
+	$Explosion/Blast/Anim.connect("animation_finished", self, "_on_Explode_finished")
 	$Explosion.start_explosion()
-	$Timers/ExplodeTimer.start()
 
 
-func _on_ExplodeTimer_timeout() -> void:
+func _on_Explode_finished(anim_name: String) -> void:
 	queue_free()

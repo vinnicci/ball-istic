@@ -33,7 +33,7 @@ func set_level(new_level: Node) -> void:
 
 func _physics_process(delta: float) -> void:
 	#only used by homing effect
-	if $TargetRay.enabled == true && _target_bot == null && _detected.size() != 0:
+	if _detected.size() != 0 && _target_bot == null:
 		for target in _detected:
 			if is_instance_valid(target) == false:
 				_detected.erase(target)

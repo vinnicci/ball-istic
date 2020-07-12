@@ -9,9 +9,9 @@ export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipa
 export (float, 0, 1.0) var almost_overheating_threshold: float = 0.75 setget , get_almost_overheating_threshold
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
 export (float) var shoot_cooldown: float = 1.0 setget set_shoot_cooldown, get_shoot_cooldown
-export (float) var proj_damage_rate: float = 1.0
-export (float) var crit_mult: float = 2.0
-export (float) var crit_chance: float = 0.05
+export (float) var proj_damage_rate: float = 1.0 setget , get_proj_damage_rate
+export (float) var crit_mult: float = 2.0 setget , get_crit_mult
+export (float) var crit_chance: float = 0.05 setget , get_crit_chance
 #firemode related properties
 enum FireModes {AUTO, BURST, CHARGE, OTHER}
 export (FireModes) var fire_mode
@@ -29,6 +29,9 @@ var current_heat_per_shot: float = 0
 var current_heat: float = 0
 var current_heat_dissipation: float
 var current_shoot_cooldown: float
+var current_proj_damage_rate: float
+var current_crit_mult: float
+var current_crit_chance: float
 var _is_almost_overheating: bool = false setget , is_almost_overheating
 var _is_overheating: bool = false setget , is_overheating
 var weap_commit: bool = false
@@ -62,6 +65,15 @@ func set_shoot_cooldown(new_shoot_cooldown: float):
 func get_shoot_cooldown():
 	return shoot_cooldown
 
+func get_proj_damage_rate():
+	return proj_damage_rate
+
+func get_crit_mult():
+	return crit_mult
+
+func get_crit_chance():
+	return crit_chance
+
 func get_fire_mode():
 	return fire_mode
 
@@ -91,7 +103,6 @@ func is_overheating():
 
 
 func _ready() -> void:
-	randomize()
 	reset_weap_vars()
 
 
@@ -111,6 +122,10 @@ func reset_weap_vars() -> void:
 	_timer_burst_timer.wait_time = burst_timer
 	current_heat = 0
 	current_heat = clamp(current_heat, 0, heat_capacity + 1)
+	current_proj_damage_rate = proj_damage_rate
+	current_crit_mult = crit_mult
+	current_crit_chance = crit_chance
+	current_crit_chance = clamp(current_crit_chance, 0, 1.0)
 
 
 func _process(_delta: float) -> void:
@@ -141,11 +156,11 @@ func _on_ShootCooldown_timeout() -> void:
 	$Muzzle/MuzzleParticles.emitting = false
 
 
-func animate_transform(transform_speed: float) -> void:
-	if modulate == Color(1,1,1,1):
+func animate_transform(transform_speed: float, visibility: bool) -> void:
+	if visibility == false:
 		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,1), Color(1,1,1,0),
 			transform_speed*0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	elif modulate == Color(1,1,1,0):
+	elif visibility == true:
 		$WeaponTween.interpolate_property(self, 'modulate', Color(1,1,1,0), Color(1,1,1,1),
 			transform_speed*0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$WeaponTween.start()
@@ -177,8 +192,7 @@ func _spawn_proj() -> void:
 func _instance_proj() -> Node:
 	var proj = Projectile.instance()
 	_modify_proj(proj)
-	if proj is Global.CLASS_BOT_PROJ:
-		proj.set_shooter(_parent_node)
+	proj.set_shooter(_parent_node)
 	proj.set_level(level_node)
 	return proj
 
@@ -188,18 +202,21 @@ func _modify_proj(proj) -> void:
 	_apply_crit(proj)
 
 
+var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
+
+
 func _apply_crit(proj) -> void:
-	if rand_range(0, 1.0) <= crit_chance:
-		var mult = proj_damage_rate * crit_mult
+	if rand_range(0, 1.0) <= current_crit_chance:
+		var mult = current_proj_damage_rate * current_crit_mult
 		if proj.has_node("Explosion") == true:
 			proj.get_node("Explosion").damage *= mult
 		else:
 			proj.damage *= mult
 		#crit feedback display
-		var crit = $Critical.duplicate()
+		var crit = _crit_feedback.instance()
 		proj.crit_node = crit
 	elif proj is Global.CLASS_PROJ:
-		proj.damage *= proj_damage_rate
+		proj.damage *= current_proj_damage_rate
 
 
 func _apply_recoil() -> void:

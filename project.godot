@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Project Ball-istic"
+run/main_scene="res://main/LevelManager.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -138,9 +139,15 @@ weap_slot_4={
  ]
 }
 
+[physics]
+
+2d/default_gravity_vector=Vector2( 0, 0 )
+
 [rendering]
 
 quality/filters/anisotropic_filter_level=2
 quality/shadows/filter_mode=0
+quality/shading/force_vertex_shading=true
+quality/subsurface_scattering/quality=0
 quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

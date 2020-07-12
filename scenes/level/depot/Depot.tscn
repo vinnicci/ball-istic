@@ -23,7 +23,7 @@ tracks/0/keys = {
 [node name="Depot" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 modulate = Color( 1, 0.545098, 0.0588235, 1 )
 
 [node name="Logo" type="Sprite" parent="Sprite" index="0"]

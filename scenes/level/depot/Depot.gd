@@ -17,7 +17,8 @@ func _init_ui_node() -> void:
 	for i in $Items.get_children().size():
 		var item = $Items.get_child(i)
 		_arr_items[i] = item
-		item.modulate.a = 0
+		if item.has_method("animate_transform"):
+			item.animate_transform(0, false)
 
 
 func _on_Access_body_entered(body: Node) -> void:

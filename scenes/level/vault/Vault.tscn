@@ -23,7 +23,7 @@ tracks/0/keys = {
 [node name="Vault" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 modulate = Color( 0.0156863, 0.92549, 0.996078, 1 )
 
 [node name="Logo" type="Sprite" parent="Sprite" index="0"]

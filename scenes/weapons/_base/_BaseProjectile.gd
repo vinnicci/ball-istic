@@ -7,12 +7,11 @@ export (int) var proj_range: int = 500 setget , get_range
 export (float) var knockback: float = 50 setget , get_knockback
 
 var velocity: Vector2
-var acceleration: Vector2
+var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
 var _shooter: Node
 var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
-var _exploded: bool = false
 var _level_node: Node = null
 var crit_node: Node = null
 
@@ -51,6 +50,10 @@ func set_level(new_level: Node) -> void:
 			$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 
 
+func set_shooter(shooter: Node) -> void:
+	_shooter = shooter
+
+
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
@@ -63,13 +66,12 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if (is_stopped == false && $RangeTimer.is_stopped() == false &&
-		$RangeTimer.time_left <= 0.1):
-		$Sprite.modulate.a = lerp($Sprite.modulate.a, 0, 0.1)
 	if is_stopped == true:
 		velocity = Vector2(0,0)
 		$Sprite.hide()
 		return
+	elif (is_stopped == false && $RangeTimer.time_left <= 0.1):
+		$Sprite.modulate.a = lerp($Sprite.modulate.a, 0, 0.1)
 	velocity += acceleration
 	velocity = velocity.normalized() * current_speed
 	$Sprite.global_rotation = velocity.angle()
@@ -83,13 +85,8 @@ func _on_Projectile_body_entered(body: Node) -> void:
 	else:
 		_damage_object(body)
 	
-	#if projectile is explosive or not
-	if has_node("Explosion") == true:
-		_exploded = true
-	else:
-		#blast graphics upon object hit
-		_play_hit_blast_anim(body)
-	_stop_projectile()
+	#graphical effect upon hit
+	stop_projectile(body)
 
 
 func _damage_bot(bot: Node) -> bool:
@@ -116,10 +113,9 @@ func _play_crit_effect(pos: Vector2) -> void:
 	var crit_anim = crit_node.get_node("Anim")
 	crit_node.show()
 	crit_node.global_position = pos
-	crit_node.global_rotation = 0
-	crit_anim.connect("animation_finished", _level_node, "_on_Crit_anim_finished",
+	crit_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[crit_node])
-	crit_anim.play("feedback")
+	crit_anim.play("critical")
 
 
 #environment object such as walls or objects
@@ -128,6 +124,27 @@ func _damage_object(object: Node) -> void:
 		$Explosion.start_explosion()
 	else:
 		object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+
+
+func _on_RangeTimer_timeout() -> void:
+	stop_projectile(null)
+
+
+#stop when max range or hitting something
+func stop_projectile(body = null) -> void:
+	#if projectile is explosive or not
+	$RangeTimer.stop()
+	is_stopped = true
+	set_deferred("monitoring", false)
+	if has_node("Explosion") == true:
+		$Explosion.get_node("Blast/Anim").connect("animation_finished", self,
+			"_on_anim_finished")
+	else:
+		#blast graphics upon object hit
+		_play_hit_blast_anim(body)
+		var blast_anim = $HitBlast/Anim
+		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
+			$HitBlast/Anim.connect("animation_finished", self, "_on_anim_finished")
 
 
 func _play_hit_blast_anim(object) -> void:
@@ -139,19 +156,5 @@ func _play_hit_blast_anim(object) -> void:
 	$OnHitParticles.emitting = true
 
 
-func _on_RangeTimer_timeout() -> void:
-	if has_node("Explosion") && _exploded == false:
-		$Explosion.start_explosion()
-	_stop_projectile()
-
-
-#stop when max range or hitting something
-func _stop_projectile() -> void:
-	is_stopped = true
-	set_deferred("monitoring", false)
-#	$Sprite.hide()
-	$RemoveTimer.start()
-
-
-func _on_RemoveTimer_timeout() -> void:
+func _on_anim_finished(anim_name: String) -> void:
 	queue_free()
