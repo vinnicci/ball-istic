@@ -20,9 +20,8 @@ func _ready() -> void:
 			_player = bot
 		bot.set_level(self)
 		add_bot(bot)
-	for access in $Access.get_children():
-		if access.is_in_group("Doors"):
-			_doors.append(access)
+	for door in $Doors.get_children():
+		_doors.append(door)
 	open_doors()
 
 
@@ -31,15 +30,20 @@ func add_bot(bot) -> void:
 	bot.connect("dead", self, "_on_bot_dead", [bot])
 
 
+var _doors_closed: bool = false
+
+
 func set_engaging_player_count(value: bool) -> void:
 	if value == true:
 		_engaging_player_count += 1
 	else:
 		_engaging_player_count -= 1
-	if _engaging_player_count == 0:
+	if _doors_closed == true && _engaging_player_count == 0:
 		open_doors()
-	else:
+		_doors_closed = false
+	elif _doors_closed == false && _engaging_player_count != 0:
 		close_doors()
+		_doors_closed = true
 
 
 func open_doors() -> void:

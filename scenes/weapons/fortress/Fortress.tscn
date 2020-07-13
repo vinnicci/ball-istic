@@ -68,6 +68,7 @@ heat_capacity = 75.0
 heat_dissipation_per_sec = 0.0
 almost_overheating_threshold = 0.8
 shoot_cooldown = 0.5
+crit_chance = 0.1
 spread = 5.0
 recoil = 300
 cam_shake_intensity = 20.0

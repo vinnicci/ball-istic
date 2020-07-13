@@ -9,6 +9,7 @@ radius = 8.0
 
 [node name="TutBlasterProj" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
+damage = 2.0
 proj_range = 2000
 
 [node name="Sprite" parent="." index="1"]

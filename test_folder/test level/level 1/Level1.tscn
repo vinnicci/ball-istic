@@ -16,7 +16,6 @@
 [ext_resource path="res://test_folder/test level/level 1/DestructibleTile.gd" type="Script" id=14]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=15]
 
-
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
@@ -566,15 +565,11 @@ tile_data = PoolIntArray( -786416, 1, 0, -786415, 1, 0, -786414, 1, 0, -786413, 
 [node name="Depot" parent="Access" index="0" instance=ExtResource( 15 )]
 position = Vector2( 2750, -1283 )
 
-[node name="Door" parent="Access" index="1" groups=[
-"Doors",
-] instance=ExtResource( 1 )]
-position = Vector2( 704, -190 )
+[node name="Door" parent="Doors" index="0" instance=ExtResource( 1 )]
+position = Vector2( 704, -264 )
 
-[node name="Door2" parent="Access" index="2" groups=[
-"Doors",
-] instance=ExtResource( 1 )]
-position = Vector2( 64, -2304 )
+[node name="Door2" parent="Doors" index="1" instance=ExtResource( 1 )]
+position = Vector2( 64, -2296 )
 
 [node name="Fighter" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( 88.9664, -438.021 )

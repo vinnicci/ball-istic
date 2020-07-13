@@ -53,9 +53,9 @@ texture = ExtResource( 6 )
 [node name="CollisionShape" parent="." index="4"]
 shape = SubResource( 4 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
+[node name="Explosion" parent="." index="7" instance=ExtResource( 3 )]
 explosion_radius = 150.0
 knockback = 100.0
 
-[node name="ProjBehavior" parent="." index="9" instance=ExtResource( 5 )]
+[node name="ProjBehavior" parent="." index="8" instance=ExtResource( 5 )]
 visible = false

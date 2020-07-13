@@ -16,3 +16,5 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="."]
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]

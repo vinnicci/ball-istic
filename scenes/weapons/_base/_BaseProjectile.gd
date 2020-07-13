@@ -5,6 +5,7 @@ export (int) var speed: int = 500 setget , get_speed
 export (float) var damage: float = 1
 export (int) var proj_range: int = 500 setget , get_range
 export (float) var knockback: float = 50 setget , get_knockback
+export (float) var stun_time: float = 0 setget , get_stun_time
 
 var velocity: Vector2
 var acceleration: Vector2 = Vector2(0,0)
@@ -14,6 +15,7 @@ var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
 var _level_node: Node = null
 var crit_node: Node = null
+var _stun_feedback = load("res://scenes/global/feedback/Stun.tscn")
 
 
 func get_speed():
@@ -24,6 +26,9 @@ func get_range():
 
 func get_knockback():
 	return knockback
+
+func get_stun_time():
+	return stun_time
 
 func shooter_faction():
 	return _shooter_faction
@@ -80,50 +85,58 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Projectile_body_entered(body: Node) -> void:
-	if body is Global.CLASS_BOT && _damage_bot(body) == false:
-		return
+	if body is Global.CLASS_BOT:
+		_damage_bot(body)
 	else:
 		_damage_object(body)
-	
-	#graphical effect upon hit
-	stop_projectile(body)
 
 
-func _damage_bot(bot: Node) -> bool:
+func _damage_bot(bot: Node) -> void:
 	if bot.current_faction == _shooter_faction:
-		return false
+		return
 	elif bot.current_faction != _shooter_faction && bot.state == Global.CLASS_BOT.State.DEAD:
-		return false
+		return
 	else:
 		if has_node("Explosion") == true:
 			$Explosion.start_explosion()
 		else:
 			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 			if crit_node != null:
+				if stun_time != 0:
+					bot.timer_stun.start(stun_time)
 				_play_crit_effect(bot.global_position)
 		if bot.has_node("AI") == true && is_instance_valid(_shooter):
 			bot.get_node("AI").engage_attacker(_shooter)
-		return true
+		stop_projectile(bot)
 
 
 #crit feedback only works on bots
 #although damage also works on walls
 func _play_crit_effect(pos: Vector2) -> void:
 	_level_node.add_child(crit_node)
-	var crit_anim = crit_node.get_node("Anim")
-	crit_node.show()
 	crit_node.global_position = pos
+	var crit_anim = crit_node.get_node("Anim")
 	crit_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[crit_node])
 	crit_anim.play("critical")
+	if stun_time == 0:
+		return
+	var stun_node = _stun_feedback.instance()
+	_level_node.add_child(stun_node)
+	stun_node.global_position = pos
+	var stun_anim = stun_node.get_node("Anim")
+	stun_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
+		[stun_node])
+	stun_anim.play("stun")
 
 
 #environment object such as walls or objects
-func _damage_object(object: Node) -> void:
+func _damage_object(lvl_object: Node) -> void:
 	if has_node("Explosion") == true:
 		$Explosion.start_explosion()
 	else:
-		object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+		lvl_object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+	stop_projectile(lvl_object)
 
 
 func _on_RangeTimer_timeout() -> void:
@@ -137,14 +150,13 @@ func stop_projectile(body = null) -> void:
 	is_stopped = true
 	set_deferred("monitoring", false)
 	if has_node("Explosion") == true:
-		$Explosion.get_node("Blast/Anim").connect("animation_finished", self,
-			"_on_anim_finished")
+		$Explosion/Blast/Anim.connect("animation_finished", self, "_on_anim_finished")
 	else:
 		#blast graphics upon object hit
 		_play_hit_blast_anim(body)
 		var blast_anim = $HitBlast/Anim
 		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
-			$HitBlast/Anim.connect("animation_finished", self, "_on_anim_finished")
+			blast_anim.connect("animation_finished", self, "_on_anim_finished")
 
 
 func _play_hit_blast_anim(object) -> void:

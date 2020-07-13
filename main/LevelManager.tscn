@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://main/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
@@ -38,10 +38,27 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 3, 4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 0, 2.5, 3.5, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "transition"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
 [node name="LevelManager" type="Node2D"]
@@ -51,8 +68,13 @@ script = ExtResource( 1 )
 wait_time = 3.0
 one_shot = true
 
+[node name="TransitionTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/destroyed = SubResource( 1 )
+anims/transition = SubResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -71,7 +93,7 @@ margin_left = 601.5
 margin_top = 360.0
 margin_right = 678.5
 margin_bottom = 395.0
-rect_scale = Vector2( 4.65552, 3.49164 )
+rect_scale = Vector2( 3.66555, 2.74916 )
 rect_pivot_offset = Vector2( 38.5, 17.5 )
 custom_fonts/normal_font = ExtResource( 2 )
 bbcode_text = "DESTROYED"
@@ -80,3 +102,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
+[connection signal="timeout" from="TransitionTimer" to="." method="_on_TransitionTimer_timeout"]

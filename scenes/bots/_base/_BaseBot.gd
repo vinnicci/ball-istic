@@ -144,10 +144,6 @@ func task_is_in_state(task):
 		"CHARGE_ROLL": get_state = State.CHARGE_ROLL
 		"STUN": get_state = State.STUN
 		"DEAD": get_state = State.DEAD
-	if get_state == State.STUN && current_health > 0:
-		$Labels/BotState.text = "STUNNED!"
-	else:
-		$Labels/BotState.text = ""
 	if state == get_state:
 		task.succeed()
 	else:
@@ -302,6 +298,9 @@ func set_level(new_level: Node) -> void:
 
 
 func _init_bot() -> void:
+	var state_machine = load("res://scenes/bots/_base/StateMachine.tscn")
+	add_child(state_machine.instance())
+	
 	#initialize AI component
 	if has_node("AI") == true:
 		$AI.set_parent(self)
@@ -436,8 +435,6 @@ func _cap_current_vars() -> void:
 
 
 func _process(delta: float) -> void:
-	$Labels.global_rotation = 0
-	
 	$Bars.global_rotation = 0
 	
 	#rolling ball sliding texture
@@ -452,10 +449,10 @@ var _is_ccd_on: bool = false
 
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() > 3000 && _is_ccd_on == false:
+	if linear_velocity.length() > 2800 && _is_ccd_on == false:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
 		_is_ccd_on = true
-	elif linear_velocity.length() <= 3000 && _is_ccd_on == true:
+	elif linear_velocity.length() <= 2800 && _is_ccd_on == true:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 		_is_ccd_on = false
 
@@ -480,7 +477,7 @@ var _unrolled: bool = false
 
 func _apply_rolling_effects(delta: float) -> void:
 	if _unrolled == false && _check_if_turret() == true:
-		#while loops simply reset texture offset near Vector(0,0)
+		#the while loops simply reset texture offset near Vector(0,0)
 		while _body_texture.texture_offset.x <= -bot_radius:
 			_body_texture.texture_offset.x += bot_radius
 		while _body_texture.texture_offset.x > bot_radius:
@@ -723,13 +720,11 @@ func _on_Bot_body_entered(body: Node) -> void:
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
 			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
-			$Sounds/Clash.play()
 			return
 		elif body.get_node("Timers/DischargeParry").is_stopped() == false:
 			var dir: float = (global_position - body.global_position).angle()
 			apply_knockback(Vector2(1500, 0).rotated(dir))
 			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
-			$Sounds/Clash.play()
 			return
 	body.take_damage(damage, Vector2(0,0))
 	if body.has_node("AI") == true:

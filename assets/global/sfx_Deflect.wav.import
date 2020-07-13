@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/sfx_Bot_Clash.wav-f8224b57faedf62c99f01508de2524b7.sample"
+path="res://.import/sfx_Deflect.wav-f361652760f29d3ddc98031f59f93ec4.sample"
 
 [deps]
 
-source_file="res://assets/bots/sfx_Bot_Clash.wav"
-dest_files=[ "res://.import/sfx_Bot_Clash.wav-f8224b57faedf62c99f01508de2524b7.sample" ]
+source_file="res://assets/global/sfx_Deflect.wav"
+dest_files=[ "res://.import/sfx_Deflect.wav-f361652760f29d3ddc98031f59f93ec4.sample" ]
 
 [params]
 

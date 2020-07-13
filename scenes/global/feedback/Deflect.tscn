@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/global/feedback/Feedback.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/global/feedback/Deflect.gd" type="Script" id=2]
+[ext_resource path="res://assets/global/sfx_Deflect.wav" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "deflect"
@@ -30,13 +32,16 @@ tracks/1/keys = {
 }
 
 [node name="Deflect" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
 
 [node name="Label" parent="." index="0"]
 modulate = Color( 0.0627451, 0.603922, 1, 1 )
-margin_left = -35.0
-margin_right = 40.0
 bbcode_text = "DEFLECTED"
 text = "DEFLECTED"
 
 [node name="Anim" parent="." index="1"]
 anims/deflect = SubResource( 1 )
+
+[node name="Sound" parent="." index="2"]
+stream = ExtResource( 3 )
+[connection signal="animation_started" from="Anim" to="." method="_on_Anim_started"]

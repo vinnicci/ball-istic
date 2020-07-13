@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/global/feedback/Feedback.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/global/sfx_Crit_Hit.wav" type="AudioStream" id=2]
+[ext_resource path="res://scenes/global/feedback/Critical.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "critical"
@@ -30,6 +32,7 @@ tracks/1/keys = {
 }
 
 [node name="Critical" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
 
 [node name="Label" parent="." index="0"]
 modulate = Color( 1, 0.643137, 0, 1 )
@@ -38,3 +41,7 @@ text = "CRITICAL"
 
 [node name="Anim" parent="." index="1"]
 anims/critical = SubResource( 1 )
+
+[node name="Sound" parent="." index="2"]
+stream = ExtResource( 2 )
+[connection signal="animation_started" from="Anim" to="." method="_on_Anim_started"]

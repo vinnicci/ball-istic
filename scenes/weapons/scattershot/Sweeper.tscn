@@ -33,15 +33,17 @@ color_ramp = SubResource( 2 )
 [node name="Sweeper" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 2 )
-heat_capacity = 4.1
+heat_per_shot = 2.0
+heat_capacity = 9.1
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 3.0
+crit_chance = 0.1
 fire_mode = 2
 proj_count_per_shot = 2
 burst_count = 25
 spread = 20.0
 recoil = 50
-charge_timer = 2.0
+charge_timer = 1.5
 cam_shake_intensity = 8.0
 
 [node name="SlotIcon" parent="." index="0"]

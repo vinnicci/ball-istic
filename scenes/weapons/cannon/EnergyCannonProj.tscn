@@ -23,10 +23,10 @@ offset = Vector2( -25, 0 )
 [node name="CollisionShape" parent="." index="2"]
 shape = SubResource( 1 )
 
-[node name="OnHitParticles" parent="." index="5"]
+[node name="OnHitParticles" parent="." index="4"]
 visible = false
 
-[node name="Explosion" parent="." index="6" instance=ExtResource( 3 )]
+[node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
 explosion_radius = 300.0
 damage = 25.0
 knockback = 1000.0

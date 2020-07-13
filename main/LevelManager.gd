@@ -22,6 +22,8 @@ func on_change_scene(level: String, pos: String) -> void:
 
 
 func on_change_scene_deferred(level: String, pos: String) -> void:
+	$TransitionTimer.start()
+	$Anim.play("transition")
 	if _current_scene != null:
 		_current_scene.queue_free()
 	_current_scene = scenes[level].instance()
@@ -34,6 +36,9 @@ func on_change_scene_deferred(level: String, pos: String) -> void:
 		player.connect("dead", self, "_on_player_dead")
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node(pos).position
+
+
+func _on_TransitionTimer_timeout() -> void:
 	add_child(_current_scene)
 
 

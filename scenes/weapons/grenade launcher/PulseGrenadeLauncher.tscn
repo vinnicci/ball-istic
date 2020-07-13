@@ -36,6 +36,7 @@ Projectile = ExtResource( 3 )
 heat_per_shot = 5.0
 heat_capacity = 15.0
 shoot_cooldown = 0.5
+crit_chance = 0.2
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.0313726, 0.972549, 0.929412, 1 )

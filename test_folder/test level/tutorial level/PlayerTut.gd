@@ -32,14 +32,12 @@ func _on_Bot_body_entered(body: Node) -> void:
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
 			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
-			$Sounds/Clash.play()
 			if body is DUMMY_C:
 				emit_signal("clashed")
 			return
 		elif body.get_node("Timers/DischargeParry").is_stopped() == false:
 			var dir: float = (global_position - body.global_position).angle()
 			apply_knockback(Vector2(1500, 0).rotated(dir))
-			$Sounds/Clash.play()
 			return
 	body.take_damage(damage, Vector2(0,0))
 	

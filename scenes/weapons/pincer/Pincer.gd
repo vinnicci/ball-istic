@@ -26,8 +26,7 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 		elif body.current_faction != _parent_node.current_faction && body.state == Global.CLASS_BOT.State.DEAD:
 			return
 		else:
-			body.take_damage(_apply_crit_a(body),
-				Vector2(knockback, 0).rotated(rotation))
+			body.take_damage(_apply_crit_a(body), Vector2(knockback, 0).rotated(rotation))
 	else:
 		body.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 

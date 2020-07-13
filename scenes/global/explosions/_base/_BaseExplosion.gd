@@ -74,14 +74,11 @@ func _apply_effect(body: Node) -> void:
 #although damage also works on walls
 func _play_crit_effect(pos: Vector2) -> void:
 	var level_node = _level_cam.get_parent()
-	var crit_clone = crit_node.duplicate()
-	level_node.add_child(crit_clone)
-	var crit_anim = crit_clone.get_node("Anim")
-	crit_clone.show()
-	crit_clone.global_position = pos
-#	crit_clone.global_rotation = 0
+	level_node.add_child(crit_node)
+	var crit_anim = crit_node.get_node("Anim")
+	crit_node.global_position = pos
 	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
-		[crit_clone])
+		[crit_node])
 	crit_anim.play("critical")
 
 

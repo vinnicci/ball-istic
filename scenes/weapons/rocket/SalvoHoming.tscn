@@ -37,6 +37,7 @@ Projectile = ExtResource( 4 )
 heat_capacity = 2.1
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 2.0
+crit_chance = 0.1
 proj_count_per_shot = 10
 spread = 5.0
 cam_shake_intensity = 15.0
