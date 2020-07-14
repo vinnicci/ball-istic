@@ -19,6 +19,9 @@ func _fire_other() -> void:
 	$Beams/Anim.play("attack")
 
 
+var _crit_feedback: = load("res://scenes/global/feedback/Critical.tscn")
+
+
 func _on_HurtBox_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT:
 		if body.current_faction == _parent_node.current_faction:

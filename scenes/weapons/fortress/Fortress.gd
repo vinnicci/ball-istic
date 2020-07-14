@@ -23,4 +23,4 @@ func _on_FrontShield_area_entered(area: Area2D) -> void:
 		current_heat += area.damage
 	$FrontShield/Anim.play("catch_proj")
 	$ShieldHit.play()
-	area.queue_free()
+	area.stop_projectile()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=2]
@@ -8,18 +8,15 @@
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=7]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/weapons/shotgun/PulseShotgun.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/pincer/StunPincer.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/weapons/cannon/PulseCannon.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/bots/shotgunner/ShotgunnerBig.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
-[ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -241,18 +238,10 @@ position = Vector2( 700, -192 )
 [node name="Depot" parent="Access" index="1" instance=ExtResource( 10 )]
 position = Vector2( 323, -190 )
 
-[node name="PulseShotgun" parent="Access/Depot/Items" index="0" instance=ExtResource( 9 )]
+[node name="StunPincer" parent="Access/Depot/Items" index="0" instance=ExtResource( 14 )]
 crit_chance = 0.5
 
-[node name="StunPincer" parent="Access/Depot/Items" index="1" instance=ExtResource( 14 )]
-crit_chance = 0.5
-
-[node name="PulseCannon" parent="Access/Depot/Items" index="2" instance=ExtResource( 15 )]
-crit_chance = 0.5
-
-[node name="Cyclone" parent="Access/Depot/Items" index="3" instance=ExtResource( 16 )]
-
-[node name="Sweeper" parent="Access/Depot/Items" index="4" instance=ExtResource( 20 )]
+[node name="Fortress" parent="Access/Depot/Items" index="1" instance=ExtResource( 9 )]
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 21 )]
 position = Vector2( 64, 777 )
@@ -266,11 +255,13 @@ position = Vector2( -177.99, 125.017 )
 [node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 17 )]
 position = Vector2( -207.655, -118.66 )
 
-[node name="BigFSpawner" parent="Bots" index="3" instance=ExtResource( 19 )]
-position = Vector2( 661, 1379 )
-
-[node name="Player" parent="Bots" index="4" instance=ExtResource( 8 )]
+[node name="Player" parent="Bots" index="3" instance=ExtResource( 8 )]
 position = Vector2( 486, 229 )
+transform_speed = 0.2
+charge_cooldown = 0.25
+
+[node name="ShotgunnerBig" parent="Bots" index="4" instance=ExtResource( 15 )]
+position = Vector2( 928, 1845 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 206, 119 )

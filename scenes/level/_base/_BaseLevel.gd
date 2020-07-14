@@ -56,10 +56,6 @@ func close_doors() -> void:
 		door.close()
 
 
-func _process(delta: float) -> void:
-	pass
-
-
 func spawn_projectile(proj, proj_position: Vector2, proj_direction: float,
 	shooter_faction: Color) -> void:
 	add_child(proj)

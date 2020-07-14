@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_Pincer.wav-7a76e4bcbc5fd777c17636ce6f0d4ae5.sample"
+
+[deps]
+
+source_file="res://assets/weapons/sfx_Pincer.wav"
+dest_files=[ "res://.import/sfx_Pincer.wav-7a76e4bcbc5fd777c17636ce6f0d4ae5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

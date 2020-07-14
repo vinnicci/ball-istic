@@ -8,7 +8,8 @@ export (float) var knockback: float = 500 setget , get_knockback
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
-var crit_node: Node = null
+var is_crit: bool = false
+var _crit_feedback = load("res://scenes/global/feedback/Critical.tscn")
 
 
 func get_radius():
@@ -66,7 +67,7 @@ func _apply_effect(body: Node) -> void:
 	$KnockBackDirection.look_at(body.global_position)
 	if body.has_method("take_damage") == true:
 		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
-		if crit_node != null && body is Global.CLASS_BOT:
+		if is_crit == true && body is Global.CLASS_BOT:
 			_play_crit_effect(body.global_position)
 
 
@@ -74,6 +75,7 @@ func _apply_effect(body: Node) -> void:
 #although damage also works on walls
 func _play_crit_effect(pos: Vector2) -> void:
 	var level_node = _level_cam.get_parent()
+	var crit_node = _crit_feedback.instance()
 	level_node.add_child(crit_node)
 	var crit_anim = crit_node.get_node("Anim")
 	crit_node.global_position = pos

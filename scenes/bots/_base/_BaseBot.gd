@@ -8,7 +8,7 @@ export (float) var health_capacity: float = 20 setget , get_health_capacity
 export (int, 0, 4000) var speed: int = 1200 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.3 setget , get_knockback_resist
 export (float, 0.05, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
-export (float, 0.5, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
+export (float, 0.25, 5.0) var charge_cooldown: float = 3.0 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
@@ -326,6 +326,8 @@ func _init_bot() -> void:
 	#bot physics and properties
 	$CollisionShape.shape = CircleShape2D.new()
 	$CollisionShape.shape.radius = bot_radius
+	$DischargeRadius/CollisionShape2D.shape = CircleShape2D.new()
+	$DischargeRadius/CollisionShape2D.shape.radius = bot_radius * 8
 #	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
@@ -428,7 +430,7 @@ func _cap_current_vars() -> void:
 	current_shield = clamp(current_shield, 0, 9999)
 	current_speed = clamp(current_speed, 500, 4000)
 	current_transform_speed = clamp(current_transform_speed, 0.05, 1.0)
-	current_charge_cooldown = clamp(current_charge_cooldown, 0.5, 5.0)
+	current_charge_cooldown = clamp(current_charge_cooldown, 0.25, 5.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 	current_charge_damage_rate = clamp(current_charge_damage_rate, 0, 1.0)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
@@ -644,9 +646,9 @@ func _end_charging_effect() -> void:
 	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
 		linear_velocity.length() <= current_speed * _charge_commit_velocity):
 		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
-			current_faction, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			current_faction, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.interpolate_property(_body_charge_effect, "modulate",
-			_body_charge_effect.modulate, Color(1,1,1,0), 0.1, Tween.TRANS_LINEAR,
+			_body_charge_effect.modulate, Color(1,1,1,0), 0.2, Tween.TRANS_LINEAR,
 			Tween.EASE_IN_OUT)
 		_body_tween.start()
 		$Timers/ChargeTrail.stop()
@@ -691,10 +693,28 @@ func discharge_parry() -> void:
 	if _timer_charge_cooldown.is_stopped() == true:
 		match state:
 			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
+				_clear_surrounding_proj()
+				var rad = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
+				_body_charge_effect.modulate.a = 0.5
+				_body_tween.interpolate_property(_body_charge_effect, "scale",
+					_body_charge_effect.scale, Vector2(rad, rad), 0.15, Tween.TRANS_LINEAR,
+					Tween.EASE_IN_OUT)
+				_body_tween.interpolate_property(_body_charge_effect, "modulate",
+					_body_charge_effect.modulate, Color(1,1,1,0), 0.15, Tween.TRANS_LINEAR,
+					Tween.EASE_IN_OUT)
+				_body_tween.start()
 				_body_charge_effect.get_node("Anim").play("discharge_parry")
 				$Sounds/DischargeParry.play()
 				_timer_discharge_parry.start()
 				_timer_charge_cooldown.start()
+
+
+func _clear_surrounding_proj() -> void:
+	if name == "Player":
+		var areas: Array = $DischargeRadius.get_overlapping_areas()
+		for area in areas:
+			if area is Global.CLASS_PROJ && current_faction != area.shooter_faction():
+				area.stop_projectile()
 
 
 func _on_Bot_body_entered(body: Node) -> void:
@@ -711,7 +731,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	#apply crit dmg
 	if rand_range(0, 1.0) <= current_charge_crit_chance:
 		damage *= current_charge_crit_mult
-		if body is Global.CLASS_BOT:
+		if body is Global.CLASS_BOT && current_faction != body.current_faction:
 			_play_anim(body.global_position, _crit_feedback.instance(), "critical")
 	if body is Global.CLASS_BOT:
 		if current_faction == body.current_faction:

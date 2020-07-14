@@ -4,6 +4,7 @@
 
 [node name="Feedback" type="Node2D"]
 scale = Vector2( 2, 1.5 )
+z_index = 2
 
 [node name="Label" type="RichTextLabel" parent="."]
 margin_left = -28.0

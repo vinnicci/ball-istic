@@ -202,9 +202,6 @@ func _modify_proj(proj) -> void:
 	_apply_crit(proj)
 
 
-var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
-
-
 func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= current_crit_chance:
 		var mult = current_proj_damage_rate * current_crit_mult
@@ -213,8 +210,7 @@ func _apply_crit(proj) -> void:
 		else:
 			proj.damage *= mult
 		#crit feedback display
-		var crit = _crit_feedback.instance()
-		proj.crit_node = crit
+		proj.is_crit = true
 	elif proj is Global.CLASS_PROJ:
 		proj.damage *= current_proj_damage_rate
 
