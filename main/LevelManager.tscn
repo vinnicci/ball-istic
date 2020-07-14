@@ -68,7 +68,7 @@ script = ExtResource( 1 )
 wait_time = 3.0
 one_shot = true
 
-[node name="TransitionTimer" type="Timer" parent="."]
+[node name="Resume" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
 
@@ -102,4 +102,4 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
-[connection signal="timeout" from="TransitionTimer" to="." method="_on_TransitionTimer_timeout"]
+[connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]

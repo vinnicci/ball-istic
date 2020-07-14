@@ -16,7 +16,7 @@
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=2]
 resource_name = "discharge_parry"
 length = 0.25
 step = 0.05
@@ -105,7 +105,7 @@ polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 modulate = Color( 1, 1, 1, 0 )
 
 [node name="Anim" type="AnimationPlayer" parent="Body/ChargeEffect"]
-anims/discharge_parry = SubResource( 7 )
+anims/discharge_parry = SubResource( 2 )
 anims/trail = SubResource( 3 )
 
 [node name="SwitchTween" type="Tween" parent="Body"]
@@ -159,6 +159,8 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="Resume" type="Timer" parent="Timers"]
+
 [node name="Sounds" type="Node2D" parent="."]
 
 [node name="Bump" type="AudioStreamPlayer2D" parent="Sounds"]
@@ -209,3 +211,4 @@ z_index = 1
 [connection signal="timeout" from="Timers/ChargeEffectDelay" to="." method="_on_ChargeEffectDelay_timeout"]
 [connection signal="timeout" from="Timers/ShieldRecoveryTimer" to="." method="_on_ShieldRecoveryTimer_timeout"]
 [connection signal="timeout" from="Timers/ExplodeDelay" to="." method="_on_ExplodeDelay_timeout"]
+[connection signal="timeout" from="Timers/Resume" to="." method="_on_Resume_timeout"]

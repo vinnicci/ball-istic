@@ -21,12 +21,13 @@ func on_change_scene(level: String, pos: String) -> void:
 	call_deferred("on_change_scene_deferred", level, pos)
 
 
+#coroutine resume signal
 signal resume
 
 
 func on_change_scene_deferred(level: String, pos: String) -> void:
 	if _current_scene != null:
-		$TransitionTimer.start()
+		$Resume.start()
 		$Anim.play("transition")
 		yield(self, "resume")
 		_current_scene.queue_free()
@@ -43,7 +44,7 @@ func on_change_scene_deferred(level: String, pos: String) -> void:
 	add_child(_current_scene)
 
 
-func _on_TransitionTimer_timeout() -> void:
+func _on_Resume_timeout() -> void:
 	emit_signal("resume")
 
 

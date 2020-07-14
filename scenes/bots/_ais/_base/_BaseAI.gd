@@ -1,7 +1,10 @@
 extends Node2D
 
 
-export(int) var detection_range: int = 1000
+export (int) var detection_range: int = 1000
+export (int) var master_seek_dist: int = 300
+export (int) var enemy_seek_dist: int = 300
+var _params_dict: Dictionary
 var _enemies: Array = []
 var _enemy: Global.CLASS_BOT = null
 var _master: Global.CLASS_BOT = null
@@ -21,6 +24,9 @@ func _ready() -> void:
 		var ray = $FleeRays.get_node("R" + i as String)
 		ray.cast_to = Vector2(ray_len, 0).rotated(deg2rad(i * 45))
 		ray.get_node("Pos").position = ray.cast_to
+	#export vars in dictionary
+	_params_dict["master_seek"] = master_seek_dist
+	_params_dict["enemy_seek"] = enemy_seek_dist
 
 
 func set_parent(new_parent: Global.CLASS_BOT):
@@ -159,7 +165,6 @@ func _seek(target: Global.CLASS_BOT) -> void:
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
-#	_next_path_point = null
 
 
 #needs optimization
@@ -184,14 +189,6 @@ func _flee() -> void:
 		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 	_next_path_point = null
-#		_velocity = Vector2(0,0)
-
-
-signal resume
-
-
-func _on_ResumeTimer_timeout() -> void:
-	emit_signal("resume")
 
 
 #############
@@ -215,10 +212,9 @@ func task_is_enemy_instance_valid(task):
 		_enemy = null
 		_velocity = Vector2(0,0)
 		task.failed()
-		return
 	else:
 		task.succeed()
-		return
+	return
 
 
 func task_seek_enemy(task):
@@ -234,20 +230,39 @@ func task_seek_enemy(task):
 func task_is_enemy_close(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
-		return
-	if _get_distance(global_position, _enemy.global_position) <= task.get_param(0):
+	elif (_get_distance(global_position, _enemy.global_position) <=
+		_params_dict[task.get_param(0)]):
 		task.succeed()
-		return
 	else:
 		task.failed()
-		return
+	return
+
+
+func task_is_enemy_in_line_of_sight(task):
+	if _check_if_valid_bot(_enemy) == false:
+		task.failed()
+	elif $Rays/Target.get_collider() == _enemy:
+		task.succeed()
+	return
+
+
+var _paused: bool = false
+signal resume
+
+
+func _on_Resume_timeout() -> void:
+	_paused = false
+	emit_signal("resume")
 
 
 #time based wait task using coroutine
 func task_timed_idle(task):
-	$ResumeTimer.wait_time = task.get_param(0)
-	if $ResumeTimer.is_stopped() == true:
-		$ResumeTimer.start()
+	if _paused == true:
+		task.reset()
+		return
+	if _paused == false && $Resume.is_stopped() == true:
+		_paused = true
+		$Resume.start(_params_dict[task.get_param(0)])
 	yield(self, "resume")
 	task.succeed()
 	return
@@ -299,10 +314,9 @@ func task_charge_roll(task):
 func task_is_charge_ready(task):
 	if _parent_node.is_charge_roll_ready() == true:
 		task.succeed()
-		return
 	else:
 		task.failed()
-		return
+	return
 
 
 ##############
@@ -314,6 +328,7 @@ func task_flee(task):
 		_flee_routes = {}
 		task.failed()
 		return
+	#initialize flee rays
 	if $FleeRays/R0.enabled == false:
 		for ray in $FleeRays.get_children():
 			ray.enabled = true
@@ -337,10 +352,9 @@ func task_switch_weapon(task):
 func task_is_weapon_overheating(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
-		return
 	else:
 		task.failed()
-		return
+	return
 
 
 func task_shoot_enemy(task):
@@ -362,22 +376,20 @@ func task_is_master_instance_valid(task):
 		_master = null
 		_velocity = Vector2(0,0)
 		task.failed()
-		return
 	else:
 		task.succeed()
-		return
+	return
 
 
 func task_is_master_close(task):
 	if _check_if_valid_bot(_master) == false:
 		task.failed()
-		return
-	if _get_distance(global_position, _master.global_position) <= task.get_param(0):
+	elif (_get_distance(global_position, _master.global_position) <=
+		_params_dict[task.get_param(0)]):
 		task.succeed()
-		return
 	else:
 		task.failed()
-		return
+	return
 
 
 func task_seek_master(task):

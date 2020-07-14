@@ -468,11 +468,11 @@ position = Vector2( 0, 1 )
 
 [node name="Pos" type="Position2D" parent="FleeRays/R7"]
 
-[node name="ResumeTimer" type="Timer" parent="."]
+[node name="Resume" type="Timer" parent="."]
 one_shot = true
 
 [node name="FoundTarget" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
-[connection signal="timeout" from="ResumeTimer" to="." method="_on_ResumeTimer_timeout"]
+[connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]

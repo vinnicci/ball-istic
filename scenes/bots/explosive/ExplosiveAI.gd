@@ -6,5 +6,5 @@ var _exploded: bool = false
 
 func _special() -> void:
 	if _exploded == false:
-		_parent_node.take_damage(100, Vector2(0,0))
+		_parent_node.current_health = 0
 		_exploded = true

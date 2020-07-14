@@ -92,6 +92,9 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		_damage_object(body)
 
 
+var exploded: bool = false
+
+
 func _damage_bot(bot: Node) -> void:
 	if bot.current_faction == _shooter_faction:
 		return
@@ -100,6 +103,7 @@ func _damage_bot(bot: Node) -> void:
 	else:
 		if has_node("Explosion") == true:
 			$Explosion.start_explosion()
+			exploded = true
 		else:
 			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 			if is_crit == true:
@@ -151,12 +155,18 @@ func stop_projectile(body = null) -> void:
 	$RangeTimer.stop()
 	is_stopped = true
 	set_deferred("monitoring", false)
+	var blast_anim
 	if has_node("Explosion") == true:
-		$Explosion/Blast/Anim.connect("animation_finished", self, "_on_anim_finished")
+		if exploded == false:
+			$Explosion.start_explosion()
+			exploded = true
+		blast_anim = $Explosion/Blast/Anim
+		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
+			blast_anim.connect("animation_finished", self, "_on_anim_finished")
 	else:
 		#blast graphics upon object hit
 		_play_hit_blast_anim(body)
-		var blast_anim = $HitBlast/Anim
+		blast_anim = $HitBlast/Anim
 		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
 			blast_anim.connect("animation_finished", self, "_on_anim_finished")
 

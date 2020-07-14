@@ -612,10 +612,9 @@ var _charge_roll = null
 
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
-	if state != State.ROLL || is_charge_roll_ready() == false:
-		return
-	_charge_roll = charge_direction
-	_apply_charge_impulse(_charge_roll)
+	if state == State.ROLL && is_charge_roll_ready() == true:
+		_charge_roll = charge_direction
+		_apply_charge_impulse(_charge_roll)
 
 
 func _apply_charge_impulse(dir: float) -> void:
@@ -642,17 +641,22 @@ func _on_ChargeTrail_timeout() -> void:
 
 
 func _end_charging_effect() -> void:
-	#stun state is included because of discharge parry/stun riposte?? eventually
-	if ((state == State.DEAD || state == State.CHARGE_ROLL || state == State.STUN) &&
-		linear_velocity.length() <= current_speed * _charge_commit_velocity):
-		_body_tween.interpolate_property(_body_outline, "modulate", _body_outline.modulate,
-			current_faction, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-		_body_tween.interpolate_property(_body_charge_effect, "modulate",
-			_body_charge_effect.modulate, Color(1,1,1,0), 0.2, Tween.TRANS_LINEAR,
-			Tween.EASE_IN_OUT)
-		_body_tween.start()
-		$Timers/ChargeTrail.stop()
-		_charge_roll = null
+	#stun state is included because of discharge parry/stun eventually
+	if linear_velocity.length() <= current_speed * _charge_commit_velocity:
+		match state:
+			State.CHARGE_ROLL, State.DEAD, State.STUN:
+				_body_outline.modulate = current_faction
+				_body_charge_effect.modulate.a = 0
+				$Timers/ChargeTrail.stop()
+				_charge_roll = null
+
+
+#coroutine resume signal
+signal resumed
+
+
+func _on_Resume_timeout() -> void:
+	emit_signal("resumed")
 
 
 var _teleport_pos = null
@@ -714,7 +718,11 @@ func _clear_surrounding_proj() -> void:
 		var areas: Array = $DischargeRadius.get_overlapping_areas()
 		for area in areas:
 			if area is Global.CLASS_PROJ && current_faction != area.shooter_faction():
-				area.stop_projectile()
+				if area.has_node("Explosion") == true:
+					area.exploded = true
+					area.queue_free()
+				else:
+					area.stop_projectile()
 
 
 func _on_Bot_body_entered(body: Node) -> void:
