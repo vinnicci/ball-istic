@@ -28,7 +28,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -28, -17 ), Vector2( -28, -150 ) ]
+"values": [ Vector2( -35, 20 ), Vector2( -35, -112 ) ]
 }
 
 [node name="Deflect" instance=ExtResource( 1 )]
@@ -36,6 +36,10 @@ script = ExtResource( 2 )
 
 [node name="Label" parent="." index="0"]
 modulate = Color( 0.0627451, 0.603922, 1, 1 )
+margin_left = -35.0
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 55.0
 bbcode_text = "DEFLECTED"
 text = "DEFLECTED"
 

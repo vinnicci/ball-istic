@@ -9,13 +9,15 @@ onready var door_A: = $Nav/DoorA
 onready var door_B: = $Nav/DoorB
 onready var door_C: = $Nav/DoorC
 onready var door_D: = $Nav/DoorD
+const HINT: = preload("res://scenes/level/hint/Hint.gd")
 
 
 func _ready() -> void:
-	for hint in $Access.get_children():
-		hint.set_level(self)
+	for access in $Access.get_children():
+		if access is HINT:
+			access.set_level(self)
 
 
 func _on_ToLvl1_body_entered(body: Node) -> void:
-	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.ROLL:
-		emit_signal("moved", "lvl_1", "PlayerPos1")
+	if body is Global.CLASS_PLAYER:
+		emit_signal("moved", "Level1", "PlayerPos1")

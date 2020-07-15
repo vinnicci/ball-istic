@@ -321,7 +321,7 @@ func _init_bot() -> void:
 			current_weapon = weapon
 			initialized_selected_weap = true
 			continue
-		weapon.modulate = Color(1,1,1,0)
+		weapon.animate_transform(0, false)
 	
 	#bot physics and properties
 	$CollisionShape.shape = CircleShape2D.new()
@@ -804,7 +804,7 @@ func explode() -> void:
 func _on_ExplodeDelay_timeout() -> void:
 	$CollisionShape.disabled = true
 	if current_weapon != null:
-		current_weapon.hide()
+		current_weapon.modulate.a = 0
 	$Legs.hide()
 	$Body.hide()
 	mode = RigidBody2D.MODE_STATIC

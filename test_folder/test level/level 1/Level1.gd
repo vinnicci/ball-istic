@@ -9,10 +9,10 @@ func _ready() -> void:
 
 
 func _on_ToTutorial_body_entered(body: Node) -> void:
-	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.ROLL:
-		emit_signal("moved", "tut", "PlayerPos1")
+	if body is Global.CLASS_PLAYER:
+		emit_signal("moved", "TutorialLevel", "PlayerPos1")
 
 
 func _on_ToCP12_body_entered(body: Node) -> void:
-	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.ROLL:
-		emit_signal("moved", "cp_12", "PlayerPos1")
+	if body is Global.CLASS_PLAYER:
+		emit_signal("moved", "Checkpoint1-2", "PlayerPos1")

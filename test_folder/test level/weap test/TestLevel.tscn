@@ -249,6 +249,7 @@ position = Vector2( 64, 777 )
 
 [node name="Dummy" parent="Bots" index="0" instance=ExtResource( 17 )]
 position = Vector2( -281.817, 339.028 )
+faction = Color( 0, 1, 0, 1 )
 
 [node name="Dummy2" parent="Bots" index="1" instance=ExtResource( 17 )]
 position = Vector2( -177.99, 125.017 )

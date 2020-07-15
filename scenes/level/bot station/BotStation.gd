@@ -1,6 +1,9 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
+signal autosaved
+
+
 func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
@@ -8,6 +11,7 @@ func _on_Access_body_entered(body: Node) -> void:
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
 		body.ui_access = "bot_station"
+		emit_signal("autosaved")
 
 
 func _on_Access_body_exited(body: Node) -> void:

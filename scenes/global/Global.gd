@@ -17,17 +17,7 @@ const CLASS_LEVEL_OBJECT = preload("res://scenes/level/_base/_BaseLevelObject.gd
 #rigid body objects
 const CLASS_RIGID_OBJECT = preload("res://scenes/level/_base/_BaseRigidObject.gd")
 
-#vault items will be accessible everywhere
-#place this later on levelmanager
-var arr_vault: Array = [
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null
-]
+const PLAYER_BUILT_IN_WEAP: = preload("res://scenes/bots/player/PlayerAutoBlaster.gd")
+const BOT_STATION: = preload("res://scenes/level/bot station/BotStation.gd")
+const DEPOT: = preload("res://scenes/level/depot/Depot.gd")
+const VAULT: = preload("res://scenes/level/vault/Vault.gd")

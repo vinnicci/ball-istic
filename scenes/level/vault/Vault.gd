@@ -1,9 +1,12 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
+var arr_vault: Array
+
+
 func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
-		_access(body, Global.arr_vault, "vault", Global.arr_vault.size())
+		_access(body, arr_vault, "vault", arr_vault.size())
 		body.ui_vault.visible = true
 
 

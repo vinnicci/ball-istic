@@ -10,5 +10,7 @@ func _ready() -> void:
 
 
 func set_parent(new_parent: Node):
+	if new_parent == _parent_node:
+		return
 	_parent_node = new_parent
 
