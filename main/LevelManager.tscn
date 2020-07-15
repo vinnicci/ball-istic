@@ -1,12 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
 
+[sub_resource type="Animation" id=3]
+resource_name = "big_bot_destroyed"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect2:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [sub_resource type="Animation" id=1]
 resource_name = "destroyed"
 length = 3.5
-step = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Label:rect_scale")
 tracks/0/interp = 1
@@ -73,6 +88,7 @@ wait_time = 0.3
 one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
+anims/big_bot_destroyed = SubResource( 3 )
 anims/destroyed = SubResource( 1 )
 anims/transition = SubResource( 2 )
 
@@ -82,7 +98,15 @@ anims/transition = SubResource( 2 )
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 1280.0
 margin_bottom = 720.0
-color = Color( 0.0117647, 0.0588235, 0.027451, 1 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 1280.0
+margin_bottom = 720.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

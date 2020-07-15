@@ -15,7 +15,7 @@ var _saved_player_items: Dictionary = {
 	"Passives": []
 }
 var _saved_respawn_point = null
-var _saved_depot_items: Dictionary = {}
+var _saved_depot_items: Dictionary = {} #key: name, value: arr_items
 var _saved_vault_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null,
@@ -28,7 +28,7 @@ var _saved_vault_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
-var _saved_big_bots: Dictionary = {}
+var _saved_big_bots: Dictionary = {} #key: name, value: is_alive
 
 var _player_tut = null
 var _player = null
@@ -73,6 +73,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 			player = _player
 	_current_scene = scenes[new_lvl].instance()
 	_connect_access(_current_scene)
+	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
 	_current_scene.connect("moved", self, "on_change_scene")
 	_current_scene.get_node("Bots").add_child(player)
@@ -85,15 +86,38 @@ func _connect_access(lvl: Node) -> void:
 	for access in lvl.get_node("Access").get_children():
 		match access.get_script():
 			Global.BOT_STATION:
-				access.connect("autosaved", self, "_on_autsave", [lvl.name, access.name])
+				access.connect("autosaved", self, "_on_autosave", [lvl.name, access.name])
 			Global.VAULT:
 				access.arr_vault = _saved_vault_items
 
 
-func _on_autsave(lvl, pos) -> void:
+func _on_autosave(lvl, pos) -> void:
 	_saved_respawn_point = {}
 	_saved_respawn_point["Level"] = lvl
 	_saved_respawn_point["Pos"] = pos
+	for bot_data in _temp_big_bots.keys():
+		_saved_big_bots[bot_data] = _temp_big_bots[bot_data]
+
+
+func _connect_big_bots(lvl: Node) -> void:
+	for bot in lvl.get_node("Bots").get_children():
+		if bot.get_bot_radius() > 32:
+			var bot_name = lvl.name + bot.name
+			if _saved_big_bots.keys().has(bot_name) == false:
+				_saved_big_bots[bot_name] = true
+			elif (_saved_big_bots.keys().has(bot_name) &&
+				_saved_big_bots[bot_name] == false):
+				bot.queue_free()
+				continue
+			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
+
+
+var _temp_big_bots: Dictionary
+
+
+func _on_big_bot_dead(lvl, bot) -> void:
+	_temp_big_bots[lvl + bot] = false
+	$Anim.play("big_bot_destroyed")
 
 
 func _save_depot_items(lvl) -> void:
@@ -180,6 +204,7 @@ func _on_player_dead() -> void:
 	_save_player_items()
 	_save_vault_items()
 	_save_depot_items(_current_scene)
+	_temp_big_bots = {}
 	$RespawnTimer.start()
 	$Anim.play("destroyed")
 
