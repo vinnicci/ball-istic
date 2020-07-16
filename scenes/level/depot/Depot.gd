@@ -7,8 +7,6 @@ var _arr_items: Array = [
 	null, null, null, null, null
 ]
 var _locked_down: bool = false
-#signal saved
-#signal loaded
 
 
 func _ready() -> void:
@@ -16,13 +14,14 @@ func _ready() -> void:
 
 
 func _init_ui_node() -> void:
-	for i in $Items.get_children().size():
-		var item = $Items.get_child(i)
+	var i = 0
+	for item in $Items.get_children():
 		_arr_items[i] = item
 #		if item.has_method("animate_transform"):
 #			item.animate_transform(0, false)
 #		else:
 		item.modulate.a = 0
+		i += 1
 
 
 func _on_Access_body_entered(body: Node) -> void:

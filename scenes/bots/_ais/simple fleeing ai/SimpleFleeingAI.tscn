@@ -5,6 +5,7 @@
 
 [node name="AI" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+enemy_seek_dist = 800
 
 [node name="BTREE" parent="." index="0"]
 tree = {
@@ -99,9 +100,9 @@ tree = {
 "data": {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 500 ),
-"params": [ [ 800, 0 ] ],
+"params": [ [ "enemy_seek", 1 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 800 ]
+"values": [ "enemy_seek" ]
 },
 "name": "task",
 "type": 1
@@ -241,9 +242,9 @@ tree = {
 "data": {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 500 ),
-"params": [ [ 800, 0 ] ],
+"params": [ [ "enemy_seek", 1 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 800 ]
+"values": [ "enemy_seek" ]
 },
 "name": "task",
 "type": 1
@@ -302,9 +303,9 @@ tree = {
 "data": {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 500 ),
-"params": [ [ 800, 0 ] ],
+"params": [ [ "enemy_seek", 1 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 800 ]
+"values": [ "enemy_seek" ]
 },
 "name": "task",
 "type": 1
@@ -343,9 +344,9 @@ tree = {
 "data": {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 500 ),
-"params": [ [ 800, 0 ] ],
+"params": [ [ "enemy_seek", 1 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 800 ]
+"values": [ "enemy_seek" ]
 },
 "name": "task",
 "type": 1
@@ -400,9 +401,9 @@ tree = {
 "data": {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 500 ),
-"params": [ [ 800, 0 ] ],
+"params": [ [ "enemy_seek", 1 ] ],
 "size": Vector2( 275, 91 ),
-"values": [ 800 ]
+"values": [ "enemy_seek" ]
 },
 "name": "task",
 "type": 1

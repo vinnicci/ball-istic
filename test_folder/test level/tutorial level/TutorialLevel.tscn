@@ -3,6 +3,7 @@
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=2]
 [ext_resource path="res://test_folder/test level/tutorial level/TutorialLevel.gd" type="Script" id=3]
+[ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/hint/Hint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://test_folder/test level/tutorial level/DummyA.gd" type="Script" id=6]
 [ext_resource path="res://test_folder/test level/tutorial level/HintA.gd" type="Script" id=7]
@@ -245,9 +246,6 @@ extents = Vector2( 123, 1.5 )
 friction = 0.5
 bounce = 0.7
 
-[sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 14, 118 )
-
 [node name="TutorialLevel" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 
@@ -290,10 +288,7 @@ shape = SubResource( 17 )
 [node name="DoorD" parent="Nav" index="4" instance=ExtResource( 18 )]
 position = Vector2( -1600, -129 )
 
-[node name="PlayerPos1" type="Position2D" parent="Access" index="0"]
-position = Vector2( -2335, 196 )
-
-[node name="HintA" parent="Access" index="1" instance=ExtResource( 5 )]
+[node name="HintA" parent="Access" index="0" instance=ExtResource( 5 )]
 position = Vector2( -2335.06, 195.91 )
 script = ExtResource( 7 )
 
@@ -307,7 +302,7 @@ You can skip the tutorial by going to the left."
 [node name="Label2" parent="Access/HintA/AccessUI" index="1"]
 text = "Destroy bots with weapon: (0/3)"
 
-[node name="HintB" parent="Access" index="2" instance=ExtResource( 5 )]
+[node name="HintB" parent="Access" index="1" instance=ExtResource( 5 )]
 position = Vector2( 259, 1433 )
 script = ExtResource( 10 )
 
@@ -319,7 +314,7 @@ of your cursor (press LMB)."
 [node name="Label2" parent="Access/HintB/AccessUI" index="1"]
 text = "Destroy bots by charging: (0/3)"
 
-[node name="HintC" parent="Access" index="3" instance=ExtResource( 5 )]
+[node name="HintC" parent="Access" index="2" instance=ExtResource( 5 )]
 position = Vector2( 1154.6, -317.16 )
 script = ExtResource( 13 )
 
@@ -331,7 +326,7 @@ damage as well as the enemy."
 [node name="Label2" parent="Access/HintC/AccessUI" index="1"]
 text = "Deflect enemy charge rolls by clashing: (0/3)"
 
-[node name="HintD" parent="Access" index="4" instance=ExtResource( 5 )]
+[node name="HintD" parent="Access" index="3" instance=ExtResource( 5 )]
 position = Vector2( -191.087, -1422.99 )
 script = ExtResource( 17 )
 
@@ -343,6 +338,15 @@ text = "Deflect enemy charge rolls with parries: (0/3)"
 
 [node name="FadeTimer" parent="Access/HintD/AccessUI/Label2" index="2"]
 wait_time = 5.0
+
+[node name="NextZone" parent="Access" index="4" instance=ExtResource( 4 )]
+position = Vector2( -2650, 194 )
+rotation = 3.14159
+to_level = "Level1"
+position_node = "Pos1"
+
+[node name="Pos1" type="Position2D" parent="Access" index="5"]
+position = Vector2( -2335, 196 )
 
 [node name="DummyA" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -261, 1316 )
@@ -407,16 +411,9 @@ script = ExtResource( 15 )
 charge_damage_rate = 0.05
 
 [node name="AI" parent="Bots/DummyD" index="9" instance=ExtResource( 14 )]
-
-[node name="ToLvl1" type="Area2D" parent="." index="4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToLvl1" index="0"]
-position = Vector2( -2546, 192 )
-shape = SubResource( 19 )
 [connection signal="body_exited" from="Nav/DoorA/Area2D" to="Nav/DoorA" method="_on_Area2D_body_exited"]
 [connection signal="body_exited" from="Nav/DoorB/Area2D" to="Nav/DoorB" method="_on_Area2D_body_exited"]
 [connection signal="body_exited" from="Nav/DoorC/Area2D" to="Nav/DoorC" method="_on_Area2D_body_exited"]
-[connection signal="body_entered" from="ToLvl1" to="." method="_on_ToLvl1_body_entered"]
 
 [editable path="Access/HintA"]
 

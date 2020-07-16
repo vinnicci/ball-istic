@@ -37,10 +37,17 @@ var _current_scene = null
 
 func _ready() -> void:
 	randomize()
-	on_change_scene("TutorialLevel", "PlayerPos1")
+	on_change_scene("TutorialLevel", "Pos1")
 
 
 func on_change_scene(new_lvl: String, pos: String) -> void:
+	if _current_scene != null:
+		$Resume.start()
+		$Anim.play("transition")
+		yield(self, "resume")
+		if _current_scene.get_node("Bots").get_children().has(_player):
+			_player.get_parent().remove_child(_player)
+		_save_depot_items(_current_scene)
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
 
 
@@ -50,13 +57,7 @@ signal resume
 
 func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	if _current_scene != null:
-		$Resume.start()
-		$Anim.play("transition")
-		yield(self, "resume")
-		if _current_scene.get_node("Bots").get_children().has(_player):
-			_player.get_parent().remove_child(_player)
-		_save_depot_items(_current_scene)
-		_current_scene.queue_free()
+		_current_scene.free()
 	var player
 	match new_lvl:
 		"TutorialLevel":
@@ -67,7 +68,6 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 			if _player == null:
 				_player = scenes["Player"].instance()
 				_load_player_items()
-				_clear_loaded_items()
 			if !_player.is_connected("dead", self, "_on_player_dead"):
 				_player.connect("dead", self, "_on_player_dead")
 			player = _player
@@ -75,7 +75,6 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
-	_current_scene.connect("moved", self, "on_change_scene")
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
@@ -89,14 +88,14 @@ func _connect_access(lvl: Node) -> void:
 				access.connect("autosaved", self, "_on_autosave", [lvl.name, access.name])
 			Global.VAULT:
 				access.arr_vault = _saved_vault_items
+			Global.NEXT_ZONE:
+				access.connect("moved", self, "on_change_scene")
 
 
 func _on_autosave(lvl, pos) -> void:
 	_saved_respawn_point = {}
 	_saved_respawn_point["Level"] = lvl
 	_saved_respawn_point["Pos"] = pos
-	for bot_data in _temp_big_bots.keys():
-		_saved_big_bots[bot_data] = _temp_big_bots[bot_data]
 
 
 func _connect_big_bots(lvl: Node) -> void:
@@ -112,12 +111,15 @@ func _connect_big_bots(lvl: Node) -> void:
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
 
 
-var _temp_big_bots: Dictionary
-
-
 func _on_big_bot_dead(lvl, bot) -> void:
-	_temp_big_bots[lvl + bot] = false
+	Engine.time_scale = 0.5
+	_saved_big_bots[lvl + bot] = false
 	$Anim.play("big_bot_destroyed")
+
+
+func _on_Anim_animation_finished(anim_name: String) -> void:
+	if anim_name == "big_bot_destroyed":
+		Engine.time_scale = 1.0
 
 
 func _save_depot_items(lvl) -> void:
@@ -138,11 +140,15 @@ func _load_depot_items(lvl) -> void:
 			if _saved_depot_items.keys().has(depot_name) == false:
 				continue
 			#remove as node
-			for item in access.get_node("Items").get_children():
-				item.free()
+			access.get_node("Items").free()
 			#add as node
+			var item_node = Node2D.new()
+			item_node.name = "Items"
 			for item in _saved_depot_items[depot_name]:
-				access.get_node("Items").add_child(item)
+				item_node.add_child(item)
+			access.add_child(item_node)
+			#clear saved
+			_saved_depot_items[depot_name] = []
 
 
 func _transition_persistent_data(player) -> void:
@@ -179,10 +185,7 @@ func _load_player_items() -> void:
 					"Items": _player.arr_items[i] = item
 					"Weapons": _player.arr_weapons[i] = item
 					"Passives": _player.arr_passives[i] = item
-
-
-func _clear_loaded_items() -> void:
-	#player items
+	#clear saved player items
 	for arr in _saved_player_items.keys():
 		_saved_player_items[arr] = []
 
@@ -201,10 +204,11 @@ func _on_Resume_timeout() -> void:
 
 
 func _on_player_dead() -> void:
+	Engine.time_scale = 1.0
+	$CanvasLayer/ColorRect2.modulate.a = 0
 	_save_player_items()
 	_save_vault_items()
 	_save_depot_items(_current_scene)
-	_temp_big_bots = {}
 	$RespawnTimer.start()
 	$Anim.play("destroyed")
 
@@ -214,6 +218,6 @@ func _on_RespawnTimer_timeout() -> void:
 	_current_scene.queue_free()
 	_current_scene = null
 	if _saved_respawn_point == null:
-		on_change_scene("TutorialLevel", "PlayerPos1")
+		on_change_scene("TutorialLevel", "Pos1")
 	else:
 		on_change_scene(_saved_respawn_point["Level"], _saved_respawn_point["Pos"])

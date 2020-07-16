@@ -16,8 +16,3 @@ func _ready() -> void:
 	for access in $Access.get_children():
 		if access is HINT:
 			access.set_level(self)
-
-
-func _on_ToLvl1_body_entered(body: Node) -> void:
-	if body is Global.CLASS_PLAYER:
-		emit_signal("moved", "Level1", "PlayerPos1")

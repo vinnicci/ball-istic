@@ -3,9 +3,9 @@
 [ext_resource path="res://main/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "big_bot_destroyed"
-length = 2.5
+length = 1.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect2:modulate")
 tracks/0/interp = 1
@@ -13,14 +13,13 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.6, 2.5 ),
+"times": PoolRealArray( 0.5, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "destroyed"
+[sub_resource type="Animation" id=2]
 length = 3.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Label:rect_scale")
@@ -59,8 +58,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "transition"
+[sub_resource type="Animation" id=3]
 length = 0.8
 step = 0.01
 tracks/0/type = "value"
@@ -88,9 +86,9 @@ wait_time = 0.3
 one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/big_bot_destroyed = SubResource( 3 )
-anims/destroyed = SubResource( 1 )
-anims/transition = SubResource( 2 )
+anims/big_bot_destroyed = SubResource( 1 )
+anims/destroyed = SubResource( 2 )
+anims/transition = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -127,3 +125,4 @@ __meta__ = {
 }
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_RespawnTimer_timeout"]
 [connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]
+[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]

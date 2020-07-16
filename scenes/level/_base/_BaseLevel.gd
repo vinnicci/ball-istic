@@ -7,7 +7,6 @@ var _player: Global.CLASS_PLAYER = null setget , get_player
 var _doors: Array
 var _engaging_player_count: int = 0
 var valid_bots: Array
-signal moved
 
 
 func get_player():

@@ -21,3 +21,4 @@ const PLAYER_BUILT_IN_WEAP: = preload("res://scenes/bots/player/PlayerAutoBlaste
 const BOT_STATION: = preload("res://scenes/level/bot station/BotStation.gd")
 const DEPOT: = preload("res://scenes/level/depot/Depot.gd")
 const VAULT: = preload("res://scenes/level/vault/Vault.gd")
+const NEXT_ZONE: = preload("res://scenes/level/next zone/NextZone.gd")
