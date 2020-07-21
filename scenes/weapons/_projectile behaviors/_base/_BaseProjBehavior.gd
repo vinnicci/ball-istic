@@ -7,14 +7,14 @@ var _parent_node: Area2D
 var _level_node: Node = null
 
 
-func _init_detector(radius: float) -> void:
+func _init_detector(radius) -> void:
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = radius
 	$DetectionRange.monitoring = true
 	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
 
 
-func _init_raycast(cast_to: float) -> void:
+func _init_raycast(cast_to) -> void:
 	$TargetRay.cast_to = Vector2(cast_to, 0)
 	$TargetRay.enabled = true
 

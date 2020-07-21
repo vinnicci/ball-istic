@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/main menu/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=3]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = -40.0
+margin_bottom = -40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="RichTextLabel" parent="."]
+margin_right = 150.0
+margin_bottom = 40.0
+rect_scale = Vector2( 2, 2 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "PROJECT BALL-ISTIC"
+text = "PROJECT BALL-ISTIC"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Version" type="RichTextLabel" parent="."]
+margin_left = 273.0
+margin_top = 35.0
+margin_right = 423.0
+margin_bottom = 75.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "v. 0.0.3"
+text = "v. 0.0.3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="Control" parent="."]
+margin_top = 100.0
+margin_right = 75.0
+margin_bottom = 315.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Buttons"]
+margin_right = 74.0
+margin_bottom = 211.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="New" parent="Buttons/VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 74.0
+margin_bottom = 39.0
+text = "NEW"
+
+[node name="Load" parent="Buttons/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 43.0
+margin_right = 74.0
+margin_bottom = 82.0
+text = "LOAD"
+
+[node name="Settings" parent="Buttons/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 86.0
+margin_right = 74.0
+margin_bottom = 125.0
+text = "SETTINGS"
+
+[node name="Credits" parent="Buttons/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 129.0
+margin_right = 74.0
+margin_bottom = 168.0
+text = "CREDITS"
+
+[node name="Exit" parent="Buttons/VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 172.0
+margin_right = 74.0
+margin_bottom = 211.0
+text = "EXIT"
+[connection signal="pressed" from="Buttons/VBoxContainer/New" to="." method="_on_New_pressed"]
+[connection signal="pressed" from="Buttons/VBoxContainer/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="Buttons/VBoxContainer/Settings" to="." method="_on_Settings_pressed"]
+[connection signal="pressed" from="Buttons/VBoxContainer/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="Buttons/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]

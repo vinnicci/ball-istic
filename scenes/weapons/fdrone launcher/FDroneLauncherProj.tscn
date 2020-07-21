@@ -35,13 +35,13 @@ uv = PoolVector2Array( 72, 32, 67, 40, 62, 48, 57, 56, 52, 64, 42, 64, 32, 64, 2
 [node name="Lifetime" parent="Timers" index="5"]
 wait_time = 15.0
 
-[node name="CollisionShape" parent="." index="6"]
+[node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 2 )
+
+[node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
+damage = 2.5
+
+[node name="AI" parent="." index="9" instance=ExtResource( 6 )]
 
 [node name="AutoBlaster" parent="Weapons" index="0" instance=ExtResource( 4 )]
 proj_damage_rate = 0.5
-
-[node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
-explosion_radius = 100.0
-
-[node name="AI" parent="." index="9" instance=ExtResource( 6 )]

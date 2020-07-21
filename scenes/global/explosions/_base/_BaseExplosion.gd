@@ -1,15 +1,15 @@
 extends Area2D
 
 
-export (float) var explosion_radius: float = 100 setget , get_radius
+export (int) var explosion_radius: int = 100 setget , get_radius
 export (float) var damage: float = 15 setget , get_damage
-export (float) var knockback: float = 500 setget , get_knockback
+export (int) var knockback: int = 500 setget , get_knockback
 
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
 var is_crit: bool = false
-var _crit_feedback = load("res://scenes/global/feedback/Critical.tscn")
+var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
 
 
 func get_radius():

@@ -29,6 +29,9 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
+explosion_radius = 200
+damage = 5.0
+knockback = 800
 
 [node name="AI" parent="." index="9" instance=ExtResource( 7 )]
 enemy_seek_dist = 200

@@ -97,12 +97,15 @@ shape = SubResource( 2 )
 [node name="Passives" type="Node2D" parent="." index="10"]
 
 [node name="Explosion" parent="." index="11" instance=ExtResource( 11 )]
-
-[node name="PlayerUI" parent="." index="12" instance=ExtResource( 10 )]
-
-[node name="HeldItem" parent="PlayerUI" index="2" instance=ExtResource( 5 )]
+explosion_radius = 200
+damage = 5.0
+knockback = 800
 
 [node name="PlayerAutoBlaster" parent="Weapons" index="0" instance=ExtResource( 12 )]
+
+[node name="PlayerUI" parent="." index="13" instance=ExtResource( 10 )]
+
+[node name="HeldItem" parent="PlayerUI" index="2" instance=ExtResource( 5 )]
 [connection signal="timeout" from="Bars/ChargeLevel/ChargeTweenTimer" to="." method="_on_ChargeTweenTimer_timeout"]
 
 [editable path="PlayerUI"]

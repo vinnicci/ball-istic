@@ -30,6 +30,9 @@ uv = PoolVector2Array( 72.0484, 32, 67.0424, 40.0097, 62.0363, 48.0194, 57.0303,
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
+explosion_radius = 200
+damage = 5.0
+knockback = 800
 
 [node name="AI" parent="." index="9" instance=ExtResource( 7 )]
 position = Vector2( -1, 1 )

@@ -2,19 +2,20 @@ extends Node
 
 
 var scenes: Dictionary = {
-	"PlayerTut": load("res://test_folder/test level/tutorial level/PlayerTut.tscn"),
-	"Player": load("res://scenes/bots/player/Player.tscn"),
-	"TutorialLevel": load("res://test_folder/test level/tutorial level/TutorialLevel.tscn"),
-	"Level1": load("res://test_folder/test level/level 1/Level1.tscn"),
-	"Checkpoint1-2": load("res://test_folder/test level/checkpoint 1-2/Checkpoint1-2.tscn"),
-	"BigGuyAssist": load("res://test_folder/test level/big guy assist/BigGuyAssist.tscn")
+	"PlayerTut": preload("res://test_folder/test level/tutorial level/PlayerTut.tscn"),
+	"Player": preload("res://scenes/bots/player/Player.tscn"),
+	"TutorialLevel": preload("res://test_folder/test level/tutorial level/TutorialLevel.tscn"),
+	"Level1": preload("res://test_folder/test level/level 1/Level1.tscn"),
+	"Checkpoint1-2": preload("res://test_folder/test level/checkpoint 1-2/Checkpoint1-2.tscn"),
+	"BigGuyAssist": preload("res://test_folder/test level/big guy assist/BigGuyAssist.tscn")
 }
-var _saved_player_items: Dictionary = {
+var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
-	"Passives": []
+	"Passives": [],
+	"Spawn": null #value -> Lvl: level name, Pos: level coords
 }
-var _saved_respawn_point = null
+var _saved_big_bots: Dictionary = {} #key: name, value: is_alive
 var _saved_depot_items: Dictionary = {} #key: name, value: arr_items
 var _saved_vault_items: Array = [
 	null, null, null, null, null,
@@ -28,26 +29,36 @@ var _saved_vault_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null
 ]
-var _saved_big_bots: Dictionary = {} #key: name, value: is_alive
 
+#var _proj_pool: Dictionary = {}
 var _player_tut = null
 var _player = null
 var _current_scene = null
+signal moved
 
 
 func _ready() -> void:
 	randomize()
+	$CanvasLayer/InGameMenu.set_parent(self)
 	on_change_scene("TutorialLevel", "Pos1")
 
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		$CanvasLayer/InGameMenu.visible = true
+		$CanvasLayer/ColorRect3.visible = true
+		get_tree().paused = true
+
+
 func on_change_scene(new_lvl: String, pos: String) -> void:
+	$Resume.start()
+	$Anim.play("transition")
+	yield(self, "resume")
 	if _current_scene != null:
-		$Resume.start()
-		$Anim.play("transition")
-		yield(self, "resume")
 		if _current_scene.get_node("Bots").get_children().has(_player):
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
+		_save_big_bots()
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
 
 
@@ -78,7 +89,32 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
+#	_pool_proj()
 	_transition_persistent_data(player)
+
+
+#func _pool_proj() -> void:
+#	for bot in _current_scene.valid_bots:
+#		for weap in bot.get_node("Weapons").get_children():
+#			var proj = weap.Projectile
+#			var proj_script = proj.get_script()
+#			if _proj_pool.keys().has(proj_script) == true:
+#				return
+#			match proj_script:
+#				Global.CLASS_PROJ:
+#					_proj_pool[proj_script] = []
+#					for i in range(50):
+#						_proj_pool[proj_script].append(proj.instance())
+#				Global.CLASS_BOT_PROJ:
+#					var drone_weap = proj.get_node("Weapons").get_child(0)
+#					if drone_weap != null:
+#						var drone_proj = drone_weap.Projectile
+#						var drone_proj_script = drone_proj.get_script()
+#						if _proj_pool.keys().has(drone_proj_script) == true:
+#							return
+#						_proj_pool[drone_proj_script] = []
+#						for i in range(50):
+#							_proj_pool[drone_proj_script].append(proj.instance())
 
 
 func _connect_access(lvl: Node) -> void:
@@ -93,9 +129,9 @@ func _connect_access(lvl: Node) -> void:
 
 
 func _on_autosave(lvl, pos) -> void:
-	_saved_respawn_point = {}
-	_saved_respawn_point["Level"] = lvl
-	_saved_respawn_point["Pos"] = pos
+	_saved_player["Spawn"] = {}
+	_saved_player["Spawn"]["Lvl"] = lvl
+	_saved_player["Spawn"]["Pos"] = pos
 
 
 func _connect_big_bots(lvl: Node) -> void:
@@ -111,10 +147,18 @@ func _connect_big_bots(lvl: Node) -> void:
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
 
 
+var _temp_big_bots: Dictionary = {}
+
+
 func _on_big_bot_dead(lvl, bot) -> void:
-	Engine.time_scale = 0.5
-	_saved_big_bots[lvl + bot] = false
+	_temp_big_bots[lvl + bot] = false
 	$Anim.play("big_bot_destroyed")
+
+
+func _save_big_bots() -> void:
+	for key in _temp_big_bots.keys():
+		_saved_big_bots[key] = _temp_big_bots[key]
+	_temp_big_bots = {}
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
@@ -148,11 +192,11 @@ func _load_depot_items(lvl) -> void:
 				item_node.add_child(item)
 			access.add_child(item_node)
 			#clear saved
-			_saved_depot_items[depot_name] = []
+			_saved_depot_items[depot_name].clear()
 
 
 func _transition_persistent_data(player) -> void:
-	#charge cooldown transfer
+	#basically resume charge cooldown's interrupted anim
 	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
 	if player_charge_time > 0:
 		player.update_bar_charge_level(player_charge_time)
@@ -160,34 +204,33 @@ func _transition_persistent_data(player) -> void:
 
 func _save_player_items() -> void:
 	#save as array
-	for key in _saved_player_items.keys():
-		_saved_player_items[key].clear()
-		_saved_player_items[key].append(_player.get_node(key).get_children())
-	#remove as nodes
-	for key in _saved_player_items.keys():
-		for arr_item in _saved_player_items[key]:
-			for item in arr_item:
-				item.get_parent().remove_child(item)
+	var keys = ["Items", "Weapons", "Passives"]
+	for key in keys:
+		_saved_player[key] = _player.get_node(key).get_children()
+	#detach items
+	var clone = null
+	for key in keys:
+		for item in _saved_player[key]:
+			if item == _player.current_weapon:
+				clone = item.duplicate()
+				continue
+			item.get_parent().remove_child(item)
+	if clone != null:
+		_saved_player["Weapons"].push_front(clone)
 
 
 func _load_player_items() -> void:
-	for key in _saved_player_items.keys():
-		for arr_item in _saved_player_items[key]:
-			var i = -1
-			for item in arr_item:
-				i += 1
-				if item is Global.PLAYER_BUILT_IN_WEAP == true:
-					continue
-				#add as node
+	var keys = ["Items", "Weapons", "Passives"]
+	for key in keys:
+		for item in _saved_player[key]:
+			if item is Global.PLAYER_BUILT_IN_WEAP == true:
+				continue
+			#add as node
+			if item != null:
 				_player.get_node(key).add_child(item)
-				#add as ref
-				match key:
-					"Items": _player.arr_items[i] = item
-					"Weapons": _player.arr_weapons[i] = item
-					"Passives": _player.arr_passives[i] = item
 	#clear saved player items
-	for arr in _saved_player_items.keys():
-		_saved_player_items[arr] = []
+	for arr in keys:
+		_saved_player[arr].clear()
 
 
 func _save_vault_items() -> void:
@@ -204,8 +247,8 @@ func _on_Resume_timeout() -> void:
 
 
 func _on_player_dead() -> void:
-	Engine.time_scale = 1.0
 	$CanvasLayer/ColorRect2.modulate.a = 0
+	_temp_big_bots = {}
 	_save_player_items()
 	_save_vault_items()
 	_save_depot_items(_current_scene)
@@ -214,10 +257,10 @@ func _on_player_dead() -> void:
 
 
 func _on_RespawnTimer_timeout() -> void:
-	var current_scene_name = _current_scene.name
 	_current_scene.queue_free()
 	_current_scene = null
-	if _saved_respawn_point == null:
+	if _saved_player["Spawn"] == null:
 		on_change_scene("TutorialLevel", "Pos1")
 	else:
-		on_change_scene(_saved_respawn_point["Level"], _saved_respawn_point["Pos"])
+		on_change_scene(_saved_player["Spawn"]["Lvl"],
+			_saved_player["Spawn"]["Pos"])

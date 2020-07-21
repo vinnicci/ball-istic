@@ -15,8 +15,10 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 54, 96, 44, 96, 39, 88, 34, 80, 29, 72, 24, 64, 29, 56, 34, 48, 39, 40, 44, 32, 54, 32, 64, 32, 74, 32, 84, 32, 89, 40, 94, 48, 99, 56, 79, 88, 69, 88, 59, 88, 49, 88, 84, 80, 74, 80, 64, 80, 54, 80, 44, 80, 39, 72, 49, 72, 59, 72, 69, 72, 79, 72, 89, 72, 34, 64, 44, 64, 54, 64, 64, 64, 74, 64, 84, 64, 94, 64, 89, 56, 79, 56, 69, 56, 59, 56, 49, 56, 39, 56, 84, 48, 74, 48, 64, 48, 54, 48, 44, 48, 49, 40, 59, 40, 69, 40, 79, 40 )
 
-[node name="CollisionShape" parent="." index="6"]
+[node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
+explosion_radius = 100
+knockback = 500
 stun_time = 5.0

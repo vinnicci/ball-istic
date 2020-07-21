@@ -4,7 +4,7 @@ extends Area2D
 export (int) var speed: int = 500 setget , get_speed
 export (float) var damage: float = 1
 export (int) var proj_range: int = 500 setget , get_range
-export (float) var knockback: float = 50 setget , get_knockback
+export (int) var knockback: int = 50 setget , get_knockback
 export (float) var stun_time: float = 0 setget , get_stun_time
 
 var velocity: Vector2

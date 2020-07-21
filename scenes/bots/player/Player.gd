@@ -30,11 +30,17 @@ func _init_player() -> void:
 			_built_in_weapon = weap
 			break
 	
+	var i = 0
 	for item in $Items.get_children():
 		item.set_parent(self)
+		arr_items[i] = item
+		i += 1
 	
+	i = 0
 	for passive in $Passives.get_children():
 		passive.set_parent(self)
+		arr_passives[i] = passive
+		i += 1
 	
 	#explosion initialize
 	$Explosion.set_player_cam($Camera2D)
@@ -108,7 +114,6 @@ func _init_weap_and_slot_selected() -> void:
 func update_player_vars() -> void:
 	for i in arr_passives.size():
 		if arr_passives[i] != null:
-			arr_passives[i].set_parent(self)
 			arr_passives[i]._apply_effects()
 	_cap_current_vars()
 	bar_health.max_value = current_health_cap

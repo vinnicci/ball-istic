@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 
-export (float, 20.0, 150.0) var bot_radius: float = 32.0 setget , get_bot_radius
+export (int, 20, 150) var bot_radius: int = 32 setget , get_bot_radius
 export (float) var shield_capacity: float = 20 setget , get_shield_capacity
 export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
 export (float) var health_capacity: float = 20 setget , get_health_capacity
@@ -17,12 +17,12 @@ export (bool) var destructible: bool = true setget , is_destructible
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
-const OUTLINE_SIZE: float = 4.5
+const OUTLINE_SIZE: int = 4
 const ROLLING_SPEED: float = 0.6
-const ROLL_MODE_DAMP: float = 2.0
-const TURRET_MODE_DAMP: float = 5.0
-const POLY_SIDES = 24 #bot polygon has 24 points
-const DEFAULT_BOT_RADIUS: float = 32.0
+const ROLL_MODE_DAMP: int = 2
+const TURRET_MODE_DAMP: int = 5
+const POLY_SIDES: int = 24 #bot polygon has 24 points
+const DEFAULT_BOT_RADIUS: int = 32
 const DEFAULT_COMMIT_VELOCITY: float = 0.45
 var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
@@ -328,7 +328,6 @@ func _init_bot() -> void:
 	$CollisionShape.shape.radius = bot_radius
 	$DischargeRadius/CollisionShape2D.shape = CircleShape2D.new()
 	$DischargeRadius/CollisionShape2D.shape.radius = bot_radius * 8
-#	$CollisionSpark.position = Vector2(bot_radius + 5, 0)
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
@@ -336,15 +335,16 @@ func _init_bot() -> void:
 		$Bars/Health.hide()
 	
 	#bot's body graphics setup
-	_body_texture.scale = Vector2(bot_radius/DEFAULT_BOT_RADIUS, bot_radius/DEFAULT_BOT_RADIUS)
+	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
+	_body_texture.scale = Vector2(tex_scale, tex_scale)
 	bar_shield.rect_position.y += bot_radius + 15 #-> 15 is hardcoded for now
 	bar_health.rect_position.y += bar_shield.rect_position.y + 15
 	bar_shield.margin_left = -bot_radius
 	bar_shield.margin_right = bot_radius
 	bar_health.margin_left = -bot_radius
 	bar_health.margin_right = bot_radius
-	bar_shield.rect_scale.x = (bot_radius*2)/150 #-> 150 is the bar length in pixels
-	bar_health.rect_scale.x = (bot_radius*2)/150
+	bar_shield.rect_scale.x = float(bot_radius*2)/150.0 #-> 150 is the bar length in pixels
+	bar_health.rect_scale.x = float(bot_radius*2)/150.0
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
@@ -356,7 +356,7 @@ func _init_bot() -> void:
 
 func _init_legs(circle_points) -> void:
 	var leg_sprite: = $Legs/Sprite
-	var deg: = 360.0/POLY_SIDES as float
+	var deg: = 360.0/POLY_SIDES
 	for i in circle_points.size():
 		var leg_node = get_node("Legs/Leg" + i as String)
 		var leg_sprite_c = leg_sprite.duplicate()
@@ -371,7 +371,7 @@ func _init_legs(circle_points) -> void:
 	leg_sprite.hide()
 
 
-func _plot_circle_points(radius) -> Array:
+func _plot_circle_points(radius: int) -> Array:
 	var circle_points = []
 	for i in range(POLY_SIDES):
 		circle_points.append(Vector2(radius,0).rotated(deg2rad(i*(360.0/POLY_SIDES))))
@@ -384,7 +384,7 @@ func reset_bot_vars() -> void:
 		return
 	
 	#for the upcoming core mod implementation be sure to always add mass
-	mass = mass * (bot_radius / DEFAULT_BOT_RADIUS)
+	mass = mass * (float(bot_radius)/float(DEFAULT_BOT_RADIUS))
 	#makes sure even heavy bots can charge although at a shorter distance
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	
@@ -698,7 +698,7 @@ func discharge_parry() -> void:
 		match state:
 			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
 				_clear_surrounding_proj()
-				var rad = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
+				var rad: float = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
 				_body_charge_effect.modulate.a = 0.5
 				_body_tween.interpolate_property(_body_charge_effect, "scale",
 					_body_charge_effect.scale, Vector2(rad, rad), 0.15, Tween.TRANS_LINEAR,

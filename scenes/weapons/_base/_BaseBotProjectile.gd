@@ -5,7 +5,7 @@ onready var _lifetime: = $Timers/Lifetime
 var _glow: Node
 var _shooter: Node
 var _level: Node
-var crit_node: Node = null
+var is_crit: bool = false
 
 
 func _ready() -> void:
@@ -23,8 +23,8 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(_shooter)
-	if crit_node != null:
-		$Explosion.crit_node = crit_node
+	if is_crit == true:
+		$Explosion.is_crit = true
 	reset_bot_vars()
 	apply_central_impulse(Vector2(2000, 0).rotated(dir))
 	$Timers/Lifetime.start()

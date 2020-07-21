@@ -59,6 +59,9 @@ uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 4 )]
+explosion_radius = 200
+damage = 5.0
+knockback = 800
 
 [node name="AI" parent="." index="9" instance=ExtResource( 7 )]
 enemy_seek_dist = 175

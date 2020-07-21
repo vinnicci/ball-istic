@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://main/MenuManager.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ui/main menu/MainMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/main menu/Load.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/main menu/Settings.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/main menu/Credits.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "transition"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/ColorRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="MenuManager" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="MainMenu" parent="." groups=[
+"Scene",
+] instance=ExtResource( 2 )]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Load" parent="." groups=[
+"Scene",
+] instance=ExtResource( 3 )]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Settings" parent="." groups=[
+"Scene",
+] instance=ExtResource( 4 )]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Credits" parent="." groups=[
+"Scene",
+] instance=ExtResource( 5 )]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Resume" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/transition = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]

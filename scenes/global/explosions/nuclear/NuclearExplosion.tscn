@@ -96,9 +96,9 @@ tracks/1/keys = {
 
 [node name="Explosion" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-explosion_radius = 1100.0
-damage = 500.0
-knockback = 2000.0
+explosion_radius = 1100
+damage = 200.0
+knockback = 1000
 
 [node name="Anim" type="AnimationPlayer" parent="Blast" index="0"]
 anims/explode = SubResource( 1 )

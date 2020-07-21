@@ -13,7 +13,7 @@ resource_local_to_scene = true
 
 [node name="ShotgunnerBig" instance=ExtResource( 4 )]
 script = ExtResource( 3 )
-bot_radius = 64.0
+bot_radius = 64
 speed = 2000
 knockback_resist = 0.5
 transform_speed = 0.4
@@ -34,9 +34,9 @@ uv = PoolVector2Array( 72.1673, 32, 67.1464, 40.0335, 62.1255, 48.067, 57.1046, 
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400.0
+explosion_radius = 400
 damage = 10.0
-knockback = 1000.0
+knockback = 1000
 
 [node name="AI" parent="." index="9" instance=ExtResource( 7 )]
 detection_range = 1100

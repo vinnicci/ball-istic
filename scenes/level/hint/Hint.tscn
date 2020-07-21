@@ -51,7 +51,7 @@ tracks/1/keys = {
 [node name="Hint" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="." index="1"]
 modulate = Color( 1, 0.843137, 0, 1 )
 
 [node name="Logo" type="Sprite" parent="Sprite" index="0"]
@@ -63,14 +63,15 @@ autoplay = "fading"
 anims/fading = SubResource( 1 )
 
 [node name="Label" parent="AccessUI" index="0"]
+margin_right = 530.0
 text = "Tutorial hint"
 
 [node name="Label2" type="RichTextLabel" parent="AccessUI" index="1"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 30.0
 margin_top = 95.0
-margin_right = 550.0
-margin_bottom = 295.0
+margin_right = 530.0
+margin_bottom = 195.0
 custom_fonts/normal_font = ExtResource( 4 )
 text = "OBJECTIVE"
 __meta__ = {
