@@ -40,4 +40,9 @@ func _on_Bot_body_entered(body: Node) -> void:
 			apply_knockback(Vector2(1500, 0).rotated(dir))
 			return
 	body.take_damage(damage, Vector2(0,0))
-	
+
+
+func _control_player() -> void:
+	if Input.is_action_just_pressed("ui_inventory"):
+		return
+	._control_player()

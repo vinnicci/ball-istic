@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://main/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scenes/ui/in-game/InGameMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "big_bot_destroyed"
@@ -35,7 +36,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id=2]
 length = 3.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("CanvasLayer/Label:rect_scale")
+tracks/0/path = NodePath("CanvasLayer/DestroyedLabel:rect_scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -44,10 +45,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 2, 1.5 ), Vector2( 4, 3 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("CanvasLayer/Label:modulate")
+tracks/1/path = NodePath("CanvasLayer/DestroyedLabel:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -83,7 +84,7 @@ tracks/3/keys = {
 "values": [ true, false ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("CanvasLayer/Label:visible")
+tracks/4/path = NodePath("CanvasLayer/DestroyedLabel:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -96,6 +97,34 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id=3]
+resource_name = "saved"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/SavedLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/SavedLabel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.490196 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
 length = 0.8
 step = 0.01
 tracks/0/type = "value"
@@ -137,7 +166,8 @@ one_shot = true
 [node name="Anim" type="AnimationPlayer" parent="."]
 anims/big_bot_destroyed = SubResource( 1 )
 anims/destroyed = SubResource( 2 )
-anims/transition = SubResource( 3 )
+anims/saved = SubResource( 3 )
+anims/transition = SubResource( 4 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -160,18 +190,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="CanvasLayer"]
+[node name="DestroyedLabel" type="RichTextLabel" parent="CanvasLayer"]
 visible = false
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 601.5
+margin_left = 577.5
 margin_top = 360.0
-margin_right = 678.5
-margin_bottom = 395.0
-rect_scale = Vector2( 4, 3 )
-rect_pivot_offset = Vector2( 38.5, 17.5 )
-custom_fonts/normal_font = ExtResource( 2 )
+margin_right = 702.5
+margin_bottom = 415.0
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 62.5, 17.5 )
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_text = "DESTROYED"
 text = "DESTROYED"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SavedLabel" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 1092.0
+margin_top = 610.0
+margin_right = 1192.0
+margin_bottom = 650.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "AUTOSAVING..."
 __meta__ = {
 "_edit_use_anchors_": false
 }

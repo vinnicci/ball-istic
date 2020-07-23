@@ -12,9 +12,9 @@ func _ready() -> void:
 	on_change_scene("MainMenu")
 
 
-func on_change_scene(new_scene: String) -> void:
-	if new_scene == "NewGame":
-		emit_signal("moved", "Level")
+func on_change_scene(new_scene: String, slot_num = -1, slot_name = "") -> void:
+	if new_scene == "Play":
+		emit_signal("moved", "Level", slot_num, slot_name)
 		return
 	if _current_scene != "":
 		get_node(_current_scene).visible = false

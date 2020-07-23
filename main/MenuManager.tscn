@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://main/MenuManager.gd" type="Script" id=1]
 [ext_resource path="res://scenes/ui/main menu/MainMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/main menu/Load.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/ui/main menu/Settings.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/ui/main menu/Credits.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/ui/main menu/NewGame.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "transition"
@@ -40,6 +41,13 @@ script = ExtResource( 1 )
 [node name="MainMenu" parent="." groups=[
 "Scene",
 ] instance=ExtResource( 2 )]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="NewGame" parent="." groups=[
+"Scene",
+] instance=ExtResource( 6 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0

@@ -7,7 +7,6 @@ margin_right = 12.0
 margin_bottom = 20.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color_hover = Color( 0.521569, 0.521569, 0.521569, 1 )
-text = "TEXT"
 flat = true
 align = 0
 __meta__ = {

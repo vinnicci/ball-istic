@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ui/main menu/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=4]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -17,10 +18,9 @@ __meta__ = {
 }
 
 [node name="Title" type="RichTextLabel" parent="."]
-margin_right = 150.0
-margin_bottom = 40.0
-rect_scale = Vector2( 2, 2 )
-custom_fonts/normal_font = ExtResource( 3 )
+margin_right = 240.0
+margin_bottom = 60.0
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 bbcode_text = "PROJECT BALL-ISTIC"
 text = "PROJECT BALL-ISTIC"
@@ -29,11 +29,11 @@ __meta__ = {
 }
 
 [node name="Version" type="RichTextLabel" parent="."]
-margin_left = 273.0
-margin_top = 35.0
-margin_right = 423.0
-margin_bottom = 75.0
-rect_scale = Vector2( 0.7, 0.7 )
+margin_left = 232.0
+margin_top = 19.0
+margin_right = 382.0
+margin_bottom = 59.0
+rect_scale = Vector2( 0.85, 0.85 )
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "v. 0.0.3"

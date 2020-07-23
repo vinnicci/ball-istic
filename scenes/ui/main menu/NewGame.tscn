@@ -1,0 +1,131 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/main menu/NewGame.gd" type="Script" id=2]
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=4]
+
+[node name="NewGame" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = -40.0
+margin_bottom = -40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeaderSelectSlot" type="RichTextLabel" parent="."]
+margin_right = 320.0
+margin_bottom = 60.0
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "NEW GAME - SELECT SLOT"
+text = "NEW GAME - SELECT SLOT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HeaderNameSlot" type="RichTextLabel" parent="."]
+visible = false
+margin_right = 320.0
+margin_bottom = 60.0
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "NEW GAME - ENTER NAME"
+text = "NEW GAME - ENTER NAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="Control" parent="."]
+margin_top = 100.0
+margin_right = 40.0
+margin_bottom = 140.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="Buttons"]
+visible = false
+margin_right = 500.0
+margin_bottom = 40.0
+custom_fonts/font = ExtResource( 4 )
+clear_button_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slot0" parent="Buttons" instance=ExtResource( 1 )]
+margin_right = 60.0
+margin_bottom = 39.0
+
+[node name="Slot1" parent="Buttons" instance=ExtResource( 1 )]
+margin_top = 43.0
+margin_right = 60.0
+margin_bottom = 82.0
+
+[node name="Slot2" parent="Buttons" instance=ExtResource( 1 )]
+margin_top = 86.0
+margin_right = 60.0
+margin_bottom = 125.0
+
+[node name="Slot3" parent="Buttons" instance=ExtResource( 1 )]
+margin_top = 129.0
+margin_right = 60.0
+margin_bottom = 168.0
+
+[node name="Slot4" parent="Buttons" instance=ExtResource( 1 )]
+margin_top = 172.0
+margin_right = 60.0
+margin_bottom = 211.0
+
+[node name="Back" parent="." instance=ExtResource( 1 )]
+margin_top = 580.0
+margin_right = 74.0
+margin_bottom = 619.0
+custom_fonts/font = ExtResource( 3 )
+text = "<BACK"
+
+[node name="Confirm" type="Control" parent="."]
+visible = false
+margin_top = 66.0
+margin_right = 40.0
+margin_bottom = 106.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmLabel" type="RichTextLabel" parent="Confirm"]
+margin_right = 500.0
+margin_bottom = 300.0
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Yes" parent="Confirm" instance=ExtResource( 1 )]
+margin_left = 34.0
+margin_top = 124.0
+margin_right = 74.0
+margin_bottom = 163.0
+text = "YES"
+
+[node name="No" parent="Confirm" instance=ExtResource( 1 )]
+margin_left = 34.0
+margin_top = 167.0
+margin_right = 74.0
+margin_bottom = 206.0
+text = "NO"
+[connection signal="text_entered" from="Buttons/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="pressed" from="Buttons/Slot0" to="." method="_on_Slot0_pressed"]
+[connection signal="pressed" from="Buttons/Slot1" to="." method="_on_Slot1_pressed"]
+[connection signal="pressed" from="Buttons/Slot2" to="." method="_on_Slot2_pressed"]
+[connection signal="pressed" from="Buttons/Slot3" to="." method="_on_Slot3_pressed"]
+[connection signal="pressed" from="Buttons/Slot4" to="." method="_on_Slot4_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Confirm/Yes" to="." method="_on_ConfirmYes_pressed"]
+[connection signal="pressed" from="Confirm/No" to="." method="_on_ConfirmNo_pressed"]

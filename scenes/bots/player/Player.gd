@@ -33,12 +33,14 @@ func _init_player() -> void:
 	var i = 0
 	for item in $Items.get_children():
 		item.set_parent(self)
+		item.modulate.a = 0
 		arr_items[i] = item
 		i += 1
 	
 	i = 0
 	for passive in $Passives.get_children():
 		passive.set_parent(self)
+		passive.modulate.a = 0
 		arr_passives[i] = passive
 		i += 1
 	
@@ -135,27 +137,32 @@ func _change_slot_selected(slot_num: int) -> void:
 
 
 func _process(delta: float) -> void:
-	if _held_item != null:
-		_held_item.position = get_viewport().get_mouse_position()
-		_held_item.global_rotation = 0
+	if held_item != null:
+		held_item.position = get_viewport().get_mouse_position()
+		held_item.global_rotation = 0
 	
 	_update_bar_weapon_heat()
 	
 	_update_weapon_hud()
 	
 	_control_player_weapon_hotkeys()
-	
-	#inventory
-	#can't close the ui if holding an item
-	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
-		ui_inventory.visible = !ui_inventory.visible
 
 
 func _physics_process(delta: float) -> void:
 	_control_player()
 
 
+var stopped: bool = false
+
+
 func _control_player() -> void:
+	if stopped == true:
+		return
+	#inventory
+	#can't close the ui if holding an item
+	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
+		ui_inventory.visible = !ui_inventory.visible
+	
 	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(get_global_mouse_position())
 	
@@ -279,7 +286,7 @@ var arr_passives: Array = [null, null, null, null, null]
 var ui_access: String
 var arr_external: Array
 
-onready var _held_item = $PlayerUI/HeldItem
+onready var held_item = $PlayerUI/HeldItem
 
 
 #similar to upddate_ui_slot func but with extra steps and returns bool value
@@ -542,8 +549,8 @@ func _match_sprite(ui_sprite: Sprite, item_sprite: Sprite) -> void:
 
 
 func _show_inventory_warning(warning_text: String) -> void:
-	var warning = _held_item.get_node("InvalidSelectWarning")
-	var warning_anim = _held_item.get_node("InvalidSelectWarning/Anim")
+	var warning = held_item.get_node("InvalidSelectWarning")
+	var warning_anim = held_item.get_node("InvalidSelectWarning/Anim")
 	warning.text = warning_text
 	warning_anim.stop(true)
 	warning_anim.play("fade_out")
@@ -553,7 +560,7 @@ func _show_held_item() -> void:
 	if _dict_held["item"] != null:
 		_match_sprite($PlayerUI/HeldItem/Sprite, _dict_held["item"].get_node("SlotIcon"))
 	elif _dict_held["item"] == null:
-		_clear_sprite(_held_item.get_node("Sprite"))
+		_clear_sprite(held_item.get_node("Sprite"))
 		
 
 

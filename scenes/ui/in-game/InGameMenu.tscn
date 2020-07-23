@@ -14,14 +14,14 @@ __meta__ = {
 }
 
 [node name="Buttons" parent="." instance=ExtResource( 3 )]
-margin_left = 590.0
-margin_top = 295.0
-margin_right = 685.0
-margin_bottom = 424.0
+margin_left = 593.0
+margin_top = 296.0
+margin_right = 688.0
+margin_bottom = 425.0
 
 [node name="QuitConfirm" parent="." instance=ExtResource( 2 )]
 visible = false
-margin_left = 500.0
-margin_top = 245.0
-margin_right = 850.0
-margin_bottom = 475.0
+margin_left = 493.0
+margin_top = 237.0
+margin_right = 823.0
+margin_bottom = 467.0
