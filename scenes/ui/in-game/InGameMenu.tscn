@@ -21,7 +21,7 @@ margin_bottom = 425.0
 
 [node name="QuitConfirm" parent="." instance=ExtResource( 2 )]
 visible = false
-margin_left = 493.0
+margin_left = 524.0
 margin_top = 237.0
-margin_right = 823.0
+margin_right = 854.0
 margin_bottom = 467.0

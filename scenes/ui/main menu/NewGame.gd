@@ -68,8 +68,8 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 	$Back.visible = false
 	$Confirm.visible = true
 	var confirm_name = $Confirm/ConfirmLabel
-	confirm_name.text = "Confirm name: "
-	confirm_name.text += new_text + ". If a save file exists it will be overwritten."
+	_header_name_slot.text = "NEW GAME - " + _slot_name
+	confirm_name.text = "If this slot is an existing save file, it will be overwritten. Confirm?"
 
 
 func _on_ConfirmYes_pressed() -> void:
@@ -82,6 +82,7 @@ func _on_ConfirmYes_pressed() -> void:
 
 func _on_ConfirmNo_pressed() -> void:
 	_line_edit.visible = false
+	_header_name_slot.text = "NEW GAME - ENTER NAME"
 	_header_name_slot.visible = false
 	$Confirm.visible = false
 	get_node("Buttons/Slot" + str(_current_slot)).visible = true

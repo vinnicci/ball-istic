@@ -132,6 +132,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 			if _player_tut == null:
 				_player_tut = scenes["PlayerTut"].instance()
 			player = _player_tut
+			_just_loaded = false
 		_:
 			if _player == null:
 				_player = scenes["Player"].instance()
@@ -185,12 +186,12 @@ func _connect_access(lvl: Node) -> void:
 				access.connect("moved", self, "on_change_scene")
 
 
-var _loaded: bool = false
+var _just_loaded: bool = true
 
 
 func _on_autosave(lvl, pos) -> void:
-	if _loaded == false:
-		_loaded = true
+	if _just_loaded == true:
+		_just_loaded = false
 		return
 	$Anim.play("saved")
 	_saved_player["Spawn"] = {}
@@ -262,13 +263,16 @@ func _load_depot_items(lvl) -> void:
 
 
 func _resume(player) -> void:
-	#basically resume charge cooldown's interrupted anim
+	#resume interrupted charge cooldown
 	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
 	if player_charge_time > 0:
 		player.update_bar_charge_level(player_charge_time)
 
 
 func _save_player_items() -> void:
+	#clear player trash
+	if _player.arr_trash[0] != null:
+		_player.arr_trash[0].free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
 	var items: Dictionary = {}
@@ -344,8 +348,13 @@ func _on_player_dead() -> void:
 	$Anim.play("destroyed")
 
 
+#this func exist to stop get_global_mouse_pos error whenever
+#the mouse cursor gets out of the current scene tree on transition
 func stop_player(stop: bool) -> void:
-	_player.stopped = true
+	if is_instance_valid(_player) == true:
+		_player.stopped = true
+	if is_instance_valid(_player_tut) == true:
+		_player_tut.stopped = true
 
 
 func _on_RespawnTimer_timeout() -> void:

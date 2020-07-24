@@ -14,7 +14,7 @@
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/pincer/StunPincer.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/bots/rocket/RocketSalvoBot.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/siren/SirenBot.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
@@ -262,11 +262,14 @@ position = Vector2( 486, 229 )
 transform_speed = 0.2
 charge_cooldown = 0.25
 
-[node name="RocketSalvoBot" parent="Bots" index="4" instance=ExtResource( 15 )]
-position = Vector2( 1259, 550 )
-
-[node name="SirenBot" parent="Bots" index="5" instance=ExtResource( 16 )]
+[node name="SirenBot" parent="Bots" index="4" instance=ExtResource( 16 )]
 position = Vector2( 566, 931 )
+
+[node name="Fighter" parent="Bots" index="5" instance=ExtResource( 15 )]
+position = Vector2( 1154, 512 )
+
+[node name="Fighter2" parent="Bots" index="6" instance=ExtResource( 15 )]
+position = Vector2( 1159, 623 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 206, 119 )

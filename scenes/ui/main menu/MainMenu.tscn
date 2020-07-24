@@ -20,6 +20,7 @@ __meta__ = {
 [node name="Title" type="RichTextLabel" parent="."]
 margin_right = 240.0
 margin_bottom = 60.0
+rect_scale = Vector2( 1.5, 1.5 )
 custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 bbcode_text = "PROJECT BALL-ISTIC"
@@ -29,11 +30,10 @@ __meta__ = {
 }
 
 [node name="Version" type="RichTextLabel" parent="."]
-margin_left = 232.0
-margin_top = 19.0
-margin_right = 382.0
-margin_bottom = 59.0
-rect_scale = Vector2( 0.85, 0.85 )
+margin_left = 340.0
+margin_top = 36.0
+margin_right = 490.0
+margin_bottom = 76.0
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "v. 0.0.3"

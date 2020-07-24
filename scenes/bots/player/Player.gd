@@ -275,7 +275,7 @@ var _dict_held: Dictionary = {
 	"item": null,
 	"from_slot": "",
 }
-var _arr_trash: Array = [null]
+var arr_trash: Array = [null]
 var arr_items: Array = [
 	null, null, null, null, null,
 	null, null, null, null, null,
@@ -321,7 +321,7 @@ func update_ui_slot(slot_num: int, arr: String) -> void:
 			item = arr_items[slot_num]
 			slot_sprite = _ui_items_slots.get_node("ItemSlots/" + slot_num_str + "/Sprite")
 		"trash":
-			item = _arr_trash[0]
+			item = arr_trash[0]
 			slot_sprite = ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot/Sprite")
 		"depot":
 			item = arr_external[slot_num]
@@ -362,7 +362,7 @@ func _on_PassiveSlot_pressed(slot_name: String) -> void:
 
 
 func _on_TrashSlot_pressed() -> void:
-	_match_slot(0, "trash", _arr_trash)
+	_match_slot(0, "trash", arr_trash)
 
 
 func _on_DepotSlot_pressed(slot_name: String) -> void:
@@ -386,10 +386,10 @@ func _match_slot(slot_num: int, arr_name: String, arr: Array) -> void:
 
 
 func _manage_trash() -> void:
-	if _dict_held["item"] == null && _arr_trash[0] != null:
-		_dict_held["item"] = _arr_trash[0]
+	if _dict_held["item"] == null && arr_trash[0] != null:
+		_dict_held["item"] = arr_trash[0]
 		_dict_held["from_slot"] = "item"
-		_arr_trash[0] = null
+		arr_trash[0] = null
 	elif _dict_held["item"] == _built_in_weapon:
 		_show_inventory_warning("CAN'T TRASH BUILT-IN WEAPON")
 		return
@@ -400,12 +400,12 @@ func _manage_trash() -> void:
 		_show_inventory_warning("CAN'T DO THIS OUTSIDE BOT STATION")
 		return
 	else:
-		if _arr_trash[0] != null:
-			_arr_trash[0].queue_free()
-		_arr_trash[0] = _dict_held["item"]
+		if arr_trash[0] != null:
+			arr_trash[0].queue_free()
+		arr_trash[0] = _dict_held["item"]
 		_dict_held["item"] = null
 		_dict_held["from_slot"] = ""
-		if _arr_trash[0] is Global.CLASS_WEAPON:
+		if arr_trash[0] is Global.CLASS_WEAPON:
 			_init_weap_and_slot_selected()
 	update_ui_slot(0, "trash")
 	_show_held_item()
