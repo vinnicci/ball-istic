@@ -5,11 +5,12 @@ export (int) var explosion_radius: int = 100 setget , get_radius
 export (float) var damage: float = 15 setget , get_damage
 export (int) var knockback: int = 500 setget , get_knockback
 
-const PARTICLEV_RADIUS_RATIO: float = 0.35
+var current_damage: float
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
 var is_crit: bool = false
 var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
+const PARTICLEV_RADIUS_RATIO: float = 0.35
 
 
 func get_radius():
@@ -23,6 +24,7 @@ func get_knockback():
 
 
 func _ready() -> void:
+	reset_explosion_vars()
 	_init_explosion()
 
 
@@ -47,6 +49,13 @@ func _init_explosion() -> void:
 	$Particles2D.process_material.initial_velocity = (explosion_radius/PARTICLEV_RADIUS_RATIO) as int
 
 
+func reset_explosion_vars() -> void:
+	current_damage = damage
+	is_crit = false
+	$Particles2D.emitting = false
+	$Particles2D.visible = true
+
+
 func start_explosion() -> void:
 	if is_instance_valid(_player_cam) && (_player_cam.get_parent().state != Global.CLASS_BOT.State.DEAD &&
 		global_position.distance_to(_player_cam.global_position) < explosion_radius * 3):
@@ -66,7 +75,7 @@ func start_explosion() -> void:
 func _apply_effect(body: Node) -> void:
 	$KnockBackDirection.look_at(body.global_position)
 	if body.has_method("take_damage") == true:
-		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
+		body.take_damage(current_damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 		if is_crit == true && body is Global.CLASS_BOT:
 			_play_crit_effect(body.global_position)
 
@@ -85,5 +94,4 @@ func _play_crit_effect(pos: Vector2) -> void:
 
 
 func _on_RemoveParticles_timeout() -> void:
-	$Particles2D.hide()
-	queue_free()
+	$Particles2D.visible = false

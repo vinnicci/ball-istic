@@ -2,7 +2,7 @@ extends Area2D
 
 
 export (int) var speed: int = 500 setget , get_speed
-export (float) var damage: float = 1
+export (float) var damage: float = 1 setget , get_damage
 export (int) var proj_range: int = 500 setget , get_range
 export (int) var knockback: int = 50 setget , get_knockback
 export (float) var stun_time: float = 0 setget , get_stun_time
@@ -10,6 +10,7 @@ export (float) var stun_time: float = 0 setget , get_stun_time
 var velocity: Vector2
 var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
+var current_damage: float
 var _shooter: Node
 var _shooter_faction: Color setget , shooter_faction
 var is_stopped: bool = false
@@ -21,6 +22,9 @@ var _stun_feedback: = load("res://scenes/global/feedback/Stun.tscn")
 
 func get_speed():
 	return speed
+
+func get_damage():
+	return damage
 
 func get_range():
 	return proj_range
@@ -36,7 +40,6 @@ func shooter_faction():
 
 
 func _ready() -> void:
-	current_speed = speed
 	var circle: Array = []
 	for i in range(12):
 		circle.append(Vector2($CollisionShape.shape.radius, 0).rotated(deg2rad(i * 30)))
@@ -60,6 +63,16 @@ func set_shooter(shooter: Node) -> void:
 	_shooter = shooter
 
 
+func reset_proj_vars() -> void:
+	current_speed = speed
+	current_damage = damage
+	is_crit = false
+	is_stopped = false
+	$Sprite.modulate.a = 1
+	monitoring = true
+	velocity = Vector2(0,0)
+
+
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = proj_range as float/current_speed as float
@@ -73,10 +86,9 @@ func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_stopped == true:
-		velocity = Vector2(0,0)
-		$Sprite.hide()
+		$Sprite.modulate.a = 0
 		return
-	elif (is_stopped == false && $RangeTimer.time_left <= 0.1):
+	elif is_stopped == false && $RangeTimer.time_left <= 0.1:
 		$Sprite.modulate.a = lerp($Sprite.modulate.a, 0, 0.1)
 	velocity += acceleration
 	velocity = velocity.normalized() * current_speed
@@ -105,12 +117,12 @@ func _damage_bot(bot: Node) -> void:
 			$Explosion.start_explosion()
 			exploded = true
 		else:
-			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+			bot.take_damage(current_damage, Vector2(knockback, 0).rotated(rotation))
 			if is_crit == true:
 				if stun_time != 0:
 					bot.timer_stun.start(stun_time)
 				_play_crit_effect(bot.global_position)
-		if bot.has_node("AI") == true && is_instance_valid(_shooter):
+		if bot.has_node("AI") == true:
 			bot.get_node("AI").engage_attacker(_shooter)
 		stop_projectile(bot)
 
@@ -141,7 +153,7 @@ func _damage_object(lvl_object: Node) -> void:
 	if has_node("Explosion") == true:
 		$Explosion.start_explosion()
 	else:
-		lvl_object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
+		lvl_object.take_damage(current_damage, Vector2(knockback, 0).rotated(rotation))
 	stop_projectile(lvl_object)
 
 
@@ -154,7 +166,6 @@ func stop_projectile(body = null) -> void:
 	#if projectile is explosive or not
 	$RangeTimer.stop()
 	is_stopped = true
-	set_deferred("monitoring", false)
 	var blast_anim
 	if has_node("Explosion") == true:
 		if exploded == false:
@@ -169,6 +180,7 @@ func stop_projectile(body = null) -> void:
 		blast_anim = $HitBlast/Anim
 		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
 			blast_anim.connect("animation_finished", self, "_on_anim_finished")
+	set_deferred("monitoring", false)
 
 
 func _play_hit_blast_anim(object) -> void:
@@ -181,4 +193,5 @@ func _play_hit_blast_anim(object) -> void:
 
 
 func _on_anim_finished(anim_name: String) -> void:
-	queue_free()
+#	queue_free()
+	_level_node.despawn_projectile(self)

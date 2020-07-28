@@ -13,7 +13,7 @@ export (float) var proj_damage_rate: float = 1.0 setget , get_proj_damage_rate
 export (float) var crit_mult: float = 2.0 setget , get_crit_mult
 export (float) var crit_chance: float = 0.05 setget , get_crit_chance
 #firemode related properties
-enum FireModes {AUTO, BURST, CHARGE, OTHER}
+enum FireModes {AUTO, BURST, CHARGE, MELEE, OTHER}
 export (FireModes) var fire_mode
 export (int) var proj_count_per_shot: int = 1 setget , get_proj_count_per_shot
 export (int) var burst_count: int = 1 setget , get_burst_count
@@ -101,9 +101,13 @@ func is_almost_overheating():
 func is_overheating():
 	return _is_overheating
 
+func parent_node():
+	return _parent_node
+
 
 func _ready() -> void:
 	reset_weap_vars()
+#	_init_proj_pool(Projectile, 50)
 
 
 func reset_weap_vars() -> void:
@@ -180,25 +184,26 @@ func fire() -> void:
 		FireModes.AUTO: _fire_auto()
 		FireModes.BURST: _fire_burst()
 		FireModes.CHARGE: _fire_charged()
+		FireModes.MELEE: _fire_melee()
 		FireModes.OTHER: _fire_other()
 
 
 func _spawn_proj() -> void:
-	level_node.spawn_projectile(_instance_proj(), $Muzzle.global_position,
+	level_node.spawn_projectile(Projectile, $Muzzle.global_position,
 		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
-		_parent_node.current_faction)
+		_parent_node.current_faction, self)
 
 
-func _instance_proj() -> Node:
-	var proj = Projectile.instance()
-	_modify_proj(proj)
-	proj.set_shooter(_parent_node)
-	proj.set_level(level_node)
-	return proj
+#func _get_proj() -> Node:
+#	var proj = Projectile.instance()
+#	_modify_proj(proj)
+#	return proj
 
 
 #do stuff here like adding critical effect, z index modification, etc.!
 func _modify_proj(proj) -> void:
+	proj.set_shooter(_parent_node)
+	proj.set_level(level_node)
 	_apply_crit(proj)
 
 
@@ -206,13 +211,13 @@ func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= current_crit_chance:
 		var mult = current_proj_damage_rate * current_crit_mult
 		if proj.has_node("Explosion") == true:
-			proj.get_node("Explosion").damage *= mult
+			proj.get_node("Explosion").current_damage *= mult
 		else:
-			proj.damage *= mult
+			proj.current_damage *= mult
 		#crit feedback display
 		proj.is_crit = true
 	elif proj is Global.CLASS_PROJ:
-		proj.damage *= current_proj_damage_rate
+		proj.current_damage *= current_proj_damage_rate
 
 
 func _apply_recoil() -> void:
@@ -253,6 +258,12 @@ func _on_BurstTimer_timeout() -> void:
 		_current_burst_count = 0
 		return
 	_fire_burst()
+
+################################################################################
+# melee attack
+################################################################################
+func _fire_melee() -> void:
+	pass
 
 
 ################################################################################

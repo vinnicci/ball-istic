@@ -18,7 +18,7 @@ resource_local_to_scene = true
 [node name="FDroneLauncherProj" instance=ExtResource( 2 )]
 physics_material_override = SubResource( 1 )
 script = ExtResource( 1 )
-health_capacity = 15.0
+health_capacity = 5.0
 speed = 1000
 charge_damage_rate = 0.1
 

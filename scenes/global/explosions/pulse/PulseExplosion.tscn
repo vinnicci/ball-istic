@@ -71,9 +71,7 @@ color_ramp = SubResource( 3 )
 
 [node name="Explosion" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-explosion_radius = 250.0
 damage = 5.0
-knockback = 1000.0
 
 [node name="Anim" type="AnimationPlayer" parent="Blast" index="0"]
 anims/explode = SubResource( 1 )

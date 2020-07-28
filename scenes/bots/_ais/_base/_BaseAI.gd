@@ -64,13 +64,12 @@ func _on_parent_dead() -> void:
 
 
 func clear_enemies() -> void:
-	_enemy = null
 	_enemies = []
+	_enemy = null
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
 	return _level_node.valid_bots.has(bot)
-#	return is_instance_valid(bot) == true && bot.state != Global.CLASS_BOT.State.DEAD
 
 
 func _clear_path_points() -> void:
@@ -178,7 +177,6 @@ func _flee() -> void:
 			ray_collide is Global.CLASS_RIGID_OBJECT):
 			continue
 		else:
-			#the tip of the ray
 			pos = ray.get_node("Pos").global_position
 		_flee_routes[_get_distance(pos, _enemy.global_position)] = pos
 	if _flee_routes.size() != 0:

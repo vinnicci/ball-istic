@@ -20,10 +20,11 @@ func _init_save_files() -> void:
 	if dir.dir_exists(save_dir) == false:
 		dir.make_dir_recursive(save_dir)
 	for i in range(5):
-		if dir.file_exists(save_dir + "save_" + str(i) + ".tres") == true:
+		var save_file: String = save_dir + "save_" + str(i) + ".tres"
+		if dir.file_exists(save_file) == true:
 			continue
 		var save: Resource = Global.CLASS_SAVE.new()
-		ResourceSaver.save(save_dir + "save_" + str(i) + ".tres", save)
+		ResourceSaver.save(save_file, save)
 
 
 func on_change_scene(new_scene: String, slot_num = -1, slot_name = "") -> void:

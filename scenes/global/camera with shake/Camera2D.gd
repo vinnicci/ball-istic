@@ -20,7 +20,8 @@ func _process(delta: float) -> void:
 
 
 func shake_camera(amplitude: float, frequency: float, duration: float, priority: int = 0) -> void:
-	if current == false || priority < _priority:
+	if (current == false || priority < _priority ||
+		get_parent() is Global.CLASS_PLAYER == false):
 		return
 	_amp = amplitude
 	_priority = priority

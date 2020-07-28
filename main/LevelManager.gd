@@ -37,7 +37,6 @@ var _vault_items: Array = [
 	null, null, null, null, null
 ]
 const SAVE_DIR: String = "user://saves/"
-#var _proj_pool: Dictionary = {}
 signal moved
 
 
@@ -132,7 +131,6 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 			if _player_tut == null:
 				_player_tut = scenes["PlayerTut"].instance()
 			player = _player_tut
-			_just_loaded = false
 		_:
 			if _player == null:
 				_player = scenes["Player"].instance()
@@ -147,32 +145,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
-#	_pool_proj()
 	_resume(player)
-
-
-#func _pool_proj() -> void:
-#	for bot in _current_scene.valid_bots:
-#		for weap in bot.get_node("Weapons").get_children():
-#			var proj = weap.Projectile
-#			var proj_script = proj.get_script()
-#			if _proj_pool.keys().has(proj_script) == true:
-#				return
-#			match proj_script:
-#				Global.CLASS_PROJ:
-#					_proj_pool[proj_script] = []
-#					for i in range(50):
-#						_proj_pool[proj_script].append(proj.instance())
-#				Global.CLASS_BOT_PROJ:
-#					var drone_weap = proj.get_node("Weapons").get_child(0)
-#					if drone_weap != null:
-#						var drone_proj = drone_weap.Projectile
-#						var drone_proj_script = drone_proj.get_script()
-#						if _proj_pool.keys().has(drone_proj_script) == true:
-#							return
-#						_proj_pool[drone_proj_script] = []
-#						for i in range(50):
-#							_proj_pool[drone_proj_script].append(proj.instance())
 
 
 func _connect_access(lvl: Node) -> void:
@@ -186,14 +159,7 @@ func _connect_access(lvl: Node) -> void:
 				access.connect("moved", self, "on_change_scene")
 
 
-var _just_loaded: bool = true
-
-
 func _on_autosave(lvl, pos) -> void:
-	if _just_loaded == true:
-		_just_loaded = false
-		return
-	$Anim.play("saved")
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
 	_saved_player["Spawn"]["Pos"] = pos
@@ -270,6 +236,8 @@ func _resume(player) -> void:
 
 
 func _save_player_items() -> void:
+	if is_instance_valid(_player) == false:
+		return
 	#clear player trash
 	if _player.arr_trash[0] != null:
 		_player.arr_trash[0].free()
