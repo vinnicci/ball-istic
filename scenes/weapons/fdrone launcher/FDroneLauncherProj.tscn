@@ -18,13 +18,11 @@ resource_local_to_scene = true
 [node name="FDroneLauncherProj" instance=ExtResource( 2 )]
 physics_material_override = SubResource( 1 )
 script = ExtResource( 1 )
-health_capacity = 5.0
 speed = 1000
 charge_damage_rate = 0.1
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.796078, 0.745098, 0.172549, 1 )
-scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 5 )
 offset = Vector2( 13, 0 )
 

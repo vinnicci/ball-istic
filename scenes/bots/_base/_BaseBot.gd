@@ -306,7 +306,9 @@ func _init_bot() -> void:
 		$AI.set_parent(self)
 	
 	#error: no explosion component
-	if has_node("Explosion") == false:
+	if has_node("Explosion") == true:
+		$Explosion.reset_explosion_vars()
+	else:
 		push_error(name + " has no explosion node. Please attach one.")
 	
 	#weapon components initialized here, some npc bots will have multiple weapons
@@ -337,14 +339,16 @@ func _init_bot() -> void:
 	#bot's body graphics setup
 	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
 	_body_texture.scale = Vector2(tex_scale, tex_scale)
+	$Legs/Sprite.scale = Vector2(tex_scale, tex_scale)
 	bar_shield.rect_position.y += bot_radius + 15 #-> 15 is hardcoded for now
 	bar_health.rect_position.y += bar_shield.rect_position.y + 15
 	bar_shield.margin_left = -bot_radius
 	bar_shield.margin_right = bot_radius
 	bar_health.margin_left = -bot_radius
 	bar_health.margin_right = bot_radius
-	bar_shield.rect_scale.x = float(bot_radius*2)/150.0 #-> 150 is the bar length in pixels
-	bar_health.rect_scale.x = float(bot_radius*2)/150.0
+	var bar_scale: float = float(bot_radius*2)/150.0 #-> 150 is the bar length in pixels
+	bar_shield.rect_scale.x = bar_scale
+	bar_health.rect_scale.x = bar_scale
 	var outline = bot_radius + OUTLINE_SIZE
 	_body_outline.polygon = _plot_circle_points(outline)
 	var cp = _plot_circle_points(bot_radius) #<- circle points
@@ -358,7 +362,7 @@ func _init_legs(circle_points) -> void:
 	var leg_sprite: = $Legs/Sprite
 	var deg: = 360.0/POLY_SIDES
 	for i in circle_points.size():
-		var leg_node = get_node("Legs/Leg" + i as String)
+		var leg_node = get_node("Legs/Leg" + str(i))
 		var leg_sprite_c = leg_sprite.duplicate()
 		leg_node.add_child(leg_sprite_c)
 		leg_node.position = circle_points[i]

@@ -49,9 +49,14 @@ func _init_player() -> void:
 	
 	#player bars initialize
 	_bar_weapon_heat.rect_position.x -= _bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
+	_bar_weapon_heat.rect_position.y = bot_radius
 	_bar_weapon_heat.max_value = current_weapon.heat_capacity
 	_bar_weapon_heat.value = 0
 	_bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
+	_bar_charge_level.rect_position.y = bot_radius
+	var bar_scale: float = float(bot_radius*2)/150.0
+	_bar_weapon_heat.rect_scale.x = bar_scale
+	_bar_charge_level.rect_scale.x = bar_scale
 	
 	update_player_vars()
 	

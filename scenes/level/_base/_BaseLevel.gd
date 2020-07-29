@@ -20,10 +20,10 @@ func _ready() -> void:
 			_player = bot
 		bot.set_level(self)
 		add_bot(bot)
-		_init_proj(bot.get_node("Weapons").get_children(), 30)
+		_init_proj(bot.get_node("Weapons").get_children(), 100)
 	for access in $Access.get_children():
 		if access is Global.DEPOT:
-			_init_proj(access.get_node("Items").get_children(), 30)
+			_init_proj(access.get_node("Items").get_children(), 100)
 	for door in $Doors.get_children():
 		_doors.append(door)
 	open_doors()
@@ -100,7 +100,6 @@ func spawn_projectile(proj, proj_position: Vector2, proj_direction: float,
 			_proj_pool[proj] = []
 	_modify_proj(proj_inst, origin_weap, proj)
 	add_child(proj_inst)
-#	print("projectile released: " + str(_proj_pool[proj].size()) + " remain")
 	proj_inst.init_travel(proj_position, proj_direction, shooter_faction)
 
 
@@ -116,7 +115,6 @@ func despawn_projectile(proj) -> void:
 	_proj_pool[proj_pack].append(proj)
 	_active_proj.erase(proj)
 	remove_child(proj)
-#	print("projectile retrieved: " + str(_proj_pool[load(proj.filename)].size()) + " remain")
 
 
 func get_points(start: Vector2, end: Vector2) -> Array:
