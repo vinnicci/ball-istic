@@ -24,3 +24,6 @@ const VAULT: = preload("res://scenes/level/vault/Vault.gd")
 const NEXT_ZONE: = preload("res://scenes/level/next zone/NextZone.gd")
 
 const CLASS_SAVE: = preload("res://scenes/global/save files/SaveFile.gd")
+
+const PROJ_BHVR_SPLIT: = preload("res://scenes/weapons/_projectile behaviors/split/Split.gd")
+const PROJ_BHVR_REFLECT: = preload("res://scenes/weapons/_projectile behaviors/reflect/Reflect.gd")

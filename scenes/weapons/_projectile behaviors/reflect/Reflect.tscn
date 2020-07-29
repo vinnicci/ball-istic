@@ -5,6 +5,13 @@
 
 [node name="ProjBehavior" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+homing_steer_magnitude = 100.0
+split_count = 2
+split_delay = 0.5
+speed_curve = null
+steer_curve = null
+steer_curve_randomize_dir = false
+reflect_count = 3
 
 [node name="BTREE" parent="." index="0"]
 tree = {

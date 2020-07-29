@@ -35,8 +35,8 @@ func set_parent(new_parent: Global.CLASS_BOT):
 
 
 func set_master(bot: Global.CLASS_BOT) -> void:
-	if _check_if_valid_bot(bot) == false:
-		return
+#	if _check_if_valid_bot(bot) == false:
+#		return
 	_master = bot
 
 

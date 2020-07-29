@@ -11,11 +11,12 @@ var velocity: Vector2
 var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
 var current_damage: float
+var is_stopped: bool = false
+var is_crit: bool = false
+var exploded: bool = false
+var _level_node: Node = null
 var _shooter: Node
 var _shooter_faction: Color setget , shooter_faction
-var is_stopped: bool = false
-var _level_node: Node = null
-var is_crit: bool = false
 var _crit_feedback: = load("res://scenes/global/feedback/Critical.tscn")
 var _stun_feedback: = load("res://scenes/global/feedback/Stun.tscn")
 
@@ -50,6 +51,8 @@ func _ready() -> void:
 
 
 func set_level(new_level: Node) -> void:
+	if _level_node == new_level:
+		return
 	_level_node = new_level
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_level(_level_node)
@@ -68,6 +71,11 @@ func reset_proj_vars() -> void:
 	current_damage = damage
 	is_crit = false
 	is_stopped = false
+	exploded = false
+	if has_node("Explosion") == true:
+		$Explosion.reset_explosion_vars()
+	if has_node("ProjBehavior") == true:
+		$ProjBehavior.reset_behavior_vars()
 	$Sprite.modulate.a = 1
 	monitoring = true
 	velocity = Vector2(0,0)
@@ -102,9 +110,6 @@ func _on_Projectile_body_entered(body: Node) -> void:
 		_damage_bot(body)
 	else:
 		_damage_object(body)
-
-
-var exploded: bool = false
 
 
 func _damage_bot(bot: Node) -> void:
@@ -192,6 +197,10 @@ func _play_hit_blast_anim(object) -> void:
 	$OnHitParticles.emitting = true
 
 
+func request_despawn() -> void:
+	_level_node.despawn_projectile(self)
+
+
 func _on_anim_finished(anim_name: String) -> void:
 #	queue_free()
-	_level_node.despawn_projectile(self)
+	request_despawn()

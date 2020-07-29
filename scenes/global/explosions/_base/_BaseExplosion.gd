@@ -24,7 +24,6 @@ func get_knockback():
 
 
 func _ready() -> void:
-	reset_explosion_vars()
 	_init_explosion()
 
 
@@ -54,6 +53,7 @@ func reset_explosion_vars() -> void:
 	is_crit = false
 	$Particles2D.emitting = false
 	$Particles2D.visible = true
+	monitoring = true
 
 
 func start_explosion() -> void:
@@ -68,8 +68,8 @@ func start_explosion() -> void:
 			_apply_effect(body)
 	$Blast/Anim.play("explode")
 	$Particles2D.emitting = true
-	$RemoveParticles.start()
 	$Sound.play()
+	set_deferred("monitoring", false)
 
 
 func _apply_effect(body: Node) -> void:
@@ -93,5 +93,5 @@ func _play_crit_effect(pos: Vector2) -> void:
 	crit_anim.play("critical")
 
 
-func _on_RemoveParticles_timeout() -> void:
-	$Particles2D.visible = false
+#func _on_RemoveParticles_timeout() -> void:
+#	$Particles2D.visible = false
