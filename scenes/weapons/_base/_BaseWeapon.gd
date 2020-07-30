@@ -16,14 +16,17 @@ export (float) var crit_chance: float = 0.05 setget , get_crit_chance
 enum FireModes {AUTO, BURST, CHARGE, MELEE, OTHER}
 export (FireModes) var fire_mode
 export (int) var proj_count_per_shot: int = 1 setget , get_proj_count_per_shot
-export (int) var burst_count: int = 1 setget , get_burst_count
 export (float) var spread: float = 0 setget , get_spread #degrees
 export (int) var recoil: int = 0 setget , get_recoil
+export (float) var cam_shake_intensity: float = 0
 #works only with burst firing mode
+export (int) var burst_count: int = 1 setget , get_burst_count
 export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 #works only with charge firing mode
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
-export (float) var cam_shake_intensity: float = 0
+#works only with melee attacks
+export (float) var melee_damage: float = 20 setget , get_melee_damage
+export (int) var melee_knockaback: int = 500 setget , get_melee_knockback
 
 var current_heat_per_shot: float = 0
 var current_heat: float = 0
@@ -95,6 +98,12 @@ func get_burst_timer():
 func get_charge_timer():
 	return charge_timer
 
+func get_melee_damage():
+	return melee_damage
+
+func get_melee_knockback():
+	return melee_knockaback
+
 func is_almost_overheating():
 	return _is_almost_overheating
 
@@ -107,7 +116,6 @@ func parent_node():
 
 func _ready() -> void:
 	reset_weap_vars()
-#	_init_proj_pool(Projectile, 50)
 
 
 func reset_weap_vars() -> void:
@@ -194,12 +202,6 @@ func _spawn_proj() -> void:
 		_parent_node.current_faction, self)
 
 
-#func _get_proj() -> Node:
-#	var proj = Projectile.instance()
-#	_modify_proj(proj)
-#	return proj
-
-
 #do stuff here like adding critical effect, z index modification, etc.!
 func _modify_proj(proj) -> void:
 	proj.set_shooter(_parent_node)
@@ -262,7 +264,53 @@ func _on_BurstTimer_timeout() -> void:
 ################################################################################
 # melee attack
 ################################################################################
+var _crit_feedback: = preload("res://scenes/global/feedback/Critical.tscn")
+
+
 func _fire_melee() -> void:
+	pass
+
+
+func _on_HurtBox_body_entered(body: Node) -> void:
+	if body is Global.CLASS_BOT:
+		if body.current_faction == _parent_node.current_faction:
+			return
+		elif (body.current_faction != _parent_node.current_faction &&
+			body.state == Global.CLASS_BOT.State.DEAD):
+			return
+		else:
+			body.take_damage(_apply_melee_crit(body),
+				Vector2(melee_knockaback, 0).rotated(rotation))
+	else:
+		body.take_damage(melee_damage, Vector2(melee_knockaback, 0).rotated(rotation))
+
+
+func _apply_melee_crit(body) -> float:
+	var dmg: float
+	if rand_range(0, 1.0) <= crit_chance:
+		dmg = melee_damage * proj_damage_rate * crit_mult
+		_apply_melee_crit_effect(body)
+		_play_crit_effect(body.global_position)
+	else:
+		dmg = melee_damage * proj_damage_rate
+	return dmg
+
+
+func _apply_melee_crit_effect(body) -> void:
+	pass
+
+
+func _play_crit_effect(pos: Vector2) -> void:
+	var crit_node = _crit_feedback.instance()
+	level_node.add_child(crit_node)
+	var crit_anim = crit_node.get_node("Anim")
+	crit_node.global_position = pos
+	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
+		[crit_node])
+	crit_anim.play("critical")
+
+
+func _on_Anim_animation_finished(anim_name: String) -> void:
 	pass
 
 

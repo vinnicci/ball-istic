@@ -118,11 +118,6 @@ func _on_SplitTimer_timeout() -> void:
 	_parent_node.request_despawn()
 
 
-func _split(count: int, proj) -> void:
-	proj.get_node("ProjBehavior").current_split_count = count
-	proj.set_level(_level_node)
-
-
 #############
 # speed curve
 #############
@@ -189,17 +184,14 @@ func task_reflect(task):
 	task.succeed()
 
 
-func _reflect(count: int, proj) -> void:
-	proj.get_node("ProjBehavior").current_reflect_count = count
-	proj.set_level(_level_node)
-
-
 ########
 # modify
 ########
 func _modify_proj(proj) -> void:
+	var proj_behavior = proj.get_node("ProjBehavior")
 	match self.get_script():
 		Global.PROJ_BHVR_SPLIT:
-			_split(current_split_count - 1, proj)
+			proj_behavior.current_split_count = current_split_count - 1
 		Global.PROJ_BHVR_REFLECT:
-			_reflect(current_reflect_count - 1, proj)
+			proj_behavior.current_reflect_count = current_reflect_count - 1
+	proj.set_level(_level_node)

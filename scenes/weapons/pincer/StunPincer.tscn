@@ -191,7 +191,6 @@ crit_chance = 0.2
 fire_mode = 3
 recoil = -1000
 cam_shake_intensity = 10.0
-damage = 5.0
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.211765, 0.807843, 0.945098, 1 )
