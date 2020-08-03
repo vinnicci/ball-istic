@@ -19,6 +19,8 @@ var _level_node: Node = null
 func _ready() -> void:
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = detection_range
+	$Rays/Target.cast_to = Vector2(detection_range, 0)
+	$Rays/LookAt.cast_to = Vector2(detection_range, 0)
 	var ray_len: = 180
 	for i in range(8):
 		var ray = $FleeRays.get_node("R" + i as String)
@@ -94,37 +96,35 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 
 
 func _get_new_target_enemy(bot) -> void:
-	if _enemy != null:
-		return
-	if _check_if_valid_bot(bot) == false:
-		_enemies.erase(bot)
-		return
+#	if _check_if_valid_bot(bot) == false:
+#		_enemies.erase(bot)
+#		return
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is in line of sight
 	if potential_enemy == bot:
-		_set_enemy(potential_enemy)
+		engage(potential_enemy)
 		return
 	#if target bot is blocked by another enemy bot,
 	#engage the blocking bot instead
-	if (potential_enemy is Global.CLASS_BOT &&
+	elif (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
 		_enemies.erase(potential_enemy)
-		_set_enemy(potential_enemy)
+		engage(potential_enemy)
 	_enemies.append(bot)
 
 
-func engage_attacker(bot) -> void:
+func engage(bot) -> void:
 	if _check_if_valid_bot(bot) == false:
 		return
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
-	if (_enemy != null &&
-		_get_distance(bot.global_position, global_position) >
+	if _enemy != null:
+		if (_get_distance(bot.global_position, global_position) >
 		_get_distance(_enemy.global_position, global_position)):
-		return
-	if _check_if_valid_bot(_enemy) == true:
-		_enemies.append(_enemy)
+			return
+		if _check_if_valid_bot(_enemy) == true:
+			_enemies.append(_enemy)
 	if _enemies.has(bot) == true:
 		_enemies.erase(bot)
 	_set_enemy(bot)

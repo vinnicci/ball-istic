@@ -13,11 +13,12 @@ var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Spawn": null #value -> Lvl: level name, Pos: level coords
+	"Spawn": null #value -> Lvl: lvl name, Pos: level coords
 }
-var _saved_big_bots: Dictionary = {} #key: name, value: is_alive
-var _saved_depot_items: Dictionary = {} #key: name, value: arr_items
+var _saved_big_bots: Dictionary = {} #key: lvl name, value: is_alive
+var _saved_depot_items: Dictionary = {} #key: lvl name, value: arr_items
 var _saved_vault_items: Array = []
+var _saved_proj_pool: Dictionary = {} #key: lvl name, pool dict
 var current_save_slot: int
 var current_save_name: String
 
@@ -74,8 +75,6 @@ func _verify_data(save_file) -> bool:
 
 
 func save_to_disk() -> void:
-	print("saved!\nsave slot name: " + current_save_name +
-		"\nsave slot num: " + str(current_save_slot))
 	_save_player_items()
 	_save_depot_items(_current_scene)
 	_save_vault_items()
@@ -117,6 +116,7 @@ func on_change_scene(new_lvl: String, pos: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_big_bots()
+		_save_proj_pool(_current_scene)
 	else:
 		yield(self, "resume")
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
@@ -142,6 +142,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
+	_load_proj_pool(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
@@ -176,6 +177,17 @@ func _connect_big_bots(lvl: Node) -> void:
 				bot.queue_free()
 				continue
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
+
+
+func _save_proj_pool(lvl) -> void:
+	var lvl_name = lvl.name
+	_saved_proj_pool[lvl_name] = _current_scene.proj_pool
+
+
+func _load_proj_pool(lvl) -> void:
+	var lvl_name = lvl.name
+	if _saved_proj_pool.keys().has(lvl_name) == true:
+		lvl.proj_pool = _saved_proj_pool[lvl_name]
 
 
 var _temp_big_bots: Dictionary = {}
@@ -320,9 +332,9 @@ func _on_player_dead() -> void:
 #the mouse cursor gets out of the current scene tree on transition
 func stop_player(stop: bool) -> void:
 	if is_instance_valid(_player) == true:
-		_player.stopped = true
+		_player.stopped = stop
 	if is_instance_valid(_player_tut) == true:
-		_player_tut.stopped = true
+		_player_tut.stopped = stop
 
 
 func _on_RespawnTimer_timeout() -> void:

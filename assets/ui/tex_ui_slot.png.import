@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_tut_terrain.png-ee2ba501980ddca8e5814c1e0f48d240.s3tc.stex"
-path.etc2="res://.import/tex_tut_terrain.png-ee2ba501980ddca8e5814c1e0f48d240.etc2.stex"
+path.s3tc="res://.import/tex_ui_slot.png-556c3b55d994ea6fd46649f239fd384a.s3tc.stex"
+path.etc2="res://.import/tex_ui_slot.png-556c3b55d994ea6fd46649f239fd384a.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/level/tex_tut_terrain.png"
-dest_files=[ "res://.import/tex_tut_terrain.png-ee2ba501980ddca8e5814c1e0f48d240.s3tc.stex", "res://.import/tex_tut_terrain.png-ee2ba501980ddca8e5814c1e0f48d240.etc2.stex" ]
+source_file="res://assets/ui/tex_ui_slot.png"
+dest_files=[ "res://.import/tex_ui_slot.png-556c3b55d994ea6fd46649f239fd384a.s3tc.stex", "res://.import/tex_ui_slot.png-556c3b55d994ea6fd46649f239fd384a.etc2.stex" ]
 
 [params]
 

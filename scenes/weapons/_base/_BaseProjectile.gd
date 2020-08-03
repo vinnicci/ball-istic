@@ -128,7 +128,7 @@ func _damage_bot(bot: Node) -> void:
 					bot.timer_stun.start(stun_time)
 				_play_crit_effect(bot.global_position)
 		if bot.has_node("AI") == true:
-			bot.get_node("AI").engage_attacker(_shooter)
+			bot.get_node("AI").engage(_shooter)
 		stop_projectile(bot)
 
 

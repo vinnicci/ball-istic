@@ -760,7 +760,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 			return
 	body.take_damage(damage, Vector2(0,0))
 	if body.has_node("AI") == true:
-		body.get_node("AI").engage_attacker(self)
+		body.get_node("AI").engage(self)
 
 
 var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")

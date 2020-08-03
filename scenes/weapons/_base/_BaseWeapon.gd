@@ -281,6 +281,8 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 		else:
 			body.take_damage(_apply_melee_crit(body),
 				Vector2(melee_knockaback, 0).rotated(rotation))
+			if body.has_node("AI") == true:
+				body.get_node("AI").engage(_parent_node)
 	else:
 		body.take_damage(melee_damage, Vector2(melee_knockaback, 0).rotated(rotation))
 
