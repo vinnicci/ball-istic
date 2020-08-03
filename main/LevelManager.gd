@@ -180,6 +180,7 @@ func _connect_big_bots(lvl: Node) -> void:
 
 
 func _save_proj_pool(lvl) -> void:
+	lvl.despawn_all_projectiles()
 	var lvl_name = lvl.name
 	_saved_proj_pool[lvl_name] = _current_scene.proj_pool
 

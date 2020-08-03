@@ -72,6 +72,15 @@ func _on_LineEdit_text_entered(new_text: String) -> void:
 	confirm_name.text = "If this slot is an existing save file, it will be overwritten. Confirm?"
 
 
+func _on_Ok_pressed() -> void:
+	var line_edit = $Buttons/LineEdit
+	line_edit.emit_signal("text_entered", line_edit.text)
+
+
+func _enter_name() -> void:
+	pass
+
+
 func _on_ConfirmYes_pressed() -> void:
 	var new_save = Global.CLASS_SAVE.new()
 	new_save.save_name = _slot_name
@@ -80,7 +89,15 @@ func _on_ConfirmYes_pressed() -> void:
 	emit_signal("moved", "Play", _current_slot, _slot_name)
 
 
+func _on_Cancel_pressed() -> void:
+	_cancel()
+
+
 func _on_ConfirmNo_pressed() -> void:
+	_cancel()
+
+
+func _cancel() -> void:
 	_line_edit.visible = false
 	_header_name_slot.text = "NEW GAME - ENTER NAME"
 	_header_name_slot.visible = false

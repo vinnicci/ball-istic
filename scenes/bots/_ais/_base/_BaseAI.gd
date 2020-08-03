@@ -37,8 +37,6 @@ func set_parent(new_parent: Global.CLASS_BOT):
 
 
 func set_master(bot: Global.CLASS_BOT) -> void:
-#	if _check_if_valid_bot(bot) == false:
-#		return
 	_master = bot
 
 
@@ -96,9 +94,6 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 
 
 func _get_new_target_enemy(bot) -> void:
-#	if _check_if_valid_bot(bot) == false:
-#		_enemies.erase(bot)
-#		return
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is in line of sight
@@ -115,8 +110,8 @@ func _get_new_target_enemy(bot) -> void:
 
 
 func engage(bot) -> void:
-	if _check_if_valid_bot(bot) == false:
-		return
+#	if _check_if_valid_bot(bot) == false:
+#		return
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
 	if _enemy != null:
@@ -199,7 +194,10 @@ func _flee() -> void:
 #############
 func task_get_enemy(task):
 	if _enemies.size() != 0:
-		_get_new_target_enemy(_enemies.pop_front())
+		var new_enemy = _enemies.pop_front()
+		if _check_if_valid_bot(new_enemy) == false:
+			return
+		_get_new_target_enemy(new_enemy)
 	task.succeed()
 	return
 

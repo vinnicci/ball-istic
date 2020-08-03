@@ -117,6 +117,11 @@ func despawn_projectile(proj) -> void:
 	remove_child(proj)
 
 
+func despawn_all_projectiles() -> void:
+	for proj in _active_proj.keys():
+		despawn_projectile(proj)
+
+
 func get_points(start: Vector2, end: Vector2) -> Array:
 	var points: Array = $Nav.get_simple_path(start, end)
 	return points

@@ -58,6 +58,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Ok" parent="Buttons/LineEdit" instance=ExtResource( 1 )]
+margin_left = 525.0
+margin_right = 565.0
+margin_bottom = 39.0
+text = "OK"
+
+[node name="Cancel" parent="Buttons/LineEdit" instance=ExtResource( 1 )]
+margin_left = 585.0
+margin_right = 647.0
+margin_bottom = 39.0
+text = "CANCEL"
+
 [node name="Slot0" parent="Buttons" instance=ExtResource( 1 )]
 margin_right = 60.0
 margin_bottom = 39.0
@@ -121,6 +133,8 @@ margin_right = 74.0
 margin_bottom = 206.0
 text = "NO"
 [connection signal="text_entered" from="Buttons/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="pressed" from="Buttons/LineEdit/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Buttons/LineEdit/Cancel" to="." method="_on_Cancel_pressed"]
 [connection signal="pressed" from="Buttons/Slot0" to="." method="_on_Slot0_pressed"]
 [connection signal="pressed" from="Buttons/Slot1" to="." method="_on_Slot1_pressed"]
 [connection signal="pressed" from="Buttons/Slot2" to="." method="_on_Slot2_pressed"]
