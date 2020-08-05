@@ -268,7 +268,8 @@ var _crit_feedback: = preload("res://scenes/global/feedback/Critical.tscn")
 
 
 func _fire_melee() -> void:
-	pass
+	$ShootingSound.play()
+	_apply_recoil()
 
 
 func _on_HurtBox_body_entered(body: Node) -> void:
@@ -282,6 +283,7 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 		else:
 			body.take_damage(_apply_melee_crit(body),
 				Vector2(melee_knockaback, 0).rotated(knockback_dir))
+			body.emit_spark(position)
 			if body.has_node("AI") == true:
 				body.get_node("AI").engage(_parent_node)
 	else:
@@ -367,6 +369,7 @@ func _on_ChargeCancelTimer_timeout() -> void:
 
 func _cancel_charge() -> void:
 	$ChargingTween.stop_all()
+	$ChargingSound.stop()
 	_timer_dissipation_cooldown.paused = false
 
 

@@ -32,11 +32,10 @@ script = ExtResource( 5 )
 speed = 1000
 damage = 0.0
 proj_range = 1700
-knockback = 0.0
 
 [node name="Particles2D" type="Particles2D" parent="." index="1"]
 amount = 100
-lifetime = 0.5
+lifetime = 0.3
 local_coords = false
 process_material = SubResource( 3 )
 
@@ -54,7 +53,5 @@ texture = ExtResource( 6 )
 shape = SubResource( 4 )
 
 [node name="Explosion" parent="." index="7" instance=ExtResource( 4 )]
-explosion_radius = 150.0
-knockback = 100.0
 
 [node name="ProjBehavior" parent="." index="8" instance=ExtResource( 3 )]

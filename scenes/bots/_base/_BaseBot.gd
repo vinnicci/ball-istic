@@ -718,15 +718,12 @@ func discharge_parry() -> void:
 
 
 func _clear_surrounding_proj() -> void:
-	if name == "Player":
-		var areas: Array = $DischargeRadius.get_overlapping_areas()
-		for area in areas:
-			if area is Global.CLASS_PROJ && current_faction != area.shooter_faction():
-				if area.has_node("Explosion") == true:
-					area.exploded = true
-					area.queue_free()
-				else:
-					area.stop_projectile()
+	var areas: Array = $DischargeRadius.get_overlapping_areas()
+	for area in areas:
+		if area is Global.CLASS_PROJ:
+			if current_faction == area.shooter_faction():
+				return
+			level_node.despawn_projectile(area)
 
 
 func _on_Bot_body_entered(body: Node) -> void:
@@ -734,9 +731,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if $Sounds/Bump.playing == false:
 			$Sounds/Bump.play()
 		return
-	$CollisionSpark.position = (
-		(body.position - position).normalized() * bot_radius)
-	$CollisionSpark.emitting = true
+	emit_spark(body.position)
 	$Sounds/ChargeAttackHit.play()
 	var damage: float = ((current_speed * 0.125 * current_charge_force_factor) *
 		current_charge_damage_rate)
@@ -761,6 +756,12 @@ func _on_Bot_body_entered(body: Node) -> void:
 	body.take_damage(damage, Vector2(0,0))
 	if body.has_node("AI") == true:
 		body.get_node("AI").engage(self)
+
+
+func emit_spark(pos: Vector2) -> void:
+	var final_pos = (position - pos).normalized() * bot_radius
+	$CollisionSpark.position = final_pos
+	$CollisionSpark.emitting = true
 
 
 var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")

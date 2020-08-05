@@ -163,13 +163,15 @@ var stopped: bool = false
 func _control_player() -> void:
 	if stopped == true:
 		return
+	var mouse_pos = get_global_mouse_position()
+	
 	#inventory
 	#can't close the ui if holding an item
 	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
 		ui_inventory.visible = !ui_inventory.visible
 	
 	if state == State.TURRET || state == State.ROLL:
-		current_weapon.look_at(get_global_mouse_position())
+		current_weapon.look_at(mouse_pos)
 	
 	#lose control when inventory ui is open and in an access area
 	if ui_access != "" && ui_inventory.visible == true:
@@ -191,7 +193,7 @@ func _control_player() -> void:
 	if Input.is_action_just_pressed("charge_roll"):
 		if _timer_charge_cooldown.is_stopped() == true && state == State.ROLL:
 			update_bar_charge_level(current_charge_cooldown)
-		charge_roll(current_weapon.global_rotation)
+		charge_roll((mouse_pos - global_position).angle())
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
 	if Input.is_action_just_pressed("discharge_parry"):

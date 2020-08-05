@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Project Ball-istic"
-run/main_scene="res://main/Game.tscn"
+run/main_scene="res://scenes/main/Game.tscn"
 config/icon="res://icon.png"
 
 [autoload]

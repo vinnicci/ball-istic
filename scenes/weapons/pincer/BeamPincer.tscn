@@ -191,6 +191,7 @@ crit_chance = 0.2
 fire_mode = 3
 recoil = -1000
 cam_shake_intensity = 10.0
+melee_damage = 10.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 1 )

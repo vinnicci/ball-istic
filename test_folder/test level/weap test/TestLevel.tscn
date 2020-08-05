@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=2]
@@ -23,10 +23,12 @@
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/incinerator/Incinerator.tscn" type="PackedScene" id=23]
-[ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/pincer/BeamPincer.tscn" type="PackedScene" id=25]
-[ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=26]
+[ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/weapons/grenade launcher/PulseGrenadeLauncher.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=28]
+[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=29]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
@@ -269,37 +271,44 @@ crit_chance = 0.5
 
 [node name="Incinerator" parent="Access/Depot/Items" index="8" instance=ExtResource( 23 )]
 
-[node name="HeatEdge" parent="Access/Depot/Items" index="9" instance=ExtResource( 24 )]
+[node name="PulseGrenadeLauncher" parent="Access/Depot/Items" index="9" instance=ExtResource( 27 )]
 
-[node name="PulseGrenadeLauncher" parent="Access/Depot/Items" index="10" instance=ExtResource( 27 )]
+[node name="Cyclone" parent="Access/Depot/Items" index="10" instance=ExtResource( 28 )]
+burst_timer = 0.03
+
+[node name="EnergyCannon" parent="Access/Depot/Items" index="11" instance=ExtResource( 24 )]
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 21 )]
 position = Vector2( 64, 504 )
 
 [node name="Dummy" parent="Bots" index="0" instance=ExtResource( 17 )]
 position = Vector2( -281.817, 339.028 )
+contacts_reported = 1
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Dummy2" parent="Bots" index="1" instance=ExtResource( 17 )]
 position = Vector2( -177.99, 125.017 )
+contacts_reported = 1
 
 [node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 17 )]
 position = Vector2( -207.655, -118.66 )
+contacts_reported = 1
 
 [node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
-position = Vector2( 415, 256 )
-shield_capacity = 200.0
-health_capacity = 200.0
+position = Vector2( 327, 208 )
+contacts_reported = 1
+charge_cooldown = 1.0
 
 [node name="CollisionShape" parent="Bots/Player" index="8"]
 shape = SubResource( 15 )
 
-[node name="BeamPincer" parent="Bots/Player/Weapons" index="1" instance=ExtResource( 25 )]
+[node name="PaladinHammer" parent="Bots/Player/Weapons" index="1" instance=ExtResource( 29 )]
 
-[node name="Slasher" parent="Bots" index="4" instance=ExtResource( 26 )]
-position = Vector2( 955, 1807 )
-shield_capacity = 200.0
-health_capacity = 200.0
+[node name="Fighter" parent="Bots" index="4" instance=ExtResource( 26 )]
+position = Vector2( 616, 1292 )
+
+[node name="Fighter2" parent="Bots" index="5" instance=ExtResource( 26 )]
+position = Vector2( 623, 1477 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 198, 1405 )

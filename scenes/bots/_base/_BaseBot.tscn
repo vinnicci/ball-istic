@@ -73,7 +73,7 @@ color_ramp = SubResource( 5 )
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
-contacts_reported = 1
+contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 15 )
 

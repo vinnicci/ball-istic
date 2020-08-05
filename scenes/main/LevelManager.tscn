@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://main/LevelManager.gd" type="Script" id=1]
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/main/LevelManager.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/in-game/InGameMenu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "big_bot_destroyed"
@@ -124,7 +124,7 @@ tracks/1/keys = {
 }
 
 [node name="LevelManager" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="RespawnTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -169,7 +169,7 @@ margin_right = 702.5
 margin_bottom = 415.0
 rect_scale = Vector2( 2, 2 )
 rect_pivot_offset = Vector2( 62.5, 17.5 )
-custom_fonts/normal_font = ExtResource( 4 )
+custom_fonts/normal_font = ExtResource( 1 )
 bbcode_text = "DESTROYED"
 text = "DESTROYED"
 __meta__ = {

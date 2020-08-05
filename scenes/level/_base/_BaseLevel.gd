@@ -111,6 +111,7 @@ func _modify_proj(proj_inst, origin_weap, proj) -> void:
 
 
 func despawn_projectile(proj) -> void:
+#	proj.stop_projectile()
 	var proj_pack = _active_proj[proj]
 	proj_pool[proj_pack].append(proj)
 	_active_proj.erase(proj)

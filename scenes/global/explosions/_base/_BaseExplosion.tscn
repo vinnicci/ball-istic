@@ -40,7 +40,7 @@ visible = false
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
 amount = 700
-lifetime = 0.5
+lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 3 )

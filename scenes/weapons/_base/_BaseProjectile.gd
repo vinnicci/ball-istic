@@ -171,6 +171,7 @@ func stop_projectile(body = null) -> void:
 	#if projectile is explosive or not
 	$RangeTimer.stop()
 	is_stopped = true
+	_play_hit_blast_anim(body)
 	var blast_anim
 	if has_node("Explosion") == true:
 		if exploded == false:
@@ -181,7 +182,6 @@ func stop_projectile(body = null) -> void:
 			blast_anim.connect("animation_finished", self, "_on_anim_finished")
 	else:
 		#blast graphics upon object hit
-		_play_hit_blast_anim(body)
 		blast_anim = $HitBlast/Anim
 		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
 			blast_anim.connect("animation_finished", self, "_on_anim_finished")

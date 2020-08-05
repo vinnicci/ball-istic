@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://main/MenuManager.gd" type="Script" id=1]
-[ext_resource path="res://scenes/ui/main menu/MainMenu.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/ui/main menu/Load.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/ui/main menu/Settings.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/ui/main menu/Credits.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/ui/main menu/NewGame.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/ui/main menu/MainMenu.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/ui/main menu/Load.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/main menu/Settings.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/ui/main menu/Credits.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/ui/main menu/NewGame.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/main/MenuManager.gd" type="Script" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "transition"
@@ -36,39 +36,39 @@ tracks/1/keys = {
 }
 
 [node name="MenuManager" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 6 )
 
 [node name="MainMenu" parent="." groups=[
 "Scene",
-] instance=ExtResource( 2 )]
+] instance=ExtResource( 1 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="NewGame" parent="." groups=[
 "Scene",
-] instance=ExtResource( 6 )]
+] instance=ExtResource( 5 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Load" parent="." groups=[
 "Scene",
-] instance=ExtResource( 3 )]
+] instance=ExtResource( 2 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Settings" parent="." groups=[
 "Scene",
-] instance=ExtResource( 4 )]
+] instance=ExtResource( 3 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Credits" parent="." groups=[
 "Scene",
-] instance=ExtResource( 5 )]
+] instance=ExtResource( 4 )]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
