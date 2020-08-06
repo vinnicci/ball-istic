@@ -1,5 +1,21 @@
 extends "res://scenes/weapons/_base/_BaseProjectile.gd"
 
 
-func _ready() -> void:
-	proj_range = rand_range(800, 1500)
+const WHITE: = Color(1, 1, 1)
+const ORANGE: = Color(0.9, 0.5, 0)
+var _is_shifting: bool = false
+
+
+func reset_proj_vars() -> void:
+	.reset_proj_vars()
+	$Sprite.modulate = WHITE
+	_is_shifting = false
+
+
+func _process(delta: float) -> void:
+	if $RangeTimer.is_stopped() == false && _is_shifting == false:
+		$ColorTween.interpolate_property($Sprite, "modulate", WHITE, ORANGE,
+			(float(proj_range) / float(current_speed)) * 0.1, Tween.TRANS_LINEAR,
+			Tween.EASE_IN_OUT)
+		$ColorTween.start()
+		_is_shifting = true

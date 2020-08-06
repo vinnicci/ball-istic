@@ -83,7 +83,7 @@ func reset_proj_vars() -> void:
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
 	_shooter_faction = shooter_faction
-	$RangeTimer.wait_time = proj_range as float/current_speed as float
+	$RangeTimer.wait_time = float(proj_range) / float(current_speed)
 	$RangeTimer.start()
 	if is_crit == true && has_node("Explosion") == true:
 		$Explosion.is_crit = true

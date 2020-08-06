@@ -30,6 +30,7 @@
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=28]
 [ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/weapons/dagger/Dagger.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=31]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
@@ -237,9 +238,6 @@ resource_local_to_scene = true
 } ]
 6/z_index = 0
 
-[sub_resource type="CircleShape2D" id=15]
-resource_local_to_scene = true
-
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
 
@@ -281,6 +279,10 @@ burst_timer = 0.03
 
 [node name="Dagger" parent="Access/Depot/Items" index="12" instance=ExtResource( 30 )]
 
+[node name="PaladinHammer" parent="Access/Depot/Items" index="13" instance=ExtResource( 29 )]
+
+[node name="Storm" parent="Access/Depot/Items" index="14" instance=ExtResource( 31 )]
+
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 21 )]
 position = Vector2( 64, 504 )
 
@@ -302,11 +304,6 @@ position = Vector2( 327, 208 )
 contacts_reported = 1
 charge_cooldown = 1.0
 
-[node name="CollisionShape" parent="Bots/Player" index="8"]
-shape = SubResource( 15 )
-
-[node name="PaladinHammer" parent="Bots/Player/Weapons" index="1" instance=ExtResource( 29 )]
-
 [node name="Fighter" parent="Bots" index="4" instance=ExtResource( 26 )]
 position = Vector2( 616, 1292 )
 
@@ -318,5 +315,3 @@ position = Vector2( 198, 1405 )
 zoom = Vector2( 1.7, 1.7 )
 
 [editable path="Access/Depot"]
-
-[editable path="Bots/Player"]

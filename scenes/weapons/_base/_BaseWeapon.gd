@@ -26,6 +26,7 @@ export (float) var burst_timer: float = 0.02 setget , get_burst_timer
 export (float) var charge_timer: float = 3.0 setget , get_charge_timer
 #works only with melee attacks
 export (float) var melee_damage: float = 20 setget , get_melee_damage
+export (float) var melee_crit_stun_time: float = 0 setget , get_melee_crit_stun_time
 export (int) var melee_knockaback: int = 500 setget , get_melee_knockback
 
 var current_heat_per_shot: float = 0
@@ -100,6 +101,9 @@ func get_charge_timer():
 
 func get_melee_damage():
 	return melee_damage
+
+func get_melee_crit_stun_time():
+	return melee_crit_stun_time
 
 func get_melee_knockback():
 	return melee_knockaback
@@ -265,6 +269,7 @@ func _on_BurstTimer_timeout() -> void:
 # melee attack
 ################################################################################
 var _crit_feedback: = preload("res://scenes/global/feedback/Critical.tscn")
+var _stun_feedback = load("res://scenes/global/feedback/Stun.tscn")
 
 
 func _fire_melee() -> void:
@@ -313,6 +318,15 @@ func _play_crit_effect(pos: Vector2) -> void:
 	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
 		[crit_node])
 	crit_anim.play("critical")
+	if melee_crit_stun_time <= 0:
+		return
+	var stun_node = _stun_feedback.instance()
+	level_node.add_child(stun_node)
+	stun_node.global_position = pos
+	var stun_anim = stun_node.get_node("Anim")
+	stun_anim.connect("animation_finished", level_node, "_on_Anim_finished",
+		[stun_node])
+	stun_anim.play("stun")
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:

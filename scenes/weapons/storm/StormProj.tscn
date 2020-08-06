@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/weapons/storm/StormProj.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/curve speed/CurveSpeed.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/weapons/tex_storm_energy.png" type="Texture" id=4]
+[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=5]
+
+[sub_resource type="CircleShape2D" id=3]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.176471, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.509804, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="StormProj" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+speed = 1500
+damage = 0.0
+knockback = 0
+
+[node name="Sprite" parent="." index="1"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" parent="." index="2"]
+shape = SubResource( 3 )
+disabled = true
+
+[node name="Explosion" parent="." index="5" instance=ExtResource( 5 )]
+explosion_radius = 200
+knockback = 800
+
+[node name="ProjBehavior" parent="." index="6" instance=ExtResource( 3 )]
+speed_curve = SubResource( 2 )

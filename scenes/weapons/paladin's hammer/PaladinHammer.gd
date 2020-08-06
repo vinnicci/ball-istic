@@ -13,7 +13,11 @@ func _fire_melee() -> void:
 	$Hammer/Anim.play("swing")
 
 
-#also stops projectiles
+func _apply_melee_crit_effect(body) -> void:
+	body.timer_stun.start(melee_crit_stun_time)
+
+
+#also stop projectiles
 func _on_HurtBox_area_entered(area: Area2D) -> void:
 	if area is Global.CLASS_PROJ:
 		if _parent_node.current_faction == area.shooter_faction():
