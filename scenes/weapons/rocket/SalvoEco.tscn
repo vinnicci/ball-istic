@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/rocket/SalvoEco.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/rocket/RocketEcoProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -59,7 +58,7 @@ spread = 5.0
 cam_shake_intensity = 5.0
 
 [node name="SlotIcon" parent="." index="0"]
-modulate = Color( 0.0431373, 0.67451, 0.305882, 1 )
+modulate = Color( 0.188235, 0.196078, 0.211765, 1 )
 texture = ExtResource( 2 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
@@ -67,7 +66,7 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.0431373, 0.67451, 0.305882, 1 )
+modulate = Color( 0.188235, 0.196078, 0.211765, 1 )
 rotation = -1.5708
 texture = ExtResource( 2 )
 

@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/weapons/tex_generic_small_proj.png" type="Texture" id=1]
+[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/_base/_BaseProjectile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/weapons/tex_generic_blob_proj.png" type="Texture" id=4]
+[ext_resource path="res://scenes/weapons/rocket/RocketGuidedProj.gd" type="Script" id=5]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/cursor seek/CursorSeek.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 0.695313, 0.695313, 0.695313, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+lifetime_randomness = 0.7
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 7.0
+color_ramp = SubResource( 2 )
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.0
+
+[node name="RocketGuidedProj" instance=ExtResource( 3 )]
+script = ExtResource( 5 )
+speed = 1000
+damage = 0.0
+proj_range = 1700
+
+[node name="Particles2D" type="Particles2D" parent="." index="1"]
+amount = 100
+lifetime = 0.3
+local_coords = false
+process_material = SubResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+scale = Vector2( 0.5, 1 )
+texture = ExtResource( 1 )
+offset = Vector2( -8, 0 )
+
+[node name="Glow" type="Sprite" parent="." index="3"]
+modulate = Color( 1, 0.356863, 0.356863, 0.196078 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" parent="." index="4"]
+shape = SubResource( 4 )
+
+[node name="Explosion" parent="." index="7" instance=ExtResource( 2 )]
+
+[node name="ProjBehavior" parent="." index="8" instance=ExtResource( 6 )]
+homing_steer_magnitude = 500.0

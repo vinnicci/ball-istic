@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=2]
@@ -7,26 +7,23 @@
 [ext_resource path="res://assets/level/tileset/brown/wall1.png" type="Texture" id=5]
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=7]
-[ext_resource path="res://scenes/weapons/cdrone launcher/CDroneLauncher.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/weapons/blaster/AutoBlasterHoming.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/weapons/rocket/BarrageGuided.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/pincer/StunPincer.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/weapons/rocket/Salvo.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/weapons/rocket/SalvoGuidedEco.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
-[ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/rocket/SalvoEco.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/weapons/rocket/SalvoGuided.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/weapons/incinerator/Incinerator.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/weapons/rocket/BarrageEcoGuided.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/pincer/BeamPincer.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/weapons/grenade launcher/PulseGrenadeLauncher.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=28]
 [ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/weapons/dagger/Dagger.tscn" type="PackedScene" id=30]
@@ -256,32 +253,26 @@ position = Vector2( 323, -190 )
 [node name="StunPincer" parent="Access/Depot/Items" index="1" instance=ExtResource( 14 )]
 crit_chance = 0.5
 
-[node name="Fortress" parent="Access/Depot/Items" index="2" instance=ExtResource( 9 )]
-
-[node name="Salvo" parent="Access/Depot/Items" index="3" instance=ExtResource( 16 )]
-
-[node name="Barrage" parent="Access/Depot/Items" index="4" instance=ExtResource( 19 )]
-
-[node name="SalvoEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 20 )]
-
-[node name="CDroneLauncher" parent="Access/Depot/Items" index="6" instance=ExtResource( 8 )]
-
-[node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="7" instance=ExtResource( 22 )]
-
-[node name="Incinerator" parent="Access/Depot/Items" index="8" instance=ExtResource( 23 )]
-
-[node name="PulseGrenadeLauncher" parent="Access/Depot/Items" index="9" instance=ExtResource( 27 )]
-
-[node name="Cyclone" parent="Access/Depot/Items" index="10" instance=ExtResource( 28 )]
+[node name="Cyclone" parent="Access/Depot/Items" index="2" instance=ExtResource( 28 )]
 burst_timer = 0.03
 
-[node name="EnergyCannon" parent="Access/Depot/Items" index="11" instance=ExtResource( 24 )]
+[node name="EnergyCannon" parent="Access/Depot/Items" index="3" instance=ExtResource( 24 )]
 
-[node name="Dagger" parent="Access/Depot/Items" index="12" instance=ExtResource( 30 )]
+[node name="Dagger" parent="Access/Depot/Items" index="4" instance=ExtResource( 30 )]
 
-[node name="PaladinHammer" parent="Access/Depot/Items" index="13" instance=ExtResource( 29 )]
+[node name="PaladinHammer" parent="Access/Depot/Items" index="5" instance=ExtResource( 29 )]
 
-[node name="Storm" parent="Access/Depot/Items" index="14" instance=ExtResource( 31 )]
+[node name="Storm" parent="Access/Depot/Items" index="6" instance=ExtResource( 31 )]
+
+[node name="AutoBlasterHoming" parent="Access/Depot/Items" index="7" instance=ExtResource( 8 )]
+
+[node name="BarrageGuided2" parent="Access/Depot/Items" index="8" instance=ExtResource( 9 )]
+
+[node name="BarrageEcoGuided" parent="Access/Depot/Items" index="9" instance=ExtResource( 22 )]
+
+[node name="SalvoGuided" parent="Access/Depot/Items" index="10" instance=ExtResource( 19 )]
+
+[node name="SalvoGuidedEco" parent="Access/Depot/Items" index="11" instance=ExtResource( 16 )]
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 21 )]
 position = Vector2( 64, 504 )

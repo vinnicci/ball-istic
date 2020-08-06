@@ -5,10 +5,13 @@ var _is_line_colliding: bool = false
 
 
 func _process(delta: float) -> void:
+	#blob sprite
 	if _is_overheating == true:
 		$Sprite/Blob.hide()
 	else:
 		$Sprite/Blob.show()
+	
+	#line
 	if (_parent_node != null && _parent_node is Global.CLASS_PLAYER &&
 		_parent_node.state == Global.CLASS_BOT.State.TURRET && _parent_node.current_weapon == self):
 		$TeleLine.cast_to = get_local_mouse_position()

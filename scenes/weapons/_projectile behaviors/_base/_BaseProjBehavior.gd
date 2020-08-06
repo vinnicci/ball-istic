@@ -1,8 +1,6 @@
 extends Node2D
 
 
-var _detected: Array = []
-var _target_bot: Node = null
 var _parent_node: Area2D
 var _level_node: Node = null
 
@@ -12,6 +10,7 @@ func _init_detector(radius) -> void:
 	$DetectionRange/CollisionShape2D.shape.radius = radius
 	$DetectionRange.monitoring = true
 	$DetectionRange.connect("body_entered", self, "_on_DetectionRange_body_entered")
+	$DetectionRange.connect("body_exited", self, "_on_DetectionRange_body_exited")
 
 
 func _init_raycast(cast_to) -> void:
@@ -43,14 +42,15 @@ func reset_behavior_vars() -> void:
 func _physics_process(delta: float) -> void:
 	#only used by homing effect
 	if _detected.size() != 0 && _target_bot == null:
-		for target in _detected:
-			if is_instance_valid(target) == false:
-				_detected.erase(target)
-				continue
-			$TargetRay.look_at(target.global_position)
-			if $TargetRay.get_collider() == target:
-				_target_bot = target
-				return
+		var target = _detected.pop_front()
+		if is_instance_valid(target) == false || target.state == Global.CLASS_BOT.State.DEAD:
+			_detected.erase(target)
+			return
+		$TargetRay.look_at(target.global_position)
+		if $TargetRay.get_collider() == target:
+			_target_bot = target
+		else:
+			_detected.append(target)
 
 
 #refactor?? to simply get values rather than recalculating
@@ -63,6 +63,8 @@ func _physics_process(delta: float) -> void:
 # homing
 ########
 export (float) var homing_steer_magnitude: float = 100
+var _detected: Array = []
+var _target_bot: Node = null
 
 
 func task_homing(task):
@@ -84,6 +86,29 @@ func task_homing(task):
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body is Global.CLASS_BOT && _parent_node.shooter_faction() != body.current_faction:
 		_detected.append(body)
+
+
+func _on_DetectionRange_body_exited(body: Node) -> void:
+	if body == _target_bot:
+		return
+	if _detected.has(body) == true:
+		_detected.erase(body)
+
+
+################
+# cursor seeking
+################
+func task_cursor_seek(task):
+	if _parent_node.is_stopped == true:
+		task.failed()
+		return
+	var cursor_pos = get_global_mouse_position()
+	var target_v = (cursor_pos - global_position).normalized() * _parent_node.speed
+	var steer_v = (target_v - _parent_node.velocity).normalized() * homing_steer_magnitude
+	var final_v = _parent_node.velocity + steer_v
+	_parent_node.acceleration = final_v
+	task.succeed()
+	return
 
 
 ################
@@ -182,6 +207,7 @@ func task_reflect(task):
 			_parent_node.shooter_faction(), self)
 		_parent_node.request_despawn()
 	task.succeed()
+	return
 
 
 ########

@@ -79,6 +79,7 @@ func reset_proj_vars() -> void:
 	$Sprite.modulate.a = 1
 	monitoring = true
 	velocity = Vector2(0,0)
+	acceleration = Vector2(0,0)
 
 
 func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:

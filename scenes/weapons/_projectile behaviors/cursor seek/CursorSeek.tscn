@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/weapons/_projectile behaviors/_base/_BaseProjBehavior.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/cursor seek/CursorSeek.gd" type="Script" id=2]
+
+[node name="ProjBehavior" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="BTREE" parent="." index="0"]
+tree = {
+"connection": [ {
+"from": "root",
+"from_port": 0,
+"to": "task",
+"to_port": 0
+} ],
+"nodes": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cursor_seek",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 258, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cursor_seek",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 258, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+} ],
+"root": {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cursor_seek",
+"offset": Vector2( 200, 0 ),
+"params": [  ],
+"size": Vector2( 258, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 0, 0 ),
+"size": Vector2( 96, 82.0006 )
+},
+"name": "root",
+"type": 0
+}
+}
