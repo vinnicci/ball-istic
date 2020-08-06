@@ -1,0 +1,209 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/weapons/sfx_Pincer.wav" type="AudioStream" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/tex_beam_pincer_proj.png" type="Texture" id=3]
+[ext_resource path="res://assets/weapons/tex_beam_pincer_motion_proj.png" type="Texture" id=4]
+[ext_resource path="res://assets/weapons/tex_dagger.png" type="Texture" id=5]
+[ext_resource path="res://scenes/weapons/dagger/Dagger.gd" type="Script" id=6]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 300.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 60, 7 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "swing_a"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.772549, 0.996078, 0 ), Color( 1, 0.772549, 0.996078, 1 ), Color( 1, 0.772549, 0.996078, 1 ), Color( 1, 0.772549, 0.996078, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.05, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -60.0, 60.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.07, 0.13 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("HurtBox:monitoring")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.05, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "swing_b"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.05, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 60.0, -60.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.772549, 0.996078, 0 ), Color( 1, 0.772549, 0.996078, 1 ), Color( 1, 0.772549, 0.996078, 1 ), Color( 1, 0.772549, 0.996078, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.07, 0.13 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 4 ), ExtResource( 3 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("HurtBox:monitoring")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.05, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Dagger" instance=ExtResource( 2 )]
+script = ExtResource( 6 )
+heat_per_shot = 0.0
+shoot_cooldown = 0.2
+crit_chance = 0.1
+fire_mode = 3
+recoil = -500
+cam_shake_intensity = 8.0
+melee_damage = 8.0
+
+[node name="SlotIcon" parent="." index="0"]
+texture = ExtResource( 5 )
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
+process_material = SubResource( 3 )
+
+[node name="Beam" type="Sprite" parent="." index="2"]
+modulate = Color( 1, 0.772549, 0.996078, 0 )
+rotation = -1.0472
+texture = ExtResource( 3 )
+offset = Vector2( 60, 0 )
+
+[node name="HurtBox" type="Area2D" parent="Beam" index="0"]
+visible = false
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Beam/HurtBox" index="0"]
+position = Vector2( 60, 0 )
+shape = SubResource( 4 )
+
+[node name="Anim" type="AnimationPlayer" parent="Beam" index="1"]
+anims/swing_a = SubResource( 5 )
+anims/swing_b = SubResource( 6 )
+
+[node name="Sprite" parent="." index="3"]
+texture = ExtResource( 5 )
+offset = Vector2( -3, 0 )
+
+[node name="ShootingSound" parent="." index="7"]
+stream = ExtResource( 1 )
+[connection signal="body_entered" from="Beam/HurtBox" to="." method="_on_HurtBox_body_entered"]
+[connection signal="animation_finished" from="Beam/Anim" to="." method="_on_Anim_animation_finished"]

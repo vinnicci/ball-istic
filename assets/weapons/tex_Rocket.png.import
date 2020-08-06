@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_RBarrage.png-46d6d0302638760889e906f7a6d7432d.s3tc.stex"
-path.etc2="res://.import/tex_RBarrage.png-46d6d0302638760889e906f7a6d7432d.etc2.stex"
+path.s3tc="res://.import/tex_Rocket.png-43ac028b90985e843e6a47c0b604f077.s3tc.stex"
+path.etc2="res://.import/tex_Rocket.png-43ac028b90985e843e6a47c0b604f077.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_RBarrage.png"
-dest_files=[ "res://.import/tex_RBarrage.png-46d6d0302638760889e906f7a6d7432d.s3tc.stex", "res://.import/tex_RBarrage.png-46d6d0302638760889e906f7a6d7432d.etc2.stex" ]
+source_file="res://assets/weapons/tex_Rocket.png"
+dest_files=[ "res://.import/tex_Rocket.png-43ac028b90985e843e6a47c0b604f077.s3tc.stex", "res://.import/tex_Rocket.png-43ac028b90985e843e6a47c0b604f077.etc2.stex" ]
 
 [params]
 

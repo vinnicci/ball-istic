@@ -1,9 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/weapons/tex_RBarrage.png" type="Texture" id=2]
+[ext_resource path="res://assets/weapons/tex_Rocket.png" type="Texture" id=2]
 [ext_resource path="res://scenes/weapons/rocket/Salvo.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/rocket/RocketProj.tscn" type="PackedScene" id=4]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )

@@ -2,9 +2,9 @@ extends RigidBody2D
 
 
 export (int, 20, 150) var bot_radius: int = 32 setget , get_bot_radius
-export (float) var shield_capacity: float = 20 setget , get_shield_capacity
+export (float) var shield_capacity: float = 10 setget , get_shield_capacity
 export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
-export (float) var health_capacity: float = 20 setget , get_health_capacity
+export (float) var health_capacity: float = 10 setget , get_health_capacity
 export (int, 0, 4000) var speed: int = 1200 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.3 setget , get_knockback_resist
 export (float, 0.05, 1.0) var transform_speed: float = 0.6 setget , get_transform_speed
@@ -793,10 +793,6 @@ signal dead
 
 func explode() -> void:
 	var color = Color(0.18, 0.18, 0.18)
-	if current_weapon != null && current_weapon.modulate.a > 0:
-		var alpha = current_weapon.modulate.a
-		current_weapon.modulate = color
-		current_weapon.modulate.a = alpha
 	$Legs.modulate = color
 	$Body.modulate = color
 	$Bars.hide()

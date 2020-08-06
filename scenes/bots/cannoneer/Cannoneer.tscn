@@ -13,6 +13,9 @@ resource_local_to_scene = true
 
 [node name="Cannoneer" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
+speed = 1000
+knockback_resist = 0.7
+transform_speed = 0.5
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.215686, 0.439216, 0.215686, 1 )
