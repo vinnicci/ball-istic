@@ -14,6 +14,7 @@ export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
+export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
@@ -128,7 +129,7 @@ func is_charge_roll_ready():
 enum State {
 	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
-var state = State.ROLL
+var state
 var _before_stun = null
 
 
@@ -281,8 +282,12 @@ func _ready() -> void:
 	
 	#when bot is initialized, turret is supposedly the default state
 	#but with lines below, it now starts on roll state
-	current_transform_speed = 0
-	_switch_to_roll()
+	if deployed == false:
+		state = State.ROLL
+		current_transform_speed = 0
+		_switch_to_roll()
+	else:
+		state = State.TURRET
 	$Sounds/ChangeMode.stop()
 	
 	#apply export vars
@@ -722,8 +727,10 @@ func _clear_surrounding_proj() -> void:
 	for area in areas:
 		if area is Global.CLASS_PROJ:
 			if current_faction == area.shooter_faction():
-				return
-			level_node.despawn_projectile(area)
+				continue
+			if area.has_node("Explosion") == true:
+				area.exploded = true
+			area.stop_projectile()
 
 
 func _on_Bot_body_entered(body: Node) -> void:
@@ -772,7 +779,6 @@ func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:
 	level_node.add_child(anim_instance)
 	var anim = anim_instance.get_node("Anim")
 	anim_instance.global_position = pos
-#	crit_node.global_rotation = 0
 	anim.connect("animation_finished", level_node, "_on_Anim_finished",
 		[anim_instance])
 	anim.play(anim_name)

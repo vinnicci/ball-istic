@@ -99,10 +99,9 @@ func _physics_process(delta: float) -> void:
 		return
 	elif is_stopped == false && $RangeTimer.time_left <= 0.1:
 		$Sprite.modulate.a = lerp($Sprite.modulate.a, 0, 0.1)
-	velocity += acceleration
-	velocity = velocity.normalized() * current_speed
+	velocity = (velocity + acceleration).normalized() * current_speed
 	$Sprite.global_rotation = velocity.angle()
-	position += velocity * delta
+	translate(velocity * delta)
 	acceleration = Vector2(0,0)
 
 
@@ -172,21 +171,26 @@ func stop_projectile(body = null) -> void:
 	#if projectile is explosive or not
 	$RangeTimer.stop()
 	is_stopped = true
+	set_deferred("monitoring", false)
 	_play_hit_blast_anim(body)
-	var blast_anim
 	if has_node("Explosion") == true:
 		if exploded == false:
 			$Explosion.start_explosion()
 			exploded = true
-		blast_anim = $Explosion/Blast/Anim
-		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
-			blast_anim.connect("animation_finished", self, "_on_anim_finished")
+		var explode_anim = $Explosion/Blast/Anim
+		if explode_anim.is_playing() == true:
+			_connect_blast_anim(explode_anim)
+		else:
+			_connect_blast_anim($HitBlast/Anim)
 	else:
-		#blast graphics upon object hit
-		blast_anim = $HitBlast/Anim
-		if !blast_anim.is_connected("animation_finished", self, "_on_anim_finished"):
-			blast_anim.connect("animation_finished", self, "_on_anim_finished")
-	set_deferred("monitoring", false)
+		_connect_blast_anim($HitBlast/Anim)
+#	set_deferred("monitoring", false)
+
+
+func _connect_blast_anim(node) -> void:
+	#blast graphics upon object hit
+	if !node.is_connected("animation_finished", self, "_on_anim_finished"):
+		node.connect("animation_finished", self, "_on_anim_finished")
 
 
 func _play_hit_blast_anim(object) -> void:
@@ -203,5 +207,4 @@ func request_despawn() -> void:
 
 
 func _on_anim_finished(anim_name: String) -> void:
-#	queue_free()
 	request_despawn()

@@ -53,7 +53,6 @@ func _physics_process(delta: float) -> void:
 			_detected.append(target)
 
 
-#refactor?? to simply get values rather than recalculating
 #############
 # btree tasks
 #############

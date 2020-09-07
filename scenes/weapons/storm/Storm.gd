@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 func _modify_proj(proj) -> void:
 	._modify_proj(proj)
-	proj.proj_range = rand_range(1000, 4000)
+	proj.proj_range = rand_range(700, 4000)
 
 
 func _charge_fire() -> void:

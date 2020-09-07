@@ -22,7 +22,9 @@ func _on_HurtBox_area_entered(area: Area2D) -> void:
 	if area is Global.CLASS_PROJ:
 		if _parent_node.current_faction == area.shooter_faction():
 			return
-		level_node.despawn_projectile(area)
+		if area.has_node("Explosion") == true:
+			area.exploded = true
+		area.stop_projectile()
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:

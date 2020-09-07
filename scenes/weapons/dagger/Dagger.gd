@@ -4,6 +4,12 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 var _current_swing: int = 0
 
 
+func _process(delta: float) -> void:
+	if _parent_node is Global.CLASS_BOT && _parent_node.state == Global.CLASS_BOT.State.DEAD:
+		$Beam/HurtBox.monitoring = false
+		$Beam.hide()
+
+
 func _fire_melee() -> void:
 	._fire_melee()
 	weap_commit = true

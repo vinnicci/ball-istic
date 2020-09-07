@@ -23,6 +23,6 @@ func _on_FrontShield_area_entered(area: Area2D) -> void:
 		current_heat += area.damage
 	$FrontShield/Anim.play("catch_proj")
 	$ShieldHit.play()
-	if level_node == null:
-		level_node = _parent_node.level_node
-	level_node.despawn_projectile(area)
+	if area.has_node("Explosion") == true:
+		area.exploded = true
+	area.stop_projectile()
