@@ -19,6 +19,7 @@ onready var ui_depot: = $PlayerUI/Inventory/Depot
 onready var ui_vault: = $PlayerUI/Inventory/Vault
 onready var ui_loadout_access_button: = _ui_loadout_slots.get_node("HBoxContainer2/ToAccess")
 
+
 func _ready() -> void:
 	#player initialization
 	_init_player()

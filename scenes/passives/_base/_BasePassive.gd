@@ -22,11 +22,12 @@ func _apply_health_cap(effect: float) -> void:
 	_parent_node.current_health = _parent_node.current_health_cap
 
 
-func _apply_heat_dissipation(effect: float) -> void:
-	for weapon in _parent_node.arr_weapons:
-		if weapon == null || weapon.get_heat_dissipation() == 0:
-			continue
-		weapon.current_heat_dissipation += weapon.get_heat_dissipation() * effect
+func _apply_weap_damage_rate(effect: float) -> void:
+	_parent_node.current_weap_damage_rate += effect
+#	for weapon in _parent_node.arr_weapons:
+#		if weapon == null || weapon.get_heat_dissipation() == 0:
+#			continue
+#		weapon.current_heat_dissipation += weapon.get_heat_dissipation() * effect
 
 
 func _apply_knockback_resist(effect: float) -> void:

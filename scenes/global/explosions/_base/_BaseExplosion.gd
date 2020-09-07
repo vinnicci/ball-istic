@@ -51,9 +51,9 @@ func _init_explosion() -> void:
 func reset_explosion_vars() -> void:
 	current_damage = damage
 	is_crit = false
-	$Particles2D.emitting = false
-	$Particles2D.visible = true
 	monitoring = true
+	$Particles2D.emitting = false
+	$Sound.stop()
 
 
 func start_explosion() -> void:
@@ -91,7 +91,3 @@ func _play_crit_effect(pos: Vector2) -> void:
 	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
 		[crit_node])
 	crit_anim.play("critical")
-
-
-#func _on_RemoveParticles_timeout() -> void:
-#	$Particles2D.visible = false

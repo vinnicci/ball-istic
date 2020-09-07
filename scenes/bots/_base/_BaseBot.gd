@@ -13,6 +13,7 @@ export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charg
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
+export (float) var weap_damage_rate: float = 1.0 setget , get_weap_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
 export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
@@ -38,6 +39,7 @@ var current_transform_speed: float
 var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
 var current_charge_damage_rate: float
+var current_weap_damage_rate: float
 var current_charge_force_factor: float
 var current_charge_crit_mult: float
 var current_charge_crit_chance: float
@@ -89,6 +91,9 @@ func get_knockback_resist():
 
 func get_charge_damage_rate():
 	return charge_damage_rate
+
+func get_weap_damage_rate():
+	return weap_damage_rate
 
 func get_charge_force_factor():
 	return charge_force_factor
@@ -412,10 +417,11 @@ func reset_bot_vars() -> void:
 	
 	current_charge_cooldown = charge_cooldown
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
-	current_charge_damage_rate = charge_damage_rate
 	current_charge_force_factor = charge_force_factor
 	current_charge_crit_mult = charge_crit_mult
 	current_charge_crit_chance = charge_crit_chance
+	current_charge_damage_rate = charge_damage_rate
+	current_weap_damage_rate = weap_damage_rate
 	
 	current_speed = speed
 	current_knockback_resist = knockback_resist

@@ -49,7 +49,3 @@ process_material = SubResource( 3 )
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
-
-[node name="RemoveParticles" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true

@@ -342,6 +342,13 @@ func task_switch_weapon(task):
 		return
 
 
+########
+# parry
+########
+func task_parry(task):
+	pass
+
+
 ##############
 # shoot weapon
 ##############

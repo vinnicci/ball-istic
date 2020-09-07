@@ -10,7 +10,8 @@ onready var _shake_tween = $ShakeTween
 #due to having the dynamic y-offset
 #process loop is used instead of returning it to V(0,0) offset
 func _process(delta: float) -> void:
-	if get_parent() is Global.CLASS_PLAYER == false || _shaking == true:
+	if (get_parent() is Global.CLASS_PLAYER == false || _shaking == true ||
+		delta > 0.1):
 		return
 	var v_distance: float = 0.5
 	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance

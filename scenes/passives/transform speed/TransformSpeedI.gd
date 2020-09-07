@@ -1,7 +1,7 @@
 extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
-const EFFECT: float = 0.04
+const EFFECT: float = 0.075
 
 
 func _apply_effects() -> void:

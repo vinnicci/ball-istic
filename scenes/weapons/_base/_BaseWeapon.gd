@@ -9,7 +9,6 @@ export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipa
 export (float, 0, 1.0) var almost_overheating_threshold: float = 0.75 setget , get_almost_overheating_threshold
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
 export (float) var shoot_cooldown: float = 1.0 setget set_shoot_cooldown, get_shoot_cooldown
-export (float) var proj_damage_rate: float = 1.0 setget , get_proj_damage_rate
 export (float) var crit_mult: float = 2.0 setget , get_crit_mult
 export (float) var crit_chance: float = 0.05 setget , get_crit_chance
 #firemode related properties
@@ -31,9 +30,7 @@ export (int) var melee_knockaback: int = 500 setget , get_melee_knockback
 
 var current_heat_per_shot: float = 0
 var current_heat: float = 0
-var current_heat_dissipation: float
 var current_shoot_cooldown: float
-var current_proj_damage_rate: float
 var current_crit_mult: float
 var current_crit_chance: float
 var _is_almost_overheating: bool = false setget , is_almost_overheating
@@ -68,9 +65,6 @@ func set_shoot_cooldown(new_shoot_cooldown: float):
 
 func get_shoot_cooldown():
 	return shoot_cooldown
-
-func get_proj_damage_rate():
-	return proj_damage_rate
 
 func get_crit_mult():
 	return crit_mult
@@ -134,11 +128,9 @@ func reset_weap_vars() -> void:
 		current_heat_per_shot = heat_per_shot
 		current_shoot_cooldown = shoot_cooldown
 		_timer_shoot_cooldown.wait_time = current_shoot_cooldown
-	current_heat_dissipation = heat_dissipation_per_sec
 	_timer_burst_timer.wait_time = burst_timer
 	current_heat = 0
 	current_heat = clamp(current_heat, 0, heat_capacity + 1)
-	current_proj_damage_rate = proj_damage_rate
 	current_crit_mult = crit_mult
 	current_crit_chance = crit_chance
 	current_crit_chance = clamp(current_crit_chance, 0, 1.0)
@@ -160,10 +152,10 @@ func _process(_delta: float) -> void:
 
 
 func _on_DissipationCooldown_timeout() -> void:
-	if current_heat_dissipation <= 0:
+	if heat_dissipation_per_sec <= 0:
 		return
 	if current_heat > 0:
-		current_heat -= current_heat_dissipation * 0.25 #<- rate 1sec/4
+		current_heat -= heat_dissipation_per_sec * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
 		current_heat = 0
 
@@ -215,7 +207,7 @@ func _modify_proj(proj) -> void:
 
 func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= current_crit_chance:
-		var mult = current_proj_damage_rate * current_crit_mult
+		var mult = _parent_node.current_weap_damage_rate * current_crit_mult
 		if proj.has_node("Explosion") == true:
 			proj.get_node("Explosion").current_damage *= mult
 		else:
@@ -223,7 +215,7 @@ func _apply_crit(proj) -> void:
 		#crit feedback display
 		proj.is_crit = true
 	elif proj is Global.CLASS_PROJ:
-		proj.current_damage *= current_proj_damage_rate
+		proj.current_damage *= _parent_node.current_weap_damage_rate
 
 
 func _apply_recoil() -> void:
@@ -298,11 +290,11 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 func _apply_melee_crit(body) -> float:
 	var dmg: float
 	if rand_range(0, 1.0) <= crit_chance:
-		dmg = melee_damage * proj_damage_rate * crit_mult
+		dmg = melee_damage * _parent_node.current_weap_damage_rate * crit_mult
 		_apply_melee_crit_effect(body)
 		_play_crit_effect(body.global_position)
 	else:
-		dmg = melee_damage * proj_damage_rate
+		dmg = melee_damage * _parent_node.current_weap_damage_rate
 	return dmg
 
 
