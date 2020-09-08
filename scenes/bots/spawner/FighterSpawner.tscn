@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/spawner/FighterSpawner.gd" type="Script" id=4]
-[ext_resource path="res://scenes/bots/spawner/big weap/FighterLauncher.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/bots/spawner/big weap/FighterBallista.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=7]
 
@@ -13,6 +13,7 @@ resource_local_to_scene = true
 
 [node name="FighterSpawner" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
+bot_radius = 64
 speed = 1500
 knockback_resist = 0.8
 

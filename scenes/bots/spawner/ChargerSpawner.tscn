@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/spawner/ChargerSpawner.gd" type="Script" id=4]
-[ext_resource path="res://scenes/bots/spawner/big weap/ChargerLauncher.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/bots/spawner/big weap/ChargerBallista.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=7]
 
@@ -41,3 +41,17 @@ max_shooting_dist = 1000
 max_flee_dist = 650
 
 [node name="ChargerLauncher" parent="Weapons" index="0" instance=ExtResource( 5 )]
+heat_per_shot = 1.0
+almost_overheating_threshold = 0.75
+heat_below_threshold = 0.0
+crit_mult = 2.0
+proj_count_per_shot = 1
+spread = 0.0
+recoil = 0
+cam_shake_intensity = 0.0
+burst_count = 1
+burst_timer = 0.02
+charge_timer = 3.0
+melee_damage = 20.0
+melee_crit_stun_time = 0.0
+melee_knockaback = 500

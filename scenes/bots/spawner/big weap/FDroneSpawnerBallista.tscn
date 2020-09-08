@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/bots/spawner/big weap/FDroneSpawnerLauncher.gd" type="Script" id=1]
+[ext_resource path="res://scenes/bots/spawner/big weap/FDroneSpawnerBallista.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/bots/spawner/FDroneSpawner.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=5]
+[ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -30,7 +30,7 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="FDroneSpawnerLauncher" instance=ExtResource( 2 )]
+[node name="FDroneSpawnerBallista" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
 heat_capacity = 1.1
@@ -40,9 +40,6 @@ crit_chance = 0.0
 fire_mode = 4
 
 [node name="SlotIcon" parent="." index="0"]
-modulate = Color( 0.890196, 0.854902, 0.666667, 1 )
-scale = Vector2( 0.65, 0.65 )
-texture = ExtResource( 5 )
 offset = Vector2( -9, 0 )
 
 [node name="Muzzle" parent="." index="1"]
@@ -53,7 +50,7 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.733333, 0.662745, 0.286275, 1 )
+modulate = Color( 0.890196, 0.854902, 0.666667, 1 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 5 )
-offset = Vector2( 18, 0 )
+texture = ExtResource( 4 )
+offset = Vector2( 10, 0 )

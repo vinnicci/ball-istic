@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_DroneLauncher.png-8d55af14c8b7289765b37d0b8e75aa1c.s3tc.stex"
-path.etc2="res://.import/tex_DroneLauncher.png-8d55af14c8b7289765b37d0b8e75aa1c.etc2.stex"
+path.s3tc="res://.import/tex_ballista.png-cb350f579857a8ba3fd3daaedcc45429.s3tc.stex"
+path.etc2="res://.import/tex_ballista.png-cb350f579857a8ba3fd3daaedcc45429.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_DroneLauncher.png"
-dest_files=[ "res://.import/tex_DroneLauncher.png-8d55af14c8b7289765b37d0b8e75aa1c.s3tc.stex", "res://.import/tex_DroneLauncher.png-8d55af14c8b7289765b37d0b8e75aa1c.etc2.stex" ]
+source_file="res://assets/weapons/tex_ballista.png"
+dest_files=[ "res://.import/tex_ballista.png-cb350f579857a8ba3fd3daaedcc45429.s3tc.stex", "res://.import/tex_ballista.png-cb350f579857a8ba3fd3daaedcc45429.etc2.stex" ]
 
 [params]
 

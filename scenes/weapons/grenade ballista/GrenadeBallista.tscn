@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/weapons/tex_DroneLauncher.png" type="Texture" id=2]
-[ext_resource path="res://scenes/weapons/grenade launcher/PulseGrenadeLauncherProj.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/weapons/grenade launcher/PulseGrenadeLauncher.gd" type="Script" id=4]
+[ext_resource path="res://scenes/weapons/grenade ballista/GrenadeBallista.gd" type="Script" id=1]
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/grenade ballista/GrenadeBallistaProj.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=4]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
-colors = PoolColorArray( 0.184857, 0.984863, 0.0153885, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
@@ -30,28 +30,28 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="PulseGrenadeLauncher" instance=ExtResource( 1 )]
-script = ExtResource( 4 )
+[node name="GrenadeBallista" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
 heat_per_shot = 5.0
 heat_capacity = 15.0
 shoot_cooldown = 0.5
-crit_chance = 0.85
+crit_chance = 0.2
 
 [node name="SlotIcon" parent="." index="0"]
-modulate = Color( 0.0313726, 0.972549, 0.929412, 1 )
-scale = Vector2( 0.65, 0.65 )
-texture = ExtResource( 2 )
-offset = Vector2( -9, 0 )
+modulate = Color( 0.25098, 0.552941, 0.176471, 1 )
+scale = Vector2( 0.45, 0.45 )
+texture = ExtResource( 4 )
+offset = Vector2( 5, 0 )
 
 [node name="Muzzle" parent="." index="1"]
-position = Vector2( 15, 0 )
+position = Vector2( 18, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.0313726, 0.972549, 0.929412, 1 )
-texture = ExtResource( 2 )
-offset = Vector2( 18, 0 )
+modulate = Color( 0.25098, 0.552941, 0.176471, 1 )
+texture = ExtResource( 4 )
+offset = Vector2( 10, 0 )
