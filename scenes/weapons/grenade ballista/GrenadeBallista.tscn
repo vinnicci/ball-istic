@@ -42,7 +42,7 @@ crit_chance = 0.2
 modulate = Color( 0.25098, 0.552941, 0.176471, 1 )
 scale = Vector2( 0.45, 0.45 )
 texture = ExtResource( 4 )
-offset = Vector2( 5, 0 )
+offset = Vector2( -23, 0 )
 
 [node name="Muzzle" parent="." index="1"]
 position = Vector2( 18, 0 )

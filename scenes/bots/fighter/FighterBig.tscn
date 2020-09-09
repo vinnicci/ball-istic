@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=1]
-[ext_resource path="res://assets/bots/tex_fighter.png" type="Texture" id=2]
+[ext_resource path="res://assets/bots/tex_big_fighter.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/fighter/big weap/AutoBlasterBig.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/fighter/FighterBig.gd" type="Script" id=5]
@@ -26,6 +26,7 @@ offset = Vector2( 12, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 2 )
+uv = PoolVector2Array( 206.983, 122, 196.61, 138.596, 186.237, 155.193, 175.864, 171.79, 165.491, 188.386, 144.746, 188.386, 124, 188.386, 103.254, 188.386, 82.5087, 188.386, 72.1359, 171.79, 61.7631, 155.193, 51.3902, 138.596, 41.0174, 122, 51.3902, 105.404, 61.7631, 88.8069, 72.1359, 72.2104, 82.5087, 55.614, 103.254, 55.614, 124, 55.614, 144.746, 55.614, 165.491, 55.614, 175.864, 72.2104, 186.237, 88.8069, 196.61, 105.404, 155.118, 171.79, 134.372, 171.79, 113.628, 171.79, 92.8815, 171.79, 165.491, 155.193, 144.746, 155.193, 124, 155.193, 103.254, 155.193, 82.5087, 155.193, 72.1358, 138.596, 92.8815, 138.596, 113.628, 138.596, 134.372, 138.596, 155.118, 138.596, 175.864, 138.596, 61.7631, 122, 82.5087, 122, 103.254, 122, 124, 122, 144.746, 122, 165.491, 122, 186.237, 122, 175.864, 105.404, 155.118, 105.404, 134.372, 105.404, 113.628, 105.404, 92.8815, 105.404, 72.1358, 105.404, 165.491, 88.8069, 144.746, 88.8069, 124, 88.8069, 103.254, 88.8069, 82.5087, 88.8069, 92.8815, 72.2104, 113.628, 72.2104, 134.372, 72.2104, 155.118, 72.2104 )
 
 [node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
