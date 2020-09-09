@@ -20,7 +20,7 @@ transform_speed = 0.5
 charge_force_factor = 0.7
 
 [node name="Sprite" parent="Legs" index="0"]
-modulate = Color( 0.156863, 0.733333, 0.235294, 1 )
+modulate = Color( 0, 0.403922, 0.054902, 1 )
 texture = ExtResource( 2 )
 offset = Vector2( 13, 0 )
 

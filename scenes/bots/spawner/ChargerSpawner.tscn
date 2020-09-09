@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/bots/tex_drone_spawner.png" type="Texture" id=1]
+[ext_resource path="res://assets/bots/tex_big_spawner.png" type="Texture" id=1]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/spawner/ChargerSpawner.gd" type="Script" id=4]
@@ -18,13 +18,14 @@ speed = 1500
 knockback_resist = 0.8
 
 [node name="Sprite" parent="Legs" index="0"]
-modulate = Color( 0.937255, 0.329412, 0, 1 )
+modulate = Color( 0.580392, 0.203922, 0, 1 )
 texture = ExtResource( 2 )
 offset = Vector2( 13, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 modulate = Color( 1, 0.313726, 0.129412, 1 )
 texture = ExtResource( 1 )
+uv = PoolVector2Array( 220.14, 128, 208.623, 146.428, 197.105, 164.856, 185.588, 183.284, 174.07, 201.712, 151.035, 201.712, 128, 201.712, 104.965, 201.712, 81.93, 201.712, 70.4124, 183.284, 58.8949, 164.856, 47.3774, 146.428, 35.8599, 128, 47.3774, 109.572, 58.8949, 91.1439, 70.4124, 72.7159, 81.93, 54.2879, 104.965, 54.2879, 128, 54.2879, 151.035, 54.2879, 174.07, 54.2879, 185.588, 72.7159, 197.105, 91.1439, 208.623, 109.572, 162.553, 183.284, 139.518, 183.284, 116.482, 183.284, 93.4475, 183.284, 174.07, 164.856, 151.035, 164.856, 128, 164.856, 104.965, 164.856, 81.93, 164.856, 70.4124, 146.428, 93.4475, 146.428, 116.482, 146.428, 139.518, 146.428, 162.553, 146.428, 185.588, 146.428, 58.8949, 128, 81.93, 128, 104.965, 128, 128, 128, 151.035, 128, 174.07, 128, 197.105, 128, 185.588, 109.572, 162.553, 109.572, 139.518, 109.572, 116.482, 109.572, 93.4475, 109.572, 70.4124, 109.572, 174.07, 91.1439, 151.035, 91.1439, 128, 91.1439, 104.965, 91.1439, 81.93, 91.1439, 93.4475, 72.7159, 116.482, 72.7159, 139.518, 72.7159, 162.553, 72.7159 )
 
 [node name="CollisionShape" parent="." index="7"]
 shape = SubResource( 1 )
@@ -41,17 +42,3 @@ max_shooting_dist = 1000
 max_flee_dist = 650
 
 [node name="ChargerLauncher" parent="Weapons" index="0" instance=ExtResource( 5 )]
-heat_per_shot = 1.0
-almost_overheating_threshold = 0.75
-heat_below_threshold = 0.0
-crit_mult = 2.0
-proj_count_per_shot = 1
-spread = 0.0
-recoil = 0
-cam_shake_intensity = 0.0
-burst_count = 1
-burst_timer = 0.02
-charge_timer = 3.0
-melee_damage = 20.0
-melee_crit_stun_time = 0.0
-melee_knockaback = 500

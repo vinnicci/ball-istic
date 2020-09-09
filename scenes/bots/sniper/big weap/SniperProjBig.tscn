@@ -27,6 +27,5 @@ shape = SubResource( 1 )
 visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
-explosion_radius = 250.0
+explosion_radius = 150
 damage = 20.0
-knockback = 1000.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/bots/spawner/StunExplosiveSpawner.gd" type="Script" id=4]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/bots/tex_big_spawner.png" type="Texture" id=7]
 
 [node name="StunExplosiveSpawner" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
@@ -15,7 +16,14 @@ health_capacity = 20.0
 speed = 1500
 
 [node name="Sprite" parent="Legs" index="0"]
+modulate = Color( 0.0431373, 0.521569, 0.0823529, 1 )
 texture = ExtResource( 2 )
+offset = Vector2( 13, 0 )
+
+[node name="Texture" parent="Body" index="1"]
+modulate = Color( 0.027451, 0.815686, 0.854902, 1 )
+texture = ExtResource( 7 )
+uv = PoolVector2Array( 214.667, 128, 203.833, 145.333, 193, 162.667, 182.167, 180, 171.333, 197.333, 149.667, 197.333, 128, 197.333, 106.333, 197.333, 84.6667, 197.333, 73.8333, 180, 63, 162.667, 52.1667, 145.333, 41.3333, 128, 52.1667, 110.667, 63, 93.3333, 73.8333, 76, 84.6667, 58.6667, 106.333, 58.6667, 128, 58.6667, 149.667, 58.6667, 171.333, 58.6667, 182.167, 76, 193, 93.3333, 203.833, 110.667, 160.5, 180, 138.833, 180, 117.167, 180, 95.5, 180, 171.333, 162.667, 149.667, 162.667, 128, 162.667, 106.333, 162.667, 84.6667, 162.667, 73.8333, 145.333, 95.5, 145.333, 117.167, 145.333, 138.833, 145.333, 160.5, 145.333, 182.167, 145.333, 63, 128, 84.6667, 128, 106.333, 128, 128, 128, 149.667, 128, 171.333, 128, 193, 128, 182.167, 110.667, 160.5, 110.667, 138.833, 110.667, 117.167, 110.667, 95.5, 110.667, 73.8333, 110.667, 171.333, 93.3333, 149.667, 93.3333, 128, 93.3333, 106.333, 93.3333, 84.6667, 93.3333, 95.5, 76, 117.167, 76, 138.833, 76, 160.5, 76 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
 explosion_radius = 200
