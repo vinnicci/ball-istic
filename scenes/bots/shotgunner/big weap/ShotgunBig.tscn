@@ -36,14 +36,12 @@ Projectile = ExtResource( 4 )
 heat_capacity = 11.1
 heat_dissipation_per_sec = 1.5
 shoot_cooldown = 0.4
-proj_damage_rate = 4.0
 proj_count_per_shot = 8
 spread = 10.0
 recoil = 30
 cam_shake_intensity = 5.0
 
 [node name="SlotIcon" parent="." index="0"]
-texture = ExtResource( 1 )
 offset = Vector2( 3, 1 )
 
 [node name="Muzzle" parent="." index="1"]
