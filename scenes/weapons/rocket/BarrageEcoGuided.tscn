@@ -49,15 +49,25 @@ tracks/0/keys = {
 [node name="BarrageEcoGuided" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
+heat_per_shot = 1.0
 heat_capacity = 3.1
 heat_dissipation_per_sec = 0.0
+almost_overheating_threshold = 0.75
+heat_below_threshold = 0.0
 shoot_cooldown = 2.0
+crit_mult = 2.0
 crit_chance = 0.1
 fire_mode = 1
+proj_count_per_shot = 1
 spread = 5.0
+recoil = 0
 cam_shake_intensity = 3.0
 burst_count = 5
 burst_timer = 0.1
+charge_timer = 3.0
+melee_damage = 20.0
+melee_crit_stun_time = 0.0
+melee_knockaback = 500
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.917647, 0.658824, 0.160784, 1 )

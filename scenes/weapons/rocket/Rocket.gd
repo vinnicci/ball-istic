@@ -12,14 +12,15 @@ func _ready() -> void:
 var _current_pos: int = 0
 
 
-func _modify_proj(proj) -> void:
-	._modify_proj(proj)
-	_current_pos += 1
-	if _current_pos == 10:
-		_current_pos = 0
+func _modify_proj(proj_pack) -> Node:
+	var proj = ._modify_proj(proj_pack)
 	var proj_behavior = proj.get_node("ProjBehavior")
-	if _current_pos % 2 == 1:
+	if _current_pos % 2 == 0:
 		proj_behavior.steer_curve = _left_curve
 	else:
 		proj_behavior.steer_curve = _right_curve
 	$Muzzle.transform = get_node("MuzzlePos/P" + _current_pos as String).transform
+	_current_pos += 1
+	if _current_pos == 10:
+		_current_pos = 0
+	return proj

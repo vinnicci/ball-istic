@@ -13,13 +13,13 @@ func _ready() -> void:
 	$Body.add_child(_glow)
 
 
-func set_shooter(shooter: Node) -> void:
+func set_shooter(shooter: Node, shooter_faction: Color) -> void:
 	_shooter = shooter
-
-
-func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
-	global_position = pos
 	faction = shooter_faction
+
+
+func init_travel(pos: Vector2, dir: float) -> void:
+	global_position = pos
 	if has_node("AI") == true:
 		$AI.clear_enemies()
 		$AI.set_master(_shooter)

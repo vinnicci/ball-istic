@@ -11,9 +11,10 @@ func _process(delta: float) -> void:
 		_energy_sprite.modulate.a = 0
 
 
-func _modify_proj(proj) -> void:
-	._modify_proj(proj)
+func _modify_proj(proj_pack) -> Node:
+	var proj = ._modify_proj(proj_pack)
 	proj.proj_range = rand_range(700, 4000)
+	return proj
 
 
 func _charge_fire() -> void:

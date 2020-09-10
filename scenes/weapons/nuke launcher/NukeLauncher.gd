@@ -8,6 +8,7 @@ func _process(delta: float) -> void:
 		$Sprite/Nuke.show()
 
 
-func _modify_proj(proj) -> void:
-	._modify_proj(proj)
+func _modify_proj(proj_pack) -> Node:
+	var proj = ._modify_proj(proj_pack)
 	proj.z_index = 1
+	return proj
