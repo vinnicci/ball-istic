@@ -193,16 +193,17 @@ func fire() -> void:
 
 
 func _spawn_proj() -> void:
-	level_node.spawn_projectile(Projectile, $Muzzle.global_position,
-		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)),
-		_parent_node.current_faction, self)
+	level_node.spawn_projectile(_modify_proj(Projectile), $Muzzle.global_position,
+		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)))
 
 
 #do stuff here like adding critical effect, z index modification, etc.!
-func _modify_proj(proj) -> void:
-	proj.set_shooter(_parent_node)
+func _modify_proj(proj_pack) -> Node:
+	var proj = proj_pack.instance()
+	proj.set_shooter(_parent_node, _parent_node.current_faction)
 	proj.set_level(level_node)
 	_apply_crit(proj)
+	return proj
 
 
 func _apply_crit(proj) -> void:

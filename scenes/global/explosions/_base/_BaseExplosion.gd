@@ -48,12 +48,12 @@ func _init_explosion() -> void:
 	$Particles2D.process_material.initial_velocity = (explosion_radius/PARTICLEV_RADIUS_RATIO) as int
 
 
-func reset_explosion_vars() -> void:
-	current_damage = damage
-	is_crit = false
-	monitoring = true
-	$Particles2D.emitting = false
-	$Sound.stop()
+#func reset_explosion_vars() -> void:
+#	current_damage = damage
+#	is_crit = false
+#	monitoring = true
+#	$Particles2D.emitting = false
+#	$Sound.stop()
 
 
 func start_explosion() -> void:

@@ -15,7 +15,7 @@ var is_stopped: bool = false
 var is_crit: bool = false
 var exploded: bool = false
 var _level_node: Node = null
-var _shooter: Node
+var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
 var _crit_feedback: = load("res://scenes/global/feedback/Critical.tscn")
 var _stun_feedback: = load("res://scenes/global/feedback/Stun.tscn")
@@ -36,6 +36,9 @@ func get_knockback():
 func get_stun_time():
 	return stun_time
 
+func shooter():
+	return _shooter
+
 func shooter_faction():
 	return _shooter_faction
 
@@ -48,6 +51,8 @@ func _ready() -> void:
 	#bullet behavior component
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_parent(self)
+	current_damage = damage
+	current_speed = speed
 
 
 func set_level(new_level: Node) -> void:
@@ -62,28 +67,29 @@ func set_level(new_level: Node) -> void:
 			$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 
 
-func set_shooter(shooter: Node) -> void:
+func set_shooter(shooter: Node, faction: Color) -> void:
 	_shooter = shooter
+	_shooter_faction = faction
 
 
-func reset_proj_vars() -> void:
-	current_speed = speed
-	current_damage = damage
-	is_crit = false
-	is_stopped = false
-	exploded = false
-	if has_node("Explosion") == true:
-		$Explosion.reset_explosion_vars()
-	if has_node("ProjBehavior") == true:
-		$ProjBehavior.reset_behavior_vars()
-	$Sprite.modulate.a = 1
-	monitoring = true
-	velocity = Vector2(0,0)
-	acceleration = Vector2(0,0)
+#func reset_proj_vars() -> void:
+#	current_speed = speed
+#	current_damage = damage
+#	is_crit = false
+#	is_stopped = false
+#	exploded = false
+#	if has_node("Explosion") == true:
+#		$Explosion.reset_explosion_vars()
+#	if has_node("ProjBehavior") == true:
+#		$ProjBehavior.reset_behavior_vars()
+#	$Sprite.modulate.a = 1
+#	monitoring = true
+#	velocity = Vector2(0,0)
+#	acceleration = Vector2(0,0)
 
 
-func init_travel(pos: Vector2, dir: float, shooter_faction: Color) -> void:
-	_shooter_faction = shooter_faction
+func init_travel(pos: Vector2, dir: float) -> void:
+#	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = float(proj_range) / float(current_speed)
 	$RangeTimer.start()
 	if is_crit == true && has_node("Explosion") == true:
@@ -127,7 +133,7 @@ func _damage_bot(bot: Node) -> void:
 				if stun_time != 0:
 					bot.timer_stun.start(stun_time)
 				_play_crit_effect(bot.global_position)
-		if bot.has_node("AI") == true:
+		if bot.has_node("AI") == true && is_instance_valid(_shooter) == true:
 			bot.get_node("AI").engage(_shooter)
 		stop_projectile(bot)
 
@@ -202,9 +208,10 @@ func _play_hit_blast_anim(object) -> void:
 	$OnHitParticles.emitting = true
 
 
-func request_despawn() -> void:
-	_level_node.despawn_projectile(self)
+#func request_despawn() -> void:
+#	_level_node.despawn_projectile(self)
 
 
 func _on_anim_finished(anim_name: String) -> void:
-	request_despawn()
+#	request_despawn()
+	queue_free()

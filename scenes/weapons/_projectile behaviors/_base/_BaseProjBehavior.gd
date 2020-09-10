@@ -30,13 +30,13 @@ func set_level(new_level: Node) -> void:
 	_level_node = new_level
 
 
-func reset_behavior_vars() -> void:
-	_detected = []
-	_target_bot = null
-	_old_v = null
-	current_split_count = split_count
-	current_reflect_count = reflect_count
-	_is_split = false
+#func reset_behavior_vars() -> void:
+#	_detected = []
+#	_target_bot = null
+#	_old_v = null
+#	current_split_count = split_count
+#	current_reflect_count = reflect_count
+#	_is_split = false
 
 
 func _physics_process(delta: float) -> void:
@@ -110,17 +110,16 @@ func task_cursor_seek(task):
 	return
 
 
-################
-# split to three
-################
+#######
+# split
+#######
 export var split_count: int = 2
 export var split_delay: float = 0.5
-var current_split_count: int
 var _is_split: bool = false
 
 
 func task_split(task):
-	if _parent_node.is_stopped == true || current_split_count == 0:
+	if _parent_node.is_stopped == true || split_count == 0:
 		task.failed()
 		return
 	if _is_split == false:
@@ -137,9 +136,10 @@ func _on_SplitTimer_timeout() -> void:
 	var spread: = 5
 	for i in range(2):
 		spread *= -1
-		_level_node.spawn_projectile(load(_parent_node.filename), _parent_node.global_position, 
-			_parent_node.global_rotation + deg2rad(spread), _parent_node.shooter_faction(), self)
-	_parent_node.request_despawn()
+		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
+			_parent_node.global_rotation + deg2rad(spread))
+#	_parent_node.request_despawn()
+	_parent_node.queue_free()
 
 
 #############
@@ -191,20 +191,19 @@ func task_curve_steer(task):
 # reflect
 #########
 export var reflect_count: int = 3
-var current_reflect_count: int
 
 
 func task_reflect(task):
-	if _parent_node.is_stopped == true || current_reflect_count == 0:
+	if _parent_node.is_stopped == true || reflect_count == 0:
 		task.failed()
 		return
 	$TargetRay.global_rotation = _parent_node.global_rotation
 	var body = $TargetRay.get_collider()
 	if body is Global.CLASS_LEVEL_OBJECT:
-		_level_node.spawn_projectile(load(_parent_node.filename), _parent_node.global_position, 
-			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180),
-			_parent_node.shooter_faction(), self)
-		_parent_node.request_despawn()
+		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
+			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180))
+#		_parent_node.request_despawn()
+		_parent_node.queue_free()
 	task.succeed()
 	return
 
@@ -212,11 +211,14 @@ func task_reflect(task):
 ########
 # modify
 ########
-func _modify_proj(proj) -> void:
-	var proj_behavior = proj.get_node("ProjBehavior")
+func _clone_proj(proj) -> Node:
+	var proj_inst = load(proj.filename).instance()
+	var proj_behavior = proj_inst.get_node("ProjBehavior")
 	match self.get_script():
 		Global.PROJ_BHVR_SPLIT:
-			proj_behavior.current_split_count = current_split_count - 1
+			proj_behavior.split_count = split_count - 1
 		Global.PROJ_BHVR_REFLECT:
-			proj_behavior.current_reflect_count = current_reflect_count - 1
-	proj.set_level(_level_node)
+			proj_behavior.reflect_count = reflect_count - 1
+	proj_inst.set_level(_level_node)
+	proj_inst.set_shooter(_parent_node.shooter(), _parent_node.shooter_faction())
+	return proj_inst

@@ -316,9 +316,7 @@ func _init_bot() -> void:
 		$AI.set_parent(self)
 	
 	#error: no explosion component
-	if has_node("Explosion") == true:
-		$Explosion.reset_explosion_vars()
-	else:
+	if has_node("Explosion") == false:
 		push_error(name + " has no explosion node. Please attach one.")
 	
 	#weapon components initialized here, some npc bots will have multiple weapons
