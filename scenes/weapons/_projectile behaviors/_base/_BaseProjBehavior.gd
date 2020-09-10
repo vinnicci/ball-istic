@@ -30,15 +30,6 @@ func set_level(new_level: Node) -> void:
 	_level_node = new_level
 
 
-#func reset_behavior_vars() -> void:
-#	_detected = []
-#	_target_bot = null
-#	_old_v = null
-#	current_split_count = split_count
-#	current_reflect_count = reflect_count
-#	_is_split = false
-
-
 func _physics_process(delta: float) -> void:
 	#only used by homing effect
 	if _detected.size() != 0 && _target_bot == null:
@@ -138,7 +129,6 @@ func _on_SplitTimer_timeout() -> void:
 		spread *= -1
 		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
 			_parent_node.global_rotation + deg2rad(spread))
-#	_parent_node.request_despawn()
 	_parent_node.queue_free()
 
 
@@ -202,7 +192,6 @@ func task_reflect(task):
 	if body is Global.CLASS_LEVEL_OBJECT:
 		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
 			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180))
-#		_parent_node.request_despawn()
 		_parent_node.queue_free()
 	task.succeed()
 	return

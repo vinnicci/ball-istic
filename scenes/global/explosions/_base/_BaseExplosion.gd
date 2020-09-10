@@ -25,6 +25,7 @@ func get_knockback():
 
 func _ready() -> void:
 	_init_explosion()
+	current_damage = damage
 
 
 func set_player_cam(player_cam: Camera2D) -> void:
@@ -46,14 +47,6 @@ func _init_explosion() -> void:
 	$Blast.polygon = circle
 	#particle velocity
 	$Particles2D.process_material.initial_velocity = (explosion_radius/PARTICLEV_RADIUS_RATIO) as int
-
-
-#func reset_explosion_vars() -> void:
-#	current_damage = damage
-#	is_crit = false
-#	monitoring = true
-#	$Particles2D.emitting = false
-#	$Sound.stop()
 
 
 func start_explosion() -> void:

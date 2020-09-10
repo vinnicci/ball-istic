@@ -72,24 +72,7 @@ func set_shooter(shooter: Node, faction: Color) -> void:
 	_shooter_faction = faction
 
 
-#func reset_proj_vars() -> void:
-#	current_speed = speed
-#	current_damage = damage
-#	is_crit = false
-#	is_stopped = false
-#	exploded = false
-#	if has_node("Explosion") == true:
-#		$Explosion.reset_explosion_vars()
-#	if has_node("ProjBehavior") == true:
-#		$ProjBehavior.reset_behavior_vars()
-#	$Sprite.modulate.a = 1
-#	monitoring = true
-#	velocity = Vector2(0,0)
-#	acceleration = Vector2(0,0)
-
-
 func init_travel(pos: Vector2, dir: float) -> void:
-#	_shooter_faction = shooter_faction
 	$RangeTimer.wait_time = float(proj_range) / float(current_speed)
 	$RangeTimer.start()
 	if is_crit == true && has_node("Explosion") == true:
@@ -190,7 +173,6 @@ func stop_projectile(body = null) -> void:
 			_connect_blast_anim($HitBlast/Anim)
 	else:
 		_connect_blast_anim($HitBlast/Anim)
-#	set_deferred("monitoring", false)
 
 
 func _connect_blast_anim(node) -> void:
@@ -208,10 +190,5 @@ func _play_hit_blast_anim(object) -> void:
 	$OnHitParticles.emitting = true
 
 
-#func request_despawn() -> void:
-#	_level_node.despawn_projectile(self)
-
-
 func _on_anim_finished(anim_name: String) -> void:
-#	request_despawn()
 	queue_free()
