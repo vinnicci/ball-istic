@@ -18,7 +18,6 @@ var _saved_player: Dictionary = {
 var _saved_big_bots: Dictionary = {} #key: lvl name, value: is_alive
 var _saved_depot_items: Dictionary = {} #key: lvl name, value: arr_items
 var _saved_vault_items: Array = []
-#var _saved_proj_pool: Dictionary = {} #key: lvl name, pool dict
 var current_save_slot: int
 var current_save_name: String
 
@@ -116,7 +115,6 @@ func on_change_scene(new_lvl: String, pos: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_big_bots()
-#		_save_proj_pool(_current_scene)
 	else:
 		yield(self, "resume")
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
@@ -142,7 +140,6 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
-#	_load_proj_pool(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
@@ -168,7 +165,7 @@ func _on_autosave(lvl, pos) -> void:
 
 func _connect_big_bots(lvl: Node) -> void:
 	for bot in lvl.get_node("Bots").get_children():
-		if bot.get_bot_radius() > 32:
+		if bot.respawnable == false:
 			var bot_name = lvl.name + bot.name
 			if _saved_big_bots.keys().has(bot_name) == false:
 				_saved_big_bots[bot_name] = true
@@ -177,18 +174,6 @@ func _connect_big_bots(lvl: Node) -> void:
 				bot.queue_free()
 				continue
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
-
-
-#func _save_proj_pool(lvl) -> void:
-#	lvl.despawn_all_projectiles()
-#	var lvl_name = lvl.name
-#	_saved_proj_pool[lvl_name] = _current_scene.proj_pool
-
-
-#func _load_proj_pool(lvl) -> void:
-#	var lvl_name = lvl.name
-#	if _saved_proj_pool.keys().has(lvl_name) == true:
-#		lvl.proj_pool = _saved_proj_pool[lvl_name]
 
 
 var _temp_big_bots: Dictionary = {}

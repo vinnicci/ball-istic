@@ -15,6 +15,7 @@ export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_c
 export (float) var charge_damage_rate: float = 0.3 setget , get_charge_damage_rate
 export (float) var weap_damage_rate: float = 1.0 setget , get_weap_damage_rate
 export (bool) var destructible: bool = true setget , is_destructible
+export (bool) var respawnable: bool = true
 export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline

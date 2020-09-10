@@ -243,6 +243,7 @@ position = Vector2( 704, 1271 )
 [node name="BigFSpawner" parent="Bots" index="0" instance=ExtResource( 15 )]
 position = Vector2( 413, -402 )
 health_capacity = 75.0
+respawnable = false
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 656, 440 )
