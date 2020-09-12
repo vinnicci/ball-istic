@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/level/tileset/brown/wall1.png" type="Texture" id=5]
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=7]
-[ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/sniper/SniperBigBot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
@@ -19,7 +19,6 @@
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/weapons/incinerator/Incinerator.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/rocket/BarrageEco.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/rocket/Salvo.tscn" type="PackedScene" id=23]
@@ -27,6 +26,7 @@
 [ext_resource path="res://scenes/weapons/rocket/BarrageEcoGuided.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=28]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
@@ -255,17 +255,17 @@ position = Vector2( 323, -190 )
 
 [node name="BarrageEcoGuided" parent="Access/Depot/Items" index="3" instance=ExtResource( 25 )]
 
-[node name="Barrage" parent="Access/Depot/Items" index="4" instance=ExtResource( 8 )]
+[node name="Salvo" parent="Access/Depot/Items" index="4" instance=ExtResource( 23 )]
 
-[node name="BarrageEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 20 )]
+[node name="SalvoEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 24 )]
 
-[node name="Salvo" parent="Access/Depot/Items" index="6" instance=ExtResource( 23 )]
+[node name="Storm" parent="Access/Depot/Items" index="6" instance=ExtResource( 26 )]
 
-[node name="SalvoEco" parent="Access/Depot/Items" index="7" instance=ExtResource( 24 )]
+[node name="PaladinHammer" parent="Access/Depot/Items" index="7" instance=ExtResource( 27 )]
 
-[node name="Storm" parent="Access/Depot/Items" index="8" instance=ExtResource( 26 )]
+[node name="RepairNanobots" parent="Access/Depot/Items" index="8" instance=ExtResource( 28 )]
 
-[node name="PaladinHammer" parent="Access/Depot/Items" index="9" instance=ExtResource( 27 )]
+[node name="ShieldRecharger" parent="Access/Depot/Items" index="9" instance=ExtResource( 8 )]
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 21 )]
 position = Vector2( 64, 776 )
@@ -294,10 +294,10 @@ health_capacity = 75.0
 [node name="Player" parent="Bots" index="4" instance=ExtResource( 15 )]
 position = Vector2( 327, 208 )
 contacts_reported = 1
-shield_capacity = 50.0
+shield_capacity = 20.0
+health_capacity = 100.0
 transform_speed = 0.1
 charge_cooldown = 1.0
-destructible = false
 
 [node name="BigFSpawner" parent="Bots" index="5" instance=ExtResource( 22 )]
 position = Vector2( 812, 1012 )
