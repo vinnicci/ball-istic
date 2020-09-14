@@ -31,9 +31,9 @@ var _charge_commit_velocity: float
 var _legs_position: Dictionary = {}
 
 var current_shield_cap: float
-var current_shield: float
+var current_shield: float setget set_current_shield, get_current_shield
 var current_health_cap: float
-var current_health: float
+var current_health: float setget set_current_health, get_current_health
 var current_speed: int
 var current_shield_recovery: float
 var current_transform_speed: float
@@ -59,7 +59,7 @@ onready var _body_tween: = $Body/BodyTween
 onready var bar_shield: = $Bars/Shield
 onready var bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
-onready var _timer_discharge_parry: = $Timers/DischargeParry
+onready var timer_discharge_parry: = $Timers/DischargeParry
 onready var timer_stun: = $Timers/Stun
 
 
@@ -118,6 +118,20 @@ func get_charge_outline():
 ####################
 # current properties
 ####################
+func set_current_shield(value: float):
+	current_shield = value
+	bar_shield.value = current_shield
+
+func get_current_shield():
+	return current_shield
+
+func set_current_health(value: float):
+	current_health = value
+	bar_health.value = current_health
+
+func get_current_health():
+	return current_health
+
 func set_current_charge_cooldown(new_charge_cooldown: float):
 	current_charge_cooldown = new_charge_cooldown
 	_timer_charge_cooldown.wait_time = new_charge_cooldown
@@ -402,15 +416,13 @@ func reset_bot_vars() -> void:
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	
 	current_shield_cap = shield_capacity
-	current_shield = current_shield_cap
 	bar_shield.max_value = current_shield_cap
-	bar_shield.value = current_shield
+	set_current_shield(current_shield_cap)
 	current_shield_recovery = shield_recovery_per_sec
 	
 	current_health_cap = health_capacity
-	current_health = current_health_cap
 	bar_health.max_value = current_health_cap
-	bar_health.value = current_health
+	set_current_health(current_health_cap)
 	
 	current_transform_speed = transform_speed
 	
@@ -723,7 +735,7 @@ func discharge_parry() -> void:
 				_body_tween.start()
 				_body_charge_effect.get_node("Anim").play("discharge_parry")
 				$Sounds/DischargeParry.play()
-				_timer_discharge_parry.start()
+				timer_discharge_parry.start()
 				_timer_charge_cooldown.start()
 
 
@@ -760,7 +772,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
 			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
 			return
-		elif body.get_node("Timers/DischargeParry").is_stopped() == false:
+		elif body.timer_discharge_parry.is_stopped() == false:
 			var dir: float = (global_position - body.global_position).angle()
 			apply_knockback(Vector2(1500, 0).rotated(dir))
 			_play_anim(global_position, _deflect_feedback.instance(), "deflect")

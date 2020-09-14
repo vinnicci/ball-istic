@@ -10,7 +10,24 @@ resource_local_to_scene = true
 
 [node name="PlayerTut" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
+bot_radius = 32
+shield_capacity = 10.0
+shield_recovery_per_sec = 1.0
+health_capacity = 10.0
+speed = 1200
+knockback_resist = 0.3
+transform_speed = 0.6
+charge_cooldown = 3.0
+charge_force_factor = 0.5
+charge_crit_mult = 2.0
+charge_crit_chance = 0.2
+charge_damage_rate = 0.3
+weap_damage_rate = 1.0
+destructible = true
+respawnable = true
+deployed = false
 faction = Color( 1, 0, 0, 1 )
+charge_outline = Color( 1, 0, 0.9, 1 )
 
 [node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )

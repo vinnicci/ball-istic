@@ -124,11 +124,11 @@ func update_player_vars() -> void:
 		if arr_passives[i] != null:
 			arr_passives[i]._apply_effects()
 	_cap_current_vars()
-	bar_health.max_value = current_health_cap
-	bar_health.value = current_health
-	if current_shield_cap != 0:
-		bar_shield.max_value = current_shield_cap
-	bar_shield.value = current_shield
+#	bar_health.max_value = current_health_cap
+#	bar_health.value = current_health
+#	if current_shield_cap != 0:
+#		bar_shield.max_value = current_shield_cap
+#	bar_shield.value = current_shield
 
 
 func _change_slot_selected(slot_num: int) -> void:
@@ -269,7 +269,7 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 
 func _on_Bot_body_entered(body: Node) -> void:
 	if (state != State.CHARGE_ROLL && body is Global.CLASS_BOT &&
-		body.state == State.CHARGE_ROLL && _timer_discharge_parry.is_stopped() == false):
+		body.state == State.CHARGE_ROLL && timer_discharge_parry.is_stopped() == false):
 			$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	elif state == State.CHARGE_ROLL:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/weapons/tex_repair_nanobots.png" type="Texture" id=1]
 [ext_resource path="res://assets/weapons/tex_siren_light.png" type="Texture" id=2]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.gd" type="Script" id=4]
+[ext_resource path="res://assets/weapons/sfx_shield_hp_heal.wav" type="AudioStream" id=5]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -52,3 +53,6 @@ modulate = Color( 1, 0, 0, 1 )
 show_behind_parent = true
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 2 )
+
+[node name="ShootingSound" parent="." index="6"]
+stream = ExtResource( 5 )

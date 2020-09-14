@@ -6,5 +6,9 @@ func _fire_other() -> void:
 		current_heat -= current_heat_per_shot
 		$ShootingSound.stop()
 		return
-	_parent_node.current_shield = _parent_node.current_shield_cap
-	_parent_node.bar_shield.value = _parent_node.current_shield
+	$ShootingSound.play()
+	var tween = $WeaponTween
+	tween.interpolate_property($Sprite/Glow, "scale", Vector2(3,3), Vector2(0.8, 0.8),
+		0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+	_parent_node.set_current_shield(_parent_node.current_shield_cap)

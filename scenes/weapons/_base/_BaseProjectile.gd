@@ -152,7 +152,7 @@ func _damage_object(lvl_object: Node) -> void:
 
 
 func _on_RangeTimer_timeout() -> void:
-	stop_projectile(null)
+	stop_projectile()
 
 
 #stop when max range or hitting something
