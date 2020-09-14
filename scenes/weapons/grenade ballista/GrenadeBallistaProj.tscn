@@ -15,4 +15,6 @@ charge_cooldown = 3.0
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
+explosion_radius = 300
 damage = 20.0
+knockback = 800

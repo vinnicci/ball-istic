@@ -215,8 +215,11 @@ func _apply_crit(proj) -> void:
 			proj.current_damage *= mult
 		#crit feedback display
 		proj.is_crit = true
-	elif proj is Global.CLASS_PROJ:
-		proj.current_damage *= _parent_node.current_weap_damage_rate
+	match proj.get_script():
+		Global.CLASS_PROJ:
+			proj.current_damage *= _parent_node.current_weap_damage_rate
+		Global.CLASS_BOT_PROJ:
+			proj.get_node("Explosion").current_damage *= _parent_node.current_weap_damage_rate
 
 
 func _apply_recoil() -> void:

@@ -364,7 +364,8 @@ func task_shoot_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
+	if _parent_node.state != Global.CLASS_BOT.State.STUN:
+		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 	if $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
 		_parent_node.shoot_weapon()
 	task.succeed()
