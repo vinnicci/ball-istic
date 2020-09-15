@@ -43,5 +43,7 @@ func _process(delta: float) -> void:
 
 
 func _on_Lifetime_timeout() -> void:
+	if current_weapon != null:
+		current_weapon.hide()
 	if state != State.DEAD:
 		current_health = 0

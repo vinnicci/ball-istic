@@ -1,5 +1,6 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
+[ext_resource path="res://assets/ui/fonts/LADYIC__.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 [ext_resource path="res://assets/bots/sfx_Bot_Bump.wav" type="AudioStream" id=4]
@@ -69,6 +70,10 @@ orbit_velocity_random = 0.0
 scale = 10.0
 scale_random = 0.9
 color_ramp = SubResource( 5 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 30
+font_data = ExtResource( 1 )
 
 [node name="Bot" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
@@ -205,6 +210,19 @@ process_material = SubResource( 6 )
 
 [node name="Weapons" type="Node2D" parent="."]
 z_index = 1
+
+[node name="Name" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Name"]
+margin_left = -250.0
+margin_right = 250.0
+margin_bottom = 39.0
+custom_fonts/font = SubResource( 7 )
+align = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="." to="." method="_on_Bot_body_entered"]
 [connection signal="tween_all_completed" from="Body/SwitchTween" to="." method="_on_SwitchTween_tween_all_completed"]
 [connection signal="timeout" from="Timers/ChargeTrail" to="." method="_on_ChargeTrail_timeout"]

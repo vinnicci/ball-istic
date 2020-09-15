@@ -360,6 +360,11 @@ func _init_bot() -> void:
 		$Bars/Health.hide()
 	
 	#bot's body graphics setup
+	var regex = RegEx.new()
+	regex.compile("[A-Za-z]+")
+	var name_label = regex.search(name)
+	$Name/Label.text = name_label.get_string()
+	$Name/Label.rect_position.y = -bot_radius - 54
 	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
 	_body_texture.scale = Vector2(tex_scale, tex_scale)
 	$Legs/Sprite.scale = Vector2(tex_scale, tex_scale)
@@ -464,6 +469,14 @@ func _cap_current_vars() -> void:
 
 func _process(delta: float) -> void:
 	$Bars.global_rotation = 0
+	$Name.global_rotation = 0
+	
+	#name visibile on hover
+	if (state != State.DEAD &&
+		global_position.distance_to(get_global_mouse_position()) < bot_radius * 2):
+		$Name.visible = true
+	else:
+		$Name.visible = false
 	
 	#rolling ball sliding texture
 	_apply_rolling_effects(delta)
@@ -839,3 +852,4 @@ func _on_ExplodeDelay_timeout() -> void:
 
 func _on_Explode_finished(anim_name: String) -> void:
 	queue_free()
+
