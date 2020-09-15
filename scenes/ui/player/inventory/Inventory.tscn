@@ -22,7 +22,7 @@ visible = false
 
 [node name="AllItems" parent="." instance=ExtResource( 4 )]
 
-[node name="ItemInfo" parent="." instance=ExtResource( 3 )]
+[node name="Stats" parent="." instance=ExtResource( 3 )]
 
 [node name="Vault" parent="." instance=ExtResource( 5 )]
 visible = false

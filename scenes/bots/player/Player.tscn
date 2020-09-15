@@ -106,6 +106,7 @@ knockback = 800
 [node name="PlayerUI" parent="." index="13" instance=ExtResource( 10 )]
 
 [node name="HeldItem" parent="PlayerUI" index="2" instance=ExtResource( 5 )]
+visible = false
 [connection signal="timeout" from="Bars/ChargeLevel/ChargeTweenTimer" to="." method="_on_ChargeTweenTimer_timeout"]
 
 [editable path="PlayerUI"]

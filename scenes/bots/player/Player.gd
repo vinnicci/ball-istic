@@ -26,6 +26,9 @@ func _ready() -> void:
 
 
 func _init_player() -> void:
+	#inject player to stats ui
+	ui_inventory.get_node("Stats").set_player(self)
+	
 	for weap in $Weapons.get_children():
 		if weap is BUILT_IN_WEAP:
 			_built_in_weapon = weap
@@ -124,6 +127,7 @@ func update_player_vars() -> void:
 		if arr_passives[i] != null:
 			arr_passives[i]._apply_effects()
 	_cap_current_vars()
+	ui_inventory.get_node("Stats").update_stats()
 #	bar_health.max_value = current_health_cap
 #	bar_health.value = current_health
 #	if current_shield_cap != 0:
@@ -170,6 +174,7 @@ func _control_player() -> void:
 	#can't close the ui if holding an item
 	if Input.is_action_just_pressed("ui_inventory") && _dict_held["item"] == null:
 		ui_inventory.visible = !ui_inventory.visible
+		held_item.visible = !held_item.visible
 	
 	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(mouse_pos)

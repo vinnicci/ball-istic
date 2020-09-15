@@ -1,12 +1,23 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/player/inventory/Stats.gd" type="Script" id=2]
 
 [node name="Stats" type="Control"]
 margin_left = 800.0
 margin_top = 50.0
 margin_right = 1200.0
 margin_bottom = 550.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 0.243137, 0.466667, 0.243137, 0.784314 )
+margin_top = 35.0
+margin_right = 400.0
+margin_bottom = 435.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -16,6 +27,363 @@ margin_right = 42.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 text = "STATS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 20.0
+margin_top = 45.0
+margin_right = 262.0
+margin_bottom = 411.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 242.0
+margin_bottom = 33.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/Health"]
+margin_right = 23.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "HP:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentVal" type="Label" parent="VBoxContainer/Health"]
+margin_left = 33.0
+margin_right = 33.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slash" type="Label" parent="VBoxContainer/Health"]
+margin_left = 43.0
+margin_right = 51.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/Health"]
+margin_left = 61.0
+margin_right = 61.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shield" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 37.0
+margin_right = 242.0
+margin_bottom = 70.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/Shield"]
+margin_right = 50.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "SHIELD:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentVal" type="Label" parent="VBoxContainer/Shield"]
+margin_left = 60.0
+margin_right = 60.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slash" type="Label" parent="VBoxContainer/Shield"]
+margin_left = 70.0
+margin_right = 78.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/Shield"]
+margin_left = 88.0
+margin_right = 88.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShieldRecovery" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 74.0
+margin_right = 242.0
+margin_bottom = 107.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/ShieldRecovery"]
+margin_right = 125.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "SHIELD RECOVERY:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/ShieldRecovery"]
+margin_left = 135.0
+margin_right = 135.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/ShieldRecovery"]
+margin_left = 145.0
+margin_right = 201.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "per sec"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 111.0
+margin_right = 242.0
+margin_bottom = 144.0
+custom_constants/separation = 15
+
+[node name="Label" type="Label" parent="VBoxContainer/Speed"]
+margin_right = 46.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "SPEED:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/Speed"]
+margin_left = 61.0
+margin_right = 101.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "value"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransformSpeed" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 148.0
+margin_right = 242.0
+margin_bottom = 181.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/TransformSpeed"]
+margin_right = 136.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "TRANSFORM SPEED:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/TransformSpeed"]
+margin_left = 146.0
+margin_right = 146.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/TransformSpeed"]
+margin_left = 156.0
+margin_right = 181.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "sec"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeCooldown" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 185.0
+margin_right = 242.0
+margin_bottom = 218.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/ChargeCooldown"]
+margin_right = 138.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "CHARGE COOLDOWN:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/ChargeCooldown"]
+margin_left = 148.0
+margin_right = 148.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/ChargeCooldown"]
+margin_left = 158.0
+margin_right = 183.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "sec"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeForceFactor" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 222.0
+margin_right = 242.0
+margin_bottom = 255.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+margin_right = 128.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "CHARGE FORCE %:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+margin_left = 138.0
+margin_right = 138.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+margin_left = 148.0
+margin_right = 164.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeDmg" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 259.0
+margin_right = 242.0
+margin_bottom = 292.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/ChargeDmg"]
+margin_right = 118.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "CHARGE DMG %:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/ChargeDmg"]
+margin_left = 128.0
+margin_right = 128.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/ChargeDmg"]
+margin_left = 138.0
+margin_right = 154.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WeaponDmg" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 296.0
+margin_right = 242.0
+margin_bottom = 329.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/WeaponDmg"]
+margin_right = 123.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON DMG %:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/WeaponDmg"]
+margin_left = 133.0
+margin_right = 133.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/WeaponDmg"]
+margin_left = 143.0
+margin_right = 159.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KnockbackResist" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 333.0
+margin_right = 242.0
+margin_bottom = 366.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/KnockbackResist"]
+margin_right = 135.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "KNOCKBACK RESIST:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/KnockbackResist"]
+margin_left = 145.0
+margin_right = 145.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/KnockbackResist"]
+margin_left = 155.0
+margin_right = 171.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "%"
 __meta__ = {
 "_edit_use_anchors_": false
 }
