@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 
-[node name="ItemInfo" type="Control"]
+[node name="Stats" type="Control"]
 margin_left = 800.0
 margin_top = 50.0
 margin_right = 1200.0
@@ -11,19 +11,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ItemName" type="Label" parent="."]
+[node name="StatsLabel" type="Label" parent="."]
+margin_right = 42.0
+margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
-text = "ITEM NAME:
-STATS AND DESCRIPTION HERE:
-
-WAHWHALDSKFLAJ
-ALKDJFLKAJLKDJLSJKF
-LAKJDLFKJLADJFLA;A
-ALKDJLFJALKDJFLKAJ
-LAKJDLKFJLSKAJDLFJALKJ
-ALKJDLKFJLAJDKFJLAKDJ
-ALKDJFLKJSDLFKJLAJDLF
-ALKDJFLKJADLKJFLSKJFD"
+text = "STATS"
 __meta__ = {
 "_edit_use_anchors_": false
 }

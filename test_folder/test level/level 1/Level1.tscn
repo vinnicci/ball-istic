@@ -593,21 +593,18 @@ position = Vector2( 64, -2296 )
 [node name="Fighter" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( 88.9664, -438.021 )
 physics_material_override = SubResource( 17 )
-shield_capacity = 10.0
 charge_force_factor = 0.6
 charge_damage_rate = 0.1
 
 [node name="Fighter2" parent="Bots" index="1" instance=ExtResource( 4 )]
 position = Vector2( 569, -2177 )
 physics_material_override = SubResource( 17 )
-shield_capacity = 10.0
 charge_force_factor = 0.6
 charge_damage_rate = 0.1
 
 [node name="Charger" parent="Bots" index="2" instance=ExtResource( 5 )]
 position = Vector2( 1685.7, -1728.86 )
 physics_material_override = SubResource( 17 )
-shield_capacity = 10.0
 transform_speed = 0.1
 charge_force_factor = 0.6
 charge_damage_rate = 0.1
