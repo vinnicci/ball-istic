@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/player/inventory/SingleSlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ui/player/inventory/FiveButtonSlots.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/ui/player/inventory/Loadout.gd" type="Script" id=4]
 
 [node name="Loadout" type="Control"]
 margin_top = 50.0
 margin_right = 400.0
 margin_bottom = 550.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
