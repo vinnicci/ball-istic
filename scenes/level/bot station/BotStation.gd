@@ -10,7 +10,7 @@ func _on_Access_body_entered(body: Node) -> void:
 		$EnterSound.play()
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
-		body.ui_access = "bot_station"
+		body.ui_inventory.access = "bot_station"
 		emit_signal("autosaved")
 
 
@@ -19,6 +19,6 @@ func _on_Access_body_exited(body: Node) -> void:
 		$AccessUI/Label.visible = !$AccessUI/Label.visible
 		$ExitSound.play()
 		$Sprite/Anim.play("fading")
-		body.ui_access = ""
+		body.ui_inventory.access = ""
 		body.reset_bot_vars()
 		body.update_player_vars()

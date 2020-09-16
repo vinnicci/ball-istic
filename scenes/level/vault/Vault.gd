@@ -1,7 +1,18 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
-var arr_vault: Array
+var arr_vault: Array = [
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+	null, null, null, null, null,
+]
 
 
 func _on_Access_body_entered(body: Node) -> void:

@@ -13,7 +13,7 @@ func update_weap_and_slot_selected() -> void:
 	var non_empty_slot_found: = false
 	var slot_initialized: = false
 	for slot_num in _player.arr_weapons.size():
-		non_empty_slot_found = _player.update_ui_weapon_slot(slot_num)
+		non_empty_slot_found = _player.ui_inventory.update_ui_weapon_slot(slot_num)
 		if non_empty_slot_found == true && slot_initialized == false: #initialize first selected slot
 			change_slot_selected(slot_num)
 			slot_initialized = true
