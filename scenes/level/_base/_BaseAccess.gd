@@ -10,6 +10,7 @@ func _access(body: Node, access_name: String, items: Node) -> void:
 	body.ui_inventory.access_button.disabled = false
 	body.ui_inventory.items_external = items
 	body.ui_inventory.get_node("Loadout").visible = false
+	body.ui_inventory.update_access_ui()
 
 
 func _exit_access(body: Node) -> void:

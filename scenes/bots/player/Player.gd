@@ -22,6 +22,7 @@ func _init_player() -> void:
 		if weap is BUILT_IN_WEAP:
 			ui_inventory.player_built_in_weap = weap
 		ui_inventory.get_node("Loadout/SlotsContainer/WeaponSlots/" + str(i)).set_item(weap)
+		$PlayerUI/WeaponSlots.get_node(str(i)).set_item(weap)
 		i += 1
 	
 	i = 0
@@ -69,12 +70,11 @@ func update_player_vars() -> void:
 
 func _process(delta: float) -> void:
 	_update_bar_weapon_heat()
-	
-	_control_player_weapon_hotkeys()
 
 
 func _physics_process(delta: float) -> void:
 	_control_player()
+	_control_player_weapon_hotkeys()
 
 
 var stopped: bool = false
@@ -138,7 +138,10 @@ func _control_player_weapon_hotkeys() -> void:
 	elif Input.is_action_just_pressed("weap_slot_4"):
 		slot_num = 4
 	if slot_num != -1:
-		 hud_weapon_slots.change_slot_selected(slot_num)
+		if change_weapon(slot_num) == true:
+			hud_weapon_slots.change_slot_selected(slot_num)
+			current_weapon.look_at(get_global_mouse_position())
+		slot_num = -1
 
 
 func update_bar_charge_level(time: float) -> void:

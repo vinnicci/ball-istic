@@ -633,7 +633,6 @@ func change_weapon(slot_num: int) -> bool:
 	var weap = arr_weapons[slot_num]
 	if weap == null:
 		return false
-	#can't switch weapon if in these states
 	match state:
 		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT, State.DEAD:
 			return false

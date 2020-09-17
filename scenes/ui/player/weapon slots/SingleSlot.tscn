@@ -1,16 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/ui/tex_hud_weap_slot_square.png" type="Texture" id=1]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scenes/ui/player/weapon slots/SingleSlot.gd" type="Script" id=3]
 
 [node name="Slot" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="SlotHeat" type="TextureProgress" parent="."]
 modulate = Color( 1, 0.701961, 0.14902, 0.921569 )
-margin_left = -26.0
-margin_top = -26.0
-margin_right = 29.0
-margin_bottom = 29.0
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 64.0
+margin_bottom = 64.0
 texture_progress = ExtResource( 1 )
 fill_mode = 3
 __meta__ = {
@@ -19,17 +21,15 @@ __meta__ = {
 
 [node name="SlotLabel" type="Label" parent="."]
 modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
-margin_left = -25.0
-margin_top = -30.0
-margin_right = -21.0
-margin_bottom = -3.0
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 16.0
+margin_bottom = 38.0
 custom_fonts/font = ExtResource( 2 )
 text = "1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WeaponSprite" type="Sprite" parent="."]
-
 [node name="SelectPos" type="Position2D" parent="."]
-position = Vector2( -29, -29 )
+position = Vector2( 6, 6 )

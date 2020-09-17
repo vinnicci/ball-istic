@@ -17,7 +17,6 @@ func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		_access(body, "depot", $Items)
 		body.ui_inventory.get_node("Depot").visible = true
-		body.ui_inventory.update_access_ui()
 
 
 func _on_Access_body_exited(body: Node) -> void:
