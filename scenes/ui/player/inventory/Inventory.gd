@@ -15,28 +15,33 @@ onready var _vault: = $Vault/SlotsContainer
 onready var access_button: = $Loadout/SlotsContainer/HBoxContainer2/AccessButton
 
 
-func _ready() -> void:
-	_connect_slot_buttons()
-
-
 func _connect_slot_buttons() -> void:
+	var core_mod_slot = $Loadout/SlotsContainer/HBoxContainer/CoreModSlot
+	core_mod_slot.held = held
+	
 	for weap_slot in _loadout_weapon_slots.get_children():
 		weap_slot.connect("pressed", self, "on_slot_pressed", [weap_slot])
+		weap_slot.held = held
 	
 	for passive_slot in _loadout_passive_slots.get_children():
 		passive_slot.connect("pressed", self, "on_slot_pressed", [passive_slot])
+		passive_slot.held = held
 	
 	for item_slot in _all_item_slots.get_children():
 		item_slot.connect("pressed", self, "on_slot_pressed", [item_slot])
+		item_slot.held = held
 	
 	for depot_slot in _depot.get_node("DepotSlots").get_children():
 		depot_slot.connect("pressed", self, "on_slot_pressed", [depot_slot])
+		depot_slot.held = held
 	
 	for vault_slot in _vault.get_node("VaultSlots").get_children():
 		vault_slot.connect("pressed", self, "on_slot_pressed", [vault_slot])
+		vault_slot.held = held
 	
 	var trash_slot = $AllItems/SlotsContainer/HBoxContainer/TrashSlot
 	trash_slot.connect("pressed", self, "on_slot_pressed", [trash_slot])
+	trash_slot.held = held
 	
 	access_button.connect("pressed", self, "_on_SwitchAccess_pressed")
 	_depot.get_node("HBoxContainer/ToLoadout").connect("pressed", self, "_on_SwitchAccess_pressed")
@@ -46,6 +51,7 @@ func _connect_slot_buttons() -> void:
 func set_player(player_node) -> void:
 	_player = player_node
 	held = _player.get_node("PlayerUI/HeldItem")
+	_connect_slot_buttons()
 	_player_weap_hud = _player.get_node("PlayerUI/WeaponSlots")
 	$Stats.set_player(_player)
 
@@ -81,6 +87,7 @@ func _swap(slot_node: Node) -> void:
 	var temp_held = held.item
 	held.set_item(slot_node.item, slot_node.from_slot)
 	slot_node.set_item(temp_held)
+	slot_node.emit_signal("mouse_entered")
 
 
 func _show_inventory_warning(warning_text: String) -> void:

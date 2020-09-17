@@ -18,6 +18,10 @@ visible = false
 modulate = Color( 0.0352941, 0.992157, 0.00392157, 1 )
 position = Vector2( 35, 35 )
 texture = ExtResource( 2 )
+
+[node name="InfoDisplayDelay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 [connection signal="hide" from="." to="." method="_on_Slot_hide"]
 [connection signal="mouse_entered" from="." to="." method="_on_Slot_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Slot_mouse_exited"]

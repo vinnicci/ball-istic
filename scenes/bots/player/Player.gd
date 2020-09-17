@@ -3,7 +3,6 @@ extends "res://scenes/bots/_base/_BaseBot.gd"
 
 const WEAP_OVERHEAT_COLOR: = Color(0.9, 0, 0) #red
 const WEAP_HEAT_COLOR: = Color(1, 0.7, 0.15) #orange
-const BUILT_IN_WEAP: = preload("res://scenes/bots/player/PlayerAutoBlaster.gd")
 
 onready var bar_weapon_heat: = $Bars/WeaponHeat
 onready var bar_charge_level: = $Bars/ChargeLevel
@@ -19,7 +18,7 @@ func _ready() -> void:
 func _init_player() -> void:
 	var i = 0
 	for weap in arr_weapons:
-		if weap is BUILT_IN_WEAP:
+		if weap is Global.PLAYER_BUILT_IN_WEAP:
 			ui_inventory.player_built_in_weap = weap
 		ui_inventory.get_node("Loadout/SlotsContainer/WeaponSlots/" + str(i)).set_item(weap)
 		$PlayerUI/WeaponSlots.get_node(str(i)).set_item(weap)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scenes/ui/player/inventory/ItemDescription.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/ui/player/inventory/ItemInfo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/player/inventory/HeldItem.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
@@ -23,7 +23,7 @@ tracks/0/keys = {
 [node name="HeldItem" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="ItemDescription" parent="." instance=ExtResource( 2 )]
+[node name="ItemInfo" parent="." instance=ExtResource( 2 )]
 visible = false
 margin_left = 15.0
 margin_top = 15.0
