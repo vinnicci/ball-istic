@@ -6,7 +6,7 @@ var _player = null
 
 func set_player(player_node) -> void:
 	_player = player_node
-	update_weap_and_slot_selected()
+#	update_weap_and_slot_selected()
 
 
 func update_weap_and_slot_selected() -> void:

@@ -1,15 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/ui/player/inventory/SingleSlot.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/ui/player/inventory/FiveButtonSlots.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=3]
-[ext_resource path="res://scenes/ui/player/inventory/Loadout.gd" type="Script" id=4]
 
 [node name="Loadout" type="Control"]
 margin_top = 50.0
 margin_right = 400.0
 margin_bottom = 550.0
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -33,7 +30,7 @@ margin_bottom = 36.0
 custom_fonts/font = ExtResource( 3 )
 text = "CORE MOD"
 
-[node name="ToAccess" type="Button" parent="SlotsContainer/HBoxContainer2"]
+[node name="AccessButton" type="Button" parent="SlotsContainer/HBoxContainer2"]
 margin_left = 260.0
 margin_right = 272.0
 margin_bottom = 39.0
@@ -49,6 +46,7 @@ margin_bottom = 113.0
 custom_constants/separation = 30
 
 [node name="CoreModSlot" parent="SlotsContainer/HBoxContainer" instance=ExtResource( 1 )]
+from_slot = "core_mod"
 
 [node name="WeaponsLabel" type="Label" parent="SlotsContainer"]
 margin_top = 117.0
@@ -57,10 +55,96 @@ margin_bottom = 150.0
 custom_fonts/font = ExtResource( 3 )
 text = "WEAPONS"
 
-[node name="WeaponSlots" parent="SlotsContainer" instance=ExtResource( 2 )]
+[node name="WeaponSlots" type="HBoxContainer" parent="SlotsContainer"]
 margin_top = 154.0
 margin_right = 400.0
 margin_bottom = 224.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" parent="SlotsContainer/WeaponSlots" instance=ExtResource( 1 )]
+from_slot = "weapon"
+
+[node name="Label" type="Label" parent="SlotsContainer/WeaponSlots/0"]
+modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
+margin_left = 9.0
+margin_top = 1.5
+margin_right = 15.0
+margin_bottom = 34.5
+custom_fonts/font = ExtResource( 3 )
+text = "1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" parent="SlotsContainer/WeaponSlots" instance=ExtResource( 1 )]
+margin_left = 74.0
+margin_right = 144.0
+from_slot = "weapon"
+
+[node name="Label" type="Label" parent="SlotsContainer/WeaponSlots/1"]
+modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
+margin_left = 9.0
+margin_top = 1.5
+margin_right = 18.0
+margin_bottom = 34.5
+custom_fonts/font = ExtResource( 3 )
+text = "2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" parent="SlotsContainer/WeaponSlots" instance=ExtResource( 1 )]
+margin_left = 148.0
+margin_right = 218.0
+from_slot = "weapon"
+
+[node name="Label" type="Label" parent="SlotsContainer/WeaponSlots/2"]
+modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
+margin_left = 9.0
+margin_top = 1.5
+margin_right = 18.0
+margin_bottom = 34.5
+custom_fonts/font = ExtResource( 3 )
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" parent="SlotsContainer/WeaponSlots" instance=ExtResource( 1 )]
+margin_left = 222.0
+margin_right = 292.0
+from_slot = "weapon"
+
+[node name="Label" type="Label" parent="SlotsContainer/WeaponSlots/3"]
+modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
+margin_left = 9.0
+margin_top = 1.5
+margin_right = 27.0
+margin_bottom = 34.5
+custom_fonts/font = ExtResource( 3 )
+text = "4"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" parent="SlotsContainer/WeaponSlots" instance=ExtResource( 1 )]
+margin_left = 296.0
+margin_right = 366.0
+from_slot = "weapon"
+
+[node name="Label" type="Label" parent="SlotsContainer/WeaponSlots/4"]
+modulate = Color( 0.109804, 0.137255, 0.113725, 1 )
+margin_left = 9.0
+margin_top = 1.5
+margin_right = 27.0
+margin_bottom = 34.5
+custom_fonts/font = ExtResource( 3 )
+text = "5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PassivesLabel" type="Label" parent="SlotsContainer"]
 margin_top = 228.0
@@ -78,35 +162,43 @@ __meta__ = {
 }
 
 [node name="0" parent="SlotsContainer/PassiveSlots" instance=ExtResource( 1 )]
+from_slot = "passive"
 
 [node name="1" parent="SlotsContainer/PassiveSlots" instance=ExtResource( 1 )]
 margin_left = 74.0
 margin_right = 144.0
+from_slot = "passive"
 
 [node name="2" parent="SlotsContainer/PassiveSlots" instance=ExtResource( 1 )]
 margin_left = 148.0
 margin_right = 218.0
+from_slot = "passive"
 
 [node name="3" parent="SlotsContainer/PassiveSlots" instance=ExtResource( 1 )]
 margin_left = 222.0
 margin_right = 292.0
+from_slot = "passive"
 
 [node name="4" parent="SlotsContainer/PassiveSlots" instance=ExtResource( 1 )]
 margin_left = 296.0
 margin_right = 366.0
+from_slot = "passive"
 
 [node name="SpecialPassiveSlots" type="HBoxContainer" parent="SlotsContainer"]
 visible = false
-margin_top = 333.0
+margin_top = 339.0
 margin_right = 400.0
-margin_bottom = 403.0
+margin_bottom = 409.0
 
-[node name="Slot0" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
+[node name="0" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
+from_slot = "passive"
 
-[node name="Slot1" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
+[node name="1" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
 margin_left = 74.0
 margin_right = 144.0
+from_slot = "passive"
 
-[node name="Slot2" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
+[node name="2" parent="SlotsContainer/SpecialPassiveSlots" instance=ExtResource( 1 )]
 margin_left = 148.0
 margin_right = 218.0
+from_slot = "passive"

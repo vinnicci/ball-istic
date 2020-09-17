@@ -47,19 +47,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="SlotsContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SlotsContainer"]
 margin_right = 400.0
 margin_bottom = 39.0
 custom_constants/separation = 217
 
-[node name="DepotLabel" type="Label" parent="SlotsContainer/HBoxContainer2"]
+[node name="DepotLabel" type="Label" parent="SlotsContainer/HBoxContainer"]
 margin_top = 3.0
 margin_right = 43.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 2 )
 text = "DEPOT"
 
-[node name="ToLoadout" parent="SlotsContainer/HBoxContainer2" instance=ExtResource( 3 )]
+[node name="ToLoadout" parent="SlotsContainer/HBoxContainer" instance=ExtResource( 3 )]
 
 [node name="DepotSlots" type="GridContainer" parent="SlotsContainer"]
 margin_top = 43.0
@@ -68,92 +68,107 @@ margin_bottom = 261.0
 columns = 5
 
 [node name="0" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
+from_slot = "depot"
 
 [node name="1" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 74.0
 margin_right = 144.0
+from_slot = "depot"
 
 [node name="2" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 148.0
 margin_right = 218.0
+from_slot = "depot"
 
 [node name="3" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 222.0
 margin_right = 292.0
+from_slot = "depot"
 
 [node name="4" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 296.0
 margin_right = 366.0
+from_slot = "depot"
 
 [node name="5" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_top = 74.0
 margin_bottom = 144.0
+from_slot = "depot"
 
 [node name="6" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 74.0
 margin_top = 74.0
 margin_right = 144.0
 margin_bottom = 144.0
+from_slot = "depot"
 
 [node name="7" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 148.0
 margin_top = 74.0
 margin_right = 218.0
 margin_bottom = 144.0
+from_slot = "depot"
 
 [node name="8" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 222.0
 margin_top = 74.0
 margin_right = 292.0
 margin_bottom = 144.0
+from_slot = "depot"
 
 [node name="9" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 296.0
 margin_top = 74.0
 margin_right = 366.0
 margin_bottom = 144.0
+from_slot = "depot"
 
 [node name="10" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_top = 148.0
 margin_bottom = 218.0
+from_slot = "depot"
 
 [node name="11" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 74.0
 margin_top = 148.0
 margin_right = 144.0
 margin_bottom = 218.0
+from_slot = "depot"
 
 [node name="12" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 148.0
 margin_top = 148.0
 margin_right = 218.0
 margin_bottom = 218.0
+from_slot = "depot"
 
 [node name="13" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 222.0
 margin_top = 148.0
 margin_right = 292.0
 margin_bottom = 218.0
+from_slot = "depot"
 
 [node name="14" parent="SlotsContainer/DepotSlots" instance=ExtResource( 1 )]
 margin_left = 296.0
 margin_top = 148.0
 margin_right = 366.0
 margin_bottom = 218.0
+from_slot = "depot"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="SlotsContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="SlotsContainer"]
 margin_top = 265.0
 margin_right = 400.0
 margin_bottom = 298.0
 custom_constants/separation = 25
 
-[node name="Label" type="Label" parent="SlotsContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="SlotsContainer/HBoxContainer2"]
 margin_right = 175.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 2 )
 text = "TAKE OUT SUCCESS RATE:"
 
-[node name="SuccessRate" type="Label" parent="SlotsContainer/HBoxContainer"]
+[node name="SuccessRate" type="Label" parent="SlotsContainer/HBoxContainer2"]
 margin_left = 200.0
 margin_right = 240.0
 margin_bottom = 33.0

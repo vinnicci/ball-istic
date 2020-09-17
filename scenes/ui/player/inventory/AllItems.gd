@@ -1,7 +1,7 @@
 extends Control
 
 
-var _player = null
+var _player: Node = null
 
 
 func set_player(player_node) -> void:
