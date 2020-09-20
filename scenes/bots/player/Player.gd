@@ -16,6 +16,13 @@ func _ready() -> void:
 
 
 func _init_player() -> void:
+	#give player access to ui nodes
+	ui_inventory.set_player(self)
+	hud_weapon_slots.set_player(self)
+	
+	#explosion initialize
+	$Explosion.set_player_cam($Camera2D)
+	
 	var i = 0
 	for weap in arr_weapons:
 		if weap is Global.PLAYER_BUILT_IN_WEAP:
@@ -38,12 +45,8 @@ func _init_player() -> void:
 		ui_inventory.get_node("Loadout/SlotsContainer/PassiveSlots/" + str(i)).set_item(passive)
 		i += 1
 	
-	#give player access to ui nodes
-	ui_inventory.set_player(self)
-	hud_weapon_slots.set_player(self)
-	
-	#explosion initialize
-	$Explosion.set_player_cam($Camera2D)
+	#initialize player stats ui
+	ui_inventory.get_node("Stats").update_stats()
 	
 	#player bars initialize
 	bar_weapon_heat.rect_position.x -= bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
@@ -55,16 +58,14 @@ func _init_player() -> void:
 	var bar_scale: float = float(bot_radius*2)/150.0
 	bar_weapon_heat.rect_scale.x = bar_scale
 	bar_charge_level.rect_scale.x = bar_scale
-	
-	update_player_vars()
 
 
 #used only on initialization or in bot stations
-func update_player_vars() -> void:
+func reset_bot_vars() -> void:
+	.reset_bot_vars()
 	for passive in $Passives.get_children():
 		passive._apply_effects()
-	_cap_current_vars()
-	ui_inventory.get_node("Stats").update_stats()
+	cap_current_vars()
 
 
 func _process(delta: float) -> void:

@@ -143,8 +143,6 @@ func _manage_weapon(slot_node: Node) -> void:
 
 
 func _manage_passive(slot_node: Node) -> void:
-#	var player_items = _player.get_node("Items")
-#	var player_passives = _player.get_node("Passives")
 	if held.item != null:
 		if accessing != "bot_station" && held.from_slot == "item":
 			_show_inventory_warning(NOT_IN_BOT_STATION)
@@ -153,6 +151,8 @@ func _manage_passive(slot_node: Node) -> void:
 			_show_inventory_warning("NOT A PASSIVE")
 			return
 	_swap(slot_node)
+	_player.reset_bot_vars()
+	$Stats.update_stats()
 
 
 const NO_WEAPON: String = "EQUIP AT LEAST ONE WEAPON"
@@ -217,7 +217,6 @@ func update_access_ui() -> void:
 
 
 func _manage_depot(slot_node: Node) -> void:
-#	var player_items = _player.get_node("Items") 
 	var text1 = _depot.get_node("Instruction1")
 	var text2 = _depot.get_node("Instruction2")
 	var text_anim = _depot.get_node("InstructionAnim")
@@ -243,7 +242,6 @@ func _manage_depot(slot_node: Node) -> void:
 
 
 func _manage_vault(slot_node: Node) -> void:
-#	var player_items = _player.get_node("Items")
 	if held.item != null:
 		if (accessing != "bot_station" &&
 			(held.from_slot == "weapon" ||

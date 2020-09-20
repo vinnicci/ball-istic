@@ -7,7 +7,7 @@ export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_reco
 export (float) var health_capacity: float = 10 setget , get_health_capacity
 export (int, 0, 4000) var speed: int = 1000 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.2 setget , get_knockback_resist
-export (float, 0.05, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
+export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.25, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
@@ -49,6 +49,10 @@ var current_weapon: Node
 var velocity: Vector2
 var arr_weapons: Array = [null, null, null, null, null]
 var level_node: Node = null
+enum State {
+	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
+}
+var state
 
 onready var _body_outline: = $Body/Outline
 onready var _body_texture: = $Body/Texture
@@ -143,159 +147,6 @@ func is_charge_roll_ready():
 	return _timer_charge_cooldown.is_stopped()
 
 
-###################
-# bot state machine
-###################
-enum State {
-	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
-}
-var state
-var _before_stun = null
-
-
-#state checker
-func task_is_in_state(task):
-	var get_state
-	match task.get_param(0):
-		"TURRET": get_state = State.TURRET
-		"ROLL": get_state = State.ROLL
-		"TO_TURRET": get_state = State.TO_TURRET
-		"TO_ROLL": get_state = State.TO_ROLL
-		"WEAP_COMMIT": get_state = State.WEAP_COMMIT
-		"CHARGE_ROLL": get_state = State.CHARGE_ROLL
-		"STUN": get_state = State.STUN
-		"DEAD": get_state = State.DEAD
-	if state == get_state:
-		task.succeed()
-	else:
-		task.failed()
-	return
-
-
-#states enter and process tasks
-func task_turret_process(task):
-	if current_health <= 0 || timer_stun.is_stopped() == false:
-		_before_stun = state
-		state = State.STUN
-		task.succeed()
-		return
-	if _switch == true:
-		state = State.TO_ROLL
-		task.succeed()
-		return
-	if current_weapon.weap_commit == true:
-		state = State.WEAP_COMMIT
-		task.succeed()
-		return
-
-
-func task_roll_process(task):
-	if current_health <= 0 || timer_stun.is_stopped() == false:
-		_before_stun = state
-		state = State.STUN
-		task.succeed()
-		return
-	if _switch == true:
-		state = State.TO_TURRET
-		task.succeed()
-		return
-	if _charge_roll != null:
-		state = State.CHARGE_ROLL
-		task.succeed()
-		return
-
-
-func task_to_turret_enter(task):
-	_switch_to_turret()
-	task.succeed()
-	return
-
-
-func task_to_turret_process(task):
-	if current_health <= 0 || timer_stun.is_stopped() == false:
-		_before_stun = state
-		state = State.STUN
-		task.succeed()
-		return
-	if _switch == false:
-		state = State.TURRET
-		task.succeed()
-		return
-
-
-func task_to_roll_enter(task):
-	_switch_to_roll()
-	task.succeed()
-	return
-
-
-func task_to_roll_process(task):
-	if current_health <= 0 || timer_stun.is_stopped() == false:
-		_before_stun = state
-		state = State.STUN
-		task.succeed()
-		return
-	if _switch == false:
-		state = State.ROLL
-		task.succeed()
-		return
-
-
-func task_weap_commit_process(task):
-	if current_health <= 0 || timer_stun.is_stopped() == false:
-		_before_stun = state
-		state = State.STUN
-		task.succeed()
-		return
-	if current_weapon.weap_commit == false:
-		state = State.TURRET
-		task.succeed()
-		return
-
-
-func task_charge_roll_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if _charge_roll == null:
-		state = State.ROLL
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == false:
-		timer_stun.stop()
-
-
-func task_stun_process(task):
-	if current_health <= 0:
-		state = State.DEAD
-		task.succeed()
-		return
-	if timer_stun.is_stopped() == true:
-		match _before_stun:
-			State.ROLL, State.TO_ROLL:
-				state = State.ROLL
-			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT:
-				state = State.TURRET
-		_before_stun = null
-		task.succeed()
-		return
-
-
-func task_dead_enter(task):
-	current_health = 0
-	explode()
-	task.succeed()
-	return
-
-
-func task_dead_process(task):
-	task.reset()
-
-
-################
-# core functions
-################
 func _ready() -> void:
 	#initialize bot
 	_init_bot()
@@ -305,7 +156,7 @@ func _ready() -> void:
 	if deployed == false:
 		state = State.ROLL
 		current_transform_speed = 0
-		_switch_to_roll()
+		switch_to_roll()
 	else:
 		state = State.TURRET
 	$Sounds/ChangeMode.stop()
@@ -323,8 +174,8 @@ func set_level(new_level: Node) -> void:
 
 
 func _init_bot() -> void:
-	var state_machine = load("res://scenes/bots/_base/StateMachine.tscn")
-	add_child(state_machine.instance())
+	#initialze state machine
+	$StateMachine.set_bot(self)
 	
 	#initialize AI component
 	if has_node("AI") == true:
@@ -430,7 +281,6 @@ func reset_bot_vars() -> void:
 	set_current_health(current_health_cap)
 	
 	current_transform_speed = transform_speed
-	
 	current_charge_cooldown = charge_cooldown
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
 	current_charge_force_factor = charge_force_factor
@@ -450,21 +300,18 @@ func reset_bot_vars() -> void:
 		if weap == null:
 			continue
 		weap.reset_weap_vars()
-	
-	_cap_current_vars()
 
 
-func _cap_current_vars() -> void:
-	current_health_cap = clamp(current_health_cap, 1, 9999)
-	current_health = clamp(current_health, 1, 9999)
+func cap_current_vars() -> void:
 	current_shield_cap = clamp(current_shield_cap, 0, 9999)
 	current_shield = clamp(current_shield, 0, 9999)
-	current_speed = clamp(current_speed, 500, 4000)
-	current_transform_speed = clamp(current_transform_speed, 0.05, 1.0)
+	current_health_cap = clamp(current_health_cap, 1, 9999)
+	current_health = clamp(current_health, 1, 9999)
+	current_transform_speed = clamp(current_transform_speed, 0, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.25, 5.0)
-	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
-	current_charge_damage_rate = clamp(current_charge_damage_rate, 0, 1.0)
 	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
+	current_speed = clamp(current_speed, 500, 4000)
+	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 
 
 func _process(delta: float) -> void:
@@ -544,7 +391,7 @@ func _check_if_turret() -> bool:
 		State.ROLL, State.TO_ROLL:
 			output = false
 		State.DEAD, State.STUN:
-			match _before_stun:
+			match $StateMachine.before_stun:
 				State.TURRET, State.TO_TURRET, State.WEAP_COMMIT:
 					output = true
 				State.TO_ROLL, State.ROLL:
@@ -552,16 +399,13 @@ func _check_if_turret() -> bool:
 	return output
 
 
-var _switch: bool = false
-
-
 func switch_mode():
 	if state == State.ROLL || state == State.TURRET:
-		_switch = true
+		$StateMachine.switching = true
 
 
 #state machine exclusive func
-func _switch_to_turret() -> void:
+func switch_to_turret() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
 	linear_damp = TURRET_MODE_DAMP
@@ -589,7 +433,7 @@ func _animate_weapon_hatch_to_turret() -> void:
 
 
 #state machine exclusive func
-func _switch_to_roll() -> void:
+func switch_to_roll() -> void:
 	velocity = Vector2(0,0)
 	$Sounds/ChangeMode.play()
 	linear_damp = ROLL_MODE_DAMP
@@ -618,7 +462,7 @@ func _animate_weapon_hatch_to_roll() -> void:
 func _on_SwitchTween_tween_all_completed() -> void:
 	if state == State.TO_ROLL:
 		_body_weapon_hatch.hide()
-	_switch = false
+	$StateMachine.switching = false
 
 
 func shoot_weapon() -> void:
@@ -645,14 +489,11 @@ func change_weapon(slot_num: int) -> bool:
 	return true
 
 
-var _charge_roll = null
-
-
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
 	if state == State.ROLL && is_charge_roll_ready() == true:
-		_charge_roll = charge_direction
-		_apply_charge_impulse(_charge_roll)
+		$StateMachine.charge_roll = charge_direction
+		_apply_charge_impulse($StateMachine.charge_roll)
 
 
 func _apply_charge_impulse(dir: float) -> void:
@@ -686,7 +527,7 @@ func _end_charging_effect() -> void:
 				_body_outline.modulate = current_faction
 				_body_charge_effect.modulate.a = 0
 				$Timers/ChargeTrail.stop()
-				_charge_roll = null
+				$StateMachine.charge_roll = null
 
 
 #coroutine resume signal

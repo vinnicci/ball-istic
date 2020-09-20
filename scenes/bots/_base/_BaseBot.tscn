@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://assets/ui/fonts/LADYIC__.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/ui/tex_bar.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Shield_Damage.wav" type="AudioStream" id=7]
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/bots/sfx_Bot_Transform.wav" type="AudioStream" id=9]
+[ext_resource path="res://scenes/bots/_base/StateMachine.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/bots/sfx_Bot_discharge_parry.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/bots/sfx_Bot_teleport.wav" type="AudioStream" id=13]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
@@ -81,6 +82,8 @@ gravity_scale = 0.0
 contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 15 )
+
+[node name="StateMachine" parent="." instance=ExtResource( 10 )]
 
 [node name="Legs" type="Node2D" parent="."]
 
