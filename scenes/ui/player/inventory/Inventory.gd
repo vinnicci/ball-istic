@@ -151,8 +151,8 @@ func _manage_passive(slot_node: Node) -> void:
 			_show_inventory_warning("NOT A PASSIVE")
 			return
 	_swap(slot_node)
-	_player.reset_bot_vars()
-	$Stats.update_stats()
+	if accessing == "bot_station":
+		_player.update_player_vars()
 
 
 const NO_WEAPON: String = "EQUIP AT LEAST ONE WEAPON"

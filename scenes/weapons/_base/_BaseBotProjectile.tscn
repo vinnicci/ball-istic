@@ -24,16 +24,16 @@ uv = PoolVector2Array( 104, 72, 99, 80, 94, 88, 89, 96, 84, 104, 74, 104, 64, 10
 
 [node name="UnrollTween" type="Tween" parent="Body" index="6"]
 
-[node name="Bars" parent="." index="2"]
+[node name="Bars" parent="." index="3"]
 visible = false
 
 [node name="ExplodeDelay" parent="Timers" index="4"]
-wait_time = 0.001
+wait_time = 0.1
 
 [node name="Lifetime" type="Timer" parent="Timers" index="5"]
 wait_time = 1.5
 one_shot = true
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 [connection signal="timeout" from="Timers/Lifetime" to="." method="_on_Lifetime_timeout"]

@@ -17,25 +17,13 @@ var _saved_player: Dictionary = {
 }
 var _saved_big_bots: Dictionary = {} #key: lvl name, value: is_alive
 var _saved_depot_items: Dictionary = {} #key: lvl name, value: arr_items
-var _saved_vault_items: Array = []
+var _saved_vault_items: Array
 var current_save_slot: int
 var current_save_name: String
 
 var _player_tut = null
 var _player = null
 var _current_scene = null
-var _vault_items: Array = [
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null,
-	null, null, null, null, null
-]
 const SAVE_DIR: String = "user://saves/"
 signal moved
 
@@ -44,7 +32,6 @@ func _ready() -> void:
 	randomize()
 	$CanvasLayer/InGameMenu.set_parent(self)
 	_load_from_disk()
-	_load_vault_items()
 	_load_data()
 
 
@@ -76,7 +63,7 @@ func _verify_data(save_file) -> bool:
 func save_to_disk() -> void:
 	_save_player_items()
 	_save_depot_items(_current_scene)
-	_save_vault_items()
+	_save_vault_items(_current_scene)
 	var new_save = Global.CLASS_SAVE.new()
 	new_save.save_name = current_save_name
 	new_save.player = _saved_player
@@ -109,14 +96,13 @@ func _process(delta: float) -> void:
 func on_change_scene(new_lvl: String, pos: String) -> void:
 	$Resume.start()
 	$Anim.play("transition")
+	yield(self, "resume")
 	if _current_scene != null:
-		yield(self, "resume")
 		if _current_scene.get_node("Bots").get_children().has(_player):
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
+		_save_vault_items(_current_scene)
 		_save_big_bots()
-	else:
-		yield(self, "resume")
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
 
 
@@ -124,23 +110,24 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	if _current_scene != null:
 		_current_scene.free()
 	var player
-	match new_lvl:
-		"TutorialLevel":
-			if _player_tut == null:
-				_player_tut = scenes["PlayerTut"].instance()
-			player = _player_tut
-		_:
-			if _player == null:
-				_player = scenes["Player"].instance()
-				_load_player_items()
-			if !_player.is_connected("dead", self, "_on_player_dead"):
-				_player.connect("dead", self, "_on_player_dead")
-			player = _player
+	if new_lvl == "TutorialLevel":
+		if _player_tut == null:
+			_player_tut = scenes["PlayerTut"].instance()
+		player = _player_tut
+	else:
+		if _player == null:
+			_player = scenes["Player"].instance()
+			_load_player_items()
+		if !_player.is_connected("dead", self, "_on_player_dead"):
+			_player.connect("dead", self, "_on_player_dead")
+		player = _player
 	player.name = current_save_name
+	print(current_save_name)
 	_current_scene = scenes[new_lvl].instance()
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
+	_load_vault_items(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
@@ -152,8 +139,6 @@ func _connect_access(lvl: Node) -> void:
 		match access.get_script():
 			Global.BOT_STATION:
 				access.connect("autosaved", self, "_on_autosave", [lvl.name, access.name])
-			Global.VAULT:
-				access.arr_vault = _vault_items
 			Global.NEXT_ZONE:
 				access.connect("moved", self, "on_change_scene")
 
@@ -196,6 +181,9 @@ func _on_Anim_animation_finished(anim_name: String) -> void:
 		Engine.time_scale = 1.0
 
 
+#############
+# depot items
+#############
 func _save_depot_items(lvl) -> void:
 	for access in lvl.get_node("Access").get_children():
 		if access is Global.DEPOT:
@@ -234,12 +222,17 @@ func _resume(player) -> void:
 		player.update_bar_charge_level(player_charge_time)
 
 
+
+##############
+# player items
+##############
 func _save_player_items() -> void:
 	if is_instance_valid(_player) == false:
 		return
 	#clear player trash
-	if _player.arr_trash[0] != null:
-		_player.arr_trash[0].free()
+	var trash_slot = _player.ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot")
+	if trash_slot.item != null:
+		trash_slot.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
 	var items: Dictionary = {}
@@ -273,20 +266,25 @@ func _load_player_items() -> void:
 		_saved_player[arr].clear()
 
 
-func _save_vault_items() -> void:
-	var i = 0
-	for item in _vault_items:
-		if item != null:
-			#save as ref
-			_saved_vault_items.append(item.filename)
-		i += 1
+#############
+# vault items
+#############
+func _save_vault_items(lvl) -> void:
+	for access in lvl.get_node("Access").get_children():
+		if access is Global.VAULT:
+			var vault_items = access.get_node("Items").get_children()
+			for item in vault_items:
+				_saved_vault_items.append(item.filename)
+				item.get_parent().remove_child(item)
 
 
-func _load_vault_items() -> void:
-	for i in _saved_vault_items.size():
-		var item = load(_saved_vault_items[i]).instance()
-		_vault_items[i] = item
-	_saved_vault_items.clear()
+func _load_vault_items(lvl) -> void:
+	for access in lvl.get_node("Access").get_children():
+		if access is Global.VAULT:
+			for i in _saved_vault_items.size():
+				var item = load(_saved_vault_items[i]).instance()
+				access.get_node("Items").add_child(item)
+			_saved_vault_items.clear()
 
 
 #coroutine resume signal
@@ -309,14 +307,14 @@ func _on_player_dead() -> void:
 	$CanvasLayer/ColorRect2.modulate.a = 0
 	_temp_big_bots = {}
 	_save_player_items()
-	_save_vault_items()
+	_save_vault_items(_current_scene)
 	_save_depot_items(_current_scene)
 	$RespawnTimer.start()
 	$Anim.play("destroyed")
 
 
-#this func exist to stop get_global_mouse_pos error whenever
-#the mouse cursor gets out of the current scene tree on transition
+#this func exists to stop get_global_mouse_pos error whenever the
+#mouse cursor gets out of the current scene tree on transition
 func stop_player(stop: bool) -> void:
 	if is_instance_valid(_player) == true:
 		_player.stopped = stop

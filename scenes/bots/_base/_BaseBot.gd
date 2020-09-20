@@ -211,10 +211,11 @@ func _init_bot() -> void:
 		$Bars/Health.hide()
 	
 	#bot's body graphics setup
-	var regex = RegEx.new()
-	regex.compile("[A-Za-z]+")
-	var name_label = regex.search(name)
-	$Name/Label.text = name_label.get_string()
+#	var regex = RegEx.new()
+#	regex.compile("[A-Za-z]+")
+#	var name_label = regex.search(name)
+#	$Name/Label.text = name_label.get_string()
+	$Name/Label.text = name
 	$Name/Label.rect_position.y = -bot_radius - 54
 	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
 	_body_texture.scale = Vector2(tex_scale, tex_scale)
@@ -300,18 +301,6 @@ func reset_bot_vars() -> void:
 		if weap == null:
 			continue
 		weap.reset_weap_vars()
-
-
-func cap_current_vars() -> void:
-	current_shield_cap = clamp(current_shield_cap, 0, 9999)
-	current_shield = clamp(current_shield, 0, 9999)
-	current_health_cap = clamp(current_health_cap, 1, 9999)
-	current_health = clamp(current_health, 1, 9999)
-	current_transform_speed = clamp(current_transform_speed, 0, 1.0)
-	current_charge_cooldown = clamp(current_charge_cooldown, 0.25, 5.0)
-	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
-	current_speed = clamp(current_speed, 500, 4000)
-	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 
 
 func _process(delta: float) -> void:

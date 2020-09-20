@@ -11,7 +11,7 @@ func _on_Access_body_entered(body: Node) -> void:
 		$Sprite/Anim.stop()
 		$Sprite.modulate.a = 1.0
 		body.ui_inventory.accessing = "bot_station"
-		body.reset_bot_vars()
+		body.update_player_vars()
 		emit_signal("autosaved")
 
 

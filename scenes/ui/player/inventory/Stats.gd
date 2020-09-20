@@ -20,7 +20,7 @@ func update_stats() -> void:
 		"ChargeForceFactor": round(_player.current_charge_force_factor * 100),
 		"ChargeDmg": round(_player.current_charge_damage_rate * 100),
 		"ChargeDmgValue":
-			((_player.current_speed * 0.125 * _player.current_charge_force_factor) *
+			round((_player.current_speed * 0.125 * _player.current_charge_force_factor) *
 			_player.current_charge_damage_rate),
 		"WeaponDmg": round(_player.current_weap_damage_rate * 100),
 		"KnockbackResist": round(_player.current_knockback_resist * 100)
