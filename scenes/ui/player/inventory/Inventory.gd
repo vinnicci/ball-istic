@@ -84,10 +84,30 @@ func on_slot_pressed(slot_node) -> void:
 
 
 func _swap(slot_node: Node) -> void:
+	#swap node parents
+	var held_item_new_parent
+	match slot_node.from_slot:
+		"weapon": held_item_new_parent = _player.get_node("Weapons")
+		"passive": held_item_new_parent = _player.get_node("Passives")
+		"item", "trash": held_item_new_parent = _player.get_node("Items")
+		"vault": held_item_new_parent = items_external
+	if is_instance_valid(held_item_new_parent) == true:
+		_change_parent(held.item, held_item_new_parent)
+	_change_parent(slot_node.item, _player.get_node("Items"))
+	
+	#swap ui
 	var temp_held = held.item
 	held.set_item(slot_node.item, slot_node.from_slot)
 	slot_node.set_item(temp_held)
 	slot_node.emit_signal("mouse_entered")
+
+
+func _change_parent(item, new_parent) -> void:
+	if item != null:
+		item.get_parent().remove_child(item)
+		new_parent.add_child(item)
+		if new_parent.get_parent() is Global.CLASS_PLAYER:
+			item.set_parent(new_parent.get_parent())
 
 
 func _show_inventory_warning(warning_text: String) -> void:
@@ -117,15 +137,14 @@ func _manage_weapon(slot_node: Node) -> void:
 			_show_inventory_warning("NOT A WEAPON")
 			return
 	_swap(slot_node)
-	#update player arr_weapon
 	_player.arr_weapons[int(slot_node.name)] = slot_node.item
-	#update player weapon hud
 	_player_weap_hud.get_node(slot_node.name).set_item(slot_node.item)
-	#update slot selected
 	_player_weap_hud.init_slot_selected()
 
 
 func _manage_passive(slot_node: Node) -> void:
+#	var player_items = _player.get_node("Items")
+#	var player_passives = _player.get_node("Passives")
 	if held.item != null:
 		if accessing != "bot_station" && held.from_slot == "item":
 			_show_inventory_warning(NOT_IN_BOT_STATION)
@@ -148,8 +167,8 @@ func _manage_item(slot_node: Node) -> void:
 			return
 		elif (accessing == "bot_station" && held.from_slot == "weapon" &&
 			_check_if_equipping_weapon() == false):
-			_show_inventory_warning(NO_WEAPON)
-			return
+				_show_inventory_warning(NO_WEAPON)
+				return
 	_swap(slot_node)
 
 
@@ -198,7 +217,7 @@ func update_access_ui() -> void:
 
 
 func _manage_depot(slot_node: Node) -> void:
-	var player_items = _player.get_node("Items") 
+#	var player_items = _player.get_node("Items") 
 	var text1 = _depot.get_node("Instruction1")
 	var text2 = _depot.get_node("Instruction2")
 	var text_anim = _depot.get_node("InstructionAnim")
@@ -210,7 +229,6 @@ func _manage_depot(slot_node: Node) -> void:
 			text_anim.play("fade_out")
 			return
 		else:
-			_change_parent(slot_node.item, player_items)
 			_swap(slot_node)
 			text1.text = "ALL CLEAR"
 			text2.text = ""
@@ -225,7 +243,7 @@ func _manage_depot(slot_node: Node) -> void:
 
 
 func _manage_vault(slot_node: Node) -> void:
-	var player_items = _player.get_node("Items")
+#	var player_items = _player.get_node("Items")
 	if held.item != null:
 		if (accessing != "bot_station" &&
 			(held.from_slot == "weapon" ||
@@ -235,13 +253,6 @@ func _manage_vault(slot_node: Node) -> void:
 		if held.item == player_built_in_weap:
 			_show_inventory_warning("CAN'T STORE BUILT-IN WEAPON")
 			return
-		if held.from_slot == "item":
-			_change_parent(held.item, items_external)
-			if slot_node.item != null:
-				_change_parent(slot_node.item, player_items)
-	elif held.item == null:
-		if slot_node.item != null:
-			_change_parent(slot_node.item, player_items)
 	_swap(slot_node)
 
 
@@ -252,10 +263,3 @@ func _get_inv_count() -> int:
 			continue
 		count += 1
 	return count
-
-
-func _change_parent(item, new_parent) -> void:
-	item.get_parent().remove_child(item)
-	new_parent.add_child(item)
-	if new_parent.get_parent() is Global.CLASS_PLAYER:
-		item.set_parent(new_parent.get_parent())

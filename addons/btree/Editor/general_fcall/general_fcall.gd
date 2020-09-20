@@ -1,7 +1,7 @@
 tool
 extends GraphNode
 
-const Runtime = preload('../../Runtime/runtime.gd')
+const Runtime = preload("res://addons/btree/Runtime/runtime.gd")
 
 var type = Runtime.TNodeTypes.TASK
 var load_function = ""
@@ -108,7 +108,9 @@ func set_data(data):
 func get_data():
 	var opt = $Main/Required/opt_function
 	var sel = $Main/Required/opt_function.selected
-	var fname = opt.get_item_text(sel)
+	var fname = null
+	if  sel != -1:
+		fname = opt.get_item_text(sel)
 	var pr = $Params
 	
 	var ret_param = []

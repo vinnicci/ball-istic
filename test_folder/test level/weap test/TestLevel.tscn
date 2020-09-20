@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=2]
@@ -24,12 +24,8 @@
 [ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceII.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedIII.tscn" type="PackedScene" id=24]
-[ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=26]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlaster.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=28]
-[ext_resource path="res://scenes/passives/charge force/ChargeForceI.tscn" type="PackedScene" id=29]
-[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=30]
 [ext_resource path="res://scenes/weapons/drone ballista/CDroneBallista.tscn" type="PackedScene" id=31]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -238,9 +234,6 @@ resource_local_to_scene = true
 } ]
 6/z_index = 0
 
-[sub_resource type="CircleShape2D" id=15]
-resource_local_to_scene = true
-
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
 
@@ -315,28 +308,7 @@ health_capacity = 75.0
 position = Vector2( 327, 208 )
 contacts_reported = 1
 shield_capacity = 20.0
-health_capacity = 100.0
-transform_speed = 0.1
-charge_cooldown = 1.0
-
-[node name="CollisionShape" parent="Bots/Player" index="8"]
-shape = SubResource( 15 )
-
-[node name="ChargeForceI" parent="Bots/Player/Items" index="0" instance=ExtResource( 29 )]
-
-[node name="ChargeForceI2" parent="Bots/Player/Items" index="1" instance=ExtResource( 29 )]
-
-[node name="ChargeForceI3" parent="Bots/Player/Items" index="2" instance=ExtResource( 29 )]
-
-[node name="PaladinHammer" parent="Bots/Player/Items" index="3" instance=ExtResource( 30 )]
-
-[node name="PaladinHammer2" parent="Bots/Player/Items" index="4" instance=ExtResource( 30 )]
-
-[node name="AutoBlaster" parent="Bots/Player/Items" index="5" instance=ExtResource( 27 )]
-
-[node name="SpeedI" parent="Bots/Player/Passives" index="0" instance=ExtResource( 25 )]
-
-[node name="SpeedI2" parent="Bots/Player/Passives" index="1" instance=ExtResource( 25 )]
+health_capacity = 50.0
 
 [node name="BigFSpawner" parent="Bots" index="5" instance=ExtResource( 22 )]
 position = Vector2( 812, 1012 )
@@ -345,5 +317,3 @@ position = Vector2( 812, 1012 )
 position = Vector2( 79, -4 )
 
 [editable path="Access/Depot"]
-
-[editable path="Bots/Player"]
