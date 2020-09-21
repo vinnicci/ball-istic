@@ -8,6 +8,7 @@ func _on_ProximityRadius_body_entered(body: Node) -> void:
 
 
 func _fire_other() -> void:
+	$ShootingSound.play()
 	var timer = _parent_node.get_node("Timers/Lifetime")
 	timer.paused = false
 	timer.start(1)

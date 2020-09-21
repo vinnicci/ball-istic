@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/bots/spawner/big weap/ExplosiveBallista.gd" type="Script" id=1]
+[ext_resource path="res://scenes/bots/spawner/big weap/StunExplosiveBotBallista.gd" type="Script" id=1]
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/bots/explosive/Explosive.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bots/explosive/StunExplosive.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=4]
 
 [sub_resource type="Gradient" id=1]
@@ -30,13 +30,12 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[node name="ExplosiveBallista" instance=ExtResource( 2 )]
+[node name="StunExplosiveBotBallista" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
 heat_capacity = 1.1
 heat_dissipation_per_sec = 0.06
 shoot_cooldown = 0.5
-crit_chance = 0.0
 fire_mode = 4
 
 [node name="SlotIcon" parent="." index="0"]
@@ -50,7 +49,7 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.25098, 0.552941, 0.176471, 1 )
+modulate = Color( 0.0313726, 0.972549, 0.929412, 1 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 offset = Vector2( 10, 0 )

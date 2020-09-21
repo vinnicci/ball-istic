@@ -34,7 +34,7 @@ script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 1.5
-crit_chance = 0.0
+crit_chance = 0.85
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.317647, 0.462745, 0.486275, 1 )

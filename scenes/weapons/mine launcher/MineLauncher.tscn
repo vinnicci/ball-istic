@@ -5,14 +5,14 @@
 [ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/mine launcher/MineLauncherProj.tscn" type="PackedScene" id=4]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
 
-[sub_resource type="ParticlesMaterial" id=4]
+[sub_resource type="ParticlesMaterial" id=3]
 resource_local_to_scene = true
 lifetime_randomness = 0.9
 emission_shape = 1
@@ -27,14 +27,14 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 15.0
 scale_random = 0.5
-color_ramp = SubResource( 3 )
+color_ramp = SubResource( 2 )
 
 [node name="MineLauncher" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
 heat_dissipation_per_sec = 0.0
 shoot_cooldown = 1.5
-crit_chance = 0.0
+crit_chance = 0.85
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.501961, 0.368627, 0.490196, 1 )
@@ -47,7 +47,7 @@ position = Vector2( 18, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 visible = false
-process_material = SubResource( 4 )
+process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
 modulate = Color( 0.501961, 0.368627, 0.490196, 1 )
