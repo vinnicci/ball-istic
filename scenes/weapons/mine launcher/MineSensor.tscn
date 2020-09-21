@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/mine launcher/MineSensor.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/tex_generic_blob_proj.png" type="Texture" id=3]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 300.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 3 )
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 200.0
+
+[node name="MineSensor" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+heat_capacity = 1.0
+heat_dissipation_per_sec = 0.0
+crit_chance = 0.0
+fire_mode = 4
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+process_material = SubResource( 4 )
+
+[node name="Sprite" parent="." index="2"]
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 3 )
+
+[node name="ProximityRadius" type="Area2D" parent="." index="8"]
+visible = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityRadius" index="0"]
+shape = SubResource( 1 )
+[connection signal="body_entered" from="ProximityRadius" to="." method="_on_ProximityRadius_body_entered"]

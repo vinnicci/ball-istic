@@ -10,11 +10,12 @@ resource_local_to_scene = true
 [node name="GrenadeBallistaProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 charge_cooldown = 3.0
-
-[node name="CollisionShape" parent="." index="7"]
-shape = SubResource( 1 )
+lifetime_timer = 2.5
 
 [node name="Explosion" parent="." index="8" instance=ExtResource( 3 )]
 explosion_radius = 300
 damage = 20.0
 knockback = 800
+
+[node name="CollisionShape" parent="." index="9"]
+shape = SubResource( 1 )

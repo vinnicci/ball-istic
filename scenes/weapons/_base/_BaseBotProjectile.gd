@@ -1,11 +1,14 @@
 extends "res://scenes/bots/_base/_BaseBot.gd"
 
 
-onready var _lifetime: = $Timers/Lifetime
+export (float) var lifetime_timer: float = 15
+
 var _glow: Node
 var _shooter: Node
 var _level: Node
 var is_crit: bool = false
+
+onready var _lifetime: = $Timers/Lifetime
 
 
 func _ready() -> void:
@@ -27,7 +30,7 @@ func init_travel(pos: Vector2, dir: float) -> void:
 		$Explosion.is_crit = true
 	reset_bot_vars()
 	apply_central_impulse(Vector2(2000, 0).rotated(dir))
-	$Timers/Lifetime.start()
+	$Timers/Lifetime.start(lifetime_timer)
 
 
 var _dying: bool = false
