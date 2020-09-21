@@ -106,10 +106,7 @@ anims/explode = SubResource( 1 )
 [node name="Particles2D" parent="." index="2"]
 process_material = SubResource( 4 )
 
-[node name="RemoveParticles" parent="." index="5"]
-wait_time = 1.0
-
-[node name="LightFlash" type="CanvasLayer" parent="." index="6"]
+[node name="LightFlash" type="CanvasLayer" parent="." index="5"]
 
 [node name="ColorRect" type="ColorRect" parent="LightFlash" index="0"]
 visible = false

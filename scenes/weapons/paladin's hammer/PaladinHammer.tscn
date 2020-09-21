@@ -100,7 +100,7 @@ tracks/4/keys = {
 [node name="PaladinHammer" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
 heat_per_shot = 0.0
-crit_chance = 0.4
+crit_chance = 0.25
 fire_mode = 3
 recoil = -1500
 cam_shake_intensity = 20.0

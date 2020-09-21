@@ -17,7 +17,7 @@ __meta__ = {
 modulate = Color( 0.243137, 0.466667, 0.243137, 0.784314 )
 margin_top = 35.0
 margin_right = 400.0
-margin_bottom = 455.0
+margin_bottom = 450.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -125,33 +125,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShieldRecovery" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ShieldRegen" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 74.0
 margin_right = 242.0
 margin_bottom = 107.0
 custom_constants/separation = 10
 
-[node name="Label" type="Label" parent="VBoxContainer/ShieldRecovery"]
-margin_right = 125.0
+[node name="Label" type="Label" parent="VBoxContainer/ShieldRegen"]
+margin_right = 99.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
-text = "SHIELD RECOVERY:"
+text = "SHIELD REGEN:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Val" type="Label" parent="VBoxContainer/ShieldRecovery"]
-margin_left = 135.0
-margin_right = 135.0
+[node name="Val" type="Label" parent="VBoxContainer/ShieldRegen"]
+margin_left = 109.0
+margin_right = 109.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Unit" type="Label" parent="VBoxContainer/ShieldRecovery"]
-margin_left = 145.0
-margin_right = 201.0
+[node name="Unit" type="Label" parent="VBoxContainer/ShieldRegen"]
+margin_left = 119.0
+margin_right = 175.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
 text = "per sec"
@@ -252,13 +252,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ChargeForceFactor" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ChargeForceMult" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 222.0
 margin_right = 242.0
 margin_bottom = 255.0
 custom_constants/separation = 10
 
-[node name="Label" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+[node name="Label" type="Label" parent="VBoxContainer/ChargeForceMult"]
 margin_right = 128.0
 margin_bottom = 33.0
 custom_fonts/font = ExtResource( 1 )
@@ -267,7 +267,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Val" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+[node name="Val" type="Label" parent="VBoxContainer/ChargeForceMult"]
 margin_left = 138.0
 margin_right = 138.0
 margin_bottom = 33.0
@@ -276,7 +276,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Unit" type="Label" parent="VBoxContainer/ChargeForceFactor"]
+[node name="Unit" type="Label" parent="VBoxContainer/ChargeForceMult"]
 margin_left = 148.0
 margin_right = 164.0
 margin_bottom = 33.0

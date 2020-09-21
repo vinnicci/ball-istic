@@ -6,7 +6,7 @@ onready var _energy_sprite = $Sprite/Energy
 
 func _process(delta: float) -> void:
 	if _timer_charge_cancel_timer.is_stopped() == false:
-		_energy_sprite.modulate.a = current_heat / heat_capacity
+		_energy_sprite.modulate.a = current_heat / heat_cap
 	else:
 		_energy_sprite.modulate.a = 0
 

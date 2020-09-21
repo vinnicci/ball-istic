@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/spawner/FighterSpawner.gd" type="Script" id=4]
 [ext_resource path="res://scenes/bots/spawner/big weap/FighterBallista.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -26,15 +26,12 @@ offset = Vector2( 13, 0 )
 texture = ExtResource( 1 )
 uv = PoolVector2Array( 218.166, 128, 206.895, 146.033, 195.624, 164.066, 184.354, 182.1, 173.083, 200.133, 150.541, 200.133, 128, 200.133, 105.459, 200.133, 82.9171, 200.133, 71.6463, 182.1, 60.3756, 164.066, 49.1048, 146.033, 37.8341, 128, 49.1048, 109.967, 60.3756, 91.9336, 71.6463, 73.9005, 82.9171, 55.8673, 105.459, 55.8673, 128, 55.8673, 150.541, 55.8673, 173.083, 55.8673, 184.354, 73.9005, 195.624, 91.9336, 206.895, 109.967, 161.812, 182.1, 139.271, 182.1, 116.729, 182.1, 94.1878, 182.1, 173.083, 164.066, 150.541, 164.066, 128, 164.066, 105.459, 164.066, 82.9171, 164.066, 71.6463, 146.033, 94.1878, 146.033, 116.729, 146.033, 139.271, 146.033, 161.812, 146.033, 184.354, 146.033, 60.3756, 128, 82.9171, 128, 105.459, 128, 128, 128, 150.541, 128, 173.083, 128, 195.624, 128, 184.354, 109.967, 161.812, 109.967, 139.271, 109.967, 116.729, 109.967, 94.1878, 109.967, 71.6463, 109.967, 173.083, 91.9336, 150.541, 91.9336, 128, 91.9336, 105.459, 91.9336, 82.9171, 91.9336, 94.1878, 73.9005, 116.729, 73.9005, 139.271, 73.9005, 161.812, 73.9005 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400
-damage = 10.0
-knockback = 1000
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1100
 enemy_seek_dist = 600
 max_shooting_dist = 1000

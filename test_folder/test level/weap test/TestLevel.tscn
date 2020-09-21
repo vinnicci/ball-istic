@@ -21,7 +21,7 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/bots/shotgunner/Shotgunner.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedIII.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/mine launcher/MineLauncher.tscn" type="PackedScene" id=25]
@@ -297,19 +297,15 @@ contacts_reported = 1
 position = Vector2( -207.655, -118.66 )
 contacts_reported = 1
 
-[node name="SniperBigBot" parent="Bots" index="3" instance=ExtResource( 9 )]
-position = Vector2( 20, 2921 )
-shield_capacity = 30.0
-health_capacity = 75.0
-
-[node name="Player" parent="Bots" index="4" instance=ExtResource( 15 )]
+[node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
 position = Vector2( 327, 208 )
 contacts_reported = 1
-shield_capacity = 20.0
-health_capacity = 50.0
 
-[node name="BigFSpawner" parent="Bots" index="5" instance=ExtResource( 22 )]
-position = Vector2( 812, 1012 )
+[node name="Shotgunner" parent="Bots" index="4" instance=ExtResource( 22 )]
+position = Vector2( 899, 974 )
+
+[node name="SniperBigBot" parent="Bots" index="5" instance=ExtResource( 9 )]
+position = Vector2( -98, 2869 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

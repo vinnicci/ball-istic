@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/shotgunner/ShotgunnerBig.gd" type="Script" id=3]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/shotgunner/big weap/ShotgunBig.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/fighter ai/FighterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -17,7 +17,6 @@ bot_radius = 64
 speed = 2000
 knockback_resist = 0.5
 transform_speed = 0.4
-charge_force_factor = 0.8
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0, 0.403922, 0.054902, 1 )
@@ -29,15 +28,12 @@ texture = ExtResource( 1 )
 polygon = PoolVector2Array( 32, -1.90735e-06, 30.912, 8.28799, 27.712, 16, 22.624, 22.624, 16, 27.712, 8.28799, 30.912, -7.62939e-06, 32, -8.28801, 30.912, -16, 27.712, -22.624, 22.624, -27.712, 16, -30.912, 8.28799, -32, -1.90735e-06, -30.912, -8.28801, -27.712, -16, -22.624, -22.624, -16, -27.712, -8.28801, -30.912, -7.62939e-06, -32, 8.28799, -30.912, 16, -27.712, 22.624, -22.624, 27.712, -16, 30.912, -8.28801, 16, 26, 5.99999, 29, -6.00001, 29, -16, 26, 24, 18, 14, 22, -7.62939e-06, 24, -14, 22, -24, 18, -28, 9.99999, -22, 12, -8.00001, 14, 7.99999, 14, 22, 12, 28, 9.99999, -30, -1.90735e-06, -26, -1.90735e-06, -16, -1.90735e-06, -7.62939e-06, -1.90735e-06, 16, -1.90735e-06, 26, -1.90735e-06, 30, -1.90735e-06, 28, -10, 22, -12, 7.99999, -14, -8.00001, -14, -22, -12, -28, -10, 24, -18, 14, -22, -7.62939e-06, -24, -14, -22, -24, -18, -16, -26, -6.00001, -29, 5.99999, -29, 16, -26 )
 uv = PoolVector2Array( 208.96, 128, 198.84, 144.192, 188.72, 160.384, 178.6, 176.576, 168.48, 192.768, 148.24, 192.768, 128, 192.768, 107.76, 192.768, 87.52, 192.768, 77.4001, 176.576, 67.2801, 160.384, 57.1601, 144.192, 47.0401, 128, 57.1601, 111.808, 67.2801, 95.6161, 77.4001, 79.424, 87.52, 63.2321, 107.76, 63.2321, 128, 63.2321, 148.24, 63.2321, 168.48, 63.2321, 178.6, 79.424, 188.72, 95.6161, 198.84, 111.808, 158.36, 176.576, 138.12, 176.576, 117.88, 176.576, 97.6401, 176.576, 168.48, 160.384, 148.24, 160.384, 128, 160.384, 107.76, 160.384, 87.52, 160.384, 77.4001, 144.192, 97.6401, 144.192, 117.88, 144.192, 138.12, 144.192, 158.36, 144.192, 178.6, 144.192, 67.2801, 128, 87.52, 128, 107.76, 128, 128, 128, 148.24, 128, 168.48, 128, 188.72, 128, 178.6, 111.808, 158.36, 111.808, 138.12, 111.808, 117.88, 111.808, 97.6401, 111.808, 77.4001, 111.808, 168.48, 95.6161, 148.24, 95.6161, 128, 95.6161, 107.76, 95.6161, 87.52, 95.6161, 97.6401, 79.424, 117.88, 79.424, 138.12, 79.424, 158.36, 79.424 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400
-damage = 10.0
-knockback = 1000
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1100
 enemy_seek_dist = 600
 max_shooting_dist = 1000

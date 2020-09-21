@@ -50,7 +50,7 @@ func _init_player() -> void:
 	#player bars initialize
 	bar_weapon_heat.rect_position.x -= bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
 	bar_weapon_heat.rect_position.y = bot_radius
-	bar_weapon_heat.max_value = current_weapon.heat_capacity
+	bar_weapon_heat.max_value = current_weapon.heat_cap
 	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
 	bar_charge_level.rect_position.y = bot_radius
@@ -75,7 +75,7 @@ func cap_current_vars() -> void:
 	current_health = clamp(current_health, 1, 9999)
 	current_transform_speed = clamp(current_transform_speed, 0, 1.0)
 	current_charge_cooldown = clamp(current_charge_cooldown, 0.25, 5.0)
-	current_charge_force_factor = clamp(current_charge_force_factor, 0.1, 2.0)
+	current_charge_force_mult = clamp(current_charge_force_mult, 0.1, 2.0)
 	current_speed = clamp(current_speed, 500, 4000)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 

@@ -3,8 +3,8 @@ extends "res://scenes/global/items/_base/_BaseItem.gd"
 
 export (PackedScene) var Projectile
 export (float) var heat_per_shot: float = 1 setget , get_heat_per_shot
-export (float) var heat_capacity: float = 5 setget , get_heat_capacity
-export (float) var heat_dissipation_per_sec: float = 1 setget , get_heat_dissipation
+export (float) var heat_cap: float = 5 setget , get_heat_cap
+export (float) var heat_dissipation: float = 0 setget , get_heat_dissipation
 #heat must be below this threshold to return firing
 export (float, 0, 1.0) var almost_overheating_threshold: float = 0.75 setget , get_almost_overheating_threshold
 export (float, 0, 1.0) var heat_below_threshold: float = 0 setget , get_heat_below_threshold
@@ -47,11 +47,11 @@ onready var _timer_dissipation_cooldown: Node = $Timers/DissipationCooldown
 func get_heat_per_shot():
 	return heat_per_shot
 
-func get_heat_capacity():
-	return heat_capacity
+func get_heat_cap():
+	return heat_cap
 
 func get_heat_dissipation():
-	return heat_dissipation_per_sec
+	return heat_dissipation
 
 func get_almost_overheating_threshold():
 	return almost_overheating_threshold
@@ -130,7 +130,7 @@ func reset_weap_vars() -> void:
 		_timer_shoot_cooldown.wait_time = current_shoot_cooldown
 	_timer_burst_timer.wait_time = burst_timer
 	current_heat = 0
-	current_heat = clamp(current_heat, 0, heat_capacity + 1)
+	current_heat = clamp(current_heat, 0, heat_cap + 1)
 	current_crit_mult = crit_mult
 	current_crit_chance = crit_chance
 	current_crit_chance = clamp(current_crit_chance, 0, 1.0)
@@ -139,23 +139,23 @@ func reset_weap_vars() -> void:
 func _process(_delta: float) -> void:
 	#almost overheat state
 	#use this for weapons that make use of heat mechanics
-	if _is_almost_overheating == false && current_heat > heat_capacity * almost_overheating_threshold:
+	if _is_almost_overheating == false && current_heat > heat_cap * almost_overheating_threshold:
 		_is_almost_overheating = true
-	elif _is_almost_overheating == true && current_heat <= heat_capacity * almost_overheating_threshold:
+	elif _is_almost_overheating == true && current_heat <= heat_cap * almost_overheating_threshold:
 		_is_almost_overheating = false
 	
 	#overheat state
-	if _is_overheating == false && current_heat > heat_capacity:
+	if _is_overheating == false && current_heat > heat_cap:
 		_is_overheating = true
-	elif _is_overheating == true && current_heat <= heat_capacity * heat_below_threshold:
+	elif _is_overheating == true && current_heat <= heat_cap * heat_below_threshold:
 		_is_overheating = false
 
 
 func _on_DissipationCooldown_timeout() -> void:
-	if heat_dissipation_per_sec <= 0:
+	if heat_dissipation <= 0:
 		return
 	if current_heat > 0:
-		current_heat -= heat_dissipation_per_sec * 0.25 #<- rate 1sec/4
+		current_heat -= heat_dissipation * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
 		current_heat = 0
 
@@ -208,7 +208,7 @@ func _modify_proj(proj_pack) -> Node:
 
 func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= current_crit_chance:
-		var mult = _parent_node.current_weap_damage_rate * current_crit_mult
+		var mult = _parent_node.current_weap_dmg_rate * current_crit_mult
 		if proj.has_node("Explosion") == true:
 			proj.get_node("Explosion").current_damage *= mult
 		else:
@@ -217,9 +217,9 @@ func _apply_crit(proj) -> void:
 		proj.is_crit = true
 	match proj.get_script():
 		Global.CLASS_PROJ:
-			proj.current_damage *= _parent_node.current_weap_damage_rate
+			proj.current_damage *= _parent_node.current_weap_dmg_rate
 		Global.CLASS_BOT_PROJ:
-			proj.get_node("Explosion").current_damage *= _parent_node.current_weap_damage_rate
+			proj.get_node("Explosion").current_damage *= _parent_node.current_weap_dmg_rate
 
 
 func _apply_recoil() -> void:
@@ -294,11 +294,11 @@ func _on_HurtBox_body_entered(body: Node) -> void:
 func _apply_melee_crit(body) -> float:
 	var dmg: float
 	if rand_range(0, 1.0) <= crit_chance:
-		dmg = melee_damage * _parent_node.current_weap_damage_rate * crit_mult
+		dmg = melee_damage * _parent_node.current_weap_dmg_rate * crit_mult
 		_apply_melee_crit_effect(body)
 		_play_crit_effect(body.global_position)
 	else:
-		dmg = melee_damage * _parent_node.current_weap_damage_rate
+		dmg = melee_damage * _parent_node.current_weap_dmg_rate
 	return dmg
 
 
@@ -343,8 +343,8 @@ func _fire_charged() -> void:
 		_timer_charge_cooldown.is_stopped() == false):
 		_cancel_charge()
 		return
-	if current_heat == heat_capacity:
-		if heat_dissipation_per_sec <= 0:
+	if current_heat == heat_cap:
+		if heat_dissipation <= 0:
 			_actual_heat += heat_per_shot
 			current_heat = _actual_heat
 			_timer_charge_cooldown.start(shoot_cooldown)
@@ -359,7 +359,7 @@ func _fire_charged() -> void:
 		$ChargingSound.play()
 		_timer_dissipation_cooldown.paused = true
 		$ChargingTween.interpolate_property(self, "current_heat", current_heat,
-			heat_capacity, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			heat_cap, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		$ChargingTween.start()
 	_timer_charge_cancel_timer.start()
 
@@ -371,7 +371,7 @@ func _charge_fire() -> void:
 
 func _on_ChargeCancelTimer_timeout() -> void:
 	_cancel_charge()
-	if heat_dissipation_per_sec <= 0:
+	if heat_dissipation <= 0:
 		current_heat = _actual_heat
 	else:
 		current_heat = 0

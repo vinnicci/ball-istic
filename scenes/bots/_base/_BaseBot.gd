@@ -2,19 +2,19 @@ extends RigidBody2D
 
 
 export (int, 20, 150) var bot_radius: int = 32 setget , get_bot_radius
-export (float) var shield_capacity: float = 10 setget , get_shield_capacity
-export (float) var shield_recovery_per_sec: float = 1.0 setget , get_shield_recovery_per_sec
-export (float) var health_capacity: float = 10 setget , get_health_capacity
+export (float) var shield_cap: float = 10 setget , get_shield_cap
+export (float) var shield_regen: float = 1.0 setget , get_shield_regen
+export (float) var health_cap: float = 10 setget , get_health_cap
 export (int, 0, 4000) var speed: int = 1000 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.2 setget , get_knockback_resist
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.25, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
-export (float, 0.1, 2.0) var charge_force_factor: float = 0.5 setget , get_charge_force_factor
+export (float, 0.1, 2.0) var charge_force_mult: float = 0.5 setget , get_charge_force_mult
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
-export (float) var charge_damage_rate: float = 0.2 setget , get_charge_damage_rate
-export (float) var weap_damage_rate: float = 0.2 setget , get_weap_damage_rate
-export (bool) var destructible: bool = true setget , is_destructible
+export (float) var charge_dmg_rate: float = 0.2 setget , get_charge_dmg_rate
+export (float) var weap_dmg_rate: float = 0.2 setget , get_weap_dmg_rate
+export (bool) var destructible: bool = true
 export (bool) var respawnable: bool = true
 export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
@@ -35,13 +35,13 @@ var current_shield: float setget set_current_shield, get_current_shield
 var current_health_cap: float
 var current_health: float setget set_current_health, get_current_health
 var current_speed: int
-var current_shield_recovery: float
+var current_shield_regen: float
 var current_transform_speed: float
 var current_charge_cooldown: float setget set_current_charge_cooldown, get_current_charge_cooldown
 var current_knockback_resist: float
-var current_charge_damage_rate: float
-var current_weap_damage_rate: float
-var current_charge_force_factor: float
+var current_charge_dmg_rate: float
+var current_weap_dmg_rate: float
+var current_charge_force_mult: float
 var current_charge_crit_mult: float
 var current_charge_crit_chance: float
 var current_faction: Color
@@ -73,17 +73,17 @@ onready var timer_stun: = $Timers/Stun
 func get_bot_radius():
 	return bot_radius
 
-func get_shield_capacity():
-	return shield_capacity
+func get_shield_cap():
+	return shield_cap
 
-func get_health_capacity():
-	return health_capacity
+func get_health_cap():
+	return health_cap
 
 func get_speed():
 	return speed
 
-func get_shield_recovery_per_sec():
-	return shield_recovery_per_sec
+func get_shield_regen():
+	return shield_regen
 
 func get_transform_speed():
 	return transform_speed
@@ -94,23 +94,20 @@ func get_charge_cooldown():
 func get_knockback_resist():
 	return knockback_resist
 
-func get_charge_damage_rate():
-	return charge_damage_rate
+func get_charge_dmg_rate():
+	return charge_dmg_rate
 
-func get_weap_damage_rate():
-	return weap_damage_rate
+func get_weap_dmg_rate():
+	return weap_dmg_rate
 
-func get_charge_force_factor():
-	return charge_force_factor
+func get_charge_force_mult():
+	return charge_force_mult
 
 func get_charge_crit_mult():
 	return charge_crit_mult
 
 func get_charge_crit_chance():
 	return charge_crit_chance
-
-func is_destructible():
-	return destructible
 
 func get_faction():
 	return faction
@@ -271,23 +268,23 @@ func reset_bot_vars() -> void:
 	#makes sure even heavy bots can charge although at a shorter distance
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	
-	current_shield_cap = shield_capacity
+	current_shield_cap = shield_cap
 	bar_shield.max_value = current_shield_cap
 	set_current_shield(current_shield_cap)
-	current_shield_recovery = shield_recovery_per_sec
+	current_shield_regen = shield_regen
 	
-	current_health_cap = health_capacity
+	current_health_cap = health_cap
 	bar_health.max_value = current_health_cap
 	set_current_health(current_health_cap)
 	
 	current_transform_speed = transform_speed
 	current_charge_cooldown = charge_cooldown
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
-	current_charge_force_factor = charge_force_factor
+	current_charge_force_mult = charge_force_mult
 	current_charge_crit_mult = charge_crit_mult
 	current_charge_crit_chance = charge_crit_chance
-	current_charge_damage_rate = charge_damage_rate
-	current_weap_damage_rate = weap_damage_rate
+	current_charge_dmg_rate = charge_dmg_rate
+	current_weap_dmg_rate = weap_dmg_rate
 	
 	current_speed = speed
 	current_knockback_resist = knockback_resist
@@ -485,7 +482,7 @@ func charge_roll(charge_direction: float) -> void:
 
 
 func _apply_charge_impulse(dir: float) -> void:
-	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_factor)
+	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_mult)
 	$Timers/ChargeEffectDelay.start()
 	$Sounds/ChargeAttack.play()
 	_timer_charge_cooldown.start()
@@ -598,8 +595,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 		return
 	emit_spark(body.position)
 	$Sounds/ChargeAttackHit.play()
-	var damage: float = ((current_speed * 0.125 * current_charge_force_factor) *
-		current_charge_damage_rate)
+	var damage: float = ((current_speed * 0.125 * current_charge_force_mult) *
+		current_charge_dmg_rate)
 	#apply crit dmg
 	if rand_range(0, 1.0) <= current_charge_crit_chance:
 		damage *= current_charge_crit_mult
@@ -643,12 +640,12 @@ func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4
-	if current_shield_recovery <= 0 || current_shield_cap <= 0:
+	if current_shield_regen <= 0 || current_shield_cap <= 0:
 		return
-	if current_shield + current_shield_recovery * 0.25 > current_shield_cap:
+	if current_shield + current_shield_regen * 0.25 > current_shield_cap:
 		current_shield = current_shield_cap
-	elif current_shield + current_shield_recovery * 0.25 <= current_shield_cap:
-		current_shield += current_shield_recovery * 0.25
+	elif current_shield + current_shield_regen * 0.25 <= current_shield_cap:
+		current_shield += current_shield_regen * 0.25
 	bar_shield.value = current_shield
 
 

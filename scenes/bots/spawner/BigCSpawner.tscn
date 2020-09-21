@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/spawner/BigCSpawner.gd" type="Script" id=4]
 [ext_resource path="res://scenes/bots/spawner/big weap/CDroneSpawnerBallista.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -27,15 +27,12 @@ modulate = Color( 0.952941, 0.407843, 0.0823529, 1 )
 texture = ExtResource( 1 )
 uv = PoolVector2Array( 226.315, 128, 214.025, 147.663, 201.736, 167.326, 189.447, 186.989, 177.157, 206.652, 152.579, 206.652, 128, 206.652, 103.421, 206.652, 78.8427, 206.652, 66.5534, 186.989, 54.2641, 167.326, 41.9747, 147.663, 29.6854, 128, 41.9747, 108.337, 54.2641, 88.6742, 66.5534, 69.0113, 78.8427, 49.3484, 103.421, 49.3484, 128, 49.3484, 152.579, 49.3484, 177.157, 49.3484, 189.447, 69.0113, 201.736, 88.6742, 214.025, 108.337, 164.868, 186.989, 140.289, 186.989, 115.711, 186.989, 91.1321, 186.989, 177.157, 167.326, 152.579, 167.326, 128, 167.326, 103.421, 167.326, 78.8427, 167.326, 66.5534, 147.663, 91.1321, 147.663, 115.711, 147.663, 140.289, 147.663, 164.868, 147.663, 189.447, 147.663, 54.2641, 128, 78.8427, 128, 103.421, 128, 128, 128, 152.579, 128, 177.157, 128, 201.736, 128, 189.447, 108.337, 164.868, 108.337, 140.289, 108.337, 115.711, 108.337, 91.1321, 108.337, 66.5534, 108.337, 177.157, 88.6742, 152.579, 88.6742, 128, 88.6742, 103.421, 88.6742, 78.8427, 88.6742, 91.1321, 69.0113, 115.711, 69.0113, 140.289, 69.0113, 164.868, 69.0113 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400
-damage = 10.0
-knockback = 1000
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1100
 enemy_seek_dist = 600
 max_shooting_dist = 1000

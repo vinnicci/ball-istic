@@ -34,8 +34,8 @@ color_ramp = SubResource( 2 )
 [node name="SalvoHomingBig" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_capacity = 2.1
-heat_dissipation_per_sec = 0.375
+heat_cap = 2.1
+heat_dissipation = 0.375
 shoot_cooldown = 2.0
 proj_count_per_shot = 10
 spread = 5.0

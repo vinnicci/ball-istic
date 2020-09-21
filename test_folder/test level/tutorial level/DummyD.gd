@@ -12,8 +12,8 @@ func _on_Bot_body_entered(body: Node) -> void:
 	$CollisionSpark.look_at(body.global_position)
 	$Sounds/ChargeAttackHit.play()
 	$CollisionSpark.emitting = true
-	var damage: float = ((current_speed * 0.125 * current_charge_force_factor) *
-		current_charge_damage_rate)
+	var damage: float = ((current_speed * 0.125 * current_charge_force_mult) *
+		current_charge_dmg_rate)
 	if body is Global.CLASS_BOT:
 		if current_faction == body.current_faction:
 			return

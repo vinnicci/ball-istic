@@ -20,5 +20,5 @@ func change_slot_selected(slot_num: int) -> void:
 	var selected_slot_pos = get_node(str(slot_num) + "/SelectPos")
 	$SlotSelected.position.x = (selected_slot_pos.get_parent().position.x +
 		selected_slot_pos.position.x)
-	_player.bar_weapon_heat.max_value = _player.current_weapon.heat_capacity
+	_player.bar_weapon_heat.max_value = _player.current_weapon.heat_cap
 	_player.bar_weapon_heat.value = 0

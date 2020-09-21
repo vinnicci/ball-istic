@@ -10,11 +10,11 @@ func _apply_charge_cooldown(effect: float) -> void:
 
 
 func _apply_charge_damage_rate(effect: float) -> void:
-	_parent_node.current_charge_damage_rate += effect
+	_parent_node.current_charge_dmg_rate += effect
 
 
 func _apply_charge_force(effect: float) -> void:
-	_parent_node.current_charge_force_factor += effect
+	_parent_node.current_charge_force_mult += effect
 
 
 func _apply_health_cap(effect: float) -> void:
@@ -23,7 +23,7 @@ func _apply_health_cap(effect: float) -> void:
 
 
 func _apply_weap_damage_rate(effect: float) -> void:
-	_parent_node.current_weap_damage_rate += effect
+	_parent_node.current_weap_dmg_rate += effect
 
 
 func _apply_knockback_resist(effect: float) -> void:
@@ -35,8 +35,8 @@ func _apply_shield_cap(effect: float) -> void:
 	_parent_node.set_current_shield(_parent_node.current_shield_cap)
 
 
-func _apply_shield_recovery(effect: float) -> void:
-	_parent_node.current_shield_recovery += effect
+func _apply_shield_regen(effect: float) -> void:
+	_parent_node.current_shield_regen += effect
 
 
 func _apply_speed(effect: int) -> void:

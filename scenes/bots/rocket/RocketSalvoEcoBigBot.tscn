@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=4]
 [ext_resource path="res://scenes/bots/rocket/big weap/SalvoEcoHomingBig.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/fighter ai/FighterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -14,8 +14,6 @@ resource_local_to_scene = true
 [node name="RocketSalvoEcoBigBot" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
 bot_radius = 64
-shield_capacity = 20.0
-health_capacity = 20.0
 knockback_resist = 0.8
 
 [node name="Sprite" parent="Legs" index="0"]
@@ -28,18 +26,14 @@ modulate = Color( 0.235294, 0.454902, 0.262745, 1 )
 texture = ExtResource( 1 )
 uv = PoolVector2Array( 229.98, 136, 217.233, 156.396, 204.485, 176.792, 191.738, 197.188, 178.99, 217.584, 153.495, 217.584, 128, 217.584, 102.505, 217.584, 77.0098, 217.584, 64.2622, 197.188, 51.5147, 176.792, 38.7671, 156.396, 26.0196, 136, 38.7671, 115.604, 51.5147, 95.2078, 64.2622, 74.8118, 77.0098, 54.4157, 102.505, 54.4157, 128, 54.4157, 153.495, 54.4157, 178.99, 54.4157, 191.738, 74.8118, 204.485, 95.2078, 217.233, 115.604, 166.243, 197.188, 140.748, 197.188, 115.252, 197.188, 89.7574, 197.188, 178.99, 176.792, 153.495, 176.792, 128, 176.792, 102.505, 176.792, 77.0098, 176.792, 64.2622, 156.396, 89.7574, 156.396, 115.252, 156.396, 140.748, 156.396, 166.243, 156.396, 191.738, 156.396, 51.5147, 136, 77.0098, 136, 102.505, 136, 128, 136, 153.495, 136, 178.99, 136, 204.485, 136, 191.738, 115.604, 166.243, 115.604, 140.748, 115.604, 115.252, 115.604, 89.7574, 115.604, 64.2622, 115.604, 178.99, 95.2078, 153.495, 95.2078, 128, 95.2078, 102.505, 95.2078, 77.0098, 95.2078, 89.7574, 74.8118, 115.252, 74.8118, 140.748, 74.8118, 166.243, 74.8118 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400
-damage = 5.0
-knockback = 800
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1200
-enemy_seek_dist = 700
-max_shooting_dist = 1000
+enemy_seek_dist = 600
+max_shooting_dist = 800
 
 [node name="SalvoEco" parent="Weapons" index="0" instance=ExtResource( 5 )]
-heat_dissipation_per_sec = 0.8

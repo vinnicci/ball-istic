@@ -18,7 +18,7 @@ func set_item(new_item) -> void:
 		icon.position = Vector2(35, 35)
 		add_child(icon)
 		#heat setup
-		$SlotHeat.max_value = item.get_heat_capacity()
+		$SlotHeat.max_value = item.get_heat_cap()
 		$SlotHeat.value = item.current_heat
 
 

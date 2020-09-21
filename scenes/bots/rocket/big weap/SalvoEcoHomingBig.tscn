@@ -50,8 +50,8 @@ tracks/0/keys = {
 [node name="SalvoEcoHomingBig" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_capacity = 3.1
-heat_dissipation_per_sec = 0.0
+heat_cap = 5.1
+heat_dissipation = 0.75
 shoot_cooldown = 2.0
 crit_chance = 0.1
 proj_count_per_shot = 5

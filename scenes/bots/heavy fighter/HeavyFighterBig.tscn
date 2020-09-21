@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/heavy fighter/big weap/HeavyBlasterBig.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighterBig.gd" type="Script" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/fighter ai/FighterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -14,10 +14,9 @@ resource_local_to_scene = true
 [node name="HeavyFighterBig" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 bot_radius = 64
-speed = 1700
+speed = 2000
 knockback_resist = 0.7
 transform_speed = 0.5
-charge_force_factor = 0.7
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0, 0.403922, 0.054902, 1 )
@@ -29,15 +28,12 @@ texture = ExtResource( 1 )
 polygon = PoolVector2Array( 32.1246, 1.14441e-05, 31.0324, 8.32029, 27.8199, 16.0623, 22.7121, 22.7121, 16.0623, 27.8199, 8.32028, 31.0324, 1.90735e-06, 32.1247, -8.32028, 31.0324, -16.0623, 27.8199, -22.7121, 22.7121, -27.8199, 16.0623, -31.0324, 8.32029, -32.1246, 1.14441e-05, -31.0324, -8.32028, -27.8199, -16.0623, -22.7121, -22.7121, -16.0623, -27.8199, -8.32028, -31.0324, 1.90735e-06, -32.1246, 8.32028, -31.0324, 16.0623, -27.8199, 22.7121, -22.7121, 27.8199, -16.0623, 31.0324, -8.32028, 16.0623, 26.1013, 6.02337, 29.113, -6.02337, 29.113, -16.0623, 26.1013, 24.0935, 18.0701, 14.0545, 22.0857, 1.90735e-06, 24.0935, -14.0545, 22.0857, -24.0935, 18.0701, -28.1091, 10.039, -22.0857, 12.0467, -8.03116, 14.0545, 8.03117, 14.0545, 22.0857, 12.0467, 28.1091, 10.039, -30.1169, 1.14441e-05, -26.1013, 1.14441e-05, -16.0623, 1.14441e-05, 1.90735e-06, 1.14441e-05, 16.0623, 1.14441e-05, 26.1013, 1.14441e-05, 30.1169, 1.14441e-05, 28.1091, -10.0389, 22.0857, -12.0467, 8.03117, -14.0545, -8.03116, -14.0545, -22.0857, -12.0467, -28.1091, -10.0389, 24.0935, -18.0701, 14.0545, -22.0857, 1.90735e-06, -24.0935, -14.0545, -22.0857, -24.0935, -18.0701, -16.0623, -26.1013, -6.02337, -29.1129, 6.02337, -29.1129, 16.0623, -26.1013 )
 uv = PoolVector2Array( 212.745, 128, 202.151, 144.949, 191.558, 161.898, 180.965, 178.847, 170.372, 195.796, 149.186, 195.796, 128, 195.796, 106.814, 195.796, 85.6277, 195.796, 75.0347, 178.847, 64.4416, 161.898, 53.8485, 144.949, 43.2554, 128, 53.8485, 111.051, 64.4416, 94.1022, 75.0347, 77.1532, 85.6277, 60.2043, 106.814, 60.2043, 128, 60.2043, 149.186, 60.2043, 170.372, 60.2043, 180.965, 77.1532, 191.558, 94.1022, 202.151, 111.051, 159.779, 178.847, 138.593, 178.847, 117.407, 178.847, 96.2208, 178.847, 170.372, 161.898, 149.186, 161.898, 128, 161.898, 106.814, 161.898, 85.6277, 161.898, 75.0347, 144.949, 96.2208, 144.949, 117.407, 144.949, 138.593, 144.949, 159.779, 144.949, 180.965, 144.949, 64.4416, 128, 85.6277, 128, 106.814, 128, 128, 128, 149.186, 128, 170.372, 128, 191.558, 128, 180.965, 111.051, 159.779, 111.051, 138.593, 111.051, 117.407, 111.051, 96.2208, 111.051, 75.0347, 111.051, 170.372, 94.1022, 149.186, 94.1022, 128, 94.1022, 106.814, 94.1022, 85.6277, 94.1022, 96.2208, 77.1532, 117.407, 77.1532, 138.593, 77.1532, 159.779, 77.1532 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 200
-damage = 5.0
-knockback = 800
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 enemy_seek_dist = 400
 max_shooting_dist = 750
 

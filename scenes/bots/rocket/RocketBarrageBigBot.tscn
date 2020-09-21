@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=4]
 [ext_resource path="res://scenes/bots/rocket/big weap/BarrageHomingBig.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/bots/_base/BigBotExplosion.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/bots/_ais/fighter ai/FighterAI.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -27,17 +27,14 @@ modulate = Color( 0.603922, 0.603922, 0.603922, 1 )
 texture = ExtResource( 1 )
 uv = PoolVector2Array( 219.76, 136, 208.29, 154.352, 196.82, 172.704, 185.35, 191.056, 173.88, 209.408, 150.94, 209.408, 128, 209.408, 105.06, 209.408, 82.1199, 209.408, 70.6499, 191.056, 59.1799, 172.704, 47.7099, 154.352, 36.2399, 136, 47.7099, 117.648, 59.1799, 99.296, 70.6499, 80.9439, 82.1199, 62.5919, 105.06, 62.5919, 128, 62.5919, 150.94, 62.5919, 173.88, 62.5919, 185.35, 80.9439, 196.82, 99.296, 208.29, 117.648, 162.41, 191.056, 139.47, 191.056, 116.53, 191.056, 93.59, 191.056, 173.88, 172.704, 150.94, 172.704, 128, 172.704, 105.06, 172.704, 82.1199, 172.704, 70.6499, 154.352, 93.59, 154.352, 116.53, 154.352, 139.47, 154.352, 162.41, 154.352, 185.35, 154.352, 59.1799, 136, 82.1199, 136, 105.06, 136, 128, 136, 150.94, 136, 173.88, 136, 196.82, 136, 185.35, 117.648, 162.41, 117.648, 139.47, 117.648, 116.53, 117.648, 93.59, 117.648, 70.6499, 117.648, 173.88, 99.296, 150.94, 99.296, 128, 99.296, 105.06, 99.296, 82.1199, 99.296, 93.59, 80.9439, 116.53, 80.9439, 139.47, 80.9439, 162.41, 80.9439 )
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="Explosion" parent="." index="8" instance=ExtResource( 6 )]
-explosion_radius = 400
-damage = 10.0
-knockback = 1000
+[node name="Explosion" parent="." index="9" instance=ExtResource( 6 )]
 
-[node name="AI" parent="." index="9" instance=ExtResource( 7 )]
+[node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1200
-enemy_seek_dist = 700
-max_shooting_dist = 1000
+enemy_seek_dist = 600
+max_shooting_dist = 800
 
 [node name="BarrageHomingBig" parent="Weapons" index="0" instance=ExtResource( 5 )]
