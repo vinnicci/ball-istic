@@ -7,9 +7,11 @@ var _is_line_colliding: bool = false
 func _process(delta: float) -> void:
 	#blob sprite
 	if _is_overheating == true:
-		$Sprite/Blob.hide()
+		_animate_glow(false)
+		$Sprite/Anim.stop(false)
 	else:
-		$Sprite/Blob.show()
+		_animate_glow(true)
+		$Sprite/Anim.play("rotate")
 	
 	#line
 	if (_parent_node != null && _parent_node is Global.CLASS_PLAYER &&
@@ -29,6 +31,29 @@ func _process(delta: float) -> void:
 			$Line2D.hide()
 	else:
 		$Line2D.hide()
+
+
+var _glowing: bool = true
+const VISIBLE_COLOR: Color = Color(0.6, 1, 1, 1)
+const INVISIBLE_COLOR: Color = Color(0.6, 1, 1, 0)
+
+
+func _animate_glow(to_show: bool) -> void:
+	var from_value: Color
+	var to_value: Color
+	if to_show == false && _glowing == true:
+		from_value = VISIBLE_COLOR
+		to_value = INVISIBLE_COLOR
+		_glowing = false
+	elif to_show == true && _glowing == false:
+		from_value = INVISIBLE_COLOR
+		to_value = VISIBLE_COLOR
+		_glowing = true
+	else:
+		return
+	$WeaponTween.interpolate_property($Sprite/Glow, "modulate", from_value,
+		to_value, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$WeaponTween.start()
 
 
 func _fire_other(to_pos = null) -> void:

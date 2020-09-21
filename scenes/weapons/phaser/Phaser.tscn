@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/phaser/Phaser.gd" type="Script" id=2]
-[ext_resource path="res://assets/weapons/tex_teleporter_body.png" type="Texture" id=3]
-[ext_resource path="res://assets/weapons/tex_teleporter_blob.png" type="Texture" id=4]
+[ext_resource path="res://assets/weapons/tex_phaser_base.png" type="Texture" id=3]
+[ext_resource path="res://assets/weapons/tex_phaser_decor.png" type="Texture" id=4]
+[ext_resource path="res://assets/weapons/tex_phaser_top.png" type="Texture" id=5]
+[ext_resource path="res://assets/weapons/tex_storm_energy.png" type="Texture" id=6]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -47,19 +49,20 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-length = 2.0
+resource_name = "rotate"
+length = 5.0
 loop = true
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
+tracks/0/path = NodePath("Base:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.8, 1.2, 2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ) ]
+"values": [ 0.0, 360.0 ]
 }
 
 [node name="Phaser" instance=ExtResource( 1 )]
@@ -73,12 +76,19 @@ fire_mode = 4
 
 [node name="SlotIcon" parent="." index="0"]
 scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 4 )
+
+[node name="Base" type="Sprite" parent="SlotIcon" index="0"]
+show_behind_parent = true
 texture = ExtResource( 3 )
 
-[node name="Blob2" type="Sprite" parent="SlotIcon" index="0"]
-modulate = Color( 1, 1, 1, 0.392157 )
-self_modulate = Color( 0, 0.827451, 0.992157, 1 )
-texture = ExtResource( 4 )
+[node name="Glow" type="Sprite" parent="SlotIcon" index="1"]
+modulate = Color( 0.592157, 0.996078, 0.996078, 1 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 6 )
+
+[node name="Top" type="Sprite" parent="SlotIcon" index="2"]
+texture = ExtResource( 5 )
 
 [node name="Muzzle" parent="." index="1"]
 visible = false
@@ -97,16 +107,23 @@ default_color = Color( 1, 1, 1, 1 )
 anims/shift_color = SubResource( 4 )
 
 [node name="Sprite" parent="." index="3"]
-texture = ExtResource( 3 )
-
-[node name="Blob" type="Sprite" parent="Sprite" index="0"]
-modulate = Color( 1, 1, 1, 0.392157 )
-self_modulate = Color( 0, 0.827451, 0.992157, 1 )
 texture = ExtResource( 4 )
 
-[node name="Anim" type="AnimationPlayer" parent="Sprite/Blob" index="0"]
-autoplay = "fading"
-anims/fading = SubResource( 5 )
+[node name="Base" type="Sprite" parent="Sprite" index="0"]
+show_behind_parent = true
+texture = ExtResource( 3 )
+
+[node name="Glow" type="Sprite" parent="Sprite" index="1"]
+modulate = Color( 0.6, 1, 1, 1 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 6 )
+
+[node name="Top" type="Sprite" parent="Sprite" index="2"]
+texture = ExtResource( 5 )
+
+[node name="Anim" type="AnimationPlayer" parent="Sprite" index="3"]
+autoplay = "rotate"
+anims/rotate = SubResource( 5 )
 
 [node name="TeleLine" type="RayCast2D" parent="." index="5"]
 enabled = true

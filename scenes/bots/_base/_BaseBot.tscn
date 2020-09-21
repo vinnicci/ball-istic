@@ -215,6 +215,7 @@ process_material = SubResource( 6 )
 z_index = 1
 
 [node name="Name" type="Node2D" parent="."]
+z_index = 2
 
 [node name="Label" type="Label" parent="Name"]
 margin_left = -250.0

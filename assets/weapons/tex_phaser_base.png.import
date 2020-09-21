@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tex_teleporter_body.png-e772725c93554828237f6c2c9e082cd8.s3tc.stex"
-path.etc2="res://.import/tex_teleporter_body.png-e772725c93554828237f6c2c9e082cd8.etc2.stex"
+path.s3tc="res://.import/tex_phaser_base.png-aa3aac349b40f4c0f9b8424add92370b.s3tc.stex"
+path.etc2="res://.import/tex_phaser_base.png-aa3aac349b40f4c0f9b8424add92370b.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/weapons/tex_teleporter_body.png"
-dest_files=[ "res://.import/tex_teleporter_body.png-e772725c93554828237f6c2c9e082cd8.s3tc.stex", "res://.import/tex_teleporter_body.png-e772725c93554828237f6c2c9e082cd8.etc2.stex" ]
+source_file="res://assets/weapons/tex_phaser_base.png"
+dest_files=[ "res://.import/tex_phaser_base.png-aa3aac349b40f4c0f9b8424add92370b.s3tc.stex", "res://.import/tex_phaser_base.png-aa3aac349b40f4c0f9b8424add92370b.etc2.stex" ]
 
 [params]
 
