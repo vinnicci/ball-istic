@@ -2,7 +2,6 @@ extends Node2D
 
 
 var item: Node
-var icon: Sprite
 var from_slot: String
 
 

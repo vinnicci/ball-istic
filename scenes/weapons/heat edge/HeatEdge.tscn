@@ -61,8 +61,11 @@ tracks/1/keys = {
 
 [node name="HeatEdge" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
-heat_capacity = 20.0
+heat_cap = 15.0
+heat_dissipation = 2.0
 shoot_cooldown = 0.2
+crit_mult = 3.0
+crit_chance = 0.1
 spread = 5.0
 recoil = 10
 cam_shake_intensity = 1.0

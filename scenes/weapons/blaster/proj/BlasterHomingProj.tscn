@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/weapons/blaster/_base/BlasterProj.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/_projectile behaviors/homing/Homing.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/tex_generic_small_proj.png" type="Texture" id=3]
+[ext_resource path="res://scenes/weapons/blaster/proj/BlasterHomingProj.gd" type="Script" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="BlasterHomingProj" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="Sprite" parent="." index="1"]
+modulate = Color( 1, 0.654902, 0, 1 )
+texture = ExtResource( 3 )
+offset = Vector2( -9, 0 )
+
+[node name="CollisionShape" parent="." index="2"]
+shape = SubResource( 1 )
+
+[node name="ProjBehavior" parent="." index="5" instance=ExtResource( 2 )]
+homing_steer_magnitude = 150.0

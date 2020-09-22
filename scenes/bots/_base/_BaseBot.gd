@@ -13,7 +13,7 @@ export (float, 0.1, 2.0) var charge_force_mult: float = 0.5 setget , get_charge_
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
 export (float) var charge_dmg_rate: float = 0.2 setget , get_charge_dmg_rate
-export (float) var weap_dmg_rate: float = 0.2 setget , get_weap_dmg_rate
+export (float) var weap_dmg_rate: float = 1 setget , get_weap_dmg_rate
 export (bool) var destructible: bool = true
 export (bool) var respawnable: bool = true
 export (bool) var deployed: bool = false
@@ -553,6 +553,10 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
+	var anim = _dmg_feedback.instance()
+	var anim_txt = anim.get_node("Label")
+	anim_txt.text = str(damage)
+	_play_anim(global_position, anim, "dmg")
 	bar_shield.value = current_shield
 	bar_health.value = current_health
 
@@ -628,6 +632,7 @@ func emit_spark(pos: Vector2) -> void:
 
 var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
 var _deflect_feedback = preload("res://scenes/global/feedback/Deflect.tscn")
+var _dmg_feedback = preload("res://scenes/global/feedback/Damage.tscn")
 
 
 func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:

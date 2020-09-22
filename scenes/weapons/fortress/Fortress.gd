@@ -18,7 +18,7 @@ func _on_FrontShield_area_entered(area: Area2D) -> void:
 		_is_overheating == true):
 		return
 	if area.has_node("Explosion"):
-		current_heat += area.get_node("Explosion").get_damage()
+		current_heat += area.get_node("Explosion").damage
 	else:
 		current_heat += area.damage
 	$FrontShield/Anim.play("catch_proj")

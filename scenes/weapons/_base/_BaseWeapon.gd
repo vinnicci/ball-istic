@@ -210,16 +210,16 @@ func _apply_crit(proj) -> void:
 	if rand_range(0, 1.0) <= current_crit_chance:
 		var mult = _parent_node.current_weap_dmg_rate * current_crit_mult
 		if proj.has_node("Explosion") == true:
-			proj.get_node("Explosion").current_damage *= mult
+			proj.get_node("Explosion").damage *= mult
 		else:
-			proj.current_damage *= mult
+			proj.damage *= mult
 		#crit feedback display
 		proj.is_crit = true
-	match proj.get_script():
-		Global.CLASS_PROJ:
-			proj.current_damage *= _parent_node.current_weap_dmg_rate
-		Global.CLASS_BOT_PROJ:
-			proj.get_node("Explosion").current_damage *= _parent_node.current_weap_dmg_rate
+	else:
+		if proj.has_node("Explosion") == true:
+			proj.get_node("Explosion").damage *= _parent_node.current_weap_dmg_rate
+		else:
+			proj.damage *= _parent_node.current_weap_dmg_rate
 
 
 func _apply_recoil() -> void:

@@ -142,7 +142,7 @@ func write(msg):
 	return
 
 func register_instance(root):
-	print("register : ", root)
+#	print("register : ", root)
 	objects.append(weakref(root))
 	return
 

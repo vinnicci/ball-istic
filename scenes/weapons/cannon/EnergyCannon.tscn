@@ -1,9 +1,10 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://scenes/weapons/cannon/EnergyCannonProj.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/cannon/proj/EnergyCannonProj.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/weapons/tex_energy_cannon.png" type="Texture" id=2]
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/weapons/cannon/_base/Cannon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/cannon/EnergyCannon.gd" type="Script" id=4]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -33,27 +34,17 @@ color_ramp = SubResource( 2 )
 [node name="EnergyCannon" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 1 )
-heat_capacity = 4.1
-heat_dissipation_per_sec = 0.0
-shoot_cooldown = 2.5
-crit_chance = 0.3
-recoil = 100
-cam_shake_intensity = 15.0
 
 [node name="SlotIcon" parent="." index="0"]
-modulate = Color( 0.631373, 0.929412, 0.482353, 1 )
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
 
 [node name="Muzzle" parent="." index="1"]
-position = Vector2( 60, 0 )
+position = Vector2( 61, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
-amount = 50
-lifetime = 0.5
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-modulate = Color( 0.631373, 0.929412, 0.482353, 1 )
 texture = ExtResource( 2 )
-offset = Vector2( 16, 0 )
+offset = Vector2( 14, 0 )

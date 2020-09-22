@@ -2,15 +2,14 @@ extends Area2D
 
 
 export (int) var speed: int = 500 setget , get_speed
-export (float) var damage: float = 1 setget , get_damage
-export (int) var proj_range: int = 500 setget , get_range
-export (int) var knockback: int = 50 setget , get_knockback
-export (float) var stun_time: float = 0 setget , get_stun_time
+export (float) var damage: float = 1
+export (int) var proj_range: int = 500
+export (int) var knockback: int = 50
+export (float) var stun_time: float = 0
 
 var velocity: Vector2
 var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
-var current_damage: float
 var is_stopped: bool = false
 var is_crit: bool = false
 var exploded: bool = false
@@ -23,18 +22,6 @@ var _stun_feedback: = load("res://scenes/global/feedback/Stun.tscn")
 
 func get_speed():
 	return speed
-
-func get_damage():
-	return damage
-
-func get_range():
-	return proj_range
-
-func get_knockback():
-	return knockback
-
-func get_stun_time():
-	return stun_time
 
 func shooter():
 	return _shooter
@@ -51,7 +38,6 @@ func _ready() -> void:
 	#bullet behavior component
 	if has_node("ProjBehavior") == true:
 		$ProjBehavior.set_parent(self)
-	current_damage = damage
 	current_speed = speed
 
 
@@ -111,7 +97,7 @@ func _damage_bot(bot: Node) -> void:
 			$Explosion.start_explosion()
 			exploded = true
 		else:
-			bot.take_damage(current_damage, Vector2(knockback, 0).rotated(rotation))
+			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 			if is_crit == true:
 				if stun_time != 0:
 					bot.timer_stun.start(stun_time)
@@ -147,7 +133,7 @@ func _damage_object(lvl_object: Node) -> void:
 	if has_node("Explosion") == true:
 		$Explosion.start_explosion()
 	else:
-		lvl_object.take_damage(current_damage, Vector2(knockback, 0).rotated(rotation))
+		lvl_object.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 	stop_projectile(lvl_object)
 
 

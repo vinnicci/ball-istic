@@ -26,17 +26,16 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -30, -52 ), Vector2( -30, -185 ) ]
+"values": [ Vector2( -30, -40 ), Vector2( -30, -173 ) ]
 }
 
 [node name="Stun" instance=ExtResource( 1 )]
 
 [node name="Label" parent="." index="0"]
 margin_left = -30.0
-margin_top = -52.0
-margin_right = 45.0
-margin_bottom = -17.0
-bbcode_text = "STUNNED"
+margin_top = -40.0
+margin_right = 30.0
+margin_bottom = -7.0
 text = "STUNNED"
 
 [node name="Anim" parent="." index="1"]

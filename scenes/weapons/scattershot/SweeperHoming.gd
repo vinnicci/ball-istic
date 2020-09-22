@@ -1,1 +1,1 @@
-extends "res://scenes/weapons/scattershot/Sweeper.gd"
+extends "res://scenes/weapons/scattershot/_base/Sweeper.gd"

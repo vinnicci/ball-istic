@@ -6,15 +6,10 @@
 scale = Vector2( 2, 1.5 )
 z_index = 2
 
-[node name="Label" type="RichTextLabel" parent="."]
-margin_left = -28.0
-margin_top = -17.0
-margin_right = 47.0
-margin_bottom = 18.0
-custom_fonts/normal_font = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Label" type="Label" parent="."]
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 

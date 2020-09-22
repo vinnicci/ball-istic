@@ -8,7 +8,7 @@ var _stun_feedback = load("res://scenes/global/feedback/Stun.tscn")
 func _apply_effect(body: Node) -> void:
 	$KnockBackDirection.look_at(body.global_position)
 	if body.has_method("take_damage") == true:
-		body.take_damage(current_damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
+		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 		if is_crit == true && body is Global.CLASS_BOT:
 			body.timer_stun.start(stun_time)
 			_play_crit_effect(body.global_position)

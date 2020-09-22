@@ -1,1 +1,1 @@
-extends "res://scenes/weapons/rocket/RocketEco.gd"
+extends "res://scenes/weapons/rocket/_base/RocketEco.gd"

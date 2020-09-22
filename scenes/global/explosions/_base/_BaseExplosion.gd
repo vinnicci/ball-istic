@@ -1,11 +1,10 @@
 extends Area2D
 
 
-export (int) var explosion_radius: int = 100 setget , get_radius
-export (float) var damage: float = 15 setget , get_damage
-export (int) var knockback: int = 500 setget , get_knockback
+export (int) var explosion_radius: int = 100
+export (float) var damage: float = 15
+export (int) var knockback: int = 500
 
-var current_damage: float
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
 var is_crit: bool = false
@@ -13,19 +12,8 @@ var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 
 
-func get_radius():
-	return explosion_radius
-
-func get_damage():
-	return damage
-
-func get_knockback():
-	return knockback
-
-
 func _ready() -> void:
 	_init_explosion()
-	current_damage = damage
 
 
 func set_player_cam(player_cam: Camera2D) -> void:
@@ -68,7 +56,7 @@ func start_explosion() -> void:
 func _apply_effect(body: Node) -> void:
 	$KnockBackDirection.look_at(body.global_position)
 	if body.has_method("take_damage") == true:
-		body.take_damage(current_damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
+		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 		if is_crit == true && body is Global.CLASS_BOT:
 			_play_crit_effect(body.global_position)
 

@@ -1,0 +1,192 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/weapons/tex_beam_pincer_proj.png" type="Texture" id=1]
+[ext_resource path="res://assets/weapons/tex_beam_pincer_motion_proj.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 60, 8 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "attack"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Beam1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -5 ), Vector2( 0, -5 ), Vector2( 18, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Beam1:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -100.0, -100.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Beam2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 5 ), Vector2( 0, 5 ), Vector2( 18, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Beam2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 100.0, 100.0, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Beam1:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Beam2:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.15, 0.25, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Beam1:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Beam2:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Beam1:texture")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.15, 0.16, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Beam2:texture")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.15, 0.16, 0.24 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 1 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Beam1/HurtBox:monitoring")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.1, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Beam2/HurtBox:monitoring")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.1, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="Beams" type="Node2D"]
+
+[node name="Beam1" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 18, 0 )
+texture = ExtResource( 1 )
+offset = Vector2( 60, 0 )
+flip_v = true
+
+[node name="HurtBox" type="Area2D" parent="Beam1"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Beam1/HurtBox"]
+position = Vector2( 60, 0 )
+shape = SubResource( 1 )
+
+[node name="Beam2" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 18, 0 )
+texture = ExtResource( 1 )
+offset = Vector2( 60, 0 )
+
+[node name="HurtBox" type="Area2D" parent="Beam2"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Beam2/HurtBox"]
+position = Vector2( 60, 0 )
+shape = SubResource( 1 )
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/attack = SubResource( 2 )

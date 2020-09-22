@@ -10,9 +10,6 @@ resource_local_to_scene = true
 [node name="BotProjectile" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 bot_radius = 20
-shield_capacity = 0.0
-shield_recovery_per_sec = 0.0
-health_capacity = 5.0
 knockback_resist = 0.1
 charge_cooldown = 2.0
 

@@ -36,7 +36,10 @@ script = ExtResource( 3 )
 
 [node name="Label" parent="." index="0"]
 modulate = Color( 1, 0.643137, 0, 1 )
-bbcode_text = "CRITICAL"
+margin_left = -29.0
+margin_top = -17.0
+margin_right = 29.0
+margin_bottom = 16.0
 text = "CRITICAL"
 
 [node name="Anim" parent="." index="1"]

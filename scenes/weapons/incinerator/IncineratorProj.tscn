@@ -13,8 +13,8 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 1, Vector2( 0.0710901, 1 ), 0.0, 0.0, 0,
 
 [node name="IncineratorProj" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-speed = 600
-damage = 0.5
+speed = 750
+damage = 1.0
 
 [node name="HitBlast" parent="." index="0"]
 modulate = Color( 1, 0.607843, 0, 1 )

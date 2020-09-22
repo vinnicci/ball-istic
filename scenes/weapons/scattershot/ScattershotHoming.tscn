@@ -1,10 +1,11 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/weapons/scattershot/ScattershotHoming.gd" type="Script" id=1]
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/weapons/scattershot/_base/Scattershot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/weapons/tex_scattershot.png" type="Texture" id=3]
-[ext_resource path="res://scenes/weapons/scattershot/ScattershotHomingProj.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/weapons/scattershot/proj/ScattershotHomingProj.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/weapons/tex_siren_light.png" type="Texture" id=5]
+
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.672414, 1 )
@@ -34,14 +35,6 @@ color_ramp = SubResource( 2 )
 [node name="ScattershotHoming" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 4 )
-heat_capacity = 14.1
-heat_dissipation_per_sec = 0.0
-shoot_cooldown = 0.5
-crit_chance = 0.1
-proj_count_per_shot = 10
-spread = 20.0
-recoil = 300
-cam_shake_intensity = 10.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 3 )
@@ -56,7 +49,6 @@ texture = ExtResource( 5 )
 position = Vector2( 33, 0 )
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
-amount = 20
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
