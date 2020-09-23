@@ -10,7 +10,8 @@ radius = 13.0
 [node name="BlasterProjBig" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 speed = 800
-proj_range = 2000
+damage = 3.0
+proj_range = 1300
 
 [node name="Sprite" parent="." index="1"]
 modulate = Color( 1, 0.654902, 0, 1 )

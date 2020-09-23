@@ -33,12 +33,11 @@ color_ramp = SubResource( 2 )
 [node name="HeavyBlasterBig" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_cap = 50.0
-heat_dissipation = 9.0
+heat_cap = 75.0
+heat_dissipation = 12.5
 shoot_cooldown = 0.03
 spread = 15.0
 recoil = 10
-cam_shake_intensity = 3.0
 
 [node name="Muzzle" parent="." index="1"]
 position = Vector2( 78, 0 )

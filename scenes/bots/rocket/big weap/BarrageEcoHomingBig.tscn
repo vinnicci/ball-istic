@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bots/rocket/big weap/_base/RocketEcoHomingBig.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/weapons/tex_Rocket.png" type="Texture" id=2]
 [ext_resource path="res://scenes/bots/rocket/big weap/BarrageEcoHomingBig.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/rocket/proj/RocketEcoHomingProj.tscn" type="PackedScene" id=4]
@@ -32,34 +32,10 @@ scale = 15.0
 scale_random = 0.5
 color_ramp = SubResource( 2 )
 
-[sub_resource type="Animation" id=4]
-resource_name = "rotate"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 90.0, -90.0 ]
-}
-
 [node name="BarrageEcoHomingBig" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_cap = 5.1
-heat_dissipation = 0.75
-shoot_cooldown = 2.0
-crit_chance = 0.1
 fire_mode = 1
-spread = 5.0
-cam_shake_intensity = 3.0
-burst_count = 5
-burst_timer = 0.1
 
 [node name="Sprite" type="Sprite" parent="SlotIcon" index="0"]
 modulate = Color( 0.968627, 0.454902, 0.0784314, 1 )
@@ -71,26 +47,5 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Sprite" parent="." index="2"]
-rotation = 1.5708
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-
-[node name="MuzzlePos" type="Node2D" parent="." index="3"]
-
-[node name="P0" type="Position2D" parent="MuzzlePos" index="0"]
-position = Vector2( 28, -60 )
-
-[node name="P1" type="Position2D" parent="MuzzlePos" index="1"]
-position = Vector2( 28, -30 )
-
-[node name="P2" type="Position2D" parent="MuzzlePos" index="2"]
-position = Vector2( 28, 0 )
-
-[node name="P3" type="Position2D" parent="MuzzlePos" index="3"]
-position = Vector2( 28, 30 )
-
-[node name="P4" type="Position2D" parent="MuzzlePos" index="4"]
-position = Vector2( 28, 60 )
-
-[node name="Anim" type="AnimationPlayer" parent="." index="9"]
-anims/rotate = SubResource( 4 )

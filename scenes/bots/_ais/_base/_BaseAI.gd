@@ -4,6 +4,7 @@ extends Node2D
 export (int) var detection_range: int = 1000
 export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
+export (float) var weap_heat_cooldown: float = 0
 var _params_dict: Dictionary
 var _enemies: Array = []
 var _enemy: Global.CLASS_BOT = null
@@ -33,6 +34,10 @@ func _ready() -> void:
 
 func set_parent(new_parent: Global.CLASS_BOT):
 	_parent_node = new_parent
+	if weap_heat_cooldown != 0:
+		for weap in _parent_node.get_node("Weapons").get_children():
+			weap.current_heat_disspation = ((round(weap.get_heat_cap()) + 1)
+				/ weap_heat_cooldown)
 	_parent_node.connect("dead", self, "_on_parent_dead")
 
 

@@ -1,0 +1,29 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/bots/tex_explosive_bot.png" type="Texture" id=1]
+[ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/_base/BotExplosion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bots/self destruct/Explosive.gd" type="Script" id=4]
+[ext_resource path="res://scenes/bots/self destruct/_base/SelfDestructAI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/bots/self destruct/_base/ExplosiveAI.gd" type="Script" id=6]
+
+[sub_resource type="CircleShape2D" id=1]
+resource_local_to_scene = true
+
+[node name="Explosive" instance=ExtResource( 2 )]
+script = ExtResource( 4 )
+charge_force_mult = 0.8
+
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 1 )
+uv = PoolVector2Array( 104, 72, 99, 80, 94, 88, 89, 96, 84, 104, 74, 104, 64, 104, 54, 104, 44, 104, 39, 96, 34, 88, 29, 80, 24, 72, 29, 64, 34, 56, 39, 48, 44, 40, 54, 40, 64, 40, 74, 40, 84, 40, 89, 48, 94, 56, 99, 64, 79, 96, 69, 96, 59, 96, 49, 96, 84, 88, 74, 88, 64, 88, 54, 88, 44, 88, 39, 80, 49, 80, 59, 80, 69, 80, 79, 80, 89, 80, 34, 72, 44, 72, 54, 72, 64, 72, 74, 72, 84, 72, 94, 72, 89, 64, 79, 64, 69, 64, 59, 64, 49, 64, 39, 64, 84, 56, 74, 56, 64, 56, 54, 56, 44, 56, 49, 48, 59, 48, 69, 48, 79, 48 )
+
+[node name="CollisionShape" parent="." index="8"]
+shape = SubResource( 1 )
+
+[node name="Explosion" parent="." index="9" instance=ExtResource( 3 )]
+explosion_radius = 300
+damage = 25.0
+
+[node name="AI" parent="." index="10" instance=ExtResource( 5 )]
+script = ExtResource( 6 )

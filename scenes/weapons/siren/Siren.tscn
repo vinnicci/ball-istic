@@ -65,9 +65,7 @@ radius = 1000.0
 [node name="Siren" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 heat_per_shot = 2.0
-heat_capacity = 1.0
-heat_dissipation_per_sec = 0.0
-crit_chance = 0.0
+heat_cap = 1.0
 fire_mode = 4
 
 [node name="SlotIcon" parent="." index="0"]

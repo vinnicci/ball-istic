@@ -14,9 +14,11 @@ resource_local_to_scene = true
 [node name="ShotgunnerBig" instance=ExtResource( 4 )]
 script = ExtResource( 3 )
 bot_radius = 64
-speed = 2000
+speed = 2200
 knockback_resist = 0.5
 transform_speed = 0.4
+charge_cooldown = 2.5
+charge_force_mult = 0.6
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0, 0.403922, 0.054902, 1 )
@@ -35,7 +37,7 @@ shape = SubResource( 1 )
 
 [node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 detection_range = 1100
-enemy_seek_dist = 600
-max_shooting_dist = 1000
+enemy_seek_dist = 500
+max_shooting_dist = 800
 
 [node name="ShotgunBig" parent="Weapons" index="0" instance=ExtResource( 5 )]

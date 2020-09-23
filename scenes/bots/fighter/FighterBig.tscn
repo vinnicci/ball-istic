@@ -36,6 +36,7 @@ shape = SubResource( 1 )
 [node name="AI" parent="." index="10" instance=ExtResource( 6 )]
 detection_range = 1200
 enemy_seek_dist = 400
+weap_heat_cooldown = 5.0
 max_shooting_dist = 1000
 charge_seek_dist = 300
 

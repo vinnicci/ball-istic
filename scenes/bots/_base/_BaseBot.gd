@@ -171,19 +171,10 @@ func set_level(new_level: Node) -> void:
 
 
 func _init_bot() -> void:
-	#initialze state machine
+	#initialize state machine
 	$StateMachine.set_bot(self)
 	
-	#initialize AI component
-	if has_node("AI") == true:
-		$AI.set_parent(self)
-	
-	#error: no explosion component
-	if has_node("Explosion") == false:
-		push_error(name + " has no explosion node. Please attach one.")
-	
-	#weapon components initialized here, some npc bots will have multiple weapons
-	#must be child of Weapons node
+	#initialize weapons
 	var initialized_selected_weap: = false
 	var i: = -1
 	for weapon in $Weapons.get_children():
@@ -195,6 +186,14 @@ func _init_bot() -> void:
 			initialized_selected_weap = true
 			continue
 		weapon.animate_transform(0, false)
+	
+	#initialize AI component
+	if has_node("AI") == true:
+		$AI.set_parent(self)
+	
+	#error: no explosion component
+	if has_node("Explosion") == false:
+		push_error(name + " has no explosion node. Please attach one.")
 	
 	#bot physics and properties
 	$CollisionShape.shape = CircleShape2D.new()
@@ -541,6 +540,10 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func take_damage(damage: float, knockback: Vector2) -> void:
 	apply_knockback(knockback)
+	var anim = _dmg_feedback.instance()
+	var anim_txt = anim.get_node("Label")
+	anim_txt.text = str(damage)
+	_play_anim(global_position, anim, "dmg")
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -553,10 +556,6 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - damage
 		current_shield = 0
-	var anim = _dmg_feedback.instance()
-	var anim_txt = anim.get_node("Label")
-	anim_txt.text = str(damage)
-	_play_anim(global_position, anim, "dmg")
 	bar_shield.value = current_shield
 	bar_health.value = current_health
 

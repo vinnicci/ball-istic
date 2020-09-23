@@ -1,1 +1,1 @@
-extends "res://scenes/bots/spawner/big weap/BotBallista.gd"
+extends "res://scenes/bots/spawner/big weap/_base/BotBallista.gd"

@@ -33,8 +33,7 @@ color_ramp = SubResource( 2 )
 [node name="AutoBlasterBig" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 3 )
-heat_cap = 50.0
-heat_dissipation = 10.0
+heat_cap = 75.0
 shoot_cooldown = 0.05
 spread = 10.0
 recoil = 15

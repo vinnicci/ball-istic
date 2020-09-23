@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/heavy blaster/proj/HeavyBlasterProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -34,6 +33,7 @@ color_ramp = SubResource( 2 )
 [node name="HeavyBlaster" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
+spread = 7.0
 
 [node name="SlotIcon" parent="." index="0"]
 texture = ExtResource( 1 )

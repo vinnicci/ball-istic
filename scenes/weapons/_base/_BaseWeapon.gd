@@ -30,6 +30,7 @@ export (int) var melee_knockaback: int = 500 setget , get_melee_knockback
 
 var current_heat_per_shot: float = 0
 var current_heat: float = 0
+var current_heat_disspation: float = 0
 var current_shoot_cooldown: float
 var current_crit_mult: float
 var current_crit_chance: float
@@ -131,6 +132,9 @@ func reset_weap_vars() -> void:
 	_timer_burst_timer.wait_time = burst_timer
 	current_heat = 0
 	current_heat = clamp(current_heat, 0, heat_cap + 1)
+	#most AI bots have disspation advantage
+	if current_heat_disspation == 0:
+		current_heat_disspation = heat_dissipation
 	current_crit_mult = crit_mult
 	current_crit_chance = crit_chance
 	current_crit_chance = clamp(current_crit_chance, 0, 1.0)
@@ -152,10 +156,10 @@ func _process(_delta: float) -> void:
 
 
 func _on_DissipationCooldown_timeout() -> void:
-	if heat_dissipation <= 0:
+	if current_heat_disspation <= 0:
 		return
 	if current_heat > 0:
-		current_heat -= heat_dissipation * 0.25 #<- rate 1sec/4
+		current_heat -= current_heat_disspation * 0.25 #<- rate 1sec/4
 	elif current_heat <= 0:
 		current_heat = 0
 
@@ -344,7 +348,7 @@ func _fire_charged() -> void:
 		_cancel_charge()
 		return
 	if current_heat == heat_cap:
-		if heat_dissipation <= 0:
+		if current_heat_disspation <= 0:
 			_actual_heat += heat_per_shot
 			current_heat = _actual_heat
 			_timer_charge_cooldown.start(shoot_cooldown)
@@ -371,7 +375,7 @@ func _charge_fire() -> void:
 
 func _on_ChargeCancelTimer_timeout() -> void:
 	_cancel_charge()
-	if heat_dissipation <= 0:
+	if current_heat_disspation <= 0:
 		current_heat = _actual_heat
 	else:
 		current_heat = 0

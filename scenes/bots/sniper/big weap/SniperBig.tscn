@@ -36,8 +36,8 @@ Projectile = ExtResource( 4 )
 heat_cap = 4.1
 heat_dissipation = 0.715
 shoot_cooldown = 2.0
+crit_chance = 0.1
 recoil = 500
-cam_shake_intensity = 15.0
 
 [node name="Muzzle" parent="." index="1"]
 position = Vector2( 85, 0 )

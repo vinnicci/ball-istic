@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/bots/spawner/big weap/CDroneSpawnerBallista.gd" type="Script" id=1]
-[ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/spawner/big weap/_base/BotBallista.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/bots/spawner/CDroneSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=4]
 
@@ -33,11 +33,6 @@ color_ramp = SubResource( 2 )
 [node name="CDroneSpawnerBallista" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 Projectile = ExtResource( 3 )
-heat_per_shot = 15.0
-heat_cap = 29.0
-heat_dissipation = 1.0
-shoot_cooldown = 0.5
-fire_mode = 4
 
 [node name="SlotIcon" parent="." index="0"]
 offset = Vector2( -9, 0 )

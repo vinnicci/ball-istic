@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/dummy/Dummy.gd" type="Script" id=2]
 [ext_resource path="res://scenes/global/explosions/explosion/Explosion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/bots/tex_dummy.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -11,7 +12,11 @@ resource_local_to_scene = true
 script = ExtResource( 2 )
 destructible = false
 
-[node name="CollisionShape" parent="." index="7"]
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 4 )
+uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 54, 96, 44, 96, 39, 88, 34, 80, 29, 72, 24, 64, 29, 56, 34, 48, 39, 40, 44, 32, 54, 32, 64, 32, 74, 32, 84, 32, 89, 40, 94, 48, 99, 56, 79, 88, 69, 88, 59, 88, 49, 88, 84, 80, 74, 80, 64, 80, 54, 80, 44, 80, 39, 72, 49, 72, 59, 72, 69, 72, 79, 72, 89, 72, 34, 64, 44, 64, 54, 64, 64, 64, 74, 64, 84, 64, 94, 64, 89, 56, 79, 56, 69, 56, 59, 56, 49, 56, 39, 56, 84, 48, 74, 48, 64, 48, 54, 48, 44, 48, 49, 40, 59, 40, 69, 40, 79, 40 )
+
+[node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="9" instance=ExtResource( 3 )]

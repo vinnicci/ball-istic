@@ -36,10 +36,10 @@ Projectile = ExtResource( 4 )
 heat_cap = 5.1
 heat_dissipation = 1.2
 shoot_cooldown = 0.4
-proj_count_per_shot = 8
-spread = 10.0
+crit_chance = 0.1
+proj_count_per_shot = 16
+spread = 15.0
 recoil = 30
-cam_shake_intensity = 5.0
 
 [node name="SlotIcon" parent="." index="0"]
 offset = Vector2( 3, 1 )

@@ -32,9 +32,9 @@ color_ramp = SubResource( 2 )
 
 [node name="Pincer" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-melee_damage = 7.0
 
 [node name="SlotIcon" parent="." index="0"]
+modulate = Color( 0.988235, 0.568627, 0.12549, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( 5, 0 )
 
@@ -42,7 +42,20 @@ offset = Vector2( 5, 0 )
 visible = false
 process_material = SubResource( 3 )
 
+[node name="Beam1" parent="Beams" index="0"]
+visible = false
+modulate = Color( 0.988235, 0.568627, 0.12549, 0 )
+position = Vector2( 18, 0 )
+rotation = 0.0
+
+[node name="Beam2" parent="Beams" index="1"]
+visible = false
+modulate = Color( 0.988235, 0.568627, 0.12549, 0 )
+position = Vector2( 18, 0 )
+rotation = 0.0
+
 [node name="Sprite" parent="." index="3"]
+modulate = Color( 0.988235, 0.568627, 0.12549, 1 )
 texture = ExtResource( 1 )
 
 [node name="ShootingSound" parent="." index="7"]
