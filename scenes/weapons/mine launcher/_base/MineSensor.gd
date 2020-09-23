@@ -2,7 +2,7 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
 func _on_ProximityRadius_body_entered(body: Node) -> void:
-	if (body is Global.CLASS_BOT && body.has_node("AI") == true &&
+	if (body is Global.CLASS_BOT &&
 		_parent_node.current_faction != body.current_faction):
 		_fire_other()
 

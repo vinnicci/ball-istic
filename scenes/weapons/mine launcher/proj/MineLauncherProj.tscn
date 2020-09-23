@@ -30,6 +30,6 @@ shape = SubResource( 1 )
 modulate = Color( 1, 0.00392157, 0.00392157, 1 )
 
 [node name="Explosion" parent="." index="11" instance=ExtResource( 4 )]
-explosion_radius = 400
+explosion_radius = 300
 damage = 20.0
 knockback = 800

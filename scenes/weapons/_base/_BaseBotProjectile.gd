@@ -14,6 +14,7 @@ onready var _lifetime: = $Timers/Lifetime
 func _ready() -> void:
 	_glow = _body_charge_effect.duplicate()
 	$Body.add_child(_glow)
+	_lifetime.start(lifetime_timer)
 
 
 func set_shooter(shooter: Node, shooter_faction: Color) -> void:
@@ -30,7 +31,6 @@ func init_travel(pos: Vector2, dir: float) -> void:
 		$Explosion.is_crit = true
 	reset_bot_vars()
 	apply_central_impulse(Vector2(2000, 0).rotated(dir))
-	$Timers/Lifetime.start(lifetime_timer)
 
 
 var _dying: bool = false
@@ -38,7 +38,7 @@ var _dying: bool = false
 
 func _process(delta: float) -> void:
 	#glow upon dying
-	if _lifetime.time_left <= 1 && _dying == false:
+	if (_lifetime.time_left <= 1 && _dying == false) || state == State.DEAD:
 		_body_tween.interpolate_property(_glow, "modulate", _glow.modulate,
 			Color(1,1,1,0.75), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		_body_tween.start()
