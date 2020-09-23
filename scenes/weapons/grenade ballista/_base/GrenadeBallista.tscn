@@ -31,6 +31,7 @@ heat_per_shot = 5.0
 heat_cap = 14.0
 heat_dissipation = 1.9
 shoot_cooldown = 0.5
+crit_chance = 0.3
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )

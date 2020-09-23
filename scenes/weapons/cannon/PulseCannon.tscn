@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/cannon/_base/Cannon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/cannon/PulseCannon.gd" type="Script" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 0.184857, 0.984863, 0.0153885, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -34,7 +33,6 @@ color_ramp = SubResource( 2 )
 [node name="PulseCannon" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
 Projectile = ExtResource( 1 )
-crit_chance = 0.8
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.243137, 0.980392, 0.945098, 1 )

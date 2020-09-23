@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/shotgun/PulseShotgun.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/shotgun/proj/PulseShotgunProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -34,7 +33,6 @@ color_ramp = SubResource( 2 )
 [node name="PulseShotgun" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-crit_chance = 0.8
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.121569, 0.717647, 0.976471, 1 )

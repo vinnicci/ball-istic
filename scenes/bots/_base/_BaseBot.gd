@@ -662,7 +662,7 @@ func explode() -> void:
 	$Body.modulate = color
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	emit_signal("dead")
+	emit_signal("dead", self)
 	if is_instance_valid(level_node.get_player()) == true:
 		$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
 

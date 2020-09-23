@@ -4,9 +4,6 @@ extends Node2D
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
 var _player: Global.CLASS_PLAYER = null setget , get_player
-var _doors: Array
-var _engaging_player_count: int = 0
-var valid_bots: Array
 
 
 func get_player():
@@ -18,47 +15,32 @@ func _ready() -> void:
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
 		bot.set_level(self)
-		add_bot(bot)
-	for door in $Doors.get_children():
-		_doors.append(door)
+		bot.connect("dead", self, "_on_bot_dead")
+		if bot.has_node("AI") == true:
+			bot.get_node("AI").connect("engaged", self, "_on_bot_engaged")
 	open_doors()
 
 
-func add_bot(bot) -> void:
-	valid_bots.append(bot)
-	bot.connect("dead", self, "_on_bot_dead", [bot])
-
-
-var _doors_closed: bool = false
-
-
-func set_engaging_player_count(value: bool) -> void:
-	if value == true:
-		_engaging_player_count += 1
-	else:
-		_engaging_player_count -= 1
-	if _doors_closed == true && _engaging_player_count == 0:
-		open_doors()
-		_doors_closed = false
-	elif _doors_closed == false && _engaging_player_count != 0:
-		close_doors()
-		_doors_closed = true
+var _doors_open: bool
 
 
 func open_doors() -> void:
-	for door in _doors:
+	for door in $Doors.get_children():
 		door.open()
+	_doors_open = true
 
 
 func close_doors() -> void:
-	for door in _doors:
+	for door in $Doors.get_children():
 		door.close()
+	_doors_open = false
 
 
 func spawn_projectile(proj_inst, proj_pos: Vector2, proj_dir: float) -> void:
 	if proj_inst is Global.CLASS_BOT == true:
-		add_bot(proj_inst)
-	add_child(proj_inst)
+		$Bots.add_child(proj_inst)
+	else:
+		add_child(proj_inst)
 	proj_inst.init_travel(proj_pos, proj_dir)
 
 
@@ -67,11 +49,24 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 	return points
 
 
+func _on_bot_engaged() -> void:
+	for bot in $Bots.get_children():
+		if (bot.state != Global.CLASS_BOT.State.DEAD && bot.has_node("AI") == true &&
+			bot.get_node("AI").get_enemy() == _player && _doors_open == true):
+			close_doors()
+			break
+
+
 func _on_bot_dead(bot) -> void:
 	if bot == _player:
 		$Camera2D.global_position = _player.global_position
 		$Camera2D.current = true
-	valid_bots.erase(bot)
+		return
+	for bot in $Bots.get_children():
+		if (bot.state != Global.CLASS_BOT.State.DEAD && bot.has_node("AI") == true &&
+			bot.get_node("AI").get_enemy() == _player && _doors_open == false):
+			return
+	open_doors()
 
 
 #anim effect cleanup -> critical, deflected, stunned, charge and teleport trail

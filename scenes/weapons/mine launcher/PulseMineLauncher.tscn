@@ -32,8 +32,6 @@ color_ramp = SubResource( 2 )
 [node name="PulseMineLauncher" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
-crit_mult = 1.0
-crit_chance = 0.8
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.317647, 0.462745, 0.486275, 1 )

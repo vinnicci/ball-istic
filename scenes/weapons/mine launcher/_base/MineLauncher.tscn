@@ -29,6 +29,7 @@ color_ramp = SubResource( 2 )
 [node name="MineLauncher" instance=ExtResource( 1 )]
 heat_cap = 2.1
 shoot_cooldown = 0.5
+crit_chance = 0.2
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )

@@ -5,9 +5,10 @@ export (int) var detection_range: int = 1000
 export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
 export (float) var weap_heat_cooldown: float = 0
+
 var _params_dict: Dictionary
 var _enemies: Array = []
-var _enemy: Global.CLASS_BOT = null
+var _enemy: Global.CLASS_BOT = null setget , get_enemy
 var _master: Global.CLASS_BOT = null
 var _path_points: Array = []
 var _next_path_point
@@ -15,6 +16,10 @@ var _velocity: Vector2
 var _flee_routes: Dictionary = {}
 var _parent_node: Global.CLASS_BOT
 var _level_node: Node = null
+
+
+func get_enemy():
+	return _enemy
 
 
 func _ready() -> void:
@@ -61,9 +66,7 @@ func _process(delta: float) -> void:
 	$Rays.global_rotation = 0
 
 
-func _on_parent_dead() -> void:
-	if _enemy is Global.CLASS_PLAYER:
-		_level_node.set_engaging_player_count(false)
+func _on_parent_dead(parent) -> void:
 	clear_enemies()
 	$DetectionRange.monitoring = false
 
@@ -74,7 +77,7 @@ func clear_enemies() -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
-	return _level_node.valid_bots.has(bot)
+	return _level_node.get_node("Bots").get_children().has(bot)
 
 
 func _clear_path_points() -> void:
@@ -115,8 +118,6 @@ func _get_new_target_enemy(bot) -> void:
 
 
 func engage(bot) -> void:
-#	if _check_if_valid_bot(bot) == false:
-#		return
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
 	if _enemy != null:
@@ -130,14 +131,14 @@ func engage(bot) -> void:
 	_set_enemy(bot)
 
 
+signal engaged
+
+
 func _set_enemy(bot) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD || _enemy == bot:
 		return
-	if bot is Global.CLASS_PLAYER:
-		_level_node.set_engaging_player_count(true)
-	elif _enemy is Global.CLASS_PLAYER:
-		_level_node.set_engaging_player_count(false)
 	_enemy = bot
+	emit_signal("engaged")
 	if $FoundTarget.is_playing() == false:
 		$FoundTarget.play()
 

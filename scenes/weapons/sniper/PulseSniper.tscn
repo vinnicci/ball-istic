@@ -5,7 +5,6 @@
 [ext_resource path="res://assets/weapons/tex_sniper.png" type="Texture" id=3]
 [ext_resource path="res://scenes/weapons/sniper/proj/PulseSniperProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -34,7 +33,7 @@ color_ramp = SubResource( 2 )
 [node name="PulseSniper" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
-crit_chance = 0.8
+crit_chance = 0.2
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.345098, 0.505882, 0.992157, 1 )

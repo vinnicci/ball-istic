@@ -9,7 +9,7 @@ radius = 6.0
 
 [node name="PulseShotgunProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-stun_time = 3.0
+stun_time = 2.0
 
 [node name="Sprite" parent="." index="1"]
 modulate = Color( 0, 1, 0.882353, 1 )
