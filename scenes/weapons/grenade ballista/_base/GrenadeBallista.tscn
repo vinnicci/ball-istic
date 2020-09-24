@@ -27,6 +27,7 @@ scale_random = 0.5
 color_ramp = SubResource( 2 )
 
 [node name="GrenadeBallista" instance=ExtResource( 1 )]
+description = "Launches grenades."
 heat_per_shot = 5.0
 heat_cap = 14.0
 heat_dissipation = 1.9

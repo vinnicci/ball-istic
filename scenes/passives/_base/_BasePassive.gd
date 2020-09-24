@@ -4,8 +4,19 @@ extends "res://scenes/global/items/_base/_BaseItem.gd"
 export (float) var effect
 
 
+func get_description() -> String:
+	if effect > 0:
+		return "+" + str(effect) + " to " + description
+	else:
+		return str(effect) + " to " + description
+
+
+func apply_effect() -> void:
+	pass
+
+
 func _apply_charge_cooldown() -> void:
-	_parent_node.current_charge_cooldown -= effect
+	_parent_node.current_charge_cooldown += effect
 
 
 func _apply_charge_damage_rate() -> void:
@@ -19,10 +30,6 @@ func _apply_charge_force() -> void:
 func _apply_health_cap() -> void:
 	_parent_node.current_health_cap += effect
 	_parent_node.set_current_health(_parent_node.current_health_cap)
-
-
-func _apply_weap_damage_rate() -> void:
-	_parent_node.current_weap_dmg_rate += effect
 
 
 func _apply_knockback_resist() -> void:
@@ -43,4 +50,8 @@ func _apply_speed() -> void:
 
 
 func _apply_transform_speed() -> void:
-	_parent_node.current_transform_speed -= effect
+	_parent_node.current_transform_speed += effect
+
+
+func _apply_weap_damage_rate() -> void:
+	_parent_node.current_weap_dmg_rate += effect

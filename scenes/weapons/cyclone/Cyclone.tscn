@@ -32,6 +32,7 @@ color_ramp = SubResource( 2 )
 
 [node name="Cyclone" instance=ExtResource( 2 )]
 script = ExtResource( 4 )
+description = "BULLET TORNADO!!"
 Projectile = ExtResource( 3 )
 heat_per_shot = 4.0
 heat_cap = 11.1

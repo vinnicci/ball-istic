@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=2]
@@ -15,15 +15,22 @@
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/weapons/grenade ballista/PulseGrenadeBallista.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/weapons/mine launcher/MineLauncher.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/mine launcher/proj/PulseMineLauncherProj.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/weapons/dagger/Dagger.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/bots/grenadier/StunGrenadier.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/bots/spawner/ExplosiveSpawner.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=28]
+[ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=29]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceI.tscn" type="PackedScene" id=30]
+[ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=31]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
@@ -231,6 +238,10 @@ resource_local_to_scene = true
 } ]
 6/z_index = 0
 
+[sub_resource type="PhysicsMaterial" id=15]
+friction = 0.5
+bounce = 0.7
+
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
 
@@ -244,11 +255,25 @@ position = Vector2( 700, -192 )
 [node name="Depot" parent="Access" index="1" instance=ExtResource( 10 )]
 position = Vector2( 323, -190 )
 
-[node name="RepairNanobots" parent="Access/Depot/Items" index="0" instance=ExtResource( 14 )]
+[node name="SpeedI" parent="Access/Depot/Items" index="0" instance=ExtResource( 16 )]
 
-[node name="ShieldRecharger" parent="Access/Depot/Items" index="1" instance=ExtResource( 8 )]
+[node name="ChargeForceI" parent="Access/Depot/Items" index="1" instance=ExtResource( 30 )]
 
-[node name="PulseGrenadeBallista" parent="Access/Depot/Items" index="2" instance=ExtResource( 16 )]
+[node name="TransformSpeedI" parent="Access/Depot/Items" index="2" instance=ExtResource( 31 )]
+
+[node name="RepairNanobots" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
+
+[node name="ShieldRecharger" parent="Access/Depot/Items" index="4" instance=ExtResource( 8 )]
+
+[node name="PaladinHammer" parent="Access/Depot/Items" index="5" instance=ExtResource( 20 )]
+
+[node name="Dagger" parent="Access/Depot/Items" index="6" instance=ExtResource( 24 )]
+
+[node name="MineLauncher" parent="Access/Depot/Items" index="7" instance=ExtResource( 22 )]
+
+[node name="Phaser" parent="Access/Depot/Items" index="8" instance=ExtResource( 28 )]
+
+[node name="Storm" parent="Access/Depot/Items" index="9" instance=ExtResource( 29 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -261,46 +286,85 @@ position = Vector2( 64, 2056 )
 
 [node name="Dummy" parent="Bots" index="0" instance=ExtResource( 17 )]
 position = Vector2( -281.817, 339.028 )
+physics_material_override = SubResource( 15 )
 contacts_reported = 1
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Dummy2" parent="Bots" index="1" instance=ExtResource( 17 )]
 position = Vector2( -177.99, 125.017 )
+physics_material_override = SubResource( 15 )
 contacts_reported = 1
 
 [node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 17 )]
 position = Vector2( -207.655, -118.66 )
+physics_material_override = SubResource( 15 )
 contacts_reported = 1
 
 [node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
 position = Vector2( 327, 208 )
+physics_material_override = SubResource( 15 )
 contacts_reported = 1
 shield_cap = 75.0
 health_cap = 75.0
 
 [node name="HeavyFighterBig" parent="Bots" index="4" instance=ExtResource( 9 )]
 position = Vector2( 758, 929 )
+physics_material_override = SubResource( 15 )
 
 [node name="PulseMineLauncherProj" parent="Bots" index="5" instance=ExtResource( 23 )]
 position = Vector2( 208, 2344 )
+physics_material_override = SubResource( 15 )
+gravity_scale = 0.0
+contacts_reported = 2
+contact_monitor = true
+bot_radius = 20
+shield_cap = 0.0
+shield_regen = 0.0
+health_cap = 5.0
+knockback_resist = 0.1
+charge_cooldown = 2.0
 
 [node name="PulseMineLauncherProj2" parent="Bots" index="6" instance=ExtResource( 23 )]
 position = Vector2( -110, 2323 )
+physics_material_override = SubResource( 15 )
+gravity_scale = 0.0
+contacts_reported = 2
+contact_monitor = true
+bot_radius = 20
+shield_cap = 0.0
+shield_regen = 0.0
+health_cap = 5.0
+knockback_resist = 0.1
+charge_cooldown = 2.0
 
 [node name="PulseMineLauncherProj3" parent="Bots" index="7" instance=ExtResource( 23 )]
 position = Vector2( 61, 2248 )
+physics_material_override = SubResource( 15 )
+gravity_scale = 0.0
+contacts_reported = 2
+contact_monitor = true
+bot_radius = 20
+shield_cap = 0.0
+shield_regen = 0.0
+health_cap = 5.0
+knockback_resist = 0.1
+charge_cooldown = 2.0
 
 [node name="SniperBot" parent="Bots" index="8" instance=ExtResource( 25 )]
 position = Vector2( 1159, 2319 )
+physics_material_override = SubResource( 15 )
 
 [node name="StunGrenadier" parent="Bots" index="9" instance=ExtResource( 26 )]
 position = Vector2( -923, 2990 )
+physics_material_override = SubResource( 15 )
 
 [node name="StunGrenadier2" parent="Bots" index="10" instance=ExtResource( 26 )]
 position = Vector2( 652, 3049 )
+physics_material_override = SubResource( 15 )
 
 [node name="ExplosiveSpawner" parent="Bots" index="11" instance=ExtResource( 27 )]
 position = Vector2( -90, 2995 )
+physics_material_override = SubResource( 15 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

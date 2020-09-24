@@ -15,9 +15,12 @@ func _ready() -> void:
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
 		bot.set_level(self)
-		bot.connect("dead", self, "_on_bot_dead")
+		bot.connect("dead", self, "_on_bot_dead", [bot])
 		if bot.has_node("AI") == true:
 			bot.get_node("AI").connect("engaged", self, "_on_bot_engaged")
+	for access in $Access.get_children():
+		if access is Global.DEPOT || access is Global.VAULT:
+			access.set_level(self)
 	open_doors()
 
 
@@ -38,6 +41,7 @@ func close_doors() -> void:
 
 func spawn_projectile(proj_inst, proj_pos: Vector2, proj_dir: float) -> void:
 	if proj_inst is Global.CLASS_BOT == true:
+		proj_inst.connect("dead", self, "_on_bot_dead", [proj_inst])
 		$Bots.add_child(proj_inst)
 	else:
 		add_child(proj_inst)

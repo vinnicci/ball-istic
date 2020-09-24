@@ -1,5 +1,5 @@
 extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
-func _apply_effects() -> void:
+func apply_effect() -> void:
 	_apply_weap_damage_rate()

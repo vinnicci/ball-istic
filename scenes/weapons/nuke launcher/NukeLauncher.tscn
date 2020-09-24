@@ -33,6 +33,7 @@ color_ramp = SubResource( 2 )
 
 [node name="NukeLauncher" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
+description = "Handle with care."
 Projectile = ExtResource( 5 )
 heat_per_shot = 2.0
 heat_cap = 1.0

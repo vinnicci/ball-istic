@@ -66,7 +66,7 @@ func _process(delta: float) -> void:
 	$Rays.global_rotation = 0
 
 
-func _on_parent_dead(parent) -> void:
+func _on_parent_dead() -> void:
 	clear_enemies()
 	$DetectionRange.monitoring = false
 

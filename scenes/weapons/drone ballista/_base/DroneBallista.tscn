@@ -27,6 +27,7 @@ scale_random = 0.5
 color_ramp = SubResource( 2 )
 
 [node name="DroneBallista" instance=ExtResource( 1 )]
+description = "Launches drones."
 heat_cap = 2.1
 shoot_cooldown = 0.5
 crit_chance = 0.0

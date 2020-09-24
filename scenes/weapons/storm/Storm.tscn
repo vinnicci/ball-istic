@@ -33,6 +33,7 @@ color_ramp = SubResource( 2 )
 
 [node name="Storm" instance=ExtResource( 5 )]
 script = ExtResource( 6 )
+description = "Shoots out multiple phase bombs."
 Projectile = ExtResource( 3 )
 heat_per_shot = 5.0
 heat_cap = 9.0

@@ -48,7 +48,7 @@ var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
 var arr_weapons: Array = [null, null, null, null, null]
-var level_node: Node = null
+var _level_node: Node = null
 enum State {
 	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
@@ -163,11 +163,13 @@ func _ready() -> void:
 
 
 func set_level(new_level: Node) -> void:
-	level_node = new_level
+	_level_node = new_level
 	if has_node("Explosion") == true:
-		$Explosion.set_level_cam(level_node.get_node("Camera2D"))
+		$Explosion.set_level_cam(_level_node.get_node("Camera2D"))
 	if has_node("AI") == true:
-		$AI.set_level(level_node)
+		$AI.set_level(_level_node)
+	for weapon in $Weapons.get_children():
+		weapon.set_level(_level_node)
 
 
 func _init_bot() -> void:
@@ -450,10 +452,10 @@ func _on_SwitchTween_tween_all_completed() -> void:
 
 
 func shoot_weapon() -> void:
-	if state == State.TURRET:
-		if current_weapon.level_node != level_node:
-			current_weapon.level_node = level_node
-		current_weapon.fire()
+#	if state == State.TURRET:
+#		if current_weapon.level_node != level_node:
+#			current_weapon.level_node = level_node
+	current_weapon.fire()
 
 
 #some weapon have longer deploy animation -- will use shoot_commit var
@@ -635,10 +637,10 @@ var _dmg_feedback = preload("res://scenes/global/feedback/Damage.tscn")
 
 
 func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:
-	level_node.add_child(anim_instance)
+	_level_node.add_child(anim_instance)
 	var anim = anim_instance.get_node("Anim")
 	anim_instance.global_position = pos
-	anim.connect("animation_finished", level_node, "_on_Anim_finished",
+	anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[anim_instance])
 	anim.play(anim_name)
 
@@ -662,9 +664,9 @@ func explode() -> void:
 	$Body.modulate = color
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	emit_signal("dead", self)
-	if is_instance_valid(level_node.get_player()) == true:
-		$Explosion.set_player_cam(level_node.get_player().get_node("Camera2D"))
+	emit_signal("dead")
+	if is_instance_valid(_level_node.get_player()) == true:
+		$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 
 
 func _on_ExplodeDelay_timeout() -> void:

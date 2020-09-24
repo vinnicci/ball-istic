@@ -11,6 +11,7 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ChargeForceI" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+description = "charge force mult."
 effect = 0.375
 
 [node name="SlotIcon" parent="." index="0"]

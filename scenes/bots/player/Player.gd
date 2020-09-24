@@ -15,6 +15,14 @@ func _ready() -> void:
 	_init_player()
 
 
+func set_level(new_level) -> void:
+	.set_level(new_level)
+	for item in $Items.get_children():
+		item.set_level(_level_node)
+	for passive in $Passives.get_children():
+		passive.set_level(_level_node)
+
+
 func _init_player() -> void:
 	#give player access to ui nodes
 	ui_inventory.set_player(self)
@@ -62,7 +70,7 @@ func _init_player() -> void:
 func update_player_vars() -> void:
 	reset_bot_vars()
 	for passive in $Passives.get_children():
-		passive._apply_effects()
+		passive.apply_effect()
 	cap_current_vars()
 	#initialize player stats ui
 	ui_inventory.get_node("Stats").update_stats()

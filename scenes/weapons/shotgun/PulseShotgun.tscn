@@ -32,6 +32,7 @@ color_ramp = SubResource( 2 )
 
 [node name="PulseShotgun" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
+description = "Pulse causes stun on hit."
 Projectile = ExtResource( 4 )
 
 [node name="SlotIcon" parent="." index="0"]

@@ -9,9 +9,8 @@
 [node name="HeatEdgeSuperProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 1300
-damage = 2.5
+damage = 4.0
 proj_range = 1500
-knockback = 100.0
 
 [node name="Sprite" parent="." index="1"]
 modulate = Color( 1, 0.560784, 0, 1 )

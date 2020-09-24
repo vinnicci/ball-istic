@@ -99,6 +99,7 @@ tracks/4/keys = {
 
 [node name="PaladinHammer" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
+description = "The hammer can stop projectiles. Also causes stun on critical hit."
 heat_per_shot = 0.0
 heat_dissipation = 5.0
 crit_chance = 0.3

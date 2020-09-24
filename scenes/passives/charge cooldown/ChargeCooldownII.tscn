@@ -11,7 +11,8 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ChargeCooldownII" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-effect = 1.625
+description = "charge cooldown."
+effect = -1.625
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 0.145098, 0.819608, 1, 1 )

@@ -31,6 +31,7 @@ color_ramp = SubResource( 2 )
 
 [node name="PulseMineLauncher" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+description = "Launches mines. Pulse causes stun on hit."
 Projectile = ExtResource( 4 )
 
 [node name="SlotIcon" parent="." index="0"]

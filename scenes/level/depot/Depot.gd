@@ -1,11 +1,18 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
+var _level_node: Node
 var _locked_down: bool = false
 
 
 func _ready() -> void:
 	_init_ui_node()
+
+
+func set_level(new_level) -> void:
+	_level_node = new_level
+	for item in $Items.get_children():
+		item.set_level(_level_node)
 
 
 func _init_ui_node() -> void:

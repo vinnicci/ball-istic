@@ -62,6 +62,7 @@ tracks/1/keys = {
 
 [node name="Fortress" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+description = "Has built-in front shield that protects you from projectiles."
 Projectile = ExtResource( 4 )
 heat_per_shot = 5.0
 heat_cap = 300.0

@@ -5,7 +5,6 @@ export (float) var lifetime_timer: float = 15
 
 var _glow: Node
 var _shooter: Node
-var _level: Node
 var is_crit: bool = false
 
 onready var _lifetime: = $Timers/Lifetime
@@ -46,7 +45,5 @@ func _process(delta: float) -> void:
 
 
 func _on_Lifetime_timeout() -> void:
-	if current_weapon != null:
-		current_weapon.hide()
 	if state != State.DEAD:
 		current_health = 0

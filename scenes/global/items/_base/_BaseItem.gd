@@ -1,7 +1,14 @@
 extends Node2D
 
 
+export var description: String
+
 var _parent_node: Node
+var _level_node: Node
+
+
+func parent_node():
+	return _parent_node
 
 
 func _ready() -> void:
@@ -14,3 +21,10 @@ func set_parent(new_parent: Node):
 		return
 	_parent_node = new_parent
 
+
+func set_level(new_level: Node):
+	_level_node = new_level
+
+
+func get_description() -> String:
+	return description

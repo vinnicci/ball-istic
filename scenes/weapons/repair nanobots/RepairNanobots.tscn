@@ -32,6 +32,7 @@ color_ramp = SubResource( 2 )
 
 [node name="RepairNanobots" instance=ExtResource( 3 )]
 script = ExtResource( 4 )
+description = "Recovers HP."
 heat_cap = 4.1
 shoot_cooldown = 5.0
 fire_mode = 4

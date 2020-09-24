@@ -37,7 +37,6 @@ var current_crit_chance: float
 var _is_almost_overheating: bool = false setget , is_almost_overheating
 var _is_overheating: bool = false setget , is_overheating
 var weap_commit: bool = false
-var level_node: Node = null
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
 onready var _timer_burst_timer: Node = $Timers/BurstTimer
@@ -109,12 +108,33 @@ func is_almost_overheating():
 func is_overheating():
 	return _is_overheating
 
-func parent_node():
-	return _parent_node
-
 
 func _ready() -> void:
 	reset_weap_vars()
+
+
+func get_description() -> String:
+	var s_description: String
+	var sample_proj
+	if Projectile != null:
+		sample_proj = Projectile.instance()
+	var dmg_rate = _level_node.get_player().current_weap_dmg_rate
+	match fire_mode:
+		FireModes.MELEE:
+			s_description = "MELEE DMG: " + str(dmg_rate * melee_damage)
+		FireModes.AUTO, FireModes.BURST, FireModes.CHARGE:
+			if (sample_proj is Global.CLASS_BOT_PROJ &&
+				sample_proj.has_node("AI") == true):
+				pass
+			elif sample_proj.has_node("Explosion") == true:
+				s_description = "EXPLOSION DMG: " + str(dmg_rate *
+					sample_proj.get_node("Explosion").damage)
+			else:
+				s_description = "PROJECTILE DMG: " + str(dmg_rate * sample_proj.damage)
+	if s_description == "":
+		return description
+	else:
+		return s_description + "\n" + description
 
 
 func reset_weap_vars() -> void:
@@ -197,7 +217,7 @@ func fire() -> void:
 
 
 func _spawn_proj() -> void:
-	level_node.spawn_projectile(_modify_proj(Projectile), $Muzzle.global_position,
+	_level_node.spawn_projectile(_modify_proj(Projectile), $Muzzle.global_position,
 		$Muzzle.global_rotation + deg2rad(rand_range(-spread, spread)))
 
 
@@ -205,7 +225,7 @@ func _spawn_proj() -> void:
 func _modify_proj(proj_pack) -> Node:
 	var proj = proj_pack.instance()
 	proj.set_shooter(_parent_node, _parent_node.current_faction)
-	proj.set_level(level_node)
+	proj.set_level(_level_node)
 	_apply_crit(proj)
 	return proj
 
@@ -312,19 +332,19 @@ func _apply_melee_crit_effect(body) -> void:
 
 func _play_crit_effect(pos: Vector2) -> void:
 	var crit_node = _crit_feedback.instance()
-	level_node.add_child(crit_node)
+	_level_node.add_child(crit_node)
 	var crit_anim = crit_node.get_node("Anim")
 	crit_node.global_position = pos
-	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
+	crit_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[crit_node])
 	crit_anim.play("critical")
 	if melee_crit_stun_time <= 0:
 		return
 	var stun_node = _stun_feedback.instance()
-	level_node.add_child(stun_node)
+	_level_node.add_child(stun_node)
 	stun_node.global_position = pos
 	var stun_anim = stun_node.get_node("Anim")
-	stun_anim.connect("animation_finished", level_node, "_on_Anim_finished",
+	stun_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[stun_node])
 	stun_anim.play("stun")
 

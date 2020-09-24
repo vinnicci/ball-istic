@@ -34,7 +34,7 @@ func _display_item_info(disp: bool) -> void:
 	type = regex.search(type).get_string()
 	type = "[" + type.to_upper().trim_suffix("S") + "]"
 	item_info.get_node("VBoxContainer/Type").text = type
-	item_info.get_node("Description").text = "This is a sample description text"
+	item_info.get_node("Description").text = item.get_description()
 
 
 func _on_Slot_mouse_entered() -> void:
