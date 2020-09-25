@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/charge cooldown/_base/ChargeCooldown.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownIII.gd" type="Script" id=3]
 [ext_resource path="res://assets/passives/tex_passive_transform_ch_cooldown.png" type="Texture" id=4]
 
@@ -11,8 +11,7 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ChargeCooldownIII" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-description = "charge cooldown."
-effect = -3.25
+effect = -3.2
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 1, 0.647059, 0.145098, 1 )

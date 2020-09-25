@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_shield_regen()
+extends "res://scenes/passives/shield regen/_base/ShieldRegen.gd"

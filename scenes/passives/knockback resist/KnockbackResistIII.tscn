@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/passives/knockback resist/KnockbackResistIII.gd" type="Script" id=1]
-[ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/knockback resist/_base/KnockbackResist.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/passives/tex_passive_speed_knockback.png" type="Texture" id=4]
 
 [sub_resource type="StreamTexture" id=1]
@@ -11,7 +11,6 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="KnockbackResistIII" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-description = "knockback resist %."
 effect = 0.8
 
 [node name="SlotIcon" parent="." index="0"]

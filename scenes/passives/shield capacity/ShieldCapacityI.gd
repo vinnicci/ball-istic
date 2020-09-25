@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_shield_cap()
+extends "res://scenes/passives/shield capacity/_base/ShieldCapacity.gd"

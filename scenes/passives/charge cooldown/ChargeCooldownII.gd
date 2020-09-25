@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_charge_cooldown()
+extends "res://scenes/passives/charge cooldown/_base/ChargeCooldown.gd"

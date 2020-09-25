@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/passives/tex_passive_hp_shield.png" type="Texture" id=1]
-[ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/shield capacity/_base/ShieldCapacity.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityI.gd" type="Script" id=3]
 
 [sub_resource type="StreamTexture" id=1]
@@ -11,7 +11,6 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ShieldCapacityI" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
-description = "shield capacity."
 effect = 25.0
 
 [node name="SlotIcon" parent="." index="0"]

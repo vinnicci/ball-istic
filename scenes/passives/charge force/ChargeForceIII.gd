@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_charge_force()
+extends "res://scenes/passives/charge force/_base/ChargeForce.gd"

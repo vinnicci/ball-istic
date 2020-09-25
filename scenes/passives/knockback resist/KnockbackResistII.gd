@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_knockback_resist()
+extends "res://scenes/passives/knockback resist/_base/KnockbackResist.gd"

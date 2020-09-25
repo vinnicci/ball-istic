@@ -8,7 +8,7 @@ export (float) var health_cap: float = 10 setget , get_health_cap
 export (int, 0, 4000) var speed: int = 1000 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.2 setget , get_knockback_resist
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
-export (float, 0.25, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
+export (float, 0.3, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_mult: float = 0.5 setget , get_charge_force_mult
 export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
@@ -135,7 +135,7 @@ func get_current_health():
 
 func set_current_charge_cooldown(new_charge_cooldown: float):
 	current_charge_cooldown = new_charge_cooldown
-	_timer_charge_cooldown.wait_time = new_charge_cooldown
+	_timer_charge_cooldown.wait_time = current_charge_cooldown
 
 func get_current_charge_cooldown():
 	return current_charge_cooldown
@@ -279,8 +279,7 @@ func reset_bot_vars() -> void:
 	set_current_health(current_health_cap)
 	
 	current_transform_speed = transform_speed
-	current_charge_cooldown = charge_cooldown
-	_timer_charge_cooldown.wait_time = current_charge_cooldown
+	set_current_charge_cooldown(charge_cooldown)
 	current_charge_force_mult = charge_force_mult
 	current_charge_crit_mult = charge_crit_mult
 	current_charge_crit_chance = charge_crit_chance

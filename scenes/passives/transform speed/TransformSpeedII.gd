@@ -1,5 +1,1 @@
-extends "res://scenes/passives/_base/_BasePassive.gd"
-
-
-func apply_effect() -> void:
-	_apply_transform_speed()
+extends "res://scenes/passives/transform speed/_base/TransformSpeed.gd"
