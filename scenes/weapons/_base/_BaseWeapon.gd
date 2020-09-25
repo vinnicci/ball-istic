@@ -288,10 +288,6 @@ func _on_BurstTimer_timeout() -> void:
 ################################################################################
 # melee attack
 ################################################################################
-#var _crit_feedback: = preload("res://scenes/global/feedback/Critical.tscn")
-#var _stun_feedback = load("res://scenes/global/feedback/Stun.tscn")
-
-
 func _fire_melee() -> void:
 	$ShootingSound.play()
 	_apply_recoil()
@@ -321,7 +317,6 @@ func _apply_melee_crit(body) -> float:
 		dmg = melee_damage * _parent_node.current_weap_dmg_rate * crit_mult
 		_apply_melee_crit_effect(body)
 		body.crit_effect()
-#		_play_crit_effect(body.global_position)
 	else:
 		dmg = melee_damage * _parent_node.current_weap_dmg_rate
 	return dmg
@@ -329,25 +324,6 @@ func _apply_melee_crit(body) -> float:
 
 func _apply_melee_crit_effect(body) -> void:
 	pass
-
-
-#func _play_crit_effect(pos: Vector2) -> void:
-#	var crit_node = _crit_feedback.instance()
-#	_level_node.add_child(crit_node)
-#	var crit_anim = crit_node.get_node("Anim")
-#	crit_node.global_position = pos
-#	crit_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
-#		[crit_node])
-#	crit_anim.play("critical")
-#	if melee_crit_stun_time <= 0:
-#		return
-#	var stun_node = _stun_feedback.instance()
-#	_level_node.add_child(stun_node)
-#	stun_node.global_position = pos
-#	var stun_anim = stun_node.get_node("Anim")
-#	stun_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
-#		[stun_node])
-#	stun_anim.play("stun")
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:

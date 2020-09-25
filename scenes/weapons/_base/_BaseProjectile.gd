@@ -16,8 +16,6 @@ var exploded: bool = false
 var _level_node: Node = null
 var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
-#var _crit_feedback: = load("res://scenes/global/feedback/Critical.tscn")
-#var _stun_feedback: = load("res://scenes/global/feedback/Stun.tscn")
 
 
 func get_speed():
@@ -101,33 +99,10 @@ func _damage_bot(bot: Node) -> void:
 			if is_crit == true:
 				if stun_time != 0:
 					bot.stun_effect(stun_time)
-#					bot.timer_stun.start(stun_time)
 				bot.crit_effect()
-#				_play_crit_effect(bot.global_position)
 		if bot.has_node("AI") == true && is_instance_valid(_shooter) == true:
 			bot.get_node("AI").engage(_shooter)
 		stop_projectile(bot)
-
-
-#crit feedback only works on bots
-#although damage also works on walls
-#func _play_crit_effect(pos: Vector2) -> void:
-#	var crit_node = _crit_feedback.instance()
-#	_level_node.add_child(crit_node)
-#	crit_node.global_position = pos
-#	var crit_anim = crit_node.get_node("Anim")
-#	crit_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
-#		[crit_node])
-#	crit_anim.play("critical")
-#	if stun_time == 0:
-#		return
-#	var stun_node = _stun_feedback.instance()
-#	_level_node.add_child(stun_node)
-#	stun_node.global_position = pos
-#	var stun_anim = stun_node.get_node("Anim")
-#	stun_anim.connect("animation_finished", _level_node, "_on_Anim_finished",
-#		[stun_node])
-#	stun_anim.play("stun")
 
 
 #environment object such as walls or objects
