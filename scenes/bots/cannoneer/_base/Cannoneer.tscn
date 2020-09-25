@@ -19,3 +19,7 @@ weap_heat_cooldown = 7.0
 max_shooting_dist = 800
 enemy_too_close_dist = 300
 max_flee_dist = 550
+
+[node name="Label" parent="Name" index="0"]
+margin_bottom = 52.0
+text = "CANNONEER"

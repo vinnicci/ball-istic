@@ -35,3 +35,6 @@ weap_heat_cooldown = 5.0
 max_shooting_dist = 800
 
 [node name="AutoBlaster" parent="Weapons" index="0" instance=ExtResource( 4 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "FIGHTER"

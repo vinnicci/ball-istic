@@ -39,3 +39,6 @@ enemy_seek_dist = 400
 max_shooting_dist = 750
 
 [node name="Shotgun" parent="Weapons" index="0" instance=ExtResource( 5 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "SHOTGUNNER"

@@ -18,3 +18,6 @@ enemy_seek_dist = 800
 weap_heat_cooldown = 8.0
 max_shooting_dist = 1050
 max_flee_dist = 850
+
+[node name="Label" parent="Name" index="0"]
+text = "SNIPER"

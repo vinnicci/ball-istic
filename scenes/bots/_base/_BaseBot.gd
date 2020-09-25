@@ -209,10 +209,10 @@ func _init_bot() -> void:
 		$Bars/Health.hide()
 	
 	#bot's body graphics setup
-	var regex = RegEx.new()
-	regex.compile("[^@]+")
-	var name_label = regex.search(name)
-	$Name/Label.text = name_label.get_string()
+#	var regex = RegEx.new()
+#	regex.compile("[^@]+")
+#	var name_label = regex.search(name)
+#	$Name/Label.text = name_label.get_string()
 	$Name/Label.rect_position.y = -bot_radius - 54
 	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
 	_body_texture.scale = Vector2(tex_scale, tex_scale)

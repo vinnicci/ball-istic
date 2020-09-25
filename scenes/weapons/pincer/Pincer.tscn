@@ -43,16 +43,10 @@ visible = false
 process_material = SubResource( 3 )
 
 [node name="Beam1" parent="Beams" index="0"]
-visible = false
-modulate = Color( 0.988235, 0.568627, 0.12549, 0 )
-position = Vector2( 18, 0 )
-rotation = 0.0
+self_modulate = Color( 1, 0.517647, 0.196078, 1 )
 
 [node name="Beam2" parent="Beams" index="1"]
-visible = false
-modulate = Color( 0.988235, 0.568627, 0.12549, 0 )
-position = Vector2( 18, 0 )
-rotation = 0.0
+self_modulate = Color( 1, 0.517647, 0.196078, 1 )
 
 [node name="Sprite" parent="." index="3"]
 modulate = Color( 0.988235, 0.568627, 0.12549, 1 )

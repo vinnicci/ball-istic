@@ -41,3 +41,6 @@ max_shooting_dist = 1000
 charge_seek_dist = 300
 
 [node name="AutoBlasterBig" parent="Weapons" index="0" instance=ExtResource( 4 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "FIGHTER BIG"

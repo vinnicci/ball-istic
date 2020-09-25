@@ -27,3 +27,6 @@ knockback = 800
 stun_time = 5.0
 
 [node name="AI" parent="." index="10" instance=ExtResource( 5 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "EXPLOSIVE"

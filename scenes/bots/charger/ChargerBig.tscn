@@ -26,3 +26,6 @@ uv = PoolVector2Array( 220.275, 139, 208.491, 157.855, 196.707, 176.71, 184.922,
 
 [node name="CollisionShape" parent="." index="10"]
 shape = SubResource( 1 )
+
+[node name="Label" parent="Name" index="0"]
+text = "CHARGER BIG"

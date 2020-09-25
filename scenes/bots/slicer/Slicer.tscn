@@ -36,3 +36,6 @@ enemy_seek_dist = 140
 max_melee_dist = 220
 
 [node name="Dagger" parent="Weapons" index="0" instance=ExtResource( 6 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "SLICER"

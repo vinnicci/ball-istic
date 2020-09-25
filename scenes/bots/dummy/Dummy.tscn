@@ -23,3 +23,6 @@ shape = SubResource( 1 )
 explosion_radius = 200
 damage = 5.0
 knockback = 800
+
+[node name="Label" parent="Name" index="0"]
+text = "DUMMY"

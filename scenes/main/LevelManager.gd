@@ -121,7 +121,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 		if !_player.is_connected("dead", self, "_on_player_dead"):
 			_player.connect("dead", self, "_on_player_dead")
 		player = _player
-	player.name = current_save_name
+	player.get_node("Name/Label").text = current_save_name
 	_current_scene = scenes[new_lvl].instance()
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)

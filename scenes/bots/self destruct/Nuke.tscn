@@ -26,3 +26,6 @@ shape = SubResource( 1 )
 [node name="AI" parent="." index="10" instance=ExtResource( 2 )]
 script = ExtResource( 6 )
 enemy_seek_dist = 150
+
+[node name="Label" parent="Name" index="0"]
+text = "NUKE"

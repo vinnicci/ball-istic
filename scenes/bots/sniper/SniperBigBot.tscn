@@ -41,3 +41,6 @@ enemy_too_close_dist = 300
 max_flee_dist = 850
 
 [node name="SniperBig" parent="Weapons" index="0" instance=ExtResource( 3 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "SNIPER BIG"

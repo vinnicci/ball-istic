@@ -35,3 +35,6 @@ enemy_seek_dist = 600
 max_shooting_dist = 650
 
 [node name="Siren" parent="Weapons" index="0" instance=ExtResource( 4 )]
+
+[node name="Label" parent="Name" index="0"]
+text = "SIREN BOT"
