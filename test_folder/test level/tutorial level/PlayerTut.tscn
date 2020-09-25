@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://test_folder/test level/tutorial level/TutBlasterProj.tscn" type="PackedScene" id=2]
-[ext_resource path="res://test_folder/test level/tutorial level/TutAutoBlaster.gd" type="Script" id=3]
 [ext_resource path="res://test_folder/test level/tutorial level/PlayerTut.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -18,9 +16,5 @@ faction = Color( 1, 0, 0, 1 )
 
 [node name="CollisionShape" parent="." index="9"]
 shape = SubResource( 1 )
-
-[node name="PlayerAutoBlaster" parent="Weapons" index="0"]
-script = ExtResource( 3 )
-Projectile = ExtResource( 2 )
 
 [editable path="PlayerUI"]

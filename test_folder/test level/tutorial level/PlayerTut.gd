@@ -31,7 +31,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 		#if both bots are charging each other
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
+			deflect_effect()
 			if body is DUMMY_C:
 				emit_signal("clashed")
 			return

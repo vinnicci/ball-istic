@@ -209,10 +209,6 @@ func _init_bot() -> void:
 		$Bars/Health.hide()
 	
 	#bot's body graphics setup
-#	var regex = RegEx.new()
-#	regex.compile("[^@]+")
-#	var name_label = regex.search(name)
-#	$Name/Label.text = name_label.get_string()
 	$Name/Label.rect_position.y = -bot_radius - 54
 	var tex_scale: float = float(bot_radius)/float(DEFAULT_BOT_RADIUS)
 	_body_texture.scale = Vector2(tex_scale, tex_scale)
@@ -451,9 +447,6 @@ func _on_SwitchTween_tween_all_completed() -> void:
 
 
 func shoot_weapon() -> void:
-#	if state == State.TURRET:
-#		if current_weapon.level_node != level_node:
-#			current_weapon.level_node = level_node
 	current_weapon.fire()
 
 
@@ -541,10 +534,7 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func take_damage(damage: float, knockback: Vector2) -> void:
 	apply_knockback(knockback)
-	var anim = _dmg_feedback.instance()
-	var anim_txt = anim.get_node("Label")
-	anim_txt.text = str(damage)
-	_play_anim(global_position, anim, "dmg")
+	dmg_effect(damage)
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -605,19 +595,19 @@ func _on_Bot_body_entered(body: Node) -> void:
 	if rand_range(0, 1.0) <= current_charge_crit_chance:
 		damage *= current_charge_crit_mult
 		if body is Global.CLASS_BOT && current_faction != body.current_faction:
-			_play_anim(body.global_position, _crit_feedback.instance(), "critical")
+			body.crit_effect()
 	if body is Global.CLASS_BOT:
 		if current_faction == body.current_faction:
 			return
 		#if both bots are charging each other
 		#or a charging bot hit a parrying bot, damage is reduced to 1%
 		if body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
+			deflect_effect()
 			return
 		elif body.timer_discharge_parry.is_stopped() == false:
 			var dir: float = (global_position - body.global_position).angle()
 			apply_knockback(Vector2(1500, 0).rotated(dir))
-			_play_anim(global_position, _deflect_feedback.instance(), "deflect")
+			deflect_effect()
 			return
 	body.take_damage(damage, Vector2(0,0))
 	if body.has_node("AI") == true:
@@ -631,6 +621,7 @@ func emit_spark(pos: Vector2) -> void:
 
 
 var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
+var _stun_feedback = preload("res://scenes/global/feedback/Stun.tscn")
 var _deflect_feedback = preload("res://scenes/global/feedback/Deflect.tscn")
 var _dmg_feedback = preload("res://scenes/global/feedback/Damage.tscn")
 
@@ -642,6 +633,26 @@ func _play_anim(pos: Vector2, anim_instance: Node, anim_name: String) -> void:
 	anim.connect("animation_finished", _level_node, "_on_Anim_finished",
 		[anim_instance])
 	anim.play(anim_name)
+
+
+func stun_effect(stun_timer: float) -> void:
+	timer_stun.start(stun_timer)
+	_play_anim(global_position, _stun_feedback.instance(), "stun")
+
+
+func crit_effect() -> void:
+	_play_anim(global_position, _crit_feedback.instance(), "critical")
+
+
+func dmg_effect(damage: float) -> void:
+	var anim = _dmg_feedback.instance()
+	var anim_txt = anim.get_node("Label")
+	anim_txt.text = str(damage)
+	_play_anim(global_position, anim, "dmg")
+
+
+func deflect_effect() -> void:
+	_play_anim(global_position, _deflect_feedback.instance(), "deflect")
 
 
 func _on_ShieldRecoveryTimer_timeout() -> void: #<- rate 1sec/4

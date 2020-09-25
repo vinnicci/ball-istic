@@ -8,7 +8,6 @@ export (int) var knockback: int = 500
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
 var is_crit: bool = false
-var _crit_feedback = preload("res://scenes/global/feedback/Critical.tscn")
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 
 
@@ -58,17 +57,18 @@ func _apply_effect(body: Node) -> void:
 	if body.has_method("take_damage") == true:
 		body.take_damage(damage, Vector2(knockback, 0).rotated($KnockBackDirection.global_rotation))
 		if is_crit == true && body is Global.CLASS_BOT:
-			_play_crit_effect(body.global_position)
+			body.crit_effect()
+#			_play_crit_effect(body.global_position)
 
 
 #crit feedback only works on bots
 #although damage also works on walls
-func _play_crit_effect(pos: Vector2) -> void:
-	var level_node = _level_cam.get_parent()
-	var crit_node = _crit_feedback.instance()
-	level_node.add_child(crit_node)
-	var crit_anim = crit_node.get_node("Anim")
-	crit_node.global_position = pos
-	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
-		[crit_node])
-	crit_anim.play("critical")
+#func _play_crit_effect(pos: Vector2) -> void:
+#	var level_node = _level_cam.get_parent()
+#	var crit_node = _crit_feedback.instance()
+#	level_node.add_child(crit_node)
+#	var crit_anim = crit_node.get_node("Anim")
+#	crit_node.global_position = pos
+#	crit_anim.connect("animation_finished", level_node, "_on_Anim_finished",
+#		[crit_node])
+#	crit_anim.play("critical")
