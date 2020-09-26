@@ -19,3 +19,6 @@ knockback = 800
 
 [node name="CollisionShape" parent="." index="9"]
 shape = SubResource( 1 )
+
+[node name="Label" parent="Name" index="0"]
+text = "GRENADE"

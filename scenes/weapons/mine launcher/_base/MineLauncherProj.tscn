@@ -15,3 +15,6 @@ wait_time = 5.0
 
 [node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
+
+[node name="Label" parent="Name" index="0"]
+text = "MINE"
