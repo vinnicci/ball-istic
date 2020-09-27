@@ -27,7 +27,7 @@ disabled = true
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 5 )]
 explosion_radius = 200
-knockback = 800
+knockback = 1000
 
 [node name="ProjBehavior" parent="." index="6" instance=ExtResource( 3 )]
 speed_curve = SubResource( 2 )

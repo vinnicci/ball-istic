@@ -4,7 +4,10 @@
 [ext_resource path="res://assets/bots/sfx_Bot_Health_Damage.wav" type="AudioStream" id=2]
 
 [node name="TileMap" type="TileMap"]
-cell_size = Vector2( 128, 128 )
+scale = Vector2( 4, 4 )
+cell_size = Vector2( 32, 32 )
+centered_textures = true
+collision_friction = 0.5
 format = 1
 script = ExtResource( 1 )
 

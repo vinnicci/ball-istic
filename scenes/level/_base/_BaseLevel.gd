@@ -17,7 +17,7 @@ func _ready() -> void:
 		bot.set_level(self)
 		bot.connect("dead", self, "_on_bot_dead", [bot])
 		if bot.has_node("AI") == true:
-			bot.get_node("AI").connect("engaged", self, "_on_bot_engaged")
+			bot.get_node("AI").connect("engaged", self, "_on_bot_engaged", [bot])
 	for access in $Access.get_children():
 		if access is Global.DEPOT || access is Global.VAULT:
 			access.set_level(self)
@@ -40,8 +40,11 @@ func close_doors() -> void:
 
 
 func spawn_projectile(proj_inst, proj_pos: Vector2, proj_dir: float) -> void:
-	if proj_inst is Global.CLASS_BOT == true:
+	if proj_inst is Global.CLASS_BOT_PROJ == true:
 		proj_inst.connect("dead", self, "_on_bot_dead", [proj_inst])
+		if proj_inst.has_node("AI") == true:
+			proj_inst.get_node("AI").connect("engaged", self,
+				"_on_bot_engaged", [proj_inst])
 		$Bots.add_child(proj_inst)
 	else:
 		add_child(proj_inst)
@@ -53,12 +56,10 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 	return points
 
 
-func _on_bot_engaged() -> void:
-	for bot in $Bots.get_children():
-		if (bot.state != Global.CLASS_BOT.State.DEAD && bot.has_node("AI") == true &&
-			bot.get_node("AI").get_enemy() == _player && _doors_open == true):
-			close_doors()
-			break
+func _on_bot_engaged(bot) -> void:
+	var ai_node = bot.get_node("AI")
+	if ai_node.get_enemy() == _player:
+		close_doors()
 
 
 func _on_bot_dead(bot) -> void:
@@ -66,9 +67,10 @@ func _on_bot_dead(bot) -> void:
 		$Camera2D.global_position = _player.global_position
 		$Camera2D.current = true
 		return
-	for bot in $Bots.get_children():
-		if (bot.state != Global.CLASS_BOT.State.DEAD && bot.has_node("AI") == true &&
-			bot.get_node("AI").get_enemy() == _player && _doors_open == false):
+	for lvlbot in $Bots.get_children():
+		if (lvlbot.state != Global.CLASS_BOT.State.DEAD &&
+			lvlbot.has_node("AI") == true &&
+			lvlbot.get_node("AI").get_enemy() == _player):
 			return
 	open_doors()
 

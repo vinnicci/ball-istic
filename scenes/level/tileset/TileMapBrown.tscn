@@ -5,7 +5,5 @@
 [ext_resource path="res://scenes/level/tileset/TileMapBrown.gd" type="Script" id=3]
 
 [node name="TileMapBrown" instance=ExtResource( 1 )]
-scale = Vector2( 4, 4 )
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 32, 32 )
 script = ExtResource( 3 )

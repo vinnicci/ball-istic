@@ -30,6 +30,7 @@ tree = {
 }
 }
 run_on = 1
+_tree_id = "527292601215533367"
 
 [node name="DetectionRange" type="Area2D" parent="."]
 visible = false

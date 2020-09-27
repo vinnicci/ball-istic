@@ -30,7 +30,7 @@ color_ramp = SubResource( 2 )
 [node name="BotBallista" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 heat_per_shot = 15.0
-heat_cap = 29.0
+heat_cap = 20.0
 shoot_cooldown = 0.5
 crit_chance = 0.2
 fire_mode = 4

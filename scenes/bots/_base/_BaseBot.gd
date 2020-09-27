@@ -6,7 +6,7 @@ export (float) var shield_cap: float = 10 setget , get_shield_cap
 export (float) var shield_regen: float = 1.0 setget , get_shield_regen
 export (float) var health_cap: float = 10 setget , get_health_cap
 export (int, 0, 4000) var speed: int = 1000 setget , get_speed
-export (float, 0, 1.0) var knockback_resist: float = 0.2 setget , get_knockback_resist
+export (float, 0, 1.0) var knockback_resist: float = 0.1 setget , get_knockback_resist
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.3, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_mult: float = 0.5 setget , get_charge_force_mult
@@ -669,12 +669,12 @@ signal dead
 
 
 func explode() -> void:
+	emit_signal("dead")
 	var color = Color(0.18, 0.18, 0.18)
 	$Legs.modulate = color
 	$Body.modulate = color
 	$Bars.hide()
 	$Timers/ExplodeDelay.start()
-	emit_signal("dead")
 	if is_instance_valid(_level_node.get_player()) == true:
 		$Explosion.set_player_cam(_level_node.get_player().get_node("Camera2D"))
 

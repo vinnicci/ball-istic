@@ -8,10 +8,11 @@ resource_local_to_scene = true
 
 [node name="PlayerTut" instance=ExtResource( 1 )]
 script = ExtResource( 5 )
-speed = 1200
-knockback_resist = 0.3
-transform_speed = 0.6
+shield_cap = 25.0
+shield_regen = 5.0
 charge_cooldown = 3.0
+charge_dmg_rate = 0.5
+weap_dmg_rate = 2.0
 faction = Color( 1, 0, 0, 1 )
 
 [node name="CollisionShape" parent="." index="9"]

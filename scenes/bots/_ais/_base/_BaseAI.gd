@@ -12,7 +12,6 @@ var _enemy: Global.CLASS_BOT = null setget , get_enemy
 var _master: Global.CLASS_BOT = null
 var _path_points: Array = []
 var _next_path_point
-var _velocity: Vector2
 var _flee_routes: Dictionary = {}
 var _parent_node: Global.CLASS_BOT
 var _level_node: Node = null
@@ -39,6 +38,7 @@ func _ready() -> void:
 
 func set_parent(new_parent: Global.CLASS_BOT):
 	_parent_node = new_parent
+	#ai has weapon heat dissipation advantage/cheat
 	if weap_heat_cooldown != 0:
 		for weap in _parent_node.get_node("Weapons").get_children():
 			weap.current_heat_disspation = ((round(weap.get_heat_cap()) + 1)
@@ -55,8 +55,6 @@ func set_level(level: Node) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
-		_parent_node.velocity = _velocity
 	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
 		$Rays/Target.look_at(_enemy.global_position)
 
@@ -164,7 +162,7 @@ func _seek(target: Global.CLASS_BOT) -> void:
 		global_position.distance_to(_next_path_point) <= 300):
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
-	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
 #needs optimization
@@ -175,7 +173,8 @@ func _flee() -> void:
 		var ray_collide = ray.get_collider()
 		#skip ray that is colliding with walls or a physics object
 		if (ray_collide is Global.CLASS_LEVEL_OBJECT ||
-			ray_collide is Global.CLASS_RIGID_OBJECT):
+			ray_collide is Global.CLASS_RIGID_OBJECT ||
+			ray_collide is Global.CLASS_BOT):
 			continue
 		else:
 			pos = ray.get_node("Pos").global_position
@@ -183,10 +182,9 @@ func _flee() -> void:
 	if _flee_routes.size() != 0:
 		_next_path_point = _flee_routes[_flee_routes.keys().max()]
 		$Rays/Velocity.look_at(_next_path_point)
-	#just flee away from the enemy if there's no way out
-	else:
+	else: #just flee away from the enemy if there's no way out
 		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
-	_velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 	_next_path_point = null
 
 
@@ -212,7 +210,6 @@ func task_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
 		_enemies.erase(_enemy)
 		_enemy = null
-		_velocity = Vector2(0,0)
 		task.failed()
 	else:
 		task.succeed()
@@ -271,7 +268,7 @@ func task_timed_idle(task):
 
 
 func task_idle(task):
-	_velocity = Vector2(0,0)
+	_parent_node.velocity = Vector2(0,0)
 	task.succeed()
 	return
 
@@ -384,7 +381,6 @@ func task_shoot_enemy(task):
 func task_is_master_instance_valid(task):
 	if _check_if_valid_bot(_master) == false:
 		_master = null
-		_velocity = Vector2(0,0)
 		task.failed()
 	else:
 		task.succeed()

@@ -2,11 +2,7 @@ extends Node2D
 
 
 var _arr_objects_within: int = 0
-#var _level_node: Node
-
-
-#func set_level(new_level: Node) -> void:
-#	_level_node = new_level
+var is_open: bool = false
 
 
 func is_door_free():
@@ -14,11 +10,15 @@ func is_door_free():
 
 
 func open() -> void:
-	$Anim.play("open")
+	if is_open == false:
+		$Anim.play("open")
+		is_open = true
 
 
 func close() -> void:
-	$Anim.play_backwards("open")
+	if is_open == true:
+		$Anim.play_backwards("open")
+		is_open = false
 
 
 func _on_Within_body_entered(body: Node) -> void:

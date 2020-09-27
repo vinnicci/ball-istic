@@ -33,7 +33,7 @@ vertices = PoolVector2Array( -16, -16, 16, -16, 16, -9, -9, 16, -16, 16 )
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ) ]
 outlines = [ PoolVector2Array( -16, 16, -9, 16, 16, -9, 16, -16, -16, -16 ) ]
 
-[sub_resource type="NavigationPolygon" id=16]
+[sub_resource type="NavigationPolygon" id=6]
 vertices = PoolVector2Array( -16, -16, -9, -16, -16, -9 )
 polygons = [ PoolIntArray( 0, 1, 2 ) ]
 outlines = [ PoolVector2Array( -16, -16, -9, -16, -16, -9 ) ]
@@ -114,4 +114,4 @@ texture = ExtResource( 6 )
 polygon = PoolVector2Array( -16, -1, -1, -16, 16, -16, 16, 16, -16, 16 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Wall5"]
-navpoly = SubResource( 16 )
+navpoly = SubResource( 6 )

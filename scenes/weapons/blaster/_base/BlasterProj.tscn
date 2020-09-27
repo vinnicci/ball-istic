@@ -5,3 +5,4 @@
 [node name="BlasterProj" instance=ExtResource( 1 )]
 damage = 2.0
 proj_range = 800
+knockback = 75

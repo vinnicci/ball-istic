@@ -1,10 +1,1 @@
-extends "res://scenes/level/tileset/DoorBrown.gd"
-
-
-var _passed: bool = false
-
-
-func _on_Area2D_body_exited(body: Node) -> void:
-	if body is Global.CLASS_PLAYER && is_door_free() == true && _passed == false:
-		close()
-		_passed = true
+extends "res://test_folder/test level/tutorial level/_base/Door.gd"

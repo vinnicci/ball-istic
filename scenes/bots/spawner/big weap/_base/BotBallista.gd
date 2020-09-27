@@ -3,6 +3,8 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 func _fire_other() -> void:
 	var proj = Projectile.instance()
+	proj.connect("dead", _level_node, "_on_bot_dead", [proj])
+	proj.get_node("AI").connect("engaged", _level_node, "_on_bot_engaged", [proj])
 	_level_node.get_node("Bots").add_child(proj)
 	proj.global_position = $Muzzle.global_position
 	proj.faction = _parent_node.current_faction

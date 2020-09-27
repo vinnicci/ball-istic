@@ -50,6 +50,7 @@ visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
 explosion_radius = 50
+knockback = 850
 stun_time = 2.0
 
 [node name="Particles2D" parent="Explosion" index="2"]

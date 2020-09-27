@@ -11,6 +11,7 @@ script = ExtResource( 1 )
 speed = 1300
 damage = 4.0
 proj_range = 1500
+knockback = 90
 
 [node name="Sprite" parent="." index="1"]
 modulate = Color( 1, 0.560784, 0, 1 )

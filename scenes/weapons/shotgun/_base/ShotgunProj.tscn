@@ -6,3 +6,4 @@
 speed = 800
 damage = 2.0
 proj_range = 700
+knockback = 85
