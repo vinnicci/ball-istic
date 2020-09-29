@@ -15,9 +15,9 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color( 0.243137, 0.466667, 0.243137, 0.784314 )
-margin_top = 35.0
+margin_top = 43.0
 margin_right = 400.0
-margin_bottom = 450.0
+margin_bottom = 458.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -33,9 +33,9 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 20.0
-margin_top = 40.0
+margin_top = 48.0
 margin_right = 262.0
-margin_bottom = 443.0
+margin_bottom = 451.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

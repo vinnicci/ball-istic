@@ -1,4 +1,4 @@
-extends "res://scenes/level/tileset/DoorBrown.gd"
+extends "res://scenes/level/tileset/brown/DoorBrown.gd"
 
 
 var _passed: bool = false

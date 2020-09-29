@@ -3,17 +3,19 @@
 [ext_resource path="res://test_folder/test level/flee test/FleeTest.gd" type="Script" id=1]
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=2]
 [ext_resource path="res://assets/level/tileset/brown/wall4.png" type="Texture" id=3]
-[ext_resource path="res://assets/level/tileset/brown/ground.png" type="Texture" id=4]
+[ext_resource path="res://assets/level/tileset/brown/ground1.png" type="Texture" id=4]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=5]
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall1.png" type="Texture" id=7]
 [ext_resource path="res://assets/level/tileset/brown/wall3.png" type="Texture" id=8]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/global/camera with shake/Camera2D.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/_ais/simple seeking ai/SimpleSeekingAI.tscn" type="PackedScene" id=14]
+
+
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )

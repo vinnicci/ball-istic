@@ -1,11 +1,11 @@
 [gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=4]
 [ext_resource path="res://assets/level/tileset/brown/wall4.png" type="Texture" id=5]
-[ext_resource path="res://assets/level/tileset/brown/ground.png" type="Texture" id=6]
+[ext_resource path="res://assets/level/tileset/brown/ground1.png" type="Texture" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=7]
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=8]
 [ext_resource path="res://assets/level/tileset/brown/wall1.png" type="Texture" id=9]
@@ -13,6 +13,8 @@
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=13]
 [ext_resource path="res://test_folder/test level/big guy assist/BigGuyAssist.gd" type="Script" id=14]
 [ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=15]
+
+
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )

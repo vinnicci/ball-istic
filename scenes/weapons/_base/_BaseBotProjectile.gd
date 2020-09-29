@@ -18,14 +18,14 @@ func _ready() -> void:
 
 func set_shooter(shooter: Node, shooter_faction: Color) -> void:
 	_shooter = shooter
+	if has_node("AI") == true:
+		$AI.clear_enemies()
+		$AI.set_master(_shooter)
 	faction = shooter_faction
 
 
 func init_travel(pos: Vector2, dir: float) -> void:
 	global_position = pos
-	if has_node("AI") == true:
-		$AI.clear_enemies()
-		$AI.set_master(_shooter)
 	if is_crit == true:
 		$Explosion.is_crit = true
 	reset_bot_vars()

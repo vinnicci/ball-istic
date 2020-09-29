@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.gd" type="Script" id=1]
+[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level/tileset/brown/TileSetBrown.tres" type="TileSet" id=3]
+
+[node name="TileMapBrown" instance=ExtResource( 2 )]
+tile_set = ExtResource( 3 )
+script = ExtResource( 1 )

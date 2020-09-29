@@ -1,14 +1,14 @@
 [gd_scene load_steps=35 format=2]
 
-[ext_resource path="res://scenes/level/tileset/DoorBrown.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/level/tileset/TileMapBrown.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=5]
 [ext_resource path="res://test_folder/test level/level 1/Level1.gd" type="Script" id=6]
 [ext_resource path="res://assets/level/tileset/brown/wall5.png" type="Texture" id=7]
 [ext_resource path="res://assets/level/tileset/brown/wall4.png" type="Texture" id=8]
-[ext_resource path="res://assets/level/tileset/brown/ground.png" type="Texture" id=9]
+[ext_resource path="res://assets/level/tileset/brown/ground1.png" type="Texture" id=9]
 [ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=10]
 [ext_resource path="res://assets/level/tileset/brown/wall_inner.png" type="Texture" id=11]
 [ext_resource path="res://assets/level/tileset/brown/wall1.png" type="Texture" id=12]
@@ -17,6 +17,8 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=17]
+
+
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )

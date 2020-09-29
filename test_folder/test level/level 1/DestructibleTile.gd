@@ -1,4 +1,4 @@
-extends "res://scenes/level/tileset/TileMapBrown.gd"
+extends "res://scenes/level/tileset/brown/TileMapBrown.gd"
 
 
 func destroy() -> void:

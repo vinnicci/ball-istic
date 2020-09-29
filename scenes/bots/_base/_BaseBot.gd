@@ -5,7 +5,7 @@ export (int, 20, 150) var bot_radius: int = 32 setget , get_bot_radius
 export (float) var shield_cap: float = 10 setget , get_shield_cap
 export (float) var shield_regen: float = 1.0 setget , get_shield_regen
 export (float) var health_cap: float = 10 setget , get_health_cap
-export (int, 0, 4000) var speed: int = 1000 setget , get_speed
+export (int, 0, 9999) var speed: int = 1000 setget , get_speed
 export (float, 0, 1.0) var knockback_resist: float = 0.1 setget , get_knockback_resist
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.3, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
@@ -647,7 +647,7 @@ func crit_effect() -> void:
 func dmg_effect(damage: float) -> void:
 	var anim = _dmg_feedback.instance()
 	var anim_txt = anim.get_node("Label")
-	anim_txt.text = str(damage)
+	anim_txt.text = str(round(damage))
 	_play_anim(global_position, anim, "dmg")
 
 

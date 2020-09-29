@@ -1,0 +1,198 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/level/tileset/brown/DoorBrown.gd" type="Script" id=1]
+[ext_resource path="res://assets/level/tileset/brown/wall2.png" type="Texture" id=2]
+[ext_resource path="res://scenes/level/_base/_BaseStaticBody.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "open"
+length = 0.1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Left/StaticBody2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -124, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Right/StaticBody2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 124, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Left/DoorLeft:region_rect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 15.5, 15 ), Rect2( 15.5, 0, 0, 15 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Left/DoorLeft:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -62, -30 ), Vector2( -125, -30 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Left/DoorLeft2:region_rect")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 15.5, 15 ), Rect2( 15.5, 0, 0, 15 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Left/DoorLeft2:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -62, 30 ), Vector2( -125, 30 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Right/DoorRight:region_rect")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 15.5, 15 ), Rect2( 15.5, 0, 0, 15 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Right/DoorRight:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 62, -30 ), Vector2( 125, -30 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Right/DoorRight2:region_rect")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 15.5, 15 ), Rect2( 15.5, 0, 0, 15 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Right/DoorRight2:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 62, 30 ), Vector2( 125, 30 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 123, 42 )
+
+[node name="Door" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Left" type="Node2D" parent="."]
+
+[node name="DoorLeft" type="Sprite" parent="Left"]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( -62, -30 )
+scale = Vector2( 8, 4 )
+texture = ExtResource( 2 )
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 15.5, 15 )
+
+[node name="DoorLeft2" type="Sprite" parent="Left"]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( -62, 30 )
+scale = Vector2( 8, 4 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 15.5, 15 )
+
+[node name="StaticBody2D" parent="Left" instance=ExtResource( 3 )]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Left/StaticBody2D"]
+polygon = PoolVector2Array( -124, -60, 0, -60, 0, 60, -124, 60 )
+
+[node name="Right" type="Node2D" parent="."]
+
+[node name="DoorRight" type="Sprite" parent="Right"]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( 62, -30 )
+scale = Vector2( 8, 4 )
+texture = ExtResource( 2 )
+flip_h = true
+flip_v = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 15.5, 15 )
+
+[node name="DoorRight2" type="Sprite" parent="Right"]
+modulate = Color( 0.615686, 0.615686, 0.592157, 1 )
+position = Vector2( 62, 30 )
+scale = Vector2( 8, 4 )
+texture = ExtResource( 2 )
+flip_h = true
+region_enabled = true
+region_rect = Rect2( 0, 0, 15.5, 15 )
+
+[node name="StaticBody2D" parent="Right" instance=ExtResource( 3 )]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Right/StaticBody2D"]
+polygon = PoolVector2Array( 0, -60, 0, 60, 124, 60, 124, -60 )
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/open = SubResource( 1 )
+
+[node name="Within" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Within"]
+shape = SubResource( 2 )
+[connection signal="body_entered" from="Within" to="." method="_on_Within_body_entered"]
+[connection signal="body_exited" from="Within" to="." method="_on_Within_body_exited"]
