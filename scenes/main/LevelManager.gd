@@ -2,9 +2,9 @@ extends Node
 
 
 var scenes: Dictionary = {
-	"PlayerTut": preload("res://test_folder/test level/tutorial level/PlayerTut.tscn"),
+	"PlayerTut": preload("res://scenes/main/levels proper/0_tutorial/PlayerTut.tscn"),
 	"Player": preload("res://scenes/bots/player/Player.tscn"),
-	"TutorialLevel": preload("res://test_folder/test level/tutorial level/TutorialLevel.tscn"),
+	"TutorialLevel": preload("res://scenes/main/levels proper/0_tutorial/TutorialLevel.tscn"),
 	"Level1": preload("res://test_folder/test level/level 1/Level1.tscn"),
 	"Checkpoint1-2": preload("res://test_folder/test level/checkpoint 1-2/Checkpoint1-2.tscn"),
 	"BigGuyAssist": preload("res://test_folder/test level/big guy assist/BigGuyAssist.tscn")

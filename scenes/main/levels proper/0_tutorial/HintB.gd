@@ -6,15 +6,15 @@ var _current_bot_count: int = 3
 
 func set_level(level) -> void:
 	.set_level(level)
-	var bots: Array = level.bots_A
+	var bots: Array = level.bots_B
 	for bot in bots:
 		bot.connect("dead", self, "on_bot_dead")
 
 
 func on_bot_dead() -> void:
 	_current_bot_count -= 1
-	$AccessUI/Label2.text = "Destroy bots with weapon: (%s/3)" % (3 - _current_bot_count)
+	$AccessUI/Label2.text = "Destroy bots by charging rolling: (%s/3)" % (3 - _current_bot_count)
 	if _current_bot_count == 0:
 		$AccessUI/Label2.text = "Great job! Move on to the next room."
-		_level.door_A.open()
+		_level.door_B.open()
 		$AccessUI/Label2/FadeTimer.start()
