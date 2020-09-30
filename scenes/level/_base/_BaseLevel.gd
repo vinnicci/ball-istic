@@ -3,6 +3,7 @@ extends Node2D
 
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
+export var disp_name: String
 var _player: Global.CLASS_PLAYER = null setget , get_player
 
 
@@ -58,7 +59,7 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 
 func _on_bot_engaged(bot) -> void:
 	var ai_node = bot.get_node("AI")
-	if ai_node.get_enemy() == _player:
+	if ai_node.get_enemy().current_faction == _player.current_faction:
 		close_doors()
 
 
@@ -68,9 +69,13 @@ func _on_bot_dead(bot) -> void:
 		$Camera2D.current = true
 		return
 	for lvlbot in $Bots.get_children():
-		if (lvlbot.state != Global.CLASS_BOT.State.DEAD &&
-			lvlbot.has_node("AI") == true &&
-			lvlbot.get_node("AI").get_enemy() == _player):
+		if (lvlbot == bot || lvlbot.current_faction == _player.current_faction ||
+			lvlbot.state == Global.CLASS_BOT.State.DEAD ||
+			lvlbot.has_node("AI") == false):
+			continue
+		var ai = lvlbot.get_node("AI")
+		if (ai.get_enemy() != null &&
+			ai.get_enemy().current_faction == _player.current_faction):
 			return
 	open_doors()
 

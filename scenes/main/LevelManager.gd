@@ -13,7 +13,7 @@ var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Spawn": null #value -> Lvl: lvl name, Pos: level coords
+	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
 }
 var _saved_big_bots: Dictionary = {} #key: lvl name, value: is_alive
 var _saved_depot_items: Dictionary = {} #key: lvl name, value: arr_items
@@ -123,6 +123,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 		player = _player
 	player.get_node("Name/Label").text = current_save_name
 	_current_scene = scenes[new_lvl].instance()
+	$CanvasLayer/AreaName.text = _current_scene.disp_name
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
@@ -176,8 +177,11 @@ func _save_big_bots() -> void:
 
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
-	if anim_name == "big_bot_destroyed":
-		Engine.time_scale = 1.0
+	match anim_name:
+#		"big_bot_destroyed":
+#			Engine.time_scale = 1.0
+		"transition":
+			$Anim.play("new_area")
 
 
 #############

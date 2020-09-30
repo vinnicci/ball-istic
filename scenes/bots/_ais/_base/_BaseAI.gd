@@ -66,7 +66,6 @@ func _process(delta: float) -> void:
 
 func _on_parent_dead() -> void:
 	clear_enemies()
-	$DetectionRange.monitoring = false
 
 
 func clear_enemies() -> void:
@@ -81,6 +80,7 @@ func _check_if_valid_bot(bot: Node) -> bool:
 func _clear_path_points() -> void:
 	_path_points = []
 	_next_path_point = null
+	_flee_routes = {}
 
 
 func _get_path_points(start: Vector2, end: Vector2) -> void:
@@ -141,20 +141,6 @@ func _set_enemy(bot) -> void:
 		$FoundTarget.play()
 
 
-func _on_DetectionRange_body_entered(body: Node) -> void:
-	if (body.has_node("AI") == true &&
-		body.current_faction != _parent_node.current_faction):
-		_enemies.append(body)
-	elif (body is Global.CLASS_PLAYER &&
-		body.current_faction != _parent_node.current_faction):
-		_enemies.append(body)
-
-
-func _on_DetectionRange_body_exited(body: Node) -> void:
-	if body != _enemy && _enemies.has(body) == true:
-		_enemies.erase(body)
-
-
 func _seek(target: Global.CLASS_BOT) -> void:
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 300:
 		_get_path_points(global_position, target.global_position)
@@ -188,6 +174,21 @@ func _flee() -> void:
 	_next_path_point = null
 
 
+func _on_DetectionRange_body_entered(body: Node) -> void:
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
+		return
+	if body.current_faction != _parent_node.current_faction:
+		if body.has_node("AI") == true || body is Global.CLASS_PLAYER:
+			_enemies.append(body)
+
+
+func _on_DetectionRange_body_exited(body: Node) -> void:
+	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
+		return
+	if body != _enemy && _enemies.has(body) == true:
+		_enemies.erase(body)
+
+
 #############
 # btree tasks
 #############
@@ -210,6 +211,7 @@ func task_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
 		_enemies.erase(_enemy)
 		_enemy = null
+		_clear_path_points()
 		task.failed()
 	else:
 		task.succeed()
@@ -218,7 +220,6 @@ func task_is_enemy_instance_valid(task):
 
 func task_seek_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
-		_clear_path_points()
 		task.failed()
 		return
 	_seek(_enemy)
@@ -324,7 +325,6 @@ func task_is_charge_ready(task):
 ##############
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
-		_flee_routes = {}
 		task.failed()
 		return
 	#initialize flee rays
@@ -381,6 +381,7 @@ func task_shoot_enemy(task):
 func task_is_master_instance_valid(task):
 	if _check_if_valid_bot(_master) == false:
 		_master = null
+		_clear_path_points()
 		task.failed()
 	else:
 		task.succeed()
@@ -400,7 +401,6 @@ func task_is_master_close(task):
 
 func task_seek_master(task):
 	if _check_if_valid_bot(_master) == false:
-		_clear_path_points()
 		task.failed()
 		return
 	_seek(_master)

@@ -18,8 +18,6 @@
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=17]
 
-
-
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -16, -16, 16, -16, 16, 16, -16, 16 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
@@ -542,6 +540,7 @@ bounce = 0.7
 
 [node name="Level1" instance=ExtResource( 3 )]
 script = ExtResource( 6 )
+disp_name = "Area 1-1"
 
 [node name="TileMap" parent="Nav" index="0" instance=ExtResource( 2 )]
 tile_set = SubResource( 14 )
