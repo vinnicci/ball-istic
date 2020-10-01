@@ -30,4 +30,4 @@ func take_damage(damage: float, knockback: Vector2) -> void:
 
 func destroy() -> void:
 	#apply graphical effects here(explosion and such)
-	pass
+	self.queue_free()

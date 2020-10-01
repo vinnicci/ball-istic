@@ -4,10 +4,10 @@ extends Node
 var scenes: Dictionary = {
 	"PlayerTut": preload("res://scenes/main/levels proper/0_tutorial/PlayerTut.tscn"),
 	"Player": preload("res://scenes/bots/player/Player.tscn"),
-	"TutorialLevel": preload("res://scenes/main/levels proper/0_tutorial/TutorialLevel.tscn"),
-	"Level1": preload("res://test_folder/test level/level 1/Level1.tscn"),
-	"Checkpoint1-2": preload("res://test_folder/test level/checkpoint 1-2/Checkpoint1-2.tscn"),
-	"BigGuyAssist": preload("res://test_folder/test level/big guy assist/BigGuyAssist.tscn")
+	"Tutorial": preload("res://scenes/main/levels proper/0_tutorial/Tutorial.tscn"),
+	"Area1-1": preload("res://scenes/main/levels proper/1-1_area/Area1-1.tscn"),
+	"Secret1-1": preload("res://scenes/main/levels proper/1-1_secret/Secret1-1.tscn"),
+	"Checkpoint1-1": preload("res://scenes/main/levels proper/1-1_checkpoint/Checkpoint1-1.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -15,9 +15,10 @@ var _saved_player: Dictionary = {
 	"Passives": [],
 	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
 }
-var _saved_big_bots: Dictionary = {} #key: lvl name, value: is_alive
-var _saved_depot_items: Dictionary = {} #key: lvl name, value: arr_items
-var _saved_vault_items: Array
+var _saved_big_bots: Dictionary #key: lvl name, value: is_alive
+var _saved_depot_items: Dictionary #key: lvl name, value: arr_items
+var _saved_vault_items: Array #just array of items
+var _saved_paths: Array #store lvl name + destructible name
 var current_save_slot: int
 var current_save_name: String
 
@@ -50,6 +51,7 @@ func _load_from_disk() -> void:
 	_saved_big_bots = save_file.big_bots
 	_saved_depot_items = save_file.depot_items
 	_saved_vault_items = save_file.vault_items
+	_saved_paths = save_file.paths
 
 
 func _verify_data(save_file) -> bool:
@@ -70,6 +72,7 @@ func save_to_disk() -> void:
 	new_save.big_bots = _saved_big_bots
 	new_save.depot_items = _saved_depot_items
 	new_save.vault_items = _saved_vault_items
+	new_save.paths = _saved_paths
 	ResourceSaver.save(SAVE_DIR + "save_" + str(current_save_slot) + ".tres",
 		new_save)
 
@@ -110,7 +113,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	if _current_scene != null:
 		_current_scene.free()
 	var player
-	if new_lvl == "TutorialLevel":
+	if new_lvl == "Tutorial":
 		if _player_tut == null:
 			_player_tut = scenes["PlayerTut"].instance()
 		player = _player_tut
@@ -124,13 +127,15 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	player.get_node("Name/Label").text = current_save_name
 	_current_scene = scenes[new_lvl].instance()
 	$CanvasLayer/AreaName.text = _current_scene.disp_name
+	_current_scene.connect("secret_found", self, "on_secret_found")
 	_connect_access(_current_scene)
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
 	_load_vault_items(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
-	player.position = _current_scene.get_node("Access/" + pos as String).position
+	player.position = _current_scene.get_node("Nav/" + pos as String).position
 	add_child(_current_scene)
+	_load_saved_paths(_current_scene)
 	_resume(player)
 
 
@@ -290,6 +295,23 @@ func _load_vault_items(lvl) -> void:
 			_saved_vault_items.clear()
 
 
+##############
+# secret paths
+##############
+func on_secret_found(lvl: Node, destructible: Node) -> void:
+	var path_name: String = lvl.name + destructible.name
+	if _saved_paths.has(path_name) == false:
+		_saved_paths.append(path_name)
+
+
+func _load_saved_paths(lvl: Node) -> void:
+	for nav_node in lvl.get_node("Nav").get_children():
+		if nav_node is TileMap:
+			var path_name: String = lvl.name + nav_node.name
+			if _saved_paths.has(path_name) == true:
+				nav_node.destroy()
+
+
 #coroutine resume signal
 signal resume
 
@@ -300,7 +322,7 @@ func _on_Resume_timeout() -> void:
 
 func _load_data() -> void:
 	if _saved_player["Spawn"] == null:
-		on_change_scene("TutorialLevel", "Pos1")
+		on_change_scene("Tutorial", "Pos1")
 	else:
 		on_change_scene(_saved_player["Spawn"]["Lvl"],
 			_saved_player["Spawn"]["Pos"])

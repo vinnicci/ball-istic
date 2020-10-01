@@ -5,6 +5,7 @@ extends Node2D
 #Bots node: attach bots
 export var disp_name: String
 var _player: Global.CLASS_PLAYER = null setget , get_player
+signal secret_found
 
 
 func get_player():
