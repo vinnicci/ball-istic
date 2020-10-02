@@ -34,7 +34,6 @@ color_ramp = SubResource( 2 )
 script = ExtResource( 2 )
 description = "Pulse causes stun on hit."
 Projectile = ExtResource( 4 )
-crit_chance = 0.2
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.345098, 0.505882, 0.992157, 1 )

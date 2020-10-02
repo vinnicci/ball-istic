@@ -1,2 +1,2 @@
-extends "res://scenes/weapons/_base/_BaseWeapon.gd"
+extends "res://scenes/weapons/sniper/_base/Sniper.gd"
 

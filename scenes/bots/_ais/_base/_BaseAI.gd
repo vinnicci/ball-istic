@@ -5,6 +5,7 @@ export (int) var detection_range: int = 1000
 export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
 export (float) var weap_heat_cooldown: float = 0
+export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
 var _enemies: Array = []
@@ -22,15 +23,18 @@ func get_enemy():
 
 
 func _ready() -> void:
+	$BTREE.enable = enabled
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = detection_range
 	$Rays/Target.cast_to = Vector2(detection_range, 0)
 	$Rays/LookAt.cast_to = Vector2(detection_range, 0)
-	var ray_len: = 180
+	var ray_len: = 175
 	for i in range(8):
 		var ray = $FleeRays.get_node("R" + i as String)
-		ray.cast_to = Vector2(ray_len, 0).rotated(deg2rad(i * 45))
+		ray.cast_to = Vector2(ray_len, 0)
 		ray.get_node("Pos").position = ray.cast_to
+		ray.global_rotation = deg2rad(i * 45)
+	$Rays/Velocity.cast_to = Vector2(ray_len, 0)
 	#export vars in dictionary
 	_params_dict["master_seek"] = master_seek_dist
 	_params_dict["enemy_seek"] = enemy_seek_dist
@@ -103,7 +107,7 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 func _get_new_target_enemy() -> void:
 	if _enemies.size() == 0:
 		return
-	var bot = _enemies.pop_front()
+	var bot = _enemies.front()
 	if _check_if_valid_bot(bot) == false:
 		return
 	$Rays/LookAt.look_at(bot.global_position)
@@ -117,7 +121,6 @@ func _get_new_target_enemy() -> void:
 	elif (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
 		engage(potential_enemy)
-	_enemies.append(bot)
 
 
 func engage(bot) -> void:
@@ -127,8 +130,6 @@ func engage(bot) -> void:
 		if (_get_distance(bot.global_position, global_position) >
 		_get_distance(_enemy.global_position, global_position)):
 			return
-		if _check_if_valid_bot(_enemy) == true:
-			_enemies.append(_enemy)
 	_set_enemy(bot)
 
 
@@ -147,39 +148,35 @@ func _set_enemy(bot) -> void:
 func _seek(target: Global.CLASS_BOT) -> void:
 	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 300:
 		_get_path_points(global_position, target.global_position)
-	if _next_path_point == null || (_path_points.size() != 0 &&
-		global_position.distance_to(_next_path_point) <= 300):
+	if _path_points.size() != 0 && global_position.distance_to(_next_path_point) <= 300:
 		_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
-#needs optimization
 func _flee() -> void:
-	_flee_routes = {}
-	for ray in $FleeRays.get_children(): #8 rays
-		var pos
-		var ray_collide = ray.get_collider()
-		#skip ray that is colliding with walls or a physics object
-		if ray_collide != null:
-			continue
-		else:
-			pos = ray.get_node("Pos").global_position
-		_flee_routes[_get_distance(pos, _enemy.global_position)] = pos
-	if _flee_routes.size() != 0:
-		_next_path_point = _flee_routes[_flee_routes.keys().max()]
-		$Rays/Velocity.look_at(_next_path_point)
-	else: #just flee away from the enemy if there's no way out
-		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
-	_next_path_point = null
+
+
+func _on_EvaluateTimer_timeout() -> void:
+	if _check_if_valid_bot(_enemy) == false:
+		return
+	_flee_routes = {}
+	for ray in $FleeRays.get_children():
+		#skip ray that is colliding with walls or a physics object
+		if ray.get_collider() != null:
+			continue
+		var flee_points: int = _enemy.global_position.distance_to(ray.get_node("Pos").global_position)
+		_flee_routes[flee_points] = ray
+	$Rays/Velocity.global_rotation = _flee_routes[_flee_routes.keys().max()].global_rotation
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		return
 	if body.current_faction != _parent_node.current_faction:
-		if body.has_node("AI") == true || body is Global.CLASS_PLAYER:
+		if (_enemies.has(body) == false &&
+			(body.has_node("AI") == true || body is Global.CLASS_PLAYER)):
 			_enemies.append(body)
 			if body.is_connected("dead", self, "_erase_enemy") == false:
 				body.connect("dead", self, "_erase_enemy", [body])
@@ -188,7 +185,9 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 func _on_DetectionRange_body_exited(body: Node) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		return
-	if body != _enemy && _enemies.has(body) == true:
+	if _enemies.has(body) == true:
+		if body == _enemy:
+			return
 		_erase_enemy(body)
 
 
@@ -324,16 +323,15 @@ func task_is_charge_ready(task):
 
 ##############
 # flee
-# still needs refinement
 ##############
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
+		$EvaluateTimer.stop()
 		task.failed()
 		return
-	#initialize flee rays
-	if $FleeRays/R0.enabled == false:
-		for ray in $FleeRays.get_children():
-			ray.enabled = true
+	if $EvaluateTimer.is_stopped() == true:
+		_on_EvaluateTimer_timeout()
+		$EvaluateTimer.start()
 	_flee()
 	task.succeed()
 	return

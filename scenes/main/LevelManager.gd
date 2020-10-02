@@ -79,6 +79,11 @@ func save_to_disk() -> void:
 		new_save)
 
 
+func _on_LevelManager_tree_exiting() -> void:
+	stop_player(true)
+	save_to_disk()
+
+
 var _reset_inv_visibility: bool = false
 
 
@@ -145,7 +150,8 @@ func _connect_access(lvl: Node) -> void:
 	for access in lvl.get_node("Access").get_children():
 		match access.get_script():
 			Global.BOT_STATION:
-				access.connect("autosaved", self, "_save_player_spawn", [lvl.name, access.name])
+				access.connect("autosaved", self, "_save_player_spawn",
+					[lvl.name, access.name])
 			Global.NEXT_ZONE:
 				access.connect("moved", self, "on_change_scene")
 
@@ -186,6 +192,13 @@ func _on_Anim_animation_finished(anim_name: String) -> void:
 			$Anim.play("new_area")
 
 
+func _resume(player) -> void:
+	#resume interrupted charge cooldown
+	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
+	if player_charge_time > 0:
+		player.update_bar_charge_level(player_charge_time)
+
+
 #############
 # depot items
 #############
@@ -218,14 +231,6 @@ func _load_depot_items(lvl) -> void:
 			access.add_child(item_node)
 			#clear saved
 			_saved_depot_items[depot_name].clear()
-
-
-func _resume(player) -> void:
-	#resume interrupted charge cooldown
-	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
-	if player_charge_time > 0:
-		player.update_bar_charge_level(player_charge_time)
-
 
 
 ##############
@@ -261,8 +266,7 @@ func _load_player_items() -> void:
 	for key in keys:
 		for item_path in _saved_player[key]:
 			var item = load(item_path).instance()
-			if item is Global.PLAYER_BUILT_IN_WEAP == true:
-				item.free()
+			if item is Global.PLAYER_BUILT_IN_WEAP:
 				continue
 			#add as node
 			_player.get_node(key).add_child(item)
@@ -284,8 +288,7 @@ func _load_player_spawn() -> void:
 	if _saved_player["Spawn"] == null:
 		on_change_scene("Tutorial", "Pos1")
 	else:
-		on_change_scene(_saved_player["Spawn"]["Lvl"],
-			_saved_player["Spawn"]["Pos"])
+		on_change_scene(_saved_player["Spawn"]["Lvl"], _saved_player["Spawn"]["Pos"])
 
 
 #############
@@ -355,5 +358,4 @@ func stop_player(stop: bool) -> void:
 
 func _on_RespawnTimer_timeout() -> void:
 	_current_scene.queue_free()
-	_current_scene = null
 	_load_player_spawn()

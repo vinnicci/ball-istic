@@ -429,7 +429,6 @@ collision_mask = 3
 
 [node name="Velocity" type="RayCast2D" parent="Rays"]
 enabled = true
-cast_to = Vector2( 300, 0 )
 collision_mask = 3
 
 [node name="LookAt" type="RayCast2D" parent="Rays"]
@@ -441,50 +440,62 @@ collision_mask = 3
 
 [node name="R0" type="RayCast2D" parent="FleeRays"]
 position = Vector2( 0, 1 )
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R0"]
 
 [node name="R1" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R1"]
 
 [node name="R2" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R2"]
 
 [node name="R3" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R3"]
 
 [node name="R4" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R4"]
 
 [node name="R5" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R5"]
 
 [node name="R6" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R6"]
 
 [node name="R7" type="RayCast2D" parent="FleeRays"]
-collision_mask = 3
+enabled = true
+collision_mask = 2
 
 [node name="Pos" type="Position2D" parent="FleeRays/R7"]
 
 [node name="Resume" type="Timer" parent="."]
 one_shot = true
 
+[node name="EvaluateTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [node name="FoundTarget" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
 [connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]
+[connection signal="timeout" from="EvaluateTimer" to="." method="_on_EvaluateTimer_timeout"]
