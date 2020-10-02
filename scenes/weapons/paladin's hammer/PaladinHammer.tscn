@@ -151,6 +151,8 @@ offset = Vector2( -100, -3.5 )
 
 [node name="HurtBox" type="Area2D" parent="Hammer" index="1"]
 monitoring = false
+collision_layer = 0
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hammer/HurtBox" index="0"]
 position = Vector2( -146, -4.00007 )

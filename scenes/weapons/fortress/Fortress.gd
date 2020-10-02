@@ -14,8 +14,7 @@ func _process(delta: float) -> void:
 
 
 func _on_FrontShield_area_entered(area: Area2D) -> void:
-	if (area is Global.CLASS_PROJ == false || area.shooter_faction() == _parent_node.current_faction ||
-		_is_overheating == true):
+	if area.shooter_faction() == _parent_node.current_faction || _is_overheating == true:
 		return
 	if area.has_node("Explosion"):
 		current_heat += area.get_node("Explosion").damage

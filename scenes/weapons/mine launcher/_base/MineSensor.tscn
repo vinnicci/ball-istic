@@ -50,6 +50,7 @@ stream = ExtResource( 4 )
 [node name="ProximityRadius" type="Area2D" parent="." index="8"]
 visible = false
 monitorable = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityRadius" index="0"]
 shape = SubResource( 4 )

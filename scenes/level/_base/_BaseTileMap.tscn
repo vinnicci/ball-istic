@@ -8,6 +8,7 @@ scale = Vector2( 4, 4 )
 cell_size = Vector2( 32, 32 )
 centered_textures = true
 collision_friction = 0.5
+collision_layer = 2
 collision_mask = 0
 format = 1
 script = ExtResource( 1 )

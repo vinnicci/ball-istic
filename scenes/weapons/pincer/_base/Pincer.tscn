@@ -208,6 +208,8 @@ flip_v = true
 [node name="HurtBox" type="Area2D" parent="Beams/Beam1" index="0"]
 monitoring = false
 monitorable = false
+collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Beams/Beam1/HurtBox" index="0"]
 position = Vector2( 60, 0 )
@@ -223,6 +225,8 @@ offset = Vector2( 60, 0 )
 [node name="HurtBox" type="Area2D" parent="Beams/Beam2" index="0"]
 monitoring = false
 monitorable = false
+collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Beams/Beam2/HurtBox" index="0"]
 position = Vector2( 60, 0 )

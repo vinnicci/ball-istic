@@ -55,6 +55,7 @@ script = ExtResource( 22 )
 
 [node name="Area2D" type="Area2D" parent="Nav/DoorA" index="4"]
 position = Vector2( -0.000244141, -52 )
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nav/DoorA/Area2D" index="0"]
 shape = SubResource( 1 )
@@ -65,6 +66,7 @@ script = ExtResource( 23 )
 
 [node name="Area2D" type="Area2D" parent="Nav/DoorB" index="4"]
 position = Vector2( 0, -54 )
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nav/DoorB/Area2D" index="0"]
 shape = SubResource( 2 )
@@ -76,6 +78,7 @@ script = ExtResource( 24 )
 
 [node name="Area2D" type="Area2D" parent="Nav/DoorC" index="4"]
 position = Vector2( 0.000274658, 53.5 )
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Nav/DoorC/Area2D" index="0"]
 shape = SubResource( 3 )

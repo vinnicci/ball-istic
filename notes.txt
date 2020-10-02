@@ -7,21 +7,30 @@ z index:
 
 
 collision layer:
-	none - discharge, ai detection, explosion, proj behavior detection
-	1 - lvl object: staticbody, tilemap, rigid object
-	2 - bots
+	none - discharge, ai detection, explosion, proj behavior detection, doors within, weapons
+	1 - bots
+	2 - lvl object: staticbody, tilemap, rigid object
 	3 - projectile
 	4 - access
 
 
 collision masks:
 	lvl object - none
+	doors within - 1
 	bots - 1, 2
 	discharge - 3
 	projectile - 1, 2
-	ai detection - 2
+	ai detection - 1
 	ai rays - 1, 2
 	explosion - 1, 2
-	access - 2
-	proj behavior detection - 2
+	access - 1
+	proj behavior detection - 1
 	proj behavior ray - 1, 2
+	weapons:
+		fortress - 3
+		mine sensor - 1
+		melee weapons - 1, 2
+		paladin hammber - 1, 2, 3
+		phaser raycast - 2
+		siren call area - 1
+		

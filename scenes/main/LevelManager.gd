@@ -35,7 +35,7 @@ func _ready() -> void:
 	randomize()
 	$CanvasLayer/InGameMenu.set_parent(self)
 	_load_from_disk()
-	_load_data()
+	_load_player_spawn()
 
 
 func _load_from_disk() -> void:
@@ -135,7 +135,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_load_depot_items(_current_scene)
 	_load_vault_items(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
-	player.position = _current_scene.get_node("Access/" + pos as String).position
+	player.position = _current_scene.get_node("Access/" + str(pos)).position
 	add_child(_current_scene)
 	_load_saved_paths(_current_scene)
 	_resume(player)
@@ -145,15 +145,9 @@ func _connect_access(lvl: Node) -> void:
 	for access in lvl.get_node("Access").get_children():
 		match access.get_script():
 			Global.BOT_STATION:
-				access.connect("autosaved", self, "_on_autosave", [lvl.name, access.name])
+				access.connect("autosaved", self, "_save_player_spawn", [lvl.name, access.name])
 			Global.NEXT_ZONE:
 				access.connect("moved", self, "on_change_scene")
-
-
-func _on_autosave(lvl, pos) -> void:
-	_saved_player["Spawn"] = {}
-	_saved_player["Spawn"]["Lvl"] = lvl
-	_saved_player["Spawn"]["Pos"] = pos
 
 
 func _connect_big_bots(lvl: Node) -> void:
@@ -277,6 +271,23 @@ func _load_player_items() -> void:
 		_saved_player[arr].clear()
 
 
+###############
+# player spawn
+###############
+func _save_player_spawn(lvl: String, pos: String) -> void:
+	_saved_player["Spawn"] = {}
+	_saved_player["Spawn"]["Lvl"] = lvl
+	_saved_player["Spawn"]["Pos"] = pos
+
+
+func _load_player_spawn() -> void:
+	if _saved_player["Spawn"] == null:
+		on_change_scene("Tutorial", "Pos1")
+	else:
+		on_change_scene(_saved_player["Spawn"]["Lvl"],
+			_saved_player["Spawn"]["Pos"])
+
+
 #############
 # vault items
 #############
@@ -323,14 +334,6 @@ func _on_Resume_timeout() -> void:
 	emit_signal("resume")
 
 
-func _load_data() -> void:
-	if _saved_player["Spawn"] == null:
-		on_change_scene("Tutorial", "Pos1")
-	else:
-		on_change_scene(_saved_player["Spawn"]["Lvl"],
-			_saved_player["Spawn"]["Pos"])
-
-
 func _on_player_dead() -> void:
 	$CanvasLayer/ColorRect2.modulate.a = 0
 	_temp_big_bots = {}
@@ -353,4 +356,4 @@ func stop_player(stop: bool) -> void:
 func _on_RespawnTimer_timeout() -> void:
 	_current_scene.queue_free()
 	_current_scene = null
-	_load_data()
+	_load_player_spawn()

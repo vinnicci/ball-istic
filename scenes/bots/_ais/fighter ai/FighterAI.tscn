@@ -320,11 +320,6 @@ tree = {
 "to_port": 0
 }, {
 "from": "selector",
-"from_port": 1,
-"to": "sequence17",
-"to_port": 0
-}, {
-"from": "selector",
 "from_port": 0,
 "to": "sequence4",
 "to_port": 0
@@ -337,26 +332,6 @@ tree = {
 "from": "sequence4",
 "from_port": 0,
 "to": "task13",
-"to_port": 0
-}, {
-"from": "sequence17",
-"from_port": 0,
-"to": "task41",
-"to_port": 0
-}, {
-"from": "sequence17",
-"from_port": 1,
-"to": "inverter20",
-"to_port": 0
-}, {
-"from": "sequence17",
-"from_port": 3,
-"to": "inverter16",
-"to_port": 0
-}, {
-"from": "sequence17",
-"from_port": 2,
-"to": "task9",
 "to_port": 0
 }, {
 "from": "inverter20",
@@ -387,6 +362,31 @@ tree = {
 "from": "selector2",
 "from_port": 1,
 "to": "task3",
+"to_port": 0
+}, {
+"from": "selector",
+"from_port": 1,
+"to": "sequence8",
+"to_port": 0
+}, {
+"from": "sequence8",
+"from_port": 0,
+"to": "task41",
+"to_port": 0
+}, {
+"from": "sequence8",
+"from_port": 1,
+"to": "inverter20",
+"to_port": 0
+}, {
+"from": "sequence8",
+"from_port": 2,
+"to": "task9",
+"to_port": 0
+}, {
+"from": "sequence8",
+"from_port": 3,
+"to": "inverter16",
 "to_port": 0
 } ],
 "nodes": [ {
@@ -442,7 +442,7 @@ tree = {
 "fn": "task_is_master_close",
 "offset": Vector2( 700, -200 ),
 "params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
+"size": Vector2( 277, 111 ),
 "values": [ "master_seek" ]
 },
 "name": "task34",
@@ -488,9 +488,9 @@ tree = {
 "data": {
 "count": 4,
 "offset": Vector2( 300, -200 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 125, 133 )
 },
-"name": "sequence17",
+"name": "sequence8",
 "type": 2
 } ],
 "data": {
@@ -507,7 +507,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 100 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task17",
@@ -542,7 +542,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -640,7 +640,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -763,7 +763,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -837,7 +837,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -848,7 +848,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -921,7 +921,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -970,7 +970,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -1136,7 +1136,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1234,7 +1234,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -1357,7 +1357,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -1431,7 +1431,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -1442,7 +1442,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -1515,7 +1515,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -1564,7 +1564,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -1714,7 +1714,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1769,7 +1769,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1816,7 +1816,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1854,7 +1854,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1872,7 +1872,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -1940,7 +1940,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -2063,7 +2063,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -2137,7 +2137,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -2148,7 +2148,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -2221,7 +2221,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -2270,7 +2270,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -2442,7 +2442,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -2528,7 +2528,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -2606,7 +2606,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -2675,7 +2675,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -2816,7 +2816,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -2890,7 +2890,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -2901,7 +2901,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -2974,7 +2974,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -3023,7 +3023,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -3222,7 +3222,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -3296,7 +3296,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -3307,7 +3307,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -3380,7 +3380,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -3429,7 +3429,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -3589,7 +3589,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -3663,7 +3663,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -3674,7 +3674,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -3747,7 +3747,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -3796,7 +3796,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -3969,7 +3969,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4043,7 +4043,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -4054,7 +4054,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -4127,7 +4127,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -4176,7 +4176,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -4287,7 +4287,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4361,7 +4361,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -4372,7 +4372,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -4445,7 +4445,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -4494,7 +4494,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -4597,7 +4597,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4652,7 +4652,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4699,7 +4699,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4737,7 +4737,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4755,7 +4755,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -4799,7 +4799,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -4810,7 +4810,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -4883,7 +4883,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -4932,7 +4932,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -5044,7 +5044,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -5055,7 +5055,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -5113,7 +5113,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -5124,7 +5124,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -5143,7 +5143,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -5154,7 +5154,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -5211,7 +5211,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5260,7 +5260,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -5388,7 +5388,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5437,7 +5437,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -5557,7 +5557,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5606,7 +5606,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -5758,7 +5758,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5807,7 +5807,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -5870,7 +5870,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5917,7 +5917,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5956,7 +5956,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -5986,7 +5986,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -6012,7 +6012,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -6067,7 +6067,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -6114,7 +6114,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -6152,7 +6152,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -6193,7 +6193,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 100 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task17",
@@ -6223,7 +6223,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 100 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task17",
@@ -6279,7 +6279,7 @@ tree = {
 "fn": "task_is_master_close",
 "offset": Vector2( 700, -200 ),
 "params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
+"size": Vector2( 277, 111 ),
 "values": [ "master_seek" ]
 },
 "name": "task34",
@@ -6325,9 +6325,9 @@ tree = {
 "data": {
 "count": 4,
 "offset": Vector2( 300, -200 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 125, 133 )
 },
-"name": "sequence17",
+"name": "sequence8",
 "type": 2
 } ],
 "data": {
@@ -6391,7 +6391,6 @@ tree = {
 "name": "task40",
 "type": 1
 }, {
-"child": [ {
 "child": [  ],
 "data": {
 "fn": "task_is_master_instance_valid",
@@ -6403,99 +6402,12 @@ tree = {
 "name": "task41",
 "type": 1
 }, {
-"child": [ {
 "child": [  ],
 "data": {
 "fn": "task_is_master_close",
 "offset": Vector2( 700, -200 ),
 "params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
-"values": [ "master_seek" ]
-},
-"name": "task34",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 500, -200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter20",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_to_roll",
-"offset": Vector2( 500, -100 ),
-"params": [  ],
-"size": Vector2( 252, 84.9999 ),
-"values": [  ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_seek_master",
-"offset": Vector2( 700, 0 ),
-"params": [  ],
-"size": Vector2( 262, 85 ),
-"values": [  ]
-},
-"name": "task35",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 500, 0 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 300, -200 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_master_instance_valid",
-"offset": Vector2( 500, -300 ),
-"params": [  ],
-"size": Vector2( 320, 85.0002 ),
-"values": [  ]
-},
-"name": "task41",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_is_master_close",
-"offset": Vector2( 700, -200 ),
-"params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
-"values": [ "master_seek" ]
-},
-"name": "task34",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 500, -200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter20",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_is_master_close",
-"offset": Vector2( 700, -200 ),
-"params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
+"size": Vector2( 277, 111 ),
 "values": [ "master_seek" ]
 },
 "name": "task34",
@@ -6593,7 +6505,7 @@ tree = {
 "fn": "task_is_master_close",
 "offset": Vector2( 700, -200 ),
 "params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
+"size": Vector2( 277, 111 ),
 "values": [ "master_seek" ]
 },
 "name": "task34",
@@ -6639,9 +6551,9 @@ tree = {
 "data": {
 "count": 4,
 "offset": Vector2( 300, -200 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 125, 133 )
 },
-"name": "sequence17",
+"name": "sequence8",
 "type": 2
 } ],
 "data": {
@@ -6658,7 +6570,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 100 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task17",
@@ -6693,7 +6605,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -6791,7 +6703,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -6914,7 +6826,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -6988,7 +6900,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -6999,7 +6911,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -7072,7 +6984,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -7121,7 +7033,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -7275,7 +7187,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -7286,11 +7198,99 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
 "type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_master_close",
+"offset": Vector2( 700, -200 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 277, 111 ),
+"values": [ "master_seek" ]
+},
+"name": "task34",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 500, -200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter20",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_master_instance_valid",
+"offset": Vector2( 500, -300 ),
+"params": [  ],
+"size": Vector2( 320, 85.0002 ),
+"values": [  ]
+},
+"name": "task41",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_is_master_close",
+"offset": Vector2( 700, -200 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 277, 111 ),
+"values": [ "master_seek" ]
+},
+"name": "task34",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 500, -200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter20",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_to_roll",
+"offset": Vector2( 500, -100 ),
+"params": [  ],
+"size": Vector2( 252, 84.9999 ),
+"values": [  ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_seek_master",
+"offset": Vector2( 700, 0 ),
+"params": [  ],
+"size": Vector2( 262, 85 ),
+"values": [  ]
+},
+"name": "task35",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 500, 0 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 300, -200 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence8",
+"type": 2
 } ],
 "root": {
 "child": [ {
@@ -7345,7 +7345,7 @@ tree = {
 "fn": "task_is_master_close",
 "offset": Vector2( 700, -200 ),
 "params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 277, 91.0001 ),
+"size": Vector2( 277, 111 ),
 "values": [ "master_seek" ]
 },
 "name": "task34",
@@ -7391,9 +7391,9 @@ tree = {
 "data": {
 "count": 4,
 "offset": Vector2( 300, -200 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 125, 133 )
 },
-"name": "sequence17",
+"name": "sequence8",
 "type": 2
 } ],
 "data": {
@@ -7410,7 +7410,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 300, 100 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task17",
@@ -7445,7 +7445,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1100, 300 ),
 "params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "enemy_seek" ]
 },
 "name": "task6",
@@ -7543,7 +7543,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 1300, 700 ),
 "params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 275, 91 ),
+"size": Vector2( 275, 111 ),
 "values": [ "max_shooting" ]
 },
 "name": "task36",
@@ -7666,7 +7666,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 2300, 1200 ),
 "params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 275, 91.0002 ),
+"size": Vector2( 275, 111 ),
 "values": [ "charge_seek" ]
 },
 "name": "task28",
@@ -7740,7 +7740,7 @@ tree = {
 "fn": "task_charge_roll",
 "offset": Vector2( 2100, 1500 ),
 "params": [ [ "target", 1 ] ],
-"size": Vector2( 265.999, 91 ),
+"size": Vector2( 265.999, 111 ),
 "values": [ "target" ]
 },
 "name": "task15",
@@ -7751,7 +7751,7 @@ tree = {
 "fn": "task_timed_idle",
 "offset": Vector2( 2100, 1600 ),
 "params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 252, 91.0005 ),
+"size": Vector2( 258, 111 ),
 "values": [ "charge_break" ]
 },
 "name": "task18",
@@ -7824,7 +7824,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3100, 1900 ),
 "params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 301, 91 ),
+"size": Vector2( 301, 111 ),
 "values": [ "charge_back_off_flee" ]
 },
 "name": "task32",
@@ -7873,7 +7873,7 @@ tree = {
 "fn": "task_is_enemy_close",
 "offset": Vector2( 3300, 2100 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 285, 91 ),
+"size": Vector2( 285, 111 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task30",
@@ -8030,3 +8030,4 @@ tree = {
 "type": 0
 }
 }
+_tree_id = "2631056548215533367"

@@ -126,3 +126,4 @@ anims/rotate = SubResource( 5 )
 
 [node name="TeleLine" type="RayCast2D" parent="." index="5"]
 enabled = true
+collision_mask = 2

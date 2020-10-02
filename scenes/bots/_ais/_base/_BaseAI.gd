@@ -74,7 +74,8 @@ func clear_enemies() -> void:
 
 
 func _check_if_valid_bot(bot: Node) -> bool:
-	return _level_node.get_node("Bots").get_children().has(bot)
+	return (_level_node.get_node("Bots").get_children().has(bot) &&
+		bot.state != Global.CLASS_BOT.State.DEAD)
 
 
 func _clear_path_points() -> void:
@@ -99,7 +100,12 @@ func _get_distance(start: Vector2, end: Vector2) -> int:
 	return dist
 
 
-func _get_new_target_enemy(bot) -> void:
+func _get_new_target_enemy() -> void:
+	if _enemies.size() == 0:
+		return
+	var bot = _enemies.pop_front()
+	if _check_if_valid_bot(bot) == false:
+		return
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is in line of sight
@@ -110,7 +116,6 @@ func _get_new_target_enemy(bot) -> void:
 	#engage the blocking bot instead
 	elif (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
-		_enemies.erase(potential_enemy)
 		engage(potential_enemy)
 	_enemies.append(bot)
 
@@ -124,8 +129,6 @@ func engage(bot) -> void:
 			return
 		if _check_if_valid_bot(_enemy) == true:
 			_enemies.append(_enemy)
-	if _enemies.has(bot) == true:
-		_enemies.erase(bot)
 	_set_enemy(bot)
 
 
@@ -158,9 +161,7 @@ func _flee() -> void:
 		var pos
 		var ray_collide = ray.get_collider()
 		#skip ray that is colliding with walls or a physics object
-		if (ray_collide is Global.CLASS_LEVEL_OBJECT ||
-			ray_collide is Global.CLASS_RIGID_OBJECT ||
-			ray_collide is Global.CLASS_BOT):
+		if ray_collide != null:
 			continue
 		else:
 			pos = ray.get_node("Pos").global_position
@@ -180,13 +181,20 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body.current_faction != _parent_node.current_faction:
 		if body.has_node("AI") == true || body is Global.CLASS_PLAYER:
 			_enemies.append(body)
+			if body.is_connected("dead", self, "_erase_enemy") == false:
+				body.connect("dead", self, "_erase_enemy", [body])
 
 
 func _on_DetectionRange_body_exited(body: Node) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		return
 	if body != _enemy && _enemies.has(body) == true:
-		_enemies.erase(body)
+		_erase_enemy(body)
+
+
+func _erase_enemy(bot: Node) -> void:
+	if _enemies.has(bot) == true:
+		_enemies.erase(bot)
 
 
 #############
@@ -198,18 +206,13 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 # enemy found
 #############
 func task_get_enemy(task):
-	if _enemies.size() != 0:
-		var new_enemy = _enemies.pop_front()
-		if _check_if_valid_bot(new_enemy) == false:
-			return
-		_get_new_target_enemy(new_enemy)
+	_get_new_target_enemy()
 	task.succeed()
 	return
 
 
 func task_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
-		_enemies.erase(_enemy)
 		_enemy = null
 		_clear_path_points()
 		task.failed()
@@ -369,7 +372,7 @@ func task_shoot_enemy(task):
 		return
 	if _parent_node.state != Global.CLASS_BOT.State.STUN:
 		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
-	if $Rays/Target.get_collider() is Global.CLASS_LEVEL_OBJECT == false:
+	if $Rays/Target.get_collider() is Global.CLASS_BOT:
 		_parent_node.shoot_weapon()
 	task.succeed()
 	return

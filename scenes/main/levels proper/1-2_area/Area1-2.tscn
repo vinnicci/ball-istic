@@ -151,6 +151,7 @@ health_cap = 30.0
 [node name="Follow" type="Area2D" parent="." index="5"]
 position = Vector2( 577, -190 )
 monitorable = false
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Follow" index="0"]
 shape = SubResource( 1 )
