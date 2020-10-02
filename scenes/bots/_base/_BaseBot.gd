@@ -201,7 +201,7 @@ func _init_bot() -> void:
 	$CollisionShape.shape = CircleShape2D.new()
 	$CollisionShape.shape.radius = bot_radius
 	$DischargeRadius/CollisionShape2D.shape = CircleShape2D.new()
-	$DischargeRadius/CollisionShape2D.shape.radius = bot_radius * 8
+	$DischargeRadius/CollisionShape2D.shape.radius = 500
 	linear_damp = TURRET_MODE_DAMP
 	angular_damp = TURRET_MODE_DAMP
 	if destructible == false:
@@ -556,10 +556,10 @@ func discharge_parry() -> void:
 		match state:
 			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
 				_clear_surrounding_proj()
-				var rad: float = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
+#				var rad: float = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
 				_body_charge_effect.modulate.a = 0.5
 				_body_tween.interpolate_property(_body_charge_effect, "scale",
-					_body_charge_effect.scale, Vector2(rad, rad), 0.15, Tween.TRANS_LINEAR,
+					_body_charge_effect.scale, Vector2(6, 6), 0.15, Tween.TRANS_LINEAR,
 					Tween.EASE_IN_OUT)
 				_body_tween.interpolate_property(_body_charge_effect, "modulate",
 					_body_charge_effect.modulate, Color(1,1,1,0), 0.15, Tween.TRANS_LINEAR,
@@ -574,12 +574,12 @@ func discharge_parry() -> void:
 func _clear_surrounding_proj() -> void:
 	var areas: Array = $DischargeRadius.get_overlapping_areas()
 	for area in areas:
-		if area is Global.CLASS_PROJ:
-			if current_faction == area.shooter_faction():
-				continue
-			if area.has_node("Explosion") == true:
-				area.exploded = true
-			area.stop_projectile()
+#		if area is Global.CLASS_PROJ:
+		if current_faction == area.shooter_faction():
+			continue
+		if area.has_node("Explosion") == true:
+			area.exploded = true
+		area.stop_projectile()
 
 
 func _on_Bot_body_entered(body: Node) -> void:

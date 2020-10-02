@@ -416,7 +416,8 @@ _tree_id = "3750688124215533367"
 
 [node name="DetectionRange" type="Area2D" parent="."]
 visible = false
-monitorable = false
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 
@@ -425,47 +426,58 @@ monitorable = false
 [node name="Target" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 1000, 0 )
+collision_mask = 3
 
 [node name="Velocity" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 300, 0 )
+collision_mask = 3
 
 [node name="LookAt" type="RayCast2D" parent="Rays"]
 enabled = true
 cast_to = Vector2( 1000, 0 )
+collision_mask = 3
 
 [node name="FleeRays" type="Node2D" parent="."]
 
 [node name="R0" type="RayCast2D" parent="FleeRays"]
 position = Vector2( 0, 1 )
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R0"]
 
 [node name="R1" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R1"]
 
 [node name="R2" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R2"]
 
 [node name="R3" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R3"]
 
 [node name="R4" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R4"]
 
 [node name="R5" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R5"]
 
 [node name="R6" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R6"]
 
 [node name="R7" type="RayCast2D" parent="FleeRays"]
+collision_mask = 3
 
 [node name="Pos" type="Position2D" parent="FleeRays/R7"]
 

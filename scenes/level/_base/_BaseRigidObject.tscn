@@ -3,6 +3,7 @@
 [ext_resource path="res://scenes/level/_base/_BaseRigidObject.gd" type="Script" id=1]
 
 [node name="RigidObject" type="RigidBody2D"]
+collision_mask = 0
 script = ExtResource( 1 )
 destructible = true
 

@@ -1,6 +1,27 @@
 z index:
-everything - 0
-weapon sprites - 1
-feedback scenes - 2
-bot bars - 2
-names - 3
+	everything - 0
+	weapon sprites - 1
+	feedback scenes - 2
+	bot bars - 2
+	names - 3
+
+
+collision layer:
+	none - discharge, ai detection, explosion, proj behavior detection
+	1 - lvl object: staticbody, tilemap, rigid object
+	2 - bots
+	3 - projectile
+	4 - access
+
+
+collision masks:
+	lvl object - none
+	bots - 1, 2
+	discharge - 3
+	projectile - 1, 2
+	ai detection - 2
+	ai rays - 1, 2
+	explosion - 1, 2
+	access - 2
+	proj behavior detection - 2
+	proj behavior ray - 1, 2

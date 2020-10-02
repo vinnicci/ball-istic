@@ -9,7 +9,7 @@ resource_local_to_scene = true
 flags = 3
 load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5ee.s3tc.stex"
 
-[node name="ShieldRecoveryIII" instance=ExtResource( 2 )]
+[node name="ShieldRegenIII" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 effect = 9.0
 

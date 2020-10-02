@@ -5,6 +5,7 @@ extends Node2D
 #Bots node: attach bots
 export var disp_name: String
 var _player: Global.CLASS_PLAYER = null setget , get_player
+var _player_faction: Color
 signal secret_found
 
 
@@ -16,6 +17,7 @@ func _ready() -> void:
 	for bot in $Bots.get_children():
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
+			_player_faction = _player.current_faction
 		bot.set_level(self)
 		bot.connect("dead", self, "_on_bot_dead", [bot])
 		if bot.has_node("AI") == true:
@@ -60,7 +62,7 @@ func get_points(start: Vector2, end: Vector2) -> Array:
 
 func _on_bot_engaged(bot) -> void:
 	var ai_node = bot.get_node("AI")
-	if ai_node.get_enemy().current_faction == _player.current_faction:
+	if ai_node.get_enemy().current_faction == _player_faction:
 		close_doors()
 
 
@@ -70,13 +72,13 @@ func _on_bot_dead(bot) -> void:
 		$Camera2D.current = true
 		return
 	for lvlbot in $Bots.get_children():
-		if (lvlbot == bot || lvlbot.current_faction == _player.current_faction ||
+		if (lvlbot == bot || lvlbot.current_faction == _player_faction ||
 			lvlbot.state == Global.CLASS_BOT.State.DEAD ||
 			lvlbot.has_node("AI") == false):
 			continue
 		var ai = lvlbot.get_node("AI")
 		if (ai.get_enemy() != null &&
-			ai.get_enemy().current_faction == _player.current_faction):
+			ai.get_enemy().current_faction == _player_faction):
 			return
 	open_doors()
 

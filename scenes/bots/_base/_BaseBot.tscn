@@ -73,6 +73,8 @@ scale_random = 0.9
 color_ramp = SubResource( 5 )
 
 [node name="Bot" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
 physics_material_override = SubResource( 1 )
 contacts_reported = 1
 contact_monitor = true
@@ -191,7 +193,8 @@ stream = ExtResource( 12 )
 stream = ExtResource( 13 )
 
 [node name="DischargeRadius" type="Area2D" parent="."]
-monitorable = false
+collision_layer = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DischargeRadius"]
 

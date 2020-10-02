@@ -7,4 +7,4 @@ func _ready() -> void:
 
 
 func _on_Secret_visibility_changed() -> void:
-	$Access/ToSecret.visible = true
+	$"Access/Secret1-1".visible = true

@@ -7,7 +7,9 @@ var scenes: Dictionary = {
 	"Tutorial": preload("res://scenes/main/levels proper/0_tutorial/Tutorial.tscn"),
 	"Area1-1": preload("res://scenes/main/levels proper/1-1_area/Area1-1.tscn"),
 	"Secret1-1": preload("res://scenes/main/levels proper/1-1_secret/Secret1-1.tscn"),
-	"Checkpoint1-1": preload("res://scenes/main/levels proper/1-1_checkpoint/Checkpoint1-1.tscn")
+	"Checkpoint1-1": preload("res://scenes/main/levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
+	"Area1-2": preload("res://scenes/main/levels proper/1-2_area/Area1-2.tscn"),
+	"Hub": preload("res://scenes/main/levels proper/0_hub/Hub.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -15,9 +17,9 @@ var _saved_player: Dictionary = {
 	"Passives": [],
 	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
 }
-var _saved_big_bots: Dictionary #key: lvl name, value: is_alive
-var _saved_depot_items: Dictionary #key: lvl name, value: arr_items
-var _saved_vault_items: Array #just array of items
+var _saved_big_bots: Dictionary #key: lvl name + bot name, value: is_alive
+var _saved_depot_items: Dictionary #key: lvl name + depot name, value: arr_items
+var _saved_vault_items: Array #store item filename
 var _saved_paths: Array #store lvl name + destructible name
 var current_save_slot: int
 var current_save_name: String
@@ -124,7 +126,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 		if !_player.is_connected("dead", self, "_on_player_dead"):
 			_player.connect("dead", self, "_on_player_dead")
 		player = _player
-	player.get_node("Name/Label").text = current_save_name
+		_player.get_node("Name/Label").text = current_save_name
 	_current_scene = scenes[new_lvl].instance()
 	$CanvasLayer/AreaName.text = _current_scene.disp_name
 	_current_scene.connect("secret_found", self, "on_secret_found")
@@ -133,7 +135,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_load_depot_items(_current_scene)
 	_load_vault_items(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
-	player.position = _current_scene.get_node("Nav/" + pos as String).position
+	player.position = _current_scene.get_node("Access/" + pos as String).position
 	add_child(_current_scene)
 	_load_saved_paths(_current_scene)
 	_resume(player)
@@ -171,6 +173,9 @@ var _temp_big_bots: Dictionary = {}
 
 
 func _on_big_bot_dead(lvl, bot) -> void:
+	if (is_instance_valid(_player) == false ||
+		_player.state == Global.CLASS_BOT.State.DEAD):
+		return
 	_temp_big_bots[lvl + bot] = false
 	$Anim.play("big_bot_destroyed")
 
@@ -183,8 +188,6 @@ func _save_big_bots() -> void:
 
 func _on_Anim_animation_finished(anim_name: String) -> void:
 	match anim_name:
-#		"big_bot_destroyed":
-#			Engine.time_scale = 1.0
 		"transition":
 			$Anim.play("new_area")
 

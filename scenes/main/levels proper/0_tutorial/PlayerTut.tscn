@@ -24,4 +24,7 @@ shape = SubResource( 1 )
 [node name="BuiltInAutoBlaster" parent="Weapons" index="0"]
 Projectile = ExtResource( 2 )
 
+[node name="Label" parent="Name" index="0"]
+text = "TRAINING BOT"
+
 [editable path="PlayerUI"]
