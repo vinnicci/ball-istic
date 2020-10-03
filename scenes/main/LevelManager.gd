@@ -2,14 +2,14 @@ extends Node
 
 
 var scenes: Dictionary = {
-	"PlayerTut": preload("res://scenes/main/levels proper/0_tutorial/PlayerTut.tscn"),
+	"PlayerTut": preload("res://levels proper/0_tutorial/PlayerTut.tscn"),
 	"Player": preload("res://scenes/bots/player/Player.tscn"),
-	"Tutorial": preload("res://scenes/main/levels proper/0_tutorial/Tutorial.tscn"),
-	"Area1-1": preload("res://scenes/main/levels proper/1-1_area/Area1-1.tscn"),
-	"Secret1-1": preload("res://scenes/main/levels proper/1-1_secret/Secret1-1.tscn"),
-	"Checkpoint1-1": preload("res://scenes/main/levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
-	"Area1-2": preload("res://scenes/main/levels proper/1-2_area/Area1-2.tscn"),
-	"Hub": preload("res://scenes/main/levels proper/0_hub/Hub.tscn")
+	"Tutorial": preload("res://levels proper/0_tutorial/Tutorial.tscn"),
+	"Area1-1": preload("res://levels proper/1-1_area/Area1-1.tscn"),
+	"Secret1-1": preload("res://levels proper/1-1_secret/Secret1-1.tscn"),
+	"Checkpoint1-1": preload("res://levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
+	"Area1-2": preload("res://levels proper/1-2_area/Area1-2.tscn"),
+	"Hub": preload("res://levels proper/0_hub/Hub.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],

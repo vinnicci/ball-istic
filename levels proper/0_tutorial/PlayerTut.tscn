@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/main/levels proper/0_tutorial/TutBlasterProj.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/main/levels proper/0_tutorial/PlayerTut.gd" type="Script" id=5]
+[ext_resource path="res://levels proper/0_tutorial/PlayerTut.gd" type="Script" id=1]
+[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://levels proper/0_tutorial/TutBlasterProj.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
-[node name="PlayerTut" instance=ExtResource( 1 )]
-script = ExtResource( 5 )
+[node name="PlayerTut" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
 shield_cap = 25.0
 shield_regen = 5.0
 speed = 1300
@@ -22,7 +22,7 @@ faction = Color( 1, 0, 0, 1 )
 shape = SubResource( 1 )
 
 [node name="BuiltInAutoBlaster" parent="Weapons" index="0"]
-Projectile = ExtResource( 2 )
+Projectile = ExtResource( 3 )
 
 [node name="Label" parent="Name" index="0"]
 text = "TRAINING BOT"

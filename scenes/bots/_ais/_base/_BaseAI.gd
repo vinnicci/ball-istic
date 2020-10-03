@@ -185,9 +185,7 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 func _on_DetectionRange_body_exited(body: Node) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		return
-	if _enemies.has(body) == true:
-		if body == _enemy:
-			return
+	if _enemies.has(body) == true && body != _enemy:
 		_erase_enemy(body)
 
 

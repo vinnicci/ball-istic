@@ -1,7 +1,7 @@
 extends "res://scenes/weapons/_base/_BaseProjectile.gd"
 
 
-const DUMMY_B = preload("res://scenes/main/levels proper/0_tutorial/DummyB.gd")
+const DUMMY_B = preload("res://levels proper/0_tutorial/DummyB.gd")
 signal cleared
 
 

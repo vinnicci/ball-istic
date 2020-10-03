@@ -1,7 +1,7 @@
 extends "res://scenes/bots/player/Player.gd"
 
 
-const DUMMY_A = preload("res://scenes/main/levels proper/0_tutorial/DummyA.gd")
+const DUMMY_A = preload("res://levels proper/0_tutorial/DummyA.gd")
 
 
 func _ready() -> void:
@@ -45,7 +45,7 @@ func _control_player() -> void:
 	._control_player()
 
 
-const TUT_PROJ: = preload("res://scenes/main/levels proper/0_tutorial/TutBlasterProj.gd")
+const TUT_PROJ: = preload("res://levels proper/0_tutorial/TutBlasterProj.gd")
 
 
 func _clear_surrounding_proj() -> void:
