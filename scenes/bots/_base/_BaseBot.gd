@@ -121,6 +121,7 @@ func get_charge_outline():
 ####################
 func set_current_shield(value: float):
 	current_shield = value
+	bar_shield.max_value = current_shield
 	bar_shield.value = current_shield
 
 func get_current_shield():
@@ -128,6 +129,7 @@ func get_current_shield():
 
 func set_current_health(value: float):
 	current_health = value
+	bar_health.max_value = current_health
 	bar_health.value = current_health
 
 func get_current_health():
@@ -266,12 +268,10 @@ func reset_bot_vars() -> void:
 	_charge_commit_velocity = DEFAULT_COMMIT_VELOCITY / mass
 	
 	current_shield_cap = shield_cap
-	bar_shield.max_value = current_shield_cap
 	set_current_shield(current_shield_cap)
 	current_shield_regen = shield_regen
 	
 	current_health_cap = health_cap
-	bar_health.max_value = current_health_cap
 	set_current_health(current_health_cap)
 	
 	current_transform_speed = transform_speed

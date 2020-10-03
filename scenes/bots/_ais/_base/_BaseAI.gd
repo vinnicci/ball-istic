@@ -61,6 +61,8 @@ func set_level(level: Node) -> void:
 func _physics_process(delta: float) -> void:
 	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
 		$Rays/Target.look_at(_enemy.global_position)
+#		if _parent_node.current_weapon != null:
+#			_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 
 
 func _process(delta: float) -> void:
@@ -366,9 +368,12 @@ func task_shoot_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	if _parent_node.state != Global.CLASS_BOT.State.STUN:
+	var ray_collider = $Rays/Target.get_collider()
+	if (_parent_node.state != Global.CLASS_BOT.State.STUN &&
+		(ray_collider is Global.CLASS_LEVEL_OBJECT ||
+		ray_collider is Global.CLASS_RIGID_OBJECT) == false):
+		$Rays/Target.look_at(_enemy.global_position)
 		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
-	if $Rays/Target.get_collider() is Global.CLASS_BOT:
 		_parent_node.shoot_weapon()
 	task.succeed()
 	return

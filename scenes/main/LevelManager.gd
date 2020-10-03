@@ -9,7 +9,8 @@ var scenes: Dictionary = {
 	"Secret1-1": preload("res://levels proper/1-1_secret/Secret1-1.tscn"),
 	"Checkpoint1-1": preload("res://levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
 	"Area1-2": preload("res://levels proper/1-2_area/Area1-2.tscn"),
-	"Hub": preload("res://levels proper/0_hub/Hub.tscn")
+	"Hub": preload("res://levels proper/0_hub/Hub.tscn"),
+	"Area1-3": preload("res://levels proper/1-3_area/Area1-3.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -245,29 +246,33 @@ func _save_player_items() -> void:
 		trash_slot.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
-	var items: Dictionary = {}
-	for key in keys:
-		items[key] = _player.get_node(key).get_children()
 	#detach items
-	var clone = null
+	var items: Array
 	for key in keys:
-		for item in items[key]:
+		if key == "Weapons":
+			for item in _player.arr_weapons:
+				if item != null:
+					items.append(item)
+		else:
+			items = _player.get_node(key).get_children()
+		for item in items:
 			_saved_player[key].append(item.filename)
 			#cloning because the weapon becomes invisible as soon as the
 			#weapon gets removed as a child
 			if item == _player.current_weapon:
-				clone = item.duplicate()
-				_player.get_node("Weapons").add_child(clone)
-			item.get_parent().remove_child(item)
+				_player.get_node("Weapons").add_child(item.duplicate())
+			if is_instance_valid(item.get_parent()) == true:
+				item.get_parent().remove_child(item)
 
 
 func _load_player_items() -> void:
 	var keys = ["Items", "Weapons", "Passives"]
 	for key in keys:
+		if key == "Weapons":
+			var built_in_weap = _player.get_node(key).get_child(0)
+			built_in_weap.get_parent().remove_child(built_in_weap)
 		for item_path in _saved_player[key]:
 			var item = load(item_path).instance()
-			if item is Global.PLAYER_BUILT_IN_WEAP:
-				continue
 			#add as node
 			_player.get_node(key).add_child(item)
 	#clear saved player items
