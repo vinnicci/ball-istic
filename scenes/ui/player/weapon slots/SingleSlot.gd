@@ -17,9 +17,14 @@ func set_item(new_item) -> void:
 		icon.visible = true
 		icon.position = Vector2(35, 35)
 		add_child(icon)
-		#heat setup
-		$SlotHeat.max_value = item.get_heat_cap()
-		$SlotHeat.value = item.current_heat
+
+
+func update_heat_cap() -> void:
+	if item == null:
+		$SlotHeat.value = 0
+		return
+	$SlotHeat.max_value = item.current_heat_cap
+	$SlotHeat.value = item.current_heat
 
 
 func _process(delta: float) -> void:

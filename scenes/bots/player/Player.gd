@@ -31,15 +31,8 @@ func _init_player() -> void:
 	#explosion initialize
 	$Explosion.set_player_cam($Camera2D)
 	
+	#player items ui initialize
 	var i = 0
-	for weap in arr_weapons:
-		if weap is Global.PLAYER_BUILT_IN_WEAP:
-			ui_inventory.player_built_in_weap = weap
-		ui_inventory.get_node("Loadout/SlotsContainer/WeaponSlots/" + str(i)).set_item(weap)
-		$PlayerUI/WeaponSlots.get_node(str(i)).set_item(weap)
-		i += 1
-	
-	i = 0
 	for item in $Items.get_children():
 		item.set_parent(self)
 		item.modulate.a = 0
@@ -55,11 +48,19 @@ func _init_player() -> void:
 	
 	update_player_vars()
 	
+	i = 0
+	for weap in arr_weapons:
+		if weap is Global.PLAYER_BUILT_IN_WEAP:
+			ui_inventory.player_built_in_weap = weap
+		ui_inventory.get_node("Loadout/SlotsContainer/WeaponSlots/" + str(i)).set_item(weap)
+		$PlayerUI/WeaponSlots.get_node(str(i)).set_item(weap)
+		i += 1
+	
 	#player bars initialize
 	bar_weapon_heat.rect_position.x -= bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
 	bar_weapon_heat.rect_position.y = bot_radius
-	bar_weapon_heat.max_value = current_weapon.heat_cap
-	bar_weapon_heat.value = 0
+#	bar_weapon_heat.max_value = current_weapon.current_heat_cap
+#	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
 	bar_charge_level.rect_position.y = bot_radius
 	var bar_scale: float = float(bot_radius*2)/150.0
@@ -74,6 +75,7 @@ func update_player_vars() -> void:
 	cap_current_vars()
 	#initialize player stats ui
 	ui_inventory.get_node("Stats").update_stats()
+	hud_weapon_slots.update_heat_cap()
 
 
 func cap_current_vars() -> void:
@@ -189,6 +191,7 @@ func _update_bar_weapon_heat() -> void:
 		if bar_weapon_heat_anim.is_playing() == false && current_weapon.is_overheating() == false:
 			bar_weapon_heat_anim.play("too_much_heat")
 			$Sounds/CloseToOverheating.play()
+	bar_weapon_heat.max_value = current_weapon.current_heat_cap
 	bar_weapon_heat.value = current_weapon.current_heat
 
 

@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.gd" type="Script" id=1]
 [ext_resource path="res://scenes/passives/knockback resist/_base/KnockbackResist.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/passives/tex_passive_speed_knockback.png" type="Texture" id=4]
 
 [sub_resource type="StreamTexture" id=1]
 resource_local_to_scene = true
@@ -16,7 +15,3 @@ effect = 0.4
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 0.145098, 0.819608, 1, 1 )
 texture = SubResource( 1 )
-
-[node name="Effect" parent="SlotIcon" index="0"]
-modulate = Color( 0.827451, 0.827451, 0.827451, 1 )
-texture = ExtResource( 4 )

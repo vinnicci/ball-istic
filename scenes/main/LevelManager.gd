@@ -250,9 +250,9 @@ func _save_player_items() -> void:
 	var items: Array
 	for key in keys:
 		if key == "Weapons":
-			for item in _player.arr_weapons:
-				if item != null:
-					items.append(item)
+			for weap in _player.arr_weapons:
+				if weap != null:
+					items.append(weap)
 		else:
 			items = _player.get_node(key).get_children()
 		for item in items:
@@ -263,12 +263,13 @@ func _save_player_items() -> void:
 				_player.get_node("Weapons").add_child(item.duplicate())
 			if is_instance_valid(item.get_parent()) == true:
 				item.get_parent().remove_child(item)
+		items = []
 
 
 func _load_player_items() -> void:
 	var keys = ["Items", "Weapons", "Passives"]
 	for key in keys:
-		if key == "Weapons":
+		if key == "Weapons" && _saved_player["Weapons"].size() != 0:
 			var built_in_weap = _player.get_node(key).get_child(0)
 			built_in_weap.get_parent().remove_child(built_in_weap)
 		for item_path in _saved_player[key]:

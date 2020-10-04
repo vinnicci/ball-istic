@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/passives/speed/_base/Speed.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/passives/tex_passive_speed_knockback.png" type="Texture" id=2]
 [ext_resource path="res://scenes/passives/speed/SpeedII.gd" type="Script" id=3]
 
 [sub_resource type="StreamTexture" id=1]
@@ -16,7 +15,3 @@ effect = 800.0
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 0.145098, 0.819608, 1, 1 )
 texture = SubResource( 1 )
-
-[node name="Effect" parent="SlotIcon" index="0"]
-modulate = Color( 0.988235, 1, 0.0941176, 1 )
-texture = ExtResource( 2 )

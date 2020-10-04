@@ -61,6 +61,7 @@ visible = false
 position = Vector2( -65, 1167 )
 rotation = 1.5708
 position_node = "Pos2"
+disp_name = "To Area 1-1"
 
 [node name="Pos1" type="Position2D" parent="Access" index="5"]
 position = Vector2( -62, 844 )
@@ -69,6 +70,7 @@ position = Vector2( -62, 844 )
 position = Vector2( -64, -798 )
 rotation = -1.5708
 position_node = "Pos1"
+disp_name = "To Area 1-2"
 
 [node name="Pos2" type="Position2D" parent="Access" index="7"]
 position = Vector2( -58, -476 )

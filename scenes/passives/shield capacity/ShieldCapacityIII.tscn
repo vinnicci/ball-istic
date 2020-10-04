@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/passives/tex_passive_hp_shield.png" type="Texture" id=1]
 [ext_resource path="res://scenes/passives/shield capacity/_base/ShieldCapacity.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.gd" type="Script" id=3]
 
@@ -16,7 +15,3 @@ effect = 100.0
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 1, 0.647059, 0.145098, 1 )
 texture = SubResource( 1 )
-
-[node name="Effect" parent="SlotIcon" index="0"]
-modulate = Color( 0.0823529, 0.278431, 0.866667, 1 )
-texture = ExtResource( 1 )

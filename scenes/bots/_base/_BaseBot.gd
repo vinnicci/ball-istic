@@ -313,17 +313,12 @@ func _process(delta: float) -> void:
 	_end_charging_effect()
 
 
-var _is_ccd_on: bool = false
-
-
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() > 2800 && _is_ccd_on == false:
+	if linear_velocity.length() > 2800 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
-		_is_ccd_on = true
-	elif linear_velocity.length() <= 2800 && _is_ccd_on == true:
+	elif linear_velocity.length() <= 2800 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
-		_is_ccd_on = false
 
 
 func _integrate_forces(pstate: Physics2DDirectBodyState) -> void:

@@ -137,6 +137,7 @@ wait_time = 5.0
 position = Vector2( -2612, 192 )
 rotation = 3.14159
 position_node = "Pos1"
+disp_name = "To Area 1-1"
 
 [node name="Pos1" type="Position2D" parent="Access" index="5"]
 position = Vector2( -2333, 192 )

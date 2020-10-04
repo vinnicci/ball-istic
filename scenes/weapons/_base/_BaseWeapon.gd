@@ -28,9 +28,10 @@ export (float) var melee_damage: float = 20 setget , get_melee_damage
 export (float) var melee_crit_stun_time: float = 0 setget , get_melee_crit_stun_time
 export (int) var melee_knockaback: int = 500 setget , get_melee_knockback
 
-var current_heat_per_shot: float = 0
-var current_heat: float = 0
-var current_heat_disspation: float = 0
+var current_heat_cap: float
+var current_heat_per_shot: float
+var current_heat: float
+var current_heat_disspation: float
 var current_shoot_cooldown: float
 var current_crit_mult: float
 var current_crit_chance: float
@@ -150,8 +151,9 @@ func reset_weap_vars() -> void:
 		current_shoot_cooldown = shoot_cooldown
 		_timer_shoot_cooldown.wait_time = current_shoot_cooldown
 	_timer_burst_timer.wait_time = burst_timer
+	current_heat_cap = heat_cap
 	current_heat = 0
-	current_heat = clamp(current_heat, 0, heat_cap + 1)
+	current_heat = clamp(current_heat, 0, current_heat_cap + 1)
 	#most AI bots have disspation advantage
 	if current_heat_disspation == 0:
 		current_heat_disspation = heat_dissipation
@@ -163,15 +165,17 @@ func reset_weap_vars() -> void:
 func _process(_delta: float) -> void:
 	#almost overheat state
 	#use this for weapons that make use of heat mechanics
-	if _is_almost_overheating == false && current_heat > heat_cap * almost_overheating_threshold:
+	if (_is_almost_overheating == false &&
+		current_heat > current_heat_cap * almost_overheating_threshold):
 		_is_almost_overheating = true
-	elif _is_almost_overheating == true && current_heat <= heat_cap * almost_overheating_threshold:
+	elif (_is_almost_overheating == true &&
+		current_heat <= current_heat_cap * almost_overheating_threshold):
 		_is_almost_overheating = false
 	
 	#overheat state
-	if _is_overheating == false && current_heat > heat_cap:
+	if _is_overheating == false && current_heat > current_heat_cap:
 		_is_overheating = true
-	elif _is_overheating == true && current_heat <= heat_cap * heat_below_threshold:
+	elif _is_overheating == true && current_heat <= current_heat_cap * heat_below_threshold:
 		_is_overheating = false
 
 
@@ -344,7 +348,7 @@ func _fire_charged() -> void:
 		_timer_charge_cooldown.is_stopped() == false):
 		_cancel_charge()
 		return
-	if current_heat == heat_cap:
+	if current_heat == current_heat_cap:
 		if current_heat_disspation <= 0:
 			_actual_heat += heat_per_shot
 			current_heat = _actual_heat
@@ -360,7 +364,7 @@ func _fire_charged() -> void:
 		$ChargingSound.play()
 		_timer_dissipation_cooldown.paused = true
 		$ChargingTween.interpolate_property(self, "current_heat", current_heat,
-			heat_cap, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			current_heat_cap, charge_timer, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		$ChargingTween.start()
 	_timer_charge_cancel_timer.start()
 

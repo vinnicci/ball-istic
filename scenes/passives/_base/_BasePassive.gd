@@ -53,5 +53,12 @@ func _apply_transform_speed() -> void:
 	_parent_node.current_transform_speed += effect
 
 
+func _apply_heat_capacity() -> void:
+	for weapon in _parent_node.get_node("Weapons").get_children():
+		if weapon == _parent_node.current_weapon:
+			_parent_node
+		weapon.current_heat_cap *= effect
+
+
 func _apply_weap_damage_rate() -> void:
 	_parent_node.current_weap_dmg_rate += effect

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/passives/charge damage rate/_base/ChargeDmgRate.gd" type="Script" id=1]
 [ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/passives/tex_passive_charge_force_damage.png" type="Texture" id=3]
 
 [sub_resource type="StreamTexture" id=1]
 resource_local_to_scene = true
@@ -14,3 +15,8 @@ description = "charge dmg rate."
 
 [node name="SlotIcon" parent="." index="0"]
 texture = SubResource( 1 )
+
+[node name="Effect" parent="SlotIcon" index="0"]
+modulate = Color( 0.529412, 0.0666667, 0.478431, 1 )
+position = Vector2( -1, 0 )
+texture = ExtResource( 3 )

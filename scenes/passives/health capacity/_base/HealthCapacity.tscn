@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/passives/health capacity/_base/HealthCapacity.gd" type="Script" id=1]
 [ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/passives/tex_passive_hp_shield.png" type="Texture" id=3]
 
 [sub_resource type="StreamTexture" id=1]
 resource_local_to_scene = true
@@ -14,3 +15,7 @@ description = "health capacity."
 
 [node name="SlotIcon" parent="." index="0"]
 texture = SubResource( 1 )
+
+[node name="Effect" parent="SlotIcon" index="0"]
+modulate = Color( 0.921569, 0.152941, 0.152941, 1 )
+texture = ExtResource( 3 )

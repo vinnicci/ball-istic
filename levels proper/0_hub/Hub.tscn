@@ -42,6 +42,7 @@ rotation = -1.5708
 position = Vector2( -64, 1798 )
 rotation = 1.5708
 position_node = "Pos2"
+disp_name = "To Area 1-2"
 
 [node name="Pos1" type="Position2D" parent="Access" index="1"]
 position = Vector2( -58, 1357 )
@@ -50,6 +51,7 @@ position = Vector2( -58, 1357 )
 position = Vector2( -2430, -1343 )
 rotation = -3.14159
 position_node = "Pos1"
+disp_name = "To Area 1-3"
 
 [node name="Pos2" type="Position2D" parent="Access" index="3"]
 position = Vector2( -1887, -1338 )
@@ -57,12 +59,16 @@ position = Vector2( -1887, -1338 )
 [node name="Area2-1" parent="Access" index="4" instance=ExtResource( 3 )]
 position = Vector2( 1718, 1592 )
 rotation = 0.785398
+position_node = "Pos1"
+disp_name = "To Area 2-1"
 
 [node name="Pos3" type="Position2D" parent="Access" index="5"]
 position = Vector2( 1405, 1267 )
 
 [node name="Area3-1" parent="Access" index="6" instance=ExtResource( 3 )]
 position = Vector2( 2304, -1344 )
+position_node = "Pos1"
+disp_name = "To Area 3-1"
 
 [node name="Pos4" type="Position2D" parent="Access" index="7"]
 position = Vector2( 1761, -1344 )
