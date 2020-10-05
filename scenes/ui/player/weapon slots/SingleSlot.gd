@@ -19,19 +19,13 @@ func set_item(new_item) -> void:
 		add_child(icon)
 
 
-func update_heat_cap() -> void:
-	if item == null:
-		$SlotHeat.value = 0
-		return
-	$SlotHeat.max_value = item.current_heat_cap
-	$SlotHeat.value = item.current_heat
-
-
 func _process(delta: float) -> void:
 	if item == null:
+		$SlotHeat.value = 0
 		return
 	if item.is_overheating() == true:
 		$SlotHeat.modulate = Global.CLASS_PLAYER.WEAP_OVERHEAT_COLOR
 	else:
 		$SlotHeat.modulate = Global.CLASS_PLAYER.WEAP_HEAT_COLOR
+	$SlotHeat.max_value = item.current_heat_cap
 	$SlotHeat.value = item.current_heat

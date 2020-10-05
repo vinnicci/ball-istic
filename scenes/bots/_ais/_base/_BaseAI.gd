@@ -5,17 +5,16 @@ export (int) var detection_range: int = 1000
 export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
 export (float) var weap_heat_cooldown: float = 0
-export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
-var _enemies: Array = []
+var _enemies: Array
 var _enemy: Global.CLASS_BOT = null setget , get_enemy
 var _master: Global.CLASS_BOT = null
-var _path_points: Array = []
+var _path_points: Array
 var _next_path_point
-var _flee_routes: Dictionary = {}
+var _flee_routes: Dictionary
 var _parent_node: Global.CLASS_BOT
-var _level_node: Node = null
+var _level_node: Node
 
 
 func get_enemy():
@@ -23,7 +22,6 @@ func get_enemy():
 
 
 func _ready() -> void:
-	$BTREE.enable = enabled
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = detection_range
 	$Rays/Target.cast_to = Vector2(detection_range, 0)
@@ -59,10 +57,9 @@ func set_level(level: Node) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _check_if_valid_bot(_enemy) == true && _parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT:
+	if (_check_if_valid_bot(_enemy) == true &&
+		_parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT):
 		$Rays/Target.look_at(_enemy.global_position)
-#		if _parent_node.current_weapon != null:
-#			_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 
 
 func _process(delta: float) -> void:
@@ -117,7 +114,6 @@ func _get_new_target_enemy() -> void:
 	#if target bot is in line of sight
 	if potential_enemy == bot:
 		engage(potential_enemy)
-		return
 	#if target bot is blocked by another enemy bot,
 	#engage the blocking bot instead
 	elif (potential_enemy is Global.CLASS_BOT &&
@@ -148,10 +144,14 @@ func _set_enemy(bot) -> void:
 
 
 func _seek(target: Global.CLASS_BOT) -> void:
-	if _path_points.size() == 0 || target.global_position.distance_to(_path_points.back()) <= 300:
+	if (_path_points.size() == 0 ||
+		target.global_position.distance_to(_path_points.back()) > 300):
 		_get_path_points(global_position, target.global_position)
-	if _path_points.size() != 0 && global_position.distance_to(_next_path_point) <= 300:
-		_next_path_point = _path_points.pop_front()
+	if global_position.distance_to(_next_path_point) > 175:
+		$Rays/Velocity.look_at(_next_path_point)
+		_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+		return
+	_next_path_point = _path_points.pop_front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
@@ -160,7 +160,7 @@ func _flee() -> void:
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
-func _on_EvaluateTimer_timeout() -> void:
+func _on_FleeEvaluate_timeout() -> void:
 	if _check_if_valid_bot(_enemy) == false:
 		return
 	_flee_routes = {}
@@ -213,7 +213,6 @@ func task_get_enemy(task):
 func task_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
 		_enemy = null
-		_clear_path_points()
 		task.failed()
 	else:
 		task.succeed()
@@ -321,17 +320,17 @@ func task_is_charge_ready(task):
 	return
 
 
-##############
+#######
 # flee
-##############
+#######
 func task_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
-		$EvaluateTimer.stop()
+		$FleeEvaluate.stop()
 		task.failed()
 		return
-	if $EvaluateTimer.is_stopped() == true:
-		_on_EvaluateTimer_timeout()
-		$EvaluateTimer.start()
+	if $FleeEvaluate.is_stopped() == true:
+		_on_FleeEvaluate_timeout()
+		$FleeEvaluate.start()
 	_flee()
 	task.succeed()
 	return
@@ -346,9 +345,9 @@ func task_switch_weapon(task):
 		return
 
 
-########
-# parry
-########
+#################
+# discharge parry
+#################
 func task_parry(task):
 	pass
 
@@ -385,7 +384,6 @@ func task_shoot_enemy(task):
 func task_is_master_instance_valid(task):
 	if _check_if_valid_bot(_master) == false:
 		_master = null
-		_clear_path_points()
 		task.failed()
 	else:
 		task.succeed()

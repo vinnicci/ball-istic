@@ -59,8 +59,6 @@ func _init_player() -> void:
 	#player bars initialize
 	bar_weapon_heat.rect_position.x -= bar_weapon_heat.rect_size.y + bot_radius + 15 #<- hardcoded for now
 	bar_weapon_heat.rect_position.y = bot_radius
-#	bar_weapon_heat.max_value = current_weapon.current_heat_cap
-#	bar_weapon_heat.value = 0
 	bar_charge_level.rect_position.x += bot_radius + 15 #<- hardcoded for now
 	bar_charge_level.rect_position.y = bot_radius
 	var bar_scale: float = float(bot_radius*2)/150.0
@@ -75,7 +73,6 @@ func update_player_vars() -> void:
 	cap_current_vars()
 	#initialize player stats ui
 	ui_inventory.get_node("Stats").update_stats()
-	hud_weapon_slots.update_heat_cap()
 
 
 func cap_current_vars() -> void:
@@ -99,6 +96,7 @@ func _physics_process(delta: float) -> void:
 	_control_player_weapon_hotkeys()
 
 
+#used by level manager, to prevent mouse transform error when exiting scene
 var stopped: bool = false
 
 

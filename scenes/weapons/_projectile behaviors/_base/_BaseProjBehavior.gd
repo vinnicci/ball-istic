@@ -15,7 +15,6 @@ func _init_detector(radius) -> void:
 
 func _init_raycast(cast_to) -> void:
 	$TargetRay.cast_to = Vector2(cast_to, 0)
-	$TargetRay.enabled = true
 
 
 func _init_timer() -> void:
@@ -44,6 +43,12 @@ func _physics_process(delta: float) -> void:
 			_detected.append(target)
 
 
+func _seek(target_pos: Vector2) -> Vector2:
+	var target_v = (target_pos - global_position).normalized() * _parent_node.speed
+	var steer_v = (target_v - _parent_node.velocity).normalized() * homing_steer_magnitude
+	return _parent_node.velocity + steer_v
+
+
 #############
 # btree tasks
 #############
@@ -65,10 +70,7 @@ func task_homing(task):
 	if _parent_node.is_stopped == true:
 		task.failed()
 		return
-	var target_v = (_target_bot.global_position - global_position).normalized() * _parent_node.speed
-	var steer_v = (target_v - _parent_node.velocity).normalized() * homing_steer_magnitude
-	var final_v = _parent_node.velocity + steer_v
-	_parent_node.acceleration = final_v
+	_parent_node.acceleration = _seek(_target_bot.global_position)
 	task.succeed()
 	return
 
@@ -92,11 +94,7 @@ func task_cursor_seek(task):
 	if _parent_node.is_stopped == true:
 		task.failed()
 		return
-	var cursor_pos = get_global_mouse_position()
-	var target_v = (cursor_pos - global_position).normalized() * _parent_node.speed
-	var steer_v = (target_v - _parent_node.velocity).normalized() * homing_steer_magnitude
-	var final_v = _parent_node.velocity + steer_v
-	_parent_node.acceleration = final_v
+	_parent_node.acceleration = _seek(get_global_mouse_position())
 	task.succeed()
 	return
 

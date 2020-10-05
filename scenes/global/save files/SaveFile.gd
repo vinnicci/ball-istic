@@ -6,7 +6,7 @@ export (Dictionary) var player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Spawn": null #value -> Lvl: level name, Pos: level coords
+	"Spawn": null #value -> Lvl: level name, Pos: access name
 }
 export (Dictionary) var big_bots: Dictionary
 export (Dictionary) var depot_items: Dictionary

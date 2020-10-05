@@ -8,7 +8,7 @@ onready var _shake_tween = $ShakeTween
 
 
 #due to having the dynamic y-offset
-#process loop is used instead of returning it to V(0,0) offset
+#physics process loop is used instead of returning it to V(0,0) offset
 func _physics_process(delta: float) -> void:
 	if get_parent() is Global.CLASS_PLAYER == false || _shaking == true:
 		return

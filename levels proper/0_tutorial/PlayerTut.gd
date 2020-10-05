@@ -4,14 +4,6 @@ extends "res://scenes/bots/player/Player.gd"
 const DUMMY_A = preload("res://levels proper/0_tutorial/DummyA.gd")
 
 
-func _ready() -> void:
-	faction = Color(0, 1, 0)
-	reset_bot_vars()
-
-
-signal clashed
-
-
 func _on_Bot_body_entered(body: Node) -> void:
 	if state != State.CHARGE_ROLL:
 		if $Sounds/Bump.playing == false:

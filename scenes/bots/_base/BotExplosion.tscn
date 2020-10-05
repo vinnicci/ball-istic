@@ -31,5 +31,8 @@ color_ramp = SubResource( 2 )
 explosion_radius = 200
 damage = 5.0
 
+[node name="CollisionShape2D" parent="." index="0"]
+visible = false
+
 [node name="Particles2D" parent="." index="2"]
 process_material = SubResource( 3 )

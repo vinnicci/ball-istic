@@ -16,7 +16,6 @@ transform_speed = 0.4
 charge_cooldown = 1.0
 charge_force_mult = 0.8
 weap_dmg_rate = 1.5
-faction = Color( 1, 0, 0, 1 )
 
 [node name="CollisionShape" parent="." index="9"]
 shape = SubResource( 1 )

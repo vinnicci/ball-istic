@@ -92,15 +92,15 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		if is_instance_valid(_player) && _player.ui_inventory.visible == true:
 			_player.ui_inventory.visible = false
-			_player.held_item.visible = false
+			_player.ui_inventory.held.visible = false
 			_reset_inv_visibility = true
 		$CanvasLayer/InGameMenu.visible = true
 		$CanvasLayer/ColorRect3.visible = true
 		get_tree().paused = true
 		return
-	if is_instance_valid(_player) && _reset_inv_visibility == true:
+	if is_instance_valid(_player) && _player.ui_inventory.visible == false:
 		_player.ui_inventory.visible = true
-		_player.held_item.visible = true
+		_player.ui_inventory.held.visible = true
 		_reset_inv_visibility = false
 
 

@@ -140,7 +140,7 @@ func stop_projectile(body = null) -> void:
 
 func _connect_blast_anim(node) -> void:
 	#blast graphics upon object hit
-	if !node.is_connected("animation_finished", self, "_on_anim_finished"):
+	if node.is_connected("animation_finished", self, "_on_anim_finished") == false:
 		node.connect("animation_finished", self, "_on_anim_finished")
 
 
