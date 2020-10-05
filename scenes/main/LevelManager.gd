@@ -85,23 +85,25 @@ func _on_LevelManager_tree_exiting() -> void:
 	save_to_disk()
 
 
-var _reset_inv_visibility: bool = false
+var _in_game_menu_visible: bool = false
 
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
-		if is_instance_valid(_player) && _player.ui_inventory.visible == true:
+	if is_instance_valid(_player) == false:
+		return
+	if Input.is_action_just_pressed("ui_cancel") && _in_game_menu_visible == false:
+		if _player.ui_inventory.visible == true:
 			_player.ui_inventory.visible = false
 			_player.ui_inventory.held.visible = false
-			_reset_inv_visibility = true
+			_in_game_menu_visible = true
 		$CanvasLayer/InGameMenu.visible = true
 		$CanvasLayer/ColorRect3.visible = true
 		get_tree().paused = true
 		return
-	if is_instance_valid(_player) && _player.ui_inventory.visible == false:
+	if _in_game_menu_visible == true:
 		_player.ui_inventory.visible = true
 		_player.ui_inventory.held.visible = true
-		_reset_inv_visibility = false
+		_in_game_menu_visible = false
 
 
 func on_change_scene(new_lvl: String, pos: String) -> void:

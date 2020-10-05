@@ -6,12 +6,6 @@ const ORANGE: = Color(0.9, 0.5, 0)
 var _is_shifting: bool = false
 
 
-func reset_proj_vars() -> void:
-	.reset_proj_vars()
-	$Sprite.modulate = WHITE
-	_is_shifting = false
-
-
 func _process(delta: float) -> void:
 	if $RangeTimer.is_stopped() == false && _is_shifting == false:
 		$ColorTween.interpolate_property($Sprite, "modulate", WHITE, ORANGE,

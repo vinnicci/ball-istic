@@ -44,7 +44,6 @@ visible = false
 position = Vector2( -2552, 960 )
 rotation = 3.14159
 position_node = "Pos1"
-disp_name = "To Hidden Path"
 
 [node name="Pos3" type="Position2D" parent="Access" index="3"]
 position = Vector2( -2070, 962 )
@@ -53,7 +52,6 @@ position = Vector2( -2070, 962 )
 position = Vector2( -2368, -1257 )
 rotation = -1.5708
 position_node = "Pos1"
-disp_name = "To Checkpoint"
 
 [node name="Pos2" type="Position2D" parent="Access" index="5"]
 position = Vector2( -2366, -895 )

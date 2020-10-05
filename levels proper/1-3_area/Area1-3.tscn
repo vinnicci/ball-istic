@@ -24,7 +24,7 @@ position_node = "Pos2"
 position = Vector2( 1188, 587 )
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 4 )]
-position = Vector2( 504, 576 )
+position = Vector2( 120, 576 )
 rotation = 1.5708
 
 [node name="Door2" parent="Doors" index="1" instance=ExtResource( 4 )]

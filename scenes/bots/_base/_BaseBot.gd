@@ -315,9 +315,9 @@ func _process(delta: float) -> void:
 
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(delta: float) -> void:
-	if linear_velocity.length() > 2800 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
+	if linear_velocity.length() > 2500 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
-	elif linear_velocity.length() <= 2800 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
+	elif linear_velocity.length() <= 2500 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 
 

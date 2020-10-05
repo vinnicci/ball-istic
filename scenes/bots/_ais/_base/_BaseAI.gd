@@ -145,9 +145,9 @@ func _set_enemy(bot) -> void:
 
 func _seek(target: Global.CLASS_BOT) -> void:
 	if (_path_points.size() == 0 ||
-		target.global_position.distance_to(_path_points.back()) > 300):
+		target.global_position.distance_to(_path_points.back()) > 250):
 		_get_path_points(global_position, target.global_position)
-	if global_position.distance_to(_next_path_point) > 175:
+	if global_position.distance_to(_next_path_point) > 150:
 		$Rays/Velocity.look_at(_next_path_point)
 		_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 		return
