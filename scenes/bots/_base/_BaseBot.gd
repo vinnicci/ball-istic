@@ -59,7 +59,6 @@ onready var _body_texture: = $Body/Texture
 onready var _body_charge_effect: = $Body/ChargeEffect
 onready var _body_weapon_hatch: = $Body/WeaponHatch
 onready var _switch_tween: = $Body/SwitchTween
-onready var _body_tween: = $Body/BodyTween
 onready var bar_shield: = $Bars/Shield
 onready var bar_health: = $Bars/Health
 onready var _timer_charge_cooldown: = $Timers/ChargeCooldown
@@ -350,9 +349,9 @@ func _apply_rolling_effects(delta: float) -> void:
 			_body_texture.texture_offset.y += bot_radius
 		while _body_texture.texture_offset.y > bot_radius:
 			_body_texture.texture_offset.y -= bot_radius
-		_body_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
+		_switch_tween.interpolate_property(_body_texture, "texture_offset", _body_texture.texture_offset,
 			Vector2(0,0), 0.25, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-		_body_tween.start()
+		_switch_tween.start()
 		_unrolled = true
 	elif _check_if_turret() == false:
 		_body_texture.texture_offset -= linear_velocity.rotated(-rotation) * (ROLLING_SPEED * delta)
@@ -465,8 +464,8 @@ func change_weapon(slot_num: int) -> bool:
 #charge strength depends on speed and force multiplier
 func charge_roll(charge_direction: float) -> void:
 	if state == State.ROLL && is_charge_roll_ready() == true:
-		$StateMachine.charge_roll = charge_direction
-		_apply_charge_impulse($StateMachine.charge_roll)
+		$StateMachine.charge_dir = charge_direction
+		_apply_charge_impulse($StateMachine.charge_dir)
 
 
 func _apply_charge_impulse(dir: float) -> void:
@@ -500,7 +499,7 @@ func _end_charging_effect() -> void:
 				_body_outline.modulate = current_faction
 				_body_charge_effect.modulate.a = 0
 				$Timers/ChargeTrail.stop()
-				$StateMachine.charge_roll = null
+				$StateMachine.charge_dir = null
 
 
 #coroutine resume signal
@@ -551,15 +550,6 @@ func discharge_parry() -> void:
 		match state:
 			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
 				_clear_surrounding_proj()
-#				var rad: float = $DischargeRadius/CollisionShape2D.shape.radius/DEFAULT_BOT_RADIUS
-				_body_charge_effect.modulate.a = 0.5
-				_body_tween.interpolate_property(_body_charge_effect, "scale",
-					_body_charge_effect.scale, Vector2(6, 6), 0.15, Tween.TRANS_LINEAR,
-					Tween.EASE_IN_OUT)
-				_body_tween.interpolate_property(_body_charge_effect, "modulate",
-					_body_charge_effect.modulate, Color(1,1,1,0), 0.15, Tween.TRANS_LINEAR,
-					Tween.EASE_IN_OUT)
-				_body_tween.start()
 				_body_charge_effect.get_node("Anim").play("discharge_parry")
 				$Sounds/DischargeParry.play()
 				timer_discharge_parry.start()

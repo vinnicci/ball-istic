@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://levels proper/0_tutorial/PlayerTut.gd" type="Script" id=1]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://levels proper/0_tutorial/TutBlasterProj.tscn" type="PackedScene" id=3]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.25
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
 [node name="PlayerTut" instance=ExtResource( 2 )]
+physics_material_override = SubResource( 1 )
 script = ExtResource( 1 )
 shield_cap = 25.0
 shield_regen = 5.0
@@ -18,7 +23,7 @@ charge_force_mult = 0.8
 weap_dmg_rate = 1.5
 
 [node name="CollisionShape" parent="." index="9"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="BuiltInAutoBlaster" parent="Weapons" index="0"]
 Projectile = ExtResource( 3 )

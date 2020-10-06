@@ -112,13 +112,25 @@ func _get_new_target_enemy() -> void:
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is in line of sight
+	if (potential_enemy is Global.CLASS_LEVEL_OBJECT ||
+		potential_enemy is Global.CLASS_RIGID_OBJECT ||
+		potential_enemy == null):
+		_enemies.erase(bot)
+		_enemies.append(bot)
+		return
 	if potential_enemy == bot:
 		engage(potential_enemy)
 	#if target bot is blocked by another enemy bot,
 	#engage the blocking bot instead
 	elif (potential_enemy is Global.CLASS_BOT &&
 		potential_enemy.current_faction != _parent_node.current_faction):
-		engage(potential_enemy)
+		if (potential_enemy is Global.CLASS_PLAYER ||
+			potential_enemy.has_node("AI") == true):
+			engage(potential_enemy)
+
+
+func _on_GetEnemy_timeout() -> void:
+	pass
 
 
 func engage(bot) -> void:
@@ -368,14 +380,22 @@ func task_shoot_enemy(task):
 		task.failed()
 		return
 	var ray_collider = $Rays/Target.get_collider()
-	if (_parent_node.state != Global.CLASS_BOT.State.STUN &&
-		(ray_collider is Global.CLASS_LEVEL_OBJECT ||
-		ray_collider is Global.CLASS_RIGID_OBJECT) == false):
+	if _valid_shooting_target(ray_collider) == true:
 		$Rays/Target.look_at(_enemy.global_position)
 		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 		_parent_node.shoot_weapon()
 	task.succeed()
 	return
+
+
+func _valid_shooting_target(ray_collider) -> bool:
+	#ai can only shoot when
+	#not stunned & aiming at the enemy
+	return (_parent_node.state != Global.CLASS_BOT.State.STUN &&
+		((ray_collider is Global.CLASS_LEVEL_OBJECT == false ||
+		ray_collider is Global.CLASS_RIGID_OBJECT == false) &&
+		(ray_collider is Global.CLASS_BOT &&
+		ray_collider.current_faction != _parent_node.current_faction)))
 
 
 ####################

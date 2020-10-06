@@ -36,6 +36,7 @@ anims/fading = SubResource( 1 )
 
 [node name="Label" parent="AccessUI" index="0"]
 text = "VAULT
-STORE YOUR EQUIPMENT HERE"
+EQUIPMENT STORAGE
+ACCESSIBLE EVERYWHERE"
 
 [node name="Items" type="Node2D" parent="." index="5"]

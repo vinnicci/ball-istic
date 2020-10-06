@@ -36,7 +36,6 @@ anims/fading = SubResource( 1 )
 
 [node name="Label" parent="AccessUI" index="0"]
 text = "DEPOT
-FOR YOUR EQUIPMENT NEEDS
 PROVIDED BY BALLS & BALLISTICS TECHNOLOGIES"
 
 [node name="Items" type="Node2D" parent="." index="5"]

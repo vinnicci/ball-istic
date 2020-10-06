@@ -15,7 +15,7 @@ var _st_dead = Global.CLASS_BOT.State.DEAD
 var _bot: Node
 var before_stun
 var switching: bool
-var charge_roll = null
+var charge_dir = null
 
 
 func set_bot(bot_node) -> void:
@@ -68,7 +68,7 @@ func task_roll_process(task):
 		_bot.state = _st_to_turret
 		task.succeed()
 		return
-	if charge_roll != null:
+	if charge_dir != null:
 		_bot.state = _st_charge_roll
 		task.succeed()
 		return
@@ -127,7 +127,7 @@ func task_charge_roll_process(task):
 		_bot.state = _st_dead
 		task.succeed()
 		return
-	if charge_roll == null:
+	if charge_dir == null:
 		_bot.state = _st_roll
 		task.succeed()
 		return

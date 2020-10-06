@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -18,6 +18,8 @@
 [ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=18]
+[ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=19]
+[ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=20]
 
 [node name="Hub" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
@@ -42,7 +44,6 @@ rotation = -1.5708
 position = Vector2( -64, 1798 )
 rotation = 1.5708
 position_node = "Pos2"
-disp_name = "To Area 1-2"
 
 [node name="Pos1" type="Position2D" parent="Access" index="1"]
 position = Vector2( -58, 1357 )
@@ -51,7 +52,6 @@ position = Vector2( -58, 1357 )
 position = Vector2( -2430, -1343 )
 rotation = -3.14159
 position_node = "Pos1"
-disp_name = "To Area 1-3"
 
 [node name="Pos2" type="Position2D" parent="Access" index="3"]
 position = Vector2( -1887, -1338 )
@@ -60,7 +60,6 @@ position = Vector2( -1887, -1338 )
 position = Vector2( 1718, 1592 )
 rotation = 0.785398
 position_node = "Pos1"
-disp_name = "To Area 2-1"
 
 [node name="Pos3" type="Position2D" parent="Access" index="5"]
 position = Vector2( 1405, 1267 )
@@ -68,7 +67,6 @@ position = Vector2( 1405, 1267 )
 [node name="Area3-1" parent="Access" index="6" instance=ExtResource( 3 )]
 position = Vector2( 2304, -1344 )
 position_node = "Pos1"
-disp_name = "To Area 3-1"
 
 [node name="Pos4" type="Position2D" parent="Access" index="7"]
 position = Vector2( 1761, -1344 )
@@ -82,15 +80,21 @@ position = Vector2( 190, -446 )
 [node name="Depot" parent="Access" index="10" instance=ExtResource( 13 )]
 position = Vector2( -584, -926 )
 
-[node name="Shotgun" parent="Access/Depot/Items" index="0" instance=ExtResource( 15 )]
+[node name="RepairNanobots" parent="Access/Depot/Items" index="0" instance=ExtResource( 19 )]
 
-[node name="WeapDmgRateI" parent="Access/Depot/Items" index="1" instance=ExtResource( 16 )]
+[node name="ShieldRecharger" parent="Access/Depot/Items" index="1" instance=ExtResource( 20 )]
 
-[node name="SpeedI" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
+[node name="Shotgun" parent="Access/Depot/Items" index="2" instance=ExtResource( 15 )]
 
-[node name="ChargeDmgRateI" parent="Access/Depot/Items" index="3" instance=ExtResource( 17 )]
+[node name="TransformSpeedI" parent="Access/Depot/Items" index="3" instance=ExtResource( 18 )]
 
-[node name="TransformSpeedI" parent="Access/Depot/Items" index="4" instance=ExtResource( 18 )]
+[node name="TransformSpeedI2" parent="Access/Depot/Items" index="4" instance=ExtResource( 18 )]
+
+[node name="WeapDmgRateI" parent="Access/Depot/Items" index="5" instance=ExtResource( 16 )]
+
+[node name="ChargeDmgRateI" parent="Access/Depot/Items" index="6" instance=ExtResource( 17 )]
+
+[node name="SpeedI" parent="Access/Depot/Items" index="7" instance=ExtResource( 14 )]
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -1000, -1570 )
