@@ -129,10 +129,6 @@ func _get_new_target_enemy() -> void:
 			engage(potential_enemy)
 
 
-func _on_GetEnemy_timeout() -> void:
-	pass
-
-
 func engage(bot) -> void:
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
@@ -159,7 +155,8 @@ func _seek(target: Global.CLASS_BOT) -> void:
 	if (_path_points.size() == 0 ||
 		target.global_position.distance_to(_path_points.back()) > 250):
 		_get_path_points(global_position, target.global_position)
-	if global_position.distance_to(_next_path_point) > 150:
+	var seek_dist_min: int = 150
+	if global_position.distance_to(_next_path_point) > seek_dist_min:
 		$Rays/Velocity.look_at(_next_path_point)
 		_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 		return
@@ -392,8 +389,9 @@ func _valid_shooting_target(ray_collider) -> bool:
 	#ai can only shoot when
 	#not stunned & aiming at the enemy
 	return (_parent_node.state != Global.CLASS_BOT.State.STUN &&
-		((ray_collider is Global.CLASS_LEVEL_OBJECT == false ||
-		ray_collider is Global.CLASS_RIGID_OBJECT == false) &&
+		(ray_collider != null &&
+		((ray_collider is Global.CLASS_LEVEL_OBJECT ||
+		ray_collider is Global.CLASS_RIGID_OBJECT) == false) &&
 		(ray_collider is Global.CLASS_BOT &&
 		ray_collider.current_faction != _parent_node.current_faction)))
 

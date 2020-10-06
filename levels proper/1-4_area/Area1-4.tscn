@@ -12,14 +12,14 @@
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=11]
 [ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=12]
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 25, 25 )
 
 [node name="Area1-4" instance=ExtResource( 2 )]
@@ -67,86 +67,62 @@ position = Vector2( 56, -64 )
 rotation = 1.5708
 
 [node name="Door2" parent="Doors" index="1" instance=ExtResource( 9 )]
-position = Vector2( -1278, 2538 )
+position = Vector2( -1280, 2538 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="Door3" parent="Doors" index="2" instance=ExtResource( 9 )]
-position = Vector2( -1278, 5014 )
+position = Vector2( -1280, 5014 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="PulseMineLauncherProj" parent="Bots" index="0" instance=ExtResource( 1 )]
 position = Vector2( -1036, 491 )
-collision_mask = 3
-physics_material_override = SubResource( 3 )
-contacts_reported = 1
-contact_monitor = true
-bot_radius = 20
-shield_cap = 0.0
-shield_regen = 0.0
-health_cap = 5.0
-charge_cooldown = 2.0
+physics_material_override = SubResource( 1 )
 
 [node name="PulseMineLauncherProj2" parent="Bots" index="1" instance=ExtResource( 1 )]
 position = Vector2( -955, 984 )
-collision_mask = 3
-physics_material_override = SubResource( 3 )
-contacts_reported = 1
-contact_monitor = true
-bot_radius = 20
-shield_cap = 0.0
-shield_regen = 0.0
-health_cap = 5.0
-charge_cooldown = 2.0
+physics_material_override = SubResource( 1 )
 
 [node name="PulseMineLauncherProj3" parent="Bots" index="2" instance=ExtResource( 1 )]
 position = Vector2( -884, 1526 )
-collision_mask = 3
-physics_material_override = SubResource( 3 )
-contacts_reported = 1
-contact_monitor = true
-bot_radius = 20
-shield_cap = 0.0
-shield_regen = 0.0
-health_cap = 5.0
-charge_cooldown = 2.0
+physics_material_override = SubResource( 1 )
 
 [node name="SniperBot" parent="Bots" index="3" instance=ExtResource( 5 )]
 position = Vector2( -175, 1169 )
 rotation = -1.5708
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 deployed = true
 
 [node name="SniperBot2" parent="Bots" index="4" instance=ExtResource( 5 )]
 position = Vector2( -589, 982 )
 rotation = -1.5708
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 deployed = true
 
 [node name="HeavyFighter" parent="Bots" index="5" instance=ExtResource( 11 )]
 position = Vector2( -1870, 3177 )
 rotation = -1.47477
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 30.0
 health_cap = 45.0
 respawnable = false
 
 [node name="HeavyFighter3" parent="Bots" index="6" instance=ExtResource( 11 )]
 position = Vector2( -1683, 3768 )
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 30.0
 health_cap = 45.0
 
 [node name="HeavyFighter2" parent="Bots" index="7" instance=ExtResource( 11 )]
 position = Vector2( -684, 3196 )
 rotation = -1.81139
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 30.0
 health_cap = 45.0
 
 [node name="HeavyFighter4" parent="Bots" index="8" instance=ExtResource( 11 )]
 position = Vector2( -867, 4287 )
 rotation = -3.14159
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 30.0
 health_cap = 45.0
 respawnable = false
@@ -154,7 +130,7 @@ respawnable = false
 [node name="SniperBigBot" parent="Bots" index="9" instance=ExtResource( 8 )]
 position = Vector2( -1282, 4729 )
 rotation = -1.5708
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 50.0
 health_cap = 100.0
 weap_dmg_rate = 0.75
@@ -163,7 +139,7 @@ deployed = true
 
 [node name="MadMoose" parent="Bots" index="10" instance=ExtResource( 10 )]
 position = Vector2( -2562, 251 )
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 1 )
 shield_cap = 75.0
 health_cap = 75.0
 speed = 1800
@@ -176,7 +152,7 @@ faction = Color( 0, 1, 0, 1 )
 modulate = Color( 0.94902, 0.176471, 0.541176, 1 )
 
 [node name="CollisionShape" parent="Bots/MadMoose" index="8"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Label" parent="Bots/MadMoose/Name" index="0"]
 margin_bottom = 52.0
@@ -186,7 +162,7 @@ text = "MAD MOOSE"
 position = Vector2( -2058, 257 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Follow" index="0"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="ParallaxBG" parent="." index="6" instance=ExtResource( 12 )]
 [connection signal="body_entered" from="Follow" to="." method="_on_Follow_body_entered"]

@@ -18,14 +18,20 @@ func _ready() -> void:
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
 			_player_faction = _player.current_faction
-		bot.set_level(self)
-		bot.connect("dead", self, "_on_bot_dead", [bot])
-		if bot.has_node("AI") == true:
-			bot.get_node("AI").connect("engaged", self, "_on_bot_engaged", [bot])
+		add_bot(bot)
 	for access in $Access.get_children():
 		if access is Global.DEPOT || access is Global.VAULT:
 			access.set_level(self)
 	open_doors()
+
+
+func add_bot(bot: Node) -> void:
+	bot.set_level(self)
+	bot.connect("dead", self, "_on_bot_dead", [bot])
+	if bot.has_node("AI") == true:
+		bot.get_node("AI").connect("engaged", self, "_on_bot_engaged", [bot])
+	if $Bots.get_children().has(bot) == false:
+		$Bots.add_child(bot)
 
 
 var _doors_open: bool

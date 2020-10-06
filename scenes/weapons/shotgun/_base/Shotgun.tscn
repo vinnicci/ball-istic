@@ -29,6 +29,7 @@ color_ramp = SubResource( 2 )
 [node name="Shotgun" instance=ExtResource( 1 )]
 heat_cap = 9.1
 shoot_cooldown = 0.5
+crit_mult = 1.5
 crit_chance = 0.25
 proj_count_per_shot = 6
 spread = 10.0

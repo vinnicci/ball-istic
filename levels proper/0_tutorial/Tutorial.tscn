@@ -137,7 +137,6 @@ wait_time = 5.0
 position = Vector2( -2612, 192 )
 rotation = 3.14159
 position_node = "Pos1"
-disp_name = "To Area 1-1"
 
 [node name="Pos1" type="Position2D" parent="Access" index="5"]
 position = Vector2( -2333, 192 )
@@ -195,8 +194,12 @@ shape = SubResource( 5 )
 [node name="AutoBlaster" parent="Bots/DummyC/Weapons" index="0" instance=ExtResource( 22 )]
 Projectile = ExtResource( 12 )
 heat_per_shot = 0.0
+shoot_cooldown = 0.05
 crit_mult = 2.0
 crit_chance = 0.1
+proj_count_per_shot = 2
+spread = 15.0
+recoil = 0
 
 [node name="AI" parent="Bots/DummyC" index="12" instance=ExtResource( 19 )]
 enemy_seek_dist = 900

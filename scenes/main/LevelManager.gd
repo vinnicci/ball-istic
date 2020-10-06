@@ -13,7 +13,8 @@ var scenes: Dictionary = {
 	"Area1-3": preload("res://levels proper/1-3_area/Area1-3.tscn"),
 	"Area1-4": preload("res://levels proper/1-4_area/Area1-4.tscn"),
 	"Secret1-2": preload("res://levels proper/1-2_secret/Secret1-2.tscn"),
-	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn")
+	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn"),
+	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],

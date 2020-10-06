@@ -16,11 +16,13 @@ func set_parent(new_parent) -> void:
 func _process(delta: float) -> void:
 	if _parent_node is Global.CLASS_PLAYER:
 		if (_parent_node.current_weapon == self &&
-			_parent_node.state == Global.CLASS_BOT.State.TURRET &&
+			(_parent_node.state == Global.CLASS_BOT.State.TURRET ||
+			_parent_node.state == Global.CLASS_BOT.State.TO_TURRET) &&
 			_camera.zoom == ZOOMED_NORM):
-				_animate_zoom(true)
+			_animate_zoom(true)
 		elif ((_parent_node.current_weapon != self ||
-			_parent_node.state != Global.CLASS_BOT.State.TURRET) &&
+			(_parent_node.state != Global.CLASS_BOT.State.TURRET &&
+			_parent_node.state != Global.CLASS_BOT.State.TO_TURRET)) &&
 			_camera.zoom == ZOOMED_OUT):
 			_animate_zoom(false)
 

@@ -4,6 +4,6 @@
 
 [node name="ShotgunProj" instance=ExtResource( 1 )]
 speed = 800
-damage = 2.0
+damage = 4.0
 proj_range = 700
-knockback = 85
+knockback = 90
