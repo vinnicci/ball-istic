@@ -38,7 +38,7 @@ spread = 5.0
 recoil = 25
 cam_shake_intensity = 5.0
 burst_count = 35
-charge_timer = 2.0
+charge_timer = 1.5
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )

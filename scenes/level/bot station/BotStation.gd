@@ -1,7 +1,7 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
-signal autosaved
+signal spawn_saved
 
 
 func _on_Access_body_entered(body: Node) -> void:
@@ -12,7 +12,7 @@ func _on_Access_body_entered(body: Node) -> void:
 		$Sprite.modulate.a = 1.0
 		body.ui_inventory.accessing = "bot_station"
 		body.update_player_vars()
-		emit_signal("autosaved")
+		emit_signal("spawn_saved")
 
 
 func _on_Access_body_exited(body: Node) -> void:

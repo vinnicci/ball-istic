@@ -39,7 +39,6 @@ spread = 20.0
 recoil = 50
 cam_shake_intensity = 8.0
 burst_count = 25
-burst_timer = 0.02
 charge_timer = 2.0
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]

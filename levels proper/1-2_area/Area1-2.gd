@@ -2,8 +2,8 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
 onready var _allies: Array = [
-	$Bots/Fighter, $Bots/Fighter2, $Bots/Fighter3, $Bots/Charger,
-	$Bots/Charger2, $Bots/Charger3, $Bots/Fighter4, $Bots/Fighter5
+	$Bots/Fighter, $Bots/Fighter2, $Bots/Charger,
+	$Bots/Charger2, $Bots/Charger3, $Bots/Charger4
 ]
 
 

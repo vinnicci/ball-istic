@@ -49,9 +49,9 @@ shape = SubResource( 1 )
 visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
-explosion_radius = 50
+explosion_radius = 75
 knockback = 850
-stun_time = 2.0
+stun_time = 5.0
 
 [node name="Particles2D" parent="Explosion" index="2"]
 process_material = SubResource( 4 )

@@ -27,7 +27,7 @@ scale_random = 0.5
 color_ramp = SubResource( 2 )
 
 [node name="Scattershot" instance=ExtResource( 1 )]
-heat_cap = 7.1
+heat_cap = 5.1
 shoot_cooldown = 0.5
 crit_chance = 0.3
 proj_count_per_shot = 12

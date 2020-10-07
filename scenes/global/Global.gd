@@ -22,6 +22,7 @@ const BOT_STATION: = preload("res://scenes/level/bot station/BotStation.gd")
 const DEPOT: = preload("res://scenes/level/depot/Depot.gd")
 const VAULT: = preload("res://scenes/level/vault/Vault.gd")
 const NEXT_ZONE: = preload("res://scenes/level/next zone/NextZone.gd")
+const KEY: = preload("res://scenes/level/key/Key.gd")
 
 const CLASS_SAVE: = preload("res://scenes/global/save files/SaveFile.gd")
 

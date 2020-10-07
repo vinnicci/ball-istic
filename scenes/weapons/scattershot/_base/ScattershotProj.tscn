@@ -4,6 +4,6 @@
 
 [node name="ScattershotProj" instance=ExtResource( 1 )]
 speed = 900
-damage = 3.0
+damage = 6.0
 proj_range = 800
 knockback = 100

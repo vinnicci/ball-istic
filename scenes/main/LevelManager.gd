@@ -14,13 +14,16 @@ var scenes: Dictionary = {
 	"Area1-4": preload("res://levels proper/1-4_area/Area1-4.tscn"),
 	"Secret1-2": preload("res://levels proper/1-2_secret/Secret1-2.tscn"),
 	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn"),
-	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn")
+	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn"),
+	"AreaFinal": preload("res://levels proper/1_area_final/AreaFinal.tscn"),
+	"Secret1-3": preload("res://levels proper/1-3_secret/Secret1-3.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
+	"Spawn": {}, #value -> Lvl: lvl name, Pos: level coords
+	"Keys": [] # lvlname + key name
 }
 var _saved_big_bots: Dictionary #key: lvl name + bot name, value: is_alive
 var _saved_depot_items: Dictionary #key: lvl name + depot name, value: arr_items
@@ -146,6 +149,8 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_connect_big_bots(_current_scene)
 	_load_depot_items(_current_scene)
 	_load_vault_items(_current_scene)
+	_load_keys(_current_scene)
+	_set_info(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
 	player.position = _current_scene.get_node("Access/" + str(pos)).position
 	add_child(_current_scene)
@@ -157,10 +162,13 @@ func _connect_access(lvl: Node) -> void:
 	for access in lvl.get_node("Access").get_children():
 		match access.get_script():
 			Global.BOT_STATION:
-				access.connect("autosaved", self, "_save_player_spawn",
+				access.connect("spawn_saved", self, "on_player_spawn_saved",
 					[lvl.name, access.name])
 			Global.NEXT_ZONE:
 				access.connect("moved", self, "on_change_scene")
+			Global.KEY:
+				access.connect("key_obtained", self, "on_key_obtained",
+					[lvl.name + access.name])
 
 
 func _connect_big_bots(lvl: Node) -> void:
@@ -176,23 +184,6 @@ func _connect_big_bots(lvl: Node) -> void:
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
 
 
-var _temp_big_bots: Dictionary = {}
-
-
-func _on_big_bot_dead(lvl, bot) -> void:
-	if (is_instance_valid(_player) == false ||
-		_player.state == Global.CLASS_BOT.State.DEAD):
-		return
-	_temp_big_bots[lvl + bot] = false
-	$Anim.play("big_bot_destroyed")
-
-
-func _save_big_bots() -> void:
-	for key in _temp_big_bots.keys():
-		_saved_big_bots[key] = _temp_big_bots[key]
-	_temp_big_bots = {}
-
-
 func _on_Anim_animation_finished(anim_name: String) -> void:
 	match anim_name:
 		"transition":
@@ -204,6 +195,56 @@ func _resume(player) -> void:
 	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
 	if player_charge_time > 0:
 		player.update_bar_charge_level(player_charge_time)
+
+
+########################################
+# levels that need access to saved info
+########################################
+const LVL_HUB: = preload("res://levels proper/0_hub/Hub.gd")
+
+
+func _set_info(lvl):
+	if lvl is LVL_HUB:
+		lvl.set_keys(_saved_player["Keys"])
+
+
+#######
+# keys
+#######
+func on_key_obtained(key_name: String) -> void:
+	if _saved_player["Keys"].has(key_name) == false:
+		_saved_player["Keys"].append(key_name)
+		$CanvasLayer/StatusLabel.text = "KEY OBTAINED"
+	if $Anim.is_playing() == false:
+		$Anim.play("key_obtained")
+
+
+func _load_keys(lvl) -> void:
+	for access in lvl.get_node("Access").get_children():
+		if access is Global.KEY:
+			var key_name: String = lvl.name + access.name
+			if _saved_player["Keys"].has(key_name) == true:
+				access.queue_free()
+
+
+###########
+# big bots
+###########
+var _temp_big_bots: Dictionary = {}
+
+
+func _on_big_bot_dead(lvl, bot) -> void:
+	if (is_instance_valid(_player) == false ||
+		_player.state == Global.CLASS_BOT.State.DEAD):
+		return
+	_temp_big_bots[lvl + bot] = false
+	$Anim.play("white_flash")
+
+
+func _save_big_bots() -> void:
+	for key in _temp_big_bots.keys():
+		_saved_big_bots[key] = _temp_big_bots[key]
+	_temp_big_bots = {}
 
 
 #############
@@ -290,7 +331,7 @@ func _load_player_items() -> void:
 ###############
 # player spawn
 ###############
-func _save_player_spawn(lvl: String, pos: String) -> void:
+func on_player_spawn_saved(lvl: String, pos: String) -> void:
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
 	_saved_player["Spawn"]["Pos"] = pos
@@ -356,6 +397,7 @@ func _on_player_dead() -> void:
 	_save_vault_items(_current_scene)
 	_save_depot_items(_current_scene)
 	$RespawnTimer.start()
+	$CanvasLayer/StatusLabel.text = "DESTROYED"
 	$Anim.play("destroyed")
 
 

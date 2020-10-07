@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -20,6 +20,11 @@
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=20]
+[ext_resource path="res://levels proper/0_hub/MainDoor.gd" type="Script" id=21]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=22]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 400, 100 )
 
 [node name="Hub" instance=ExtResource( 1 )]
 script = ExtResource( 4 )
@@ -96,6 +101,11 @@ position = Vector2( -584, -926 )
 
 [node name="SpeedI" parent="Access/Depot/Items" index="7" instance=ExtResource( 14 )]
 
+[node name="MainDoor" parent="Doors" index="0" instance=ExtResource( 7 )]
+position = Vector2( -64, -1972 )
+scale = Vector2( 2, 2 )
+script = ExtResource( 21 )
+
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -1000, -1570 )
 faction = Color( 0, 1, 0, 1 )
@@ -158,5 +168,29 @@ deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 6 )]
+
+[node name="KeysDisplay" type="Area2D" parent="." index="6"]
+position = Vector2( -64, -1722 )
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KeysDisplay" index="0"]
+shape = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="7"]
+
+[node name="KeysDisp" type="Label" parent="CanvasLayer" index="0"]
+visible = false
+margin_left = 30.0
+margin_top = 95.0
+margin_right = 150.0
+margin_bottom = 128.0
+custom_fonts/font = ExtResource( 22 )
+text = "KEYS FOUND: N/3"
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="body_entered" from="KeysDisplay" to="." method="_on_KeysDisplay_body_entered"]
+[connection signal="body_exited" from="KeysDisplay" to="." method="_on_KeysDisplay_body_exited"]
 
 [editable path="Access/Depot"]
