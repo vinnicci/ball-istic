@@ -13,6 +13,12 @@ var _master: Global.CLASS_BOT = null
 var _path_points: Array
 var _next_path_point
 var _flee_routes: Dictionary
+var _current_act
+enum ACTION {
+	SEEK_ENEMY
+	SEEK_MASTER
+	FLEE
+}
 var _parent_node: Global.CLASS_BOT
 var _level_node: Node
 

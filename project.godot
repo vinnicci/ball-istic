@@ -140,6 +140,11 @@ weap_slot_4={
  ]
 }
 
+[network]
+
+limits/websocket_server/max_in_buffer_kb=4096
+limits/websocket_server/max_out_buffer_kb=4096
+
 [physics]
 
 2d/default_gravity_vector=Vector2( 0, 0 )
