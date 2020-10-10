@@ -10,7 +10,7 @@
 [ext_resource path="res://levels proper/1-2_checkpoint/Checkpoint1-2.gd" type="Script" id=8]
 [ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceI.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/passives/weapon heat capacity/WeaponHeatCapacityI.tscn" type="PackedScene" id=12]
 [ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=14]
@@ -50,15 +50,15 @@ heat_dissipation = 9.4
 
 [node name="ChargeForceI" parent="Access/Depot/Items" index="1" instance=ExtResource( 10 )]
 
-[node name="KnockbackResistII" parent="Access/Depot/Items" index="2" instance=ExtResource( 11 )]
+[node name="WeaponHeatCapacityI" parent="Access/Depot/Items" index="2" instance=ExtResource( 12 )]
 
-[node name="WeaponHeatCapacityI" parent="Access/Depot/Items" index="3" instance=ExtResource( 12 )]
+[node name="ShieldRegenI" parent="Access/Depot/Items" index="3" instance=ExtResource( 15 )]
 
-[node name="ShieldRegenI" parent="Access/Depot/Items" index="4" instance=ExtResource( 15 )]
+[node name="SpeedI" parent="Access/Depot/Items" index="4" instance=ExtResource( 14 )]
 
-[node name="SpeedI" parent="Access/Depot/Items" index="5" instance=ExtResource( 14 )]
+[node name="TransformSpeedI" parent="Access/Depot/Items" index="5" instance=ExtResource( 16 )]
 
-[node name="TransformSpeedI" parent="Access/Depot/Items" index="6" instance=ExtResource( 16 )]
+[node name="KnockbackResistI" parent="Access/Depot/Items" index="6" instance=ExtResource( 11 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 6 )]
 position = Vector2( 1342, 705 )
