@@ -206,8 +206,8 @@ func animate_transform(transform_speed: float, visibility: bool) -> void:
 # all the firing modes
 ######################
 func fire() -> void:
-	if (_timer_shoot_cooldown.is_stopped() == false || _is_overheating == true ||
-		_parent_node.state != Global.CLASS_BOT.State.TURRET):
+	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true:
+#		_parent_node.state != Global.CLASS_BOT.State.TURRET):
 		return
 	_timer_shoot_cooldown.start()
 	$Muzzle/MuzzleParticles.emitting = true
@@ -344,8 +344,8 @@ onready var _timer_charge_cooldown = $Timers/ChargeCooldown
 
 
 func _fire_charged() -> void:
-	if (_is_overheating == true || _parent_node.state != Global.CLASS_BOT.State.TURRET ||
-		_timer_charge_cooldown.is_stopped() == false):
+	if _is_overheating == true || _timer_charge_cooldown.is_stopped() == false:
+#		_parent_node.state != Global.CLASS_BOT.State.TURRET):
 		_cancel_charge()
 		return
 	if current_heat == current_heat_cap:
@@ -370,8 +370,9 @@ func _fire_charged() -> void:
 
 
 func _charge_fire() -> void:
-	if _parent_node.state != Global.CLASS_BOT.State.TURRET:
-		return
+#	if _parent_node.state != Global.CLASS_BOT.State.TURRET:
+#		return
+	pass
 
 
 func _on_ChargeCancelTimer_timeout() -> void:

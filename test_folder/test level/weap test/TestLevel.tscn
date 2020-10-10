@@ -1,7 +1,7 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/weapons/sniper/PulseSniper.tscn" type="PackedScene" id=5]
@@ -12,17 +12,16 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/weapons/cannon/PulseCannon.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterHoming.tscn" type="PackedScene" id=16]
-[ext_resource path="res://test_folder/test level/weap test/Dummy.gd" type="Script" id=17]
+[ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/bots/charger/ChargerBig.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=24]
 [ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=27]
@@ -57,22 +56,28 @@ position = Vector2( 323, -190 )
 [node name="ChargeForceIII" parent="Access/Depot/Items" index="3" instance=ExtResource( 27 )]
 
 [node name="Shotgun" parent="Access/Depot/Items" index="4" instance=ExtResource( 3 )]
+z_index = 1
+crit_mult = 1.5
+crit_chance = 0.25
 
 [node name="Scattershot" parent="Access/Depot/Items" index="5" instance=ExtResource( 4 )]
 
 [node name="PulseSniper" parent="Access/Depot/Items" index="6" instance=ExtResource( 5 )]
+crit_mult = 5.0
 
 [node name="AutoBlasterHoming" parent="Access/Depot/Items" index="7" instance=ExtResource( 16 )]
+crit_chance = 0.3
 
 [node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="8" instance=ExtResource( 20 )]
+crit_chance = 0.3
 
 [node name="BarrageEcoGuided" parent="Access/Depot/Items" index="9" instance=ExtResource( 28 )]
 
 [node name="Incinerator" parent="Access/Depot/Items" index="10" instance=ExtResource( 29 )]
 
-[node name="Siren" parent="Access/Depot/Items" index="11" instance=ExtResource( 30 )]
+[node name="Phaser" parent="Access/Depot/Items" index="11" instance=ExtResource( 21 )]
 
-[node name="Phaser" parent="Access/Depot/Items" index="12" instance=ExtResource( 21 )]
+[node name="Siren" parent="Access/Depot/Items" index="12" instance=ExtResource( 30 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -103,34 +108,20 @@ position = Vector2( 1400, 1600 )
 rotation = 1.5708
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
-position = Vector2( 1244, 2108 )
+position = Vector2( -13, 1198 )
 speed = 1500
 destructible = false
 
-[node name="Dummy" parent="Bots" index="1" instance=ExtResource( 2 )]
-position = Vector2( 244, 195 )
-script = ExtResource( 17 )
-speed = 1500
-charge_cooldown = 1.0
-charge_force_mult = 0.85
-charge_dmg_rate = 0.05
-faction = Color( 0, 1, 0, 1 )
+[node name="Slasher" parent="Bots" index="1" instance=ExtResource( 2 )]
+position = Vector2( 3164, 1954 )
 
-[node name="AI" parent="Bots/Dummy" index="12" instance=ExtResource( 13 )]
+[node name="Balladin" parent="Bots" index="2" instance=ExtResource( 13 )]
+position = Vector2( -1283, 3578 )
 
-[node name="ChargerBig" parent="Bots" index="2" instance=ExtResource( 23 )]
-position = Vector2( 470, 37 )
-speed = 3500
-charge_force_mult = 0.8
-faction = Color( 0, 1, 0, 1 )
+[node name="Dummy" parent="Bots" index="3" instance=ExtResource( 17 )]
+position = Vector2( 905, 1708 )
 
-[node name="ChargerBig2" parent="Bots" index="3" instance=ExtResource( 23 )]
-position = Vector2( -653, 3154 )
-speed = 3500
-charge_force_mult = 0.8
-
-[node name="BigFSpawner" parent="Bots" index="4" instance=ExtResource( 22 )]
-position = Vector2( 3721, 1804 )
+[node name="AI" parent="Bots/Dummy" index="12" instance=ExtResource( 22 )]
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

@@ -13,10 +13,13 @@ var _master: Global.CLASS_BOT = null
 var _path_points: Array
 var _next_path_point
 var _flee_routes: Dictionary
-var _current_act
-enum ACTION {
-	SEEK_ENEMY
-	SEEK_MASTER
+#enum actions that uses the physics process loop
+var _current_act = Action.NONE
+enum Action {
+	NONE,
+	IDLE,
+	SEEK_ENEMY,
+	SEEK_MASTER,
 	FLEE
 }
 var _parent_node: Global.CLASS_BOT
@@ -28,6 +31,8 @@ func get_enemy():
 
 
 func _ready() -> void:
+	if has_node("BTREE") == false:
+		push_error(_parent_node.name + " AI has no BTREE node. Please attach one.")
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = detection_range
 	$Rays/Target.cast_to = Vector2(detection_range, 0)
@@ -63,9 +68,22 @@ func set_level(level: Node) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if _check_if_valid_bot(_enemy) == false:
+		_get_new_target_enemy()
 	if (_check_if_valid_bot(_enemy) == true &&
 		_parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT):
 		$Rays/Target.look_at(_enemy.global_position)
+	match _current_act:
+		Action.NONE:
+			return
+		Action.IDLE:
+			_parent_node.velocity = Vector2(0,0)
+		Action.SEEK_ENEMY:
+			_seek(_enemy)
+		Action.SEEK_MASTER:
+			_seek(_master)
+		Action.FLEE:
+			_flee()
 
 
 func _process(delta: float) -> void:
@@ -99,7 +117,11 @@ func _get_path_points(start: Vector2, end: Vector2) -> void:
 	_next_path_point = _path_points.pop_front()
 
 
-func _get_distance(start: Vector2, end: Vector2) -> int:
+func _get_distance(start_node: Node, target_node: Node) -> int:
+	if _check_if_valid_bot(target_node) == false:
+		return 0
+	var start: Vector2 = start_node.global_position
+	var end: Vector2 = target_node.global_position
 	var arr: Array = _level_node.get_points(start, end)
 	if arr.size() <= 1:
 		return 0
@@ -138,9 +160,8 @@ func _get_new_target_enemy() -> void:
 func engage(bot) -> void:
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
-	if _enemy != null:
-		if (_get_distance(bot.global_position, global_position) >
-		_get_distance(_enemy.global_position, global_position)):
+	if _check_if_valid_bot(_enemy) != false:
+		if _get_distance(bot, self) > _get_distance(_enemy, self):
 			return
 	_set_enemy(bot)
 
@@ -158,6 +179,8 @@ func _set_enemy(bot) -> void:
 
 
 func _seek(target: Global.CLASS_BOT) -> void:
+	if _check_if_valid_bot(target) == false:
+		return
 	if (_path_points.size() == 0 ||
 		target.global_position.distance_to(_path_points.back()) > 250):
 		_get_path_points(global_position, target.global_position)
@@ -172,6 +195,8 @@ func _seek(target: Global.CLASS_BOT) -> void:
 
 
 func _flee() -> void:
+	if _check_if_valid_bot(_enemy) == false:
+		return
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 
 
@@ -219,60 +244,63 @@ func _erase_enemy(bot: Node) -> void:
 #############
 # enemy found
 #############
-func task_get_enemy(task):
-	_get_new_target_enemy()
-	task.succeed()
-	return
-
-
-func task_is_enemy_instance_valid(task):
+func task_cond_is_enemy_instance_valid(task):
 	if _check_if_valid_bot(_enemy) == false:
-		_enemy = null
 		task.failed()
 	else:
 		task.succeed()
 	return
 
 
-func task_seek_enemy(task):
+func task_act_seek_enemy(task):
+	if _current_act != Action.SEEK_ENEMY:
+		_current_act = Action.SEEK_ENEMY
+	task.succeed()
+	return
+
+
+func task_cond_is_enemy_close(task):
+	if _get_distance(self, _enemy) <= _params_dict[task.get_param(0)]:
+		task.succeed()
+	else:
+		task.failed()
+	return
+
+
+func task_cond_get_enemy_state(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
-	_seek(_enemy)
-	task.succeed()
-	return
-
-
-func task_is_enemy_close(task):
-	if _check_if_valid_bot(_enemy) == false:
-		task.failed()
-	elif (_get_distance(global_position, _enemy.global_position) <=
-		_params_dict[task.get_param(0)]):
+	if _convert_enum(task.get_param(0)) == _enemy.state:
 		task.succeed()
 	else:
 		task.failed()
 	return
 
 
-func task_is_enemy_in_line_of_sight(task):
-	if _check_if_valid_bot(_enemy) == false:
-		task.failed()
-	elif $Rays/Target.get_collider() == _enemy:
-		task.succeed()
-	return
+func _convert_enum(state: String) -> int:
+	var output: int
+	match state:
+		"TURRET": output = Global.CLASS_BOT.State.TURRET
+		"TO_TURRET": output = Global.CLASS_BOT.State.TO_TURRET
+		"ROLL": output = Global.CLASS_BOT.State.ROLL
+		"TO_ROLL": output = Global.CLASS_BOT.State.TO_ROLL
+		"CHARGE_ROLL": output = Global.CLASS_BOT.State.CHARGE_ROLL
+		"WEAP_COMMIT": output = Global.CLASS_BOT.State.WEAP_COMMIT
+		"STUN": output = Global.CLASS_BOT.State.STUN
+		"DEAD": output = Global.CLASS_BOT.State.DEAD
+	return output
 
 
+######
+# idle
+######
 var _paused: bool = false
 signal resume
 
 
-func _on_Resume_timeout() -> void:
-	_paused = false
-	emit_signal("resume")
-
-
 #time based wait task using coroutine
-func task_timed_idle(task):
+func task_act_timed_idle(task):
 	if _paused == true:
 		task.reset()
 		return
@@ -284,8 +312,21 @@ func task_timed_idle(task):
 	return
 
 
-func task_idle(task):
-	_parent_node.velocity = Vector2(0,0)
+func _on_Resume_timeout() -> void:
+	_paused = false
+	emit_signal("resume")
+
+
+func task_act_idle(task):
+	if _current_act != Action.IDLE:
+		_current_act = Action.IDLE
+	task.succeed()
+	return
+
+
+func task_act_none(task):
+	if _current_act != Action.NONE:
+		_current_act = Action.NONE
 	task.succeed()
 	return
 
@@ -293,7 +334,7 @@ func task_idle(task):
 ###########
 # transform
 ###########
-func task_to_roll(task):
+func task_act_to_roll(task):
 	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		task.succeed()
 		return
@@ -301,7 +342,7 @@ func task_to_roll(task):
 		_parent_node.switch_mode()
 
 
-func task_to_turret(task):
+func task_act_to_turret(task):
 	if _parent_node.state == Global.CLASS_BOT.State.TURRET:
 		task.succeed()
 		return
@@ -313,10 +354,7 @@ func task_to_turret(task):
 #############
 # charge roll
 #############
-func task_charge_roll(task):
-	if _check_if_valid_bot(_enemy) == false:
-		task.failed()
-		return
+func task_act_charge_roll(task):
 	match task.get_param(0):
 		"target":
 			if $Rays/Target.get_collider() == _enemy:
@@ -327,7 +365,7 @@ func task_charge_roll(task):
 	return
 
 
-func task_is_charge_ready(task):
+func task_cond_is_charge_ready(task):
 	if _parent_node.is_charge_roll_ready() == true:
 		task.succeed()
 	else:
@@ -338,7 +376,7 @@ func task_is_charge_ready(task):
 #######
 # flee
 #######
-func task_flee(task):
+func task_act_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
 		$FleeEvaluate.stop()
 		task.failed()
@@ -346,7 +384,7 @@ func task_flee(task):
 	if $FleeEvaluate.is_stopped() == true:
 		_on_FleeEvaluate_timeout()
 		$FleeEvaluate.start()
-	_flee()
+	_current_act = Action.FLEE
 	task.succeed()
 	return
 
@@ -354,7 +392,7 @@ func task_flee(task):
 ###############
 # switch weapon
 ###############
-func task_switch_weapon(task):
+func task_act_switch_weapon(task):
 	if _parent_node.change_weapon(task.get_param(0)) == true:
 		task.succeed()
 		return
@@ -363,14 +401,16 @@ func task_switch_weapon(task):
 #################
 # discharge parry
 #################
-func task_parry(task):
-	pass
+func task_act_discharge_parry(task):
+	_parent_node.discharge_parry()
+	task.succeed()
+	return
 
 
 ##############
 # shoot weapon
 ##############
-func task_is_weapon_overheating(task):
+func task_cond_is_weapon_overheating(task):
 	if _parent_node.current_weapon.is_overheating() == true:
 		task.succeed()
 	else:
@@ -378,7 +418,7 @@ func task_is_weapon_overheating(task):
 	return
 
 
-func task_shoot_enemy(task):
+func task_act_shoot_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
@@ -405,31 +445,25 @@ func _valid_shooting_target(ray_collider) -> bool:
 ####################
 # ally/master follow
 ####################
-func task_is_master_instance_valid(task):
+func task_cond_is_master_instance_valid(task):
 	if _check_if_valid_bot(_master) == false:
-		_master = null
 		task.failed()
 	else:
 		task.succeed()
 	return
 
 
-func task_is_master_close(task):
-	if _check_if_valid_bot(_master) == false:
-		task.failed()
-	elif (_get_distance(global_position, _master.global_position) <=
-		_params_dict[task.get_param(0)]):
+func task_cond_is_master_close(task):
+	if _get_distance(self, _master) <= _params_dict[task.get_param(0)]:
 		task.succeed()
 	else:
 		task.failed()
 	return
 
 
-func task_seek_master(task):
-	if _check_if_valid_bot(_master) == false:
-		task.failed()
-		return
-	_seek(_master)
+func task_act_seek_master(task):
+	if _current_act != Action.SEEK_MASTER:
+		_current_act = Action.SEEK_MASTER
 	task.succeed()
 	return
 
@@ -437,7 +471,7 @@ func task_seek_master(task):
 ###############
 # special tasks
 ###############
-func task_special(task):
+func task_act_special(task):
 	_special()
 	task.succeed()
 	return

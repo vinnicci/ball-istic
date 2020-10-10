@@ -4,5 +4,6 @@
 
 [node name="HeavyBlasterProj" instance=ExtResource( 1 )]
 speed = 700
+damage = 2.0
 proj_range = 1000
 knockback = 75

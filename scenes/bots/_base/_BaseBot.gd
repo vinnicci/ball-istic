@@ -20,7 +20,7 @@ export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
-const OUTLINE_SIZE: int = 4
+const OUTLINE_SIZE: int = 5
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: int = 2
 const TURRET_MODE_DAMP: int = 5
@@ -441,7 +441,8 @@ func _on_SwitchTween_tween_all_completed() -> void:
 
 
 func shoot_weapon() -> void:
-	current_weapon.fire()
+	if state == State.TURRET:
+		current_weapon.fire()
 
 
 #some weapon have longer deploy animation -- will use shoot_commit var
@@ -550,7 +551,8 @@ func discharge_parry() -> void:
 		match state:
 			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
 				_clear_surrounding_proj()
-				_body_charge_effect.get_node("Anim").play("discharge_parry")
+				if _body_charge_effect.get_node("Anim").is_playing() == false:
+					_body_charge_effect.get_node("Anim").play("discharge_parry")
 				$Sounds/DischargeParry.play()
 				timer_discharge_parry.start()
 				_timer_charge_cooldown.start()

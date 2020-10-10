@@ -16,6 +16,7 @@ script = ExtResource( 5 )
 speed = 1500
 transform_speed = 0.5
 charge_cooldown = 2.0
+charge_force_mult = 0.65
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.717647, 0.694118, 0.411765, 1 )
