@@ -20,6 +20,7 @@ uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 
 explosion_radius = 300
 damage = 10.0
 knockback = 1000
+stun_time = 5.0
 
 [node name="CollisionShape" parent="." index="9"]
 shape = SubResource( 1 )

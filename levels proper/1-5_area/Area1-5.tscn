@@ -50,8 +50,9 @@ scale = Vector2( 1.5, 1.5 )
 [node name="HeavyFighterBig" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( -6, 1740 )
 shield_cap = 50.0
-health_cap = 500.0
-speed = 1500
+shield_regen = 2.0
+health_cap = 1000.0
+speed = 2000
 respawnable = false
 
 [node name="CollisionShape" parent="Bots/HeavyFighterBig" index="8"]

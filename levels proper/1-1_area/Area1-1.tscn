@@ -62,20 +62,23 @@ position = Vector2( -2368, -376 )
 [node name="Fighter" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( -223, 111 )
 rotation = -0.490438
-health_cap = 15.0
+shield_cap = 7.0
+health_cap = 7.0
 charge_dmg_rate = 0.07
 weap_dmg_rate = 0.5
 deployed = true
 
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 8 )]
 position = Vector2( -1225, -98 )
-health_cap = 15.0
+shield_cap = 7.0
+health_cap = 7.0
 charge_dmg_rate = 0.07
 
 [node name="Fighter2" parent="Bots" index="2" instance=ExtResource( 7 )]
 position = Vector2( -1979, -133 )
 rotation = 1.30376
-health_cap = 15.0
+shield_cap = 7.0
+health_cap = 7.0
 charge_dmg_rate = 0.07
 weap_dmg_rate = 0.5
 deployed = true

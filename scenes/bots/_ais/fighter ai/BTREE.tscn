@@ -6,11 +6,6 @@
 script = ExtResource( 1 )
 tree = {
 "connection": [ {
-"from": "root",
-"from_port": 0,
-"to": "sequence12",
-"to_port": 0
-}, {
 "from": "inverter24",
 "from_port": 0,
 "to": "task51",
@@ -26,56 +21,6 @@ tree = {
 "to": "task36",
 "to_port": 0
 }, {
-"from": "sequence12",
-"from_port": 0,
-"to": "sequence8",
-"to_port": 0
-}, {
-"from": "sequence8",
-"from_port": 0,
-"to": "task5",
-"to_port": 0
-}, {
-"from": "sequence8",
-"from_port": 1,
-"to": "sequence",
-"to_port": 0
-}, {
-"from": "repeat7",
-"from_port": 0,
-"to": "sequence19",
-"to_port": 0
-}, {
-"from": "sequence19",
-"from_port": 0,
-"to": "inverter23",
-"to_port": 0
-}, {
-"from": "sequence19",
-"from_port": 1,
-"to": "task48",
-"to_port": 0
-}, {
-"from": "sequence19",
-"from_port": 2,
-"to": "inverter20",
-"to_port": 0
-}, {
-"from": "sequence19",
-"from_port": 3,
-"to": "task32",
-"to_port": 0
-}, {
-"from": "inverter23",
-"from_port": 0,
-"to": "task47",
-"to_port": 0
-}, {
-"from": "inverter20",
-"from_port": 0,
-"to": "task31",
-"to_port": 0
-}, {
 "from": "sequence18",
 "from_port": 0,
 "to": "inverter24",
@@ -84,16 +29,6 @@ tree = {
 "from": "sequence18",
 "from_port": 1,
 "to": "task50",
-"to_port": 0
-}, {
-"from": "sequence18",
-"from_port": 2,
-"to": "task49",
-"to_port": 0
-}, {
-"from": "sequence18",
-"from_port": 3,
-"to": "repeat7",
 "to_port": 0
 }, {
 "from": "sequence4",
@@ -415,21 +350,104 @@ tree = {
 "from_port": 0,
 "to": "sequence3",
 "to_port": 0
+}, {
+"from": "selector4",
+"from_port": 1,
+"to": "sequence",
+"to_port": 0
+}, {
+"from": "sequence12",
+"from_port": 0,
+"to": "selector4",
+"to_port": 0
+}, {
+"from": "inverter2",
+"from_port": 0,
+"to": "task5",
+"to_port": 0
+}, {
+"from": "selector4",
+"from_port": 0,
+"to": "inverter2",
+"to_port": 0
+}, {
+"from": "root",
+"from_port": 0,
+"to": "sequence12",
+"to_port": 0
+}, {
+"from": "repeat7",
+"from_port": 0,
+"to": "sequence19",
+"to_port": 0
+}, {
+"from": "sequence19",
+"from_port": 0,
+"to": "inverter23",
+"to_port": 0
+}, {
+"from": "sequence19",
+"from_port": 1,
+"to": "task48",
+"to_port": 0
+}, {
+"from": "sequence19",
+"from_port": 2,
+"to": "inverter20",
+"to_port": 0
+}, {
+"from": "sequence19",
+"from_port": 3,
+"to": "task32",
+"to_port": 0
+}, {
+"from": "inverter23",
+"from_port": 0,
+"to": "task47",
+"to_port": 0
+}, {
+"from": "inverter20",
+"from_port": 0,
+"to": "task31",
+"to_port": 0
+}, {
+"from": "sequence18",
+"from_port": 4,
+"to": "repeat7",
+"to_port": 0
+}, {
+"from": "sequence18",
+"from_port": 3,
+"to": "task49",
+"to_port": 0
+}, {
+"from": "sequence18",
+"from_port": 2,
+"to": "task17",
+"to_port": 0
 } ],
 "nodes": [ {
 "child": [ {
 "child": [ {
 "child": [ {
+"child": [ {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 400, -2500 ),
+"offset": Vector2( 600, -2500 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task5",
 "type": 1
+} ],
+"data": {
+"offset": Vector2( 400, -2500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter2",
+"type": 14
 }, {
 "child": [ {
 "child": [ {
@@ -657,7 +675,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
+"size": Vector2( 169, 52.9995 )
 },
 "name": "repeat6",
 "type": 8
@@ -821,7 +839,7 @@ tree = {
 "fn": "task_cond_is_enemy_close",
 "offset": Vector2( 3700, -1200 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
+"size": Vector2( 302, 91 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task19",
@@ -918,7 +936,7 @@ tree = {
 "fn": "task_cond_is_weapon_overheating",
 "offset": Vector2( 2700, -1000 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task10",
@@ -929,7 +947,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 2700, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task43",
@@ -949,7 +967,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
+"size": Vector2( 123, 49 )
 },
 "name": "inverter21",
 "type": 14
@@ -1065,10 +1083,10 @@ tree = {
 "data": {
 "count": 2,
 "offset": Vector2( 200, -1900 ),
-"size": Vector2( 125, 91 )
+"size": Vector2( 118, 91 )
 },
-"name": "sequence8",
-"type": 2
+"name": "selector4",
+"type": 3
 }, {
 "child": [ {
 "child": [ {
@@ -1077,7 +1095,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 600, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task51",
@@ -1103,8 +1121,19 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_act_to_roll",
+"fn": "task_cond_is_master_close",
 "offset": Vector2( 400, -700 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 400, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -1118,7 +1147,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -1127,7 +1156,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -1136,7 +1165,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -1148,7 +1177,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -1157,7 +1186,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
+"offset": Vector2( 800, -400 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -1166,7 +1195,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -1176,7 +1205,7 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
@@ -1184,16 +1213,16 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 400, -500 ),
 "size": Vector2( 169, 53.0005 )
 },
 "name": "repeat7",
 "type": 8
 } ],
 "data": {
-"count": 4,
+"count": 5,
 "offset": Vector2( 200, -800 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 131, 154 )
 },
 "name": "sequence18",
 "type": 2
@@ -1201,7 +1230,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_idle",
-"offset": Vector2( 200, -500 ),
+"offset": Vector2( 200, -400 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -1219,7 +1248,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( -300, -800 ),
-"size": Vector2( 96, 82.0006 )
+"size": Vector2( 96, 82.0005 )
 },
 "name": "root",
 "type": 0
@@ -1230,7 +1259,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 600, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task51",
@@ -1243,17 +1272,3419 @@ tree = {
 "name": "inverter24",
 "type": 14
 }, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_master_instance_valid",
+"offset": Vector2( 400, -800 ),
+"params": [  ],
+"size": Vector2( 347, 85 ),
+"values": [  ]
+},
+"name": "task50",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 600, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task51",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1000, -1200 ),
+"size": Vector2( 111, 49 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -1100 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1200 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector3",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1900, -1000 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 800, -1000 ),
+"size": Vector2( 170, 50 )
+},
+"name": "repeat",
+"type": 8
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence4",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1000, -1200 ),
+"size": Vector2( 111, 49 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -1100 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1200 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector3",
+"type": 3
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1000, -1200 ),
+"size": Vector2( 111, 49 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -1100 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1900, -1000 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 800, -1000 ),
+"size": Vector2( 170, 50 )
+},
+"name": "repeat",
+"type": 8
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1000, -2400 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -2300 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -2400 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [ {
 "child": [ {
 "child": [ {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 400, -2500 ),
+"offset": Vector2( 1400, -2200 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
 },
-"name": "task5",
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -2200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat5",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -2200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter12",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -2300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence11",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1000, -2400 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -2300 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -2400 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1000, -2400 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -2300 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -2200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat5",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -2200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter12",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -2200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat5",
+"type": 8
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1000, -1900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 1000, -1800 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector2",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -1500 ),
+"size": Vector2( 169, 52.9995 )
+},
+"name": "repeat6",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter13",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1900 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence2",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1000, -1900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 1000, -1800 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector2",
+"type": 3
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1000, -1900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 1000, -1800 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -1500 ),
+"size": Vector2( 169, 52.9995 )
+},
+"name": "repeat6",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter13",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -1500 ),
+"size": Vector2( 169, 52.9995 )
+},
+"name": "repeat6",
+"type": 8
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1900, -1000 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
 "type": 1
 }, {
 "child": [ {
@@ -1482,7 +4913,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
+"size": Vector2( 169, 52.9995 )
 },
 "name": "repeat6",
 "type": 8
@@ -1646,7 +5077,7 @@ tree = {
 "fn": "task_cond_is_enemy_close",
 "offset": Vector2( 3700, -1200 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
+"size": Vector2( 302, 91 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task19",
@@ -1743,7 +5174,7 @@ tree = {
 "fn": "task_cond_is_weapon_overheating",
 "offset": Vector2( 2700, -1000 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task10",
@@ -1754,7 +5185,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 2700, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task43",
@@ -1774,7 +5205,658 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1900, -1000 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 800, -1000 ),
+"size": Vector2( 170, 50 )
+},
+"name": "repeat",
+"type": 8
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence4",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 400, -1900 ),
+"size": Vector2( 119, 112 )
+},
+"name": "sequence",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 600, -2500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 400, -2500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1000, -2400 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -2300 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -2400 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -2200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat5",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -2200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter12",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -2300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence11",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1000, -1900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 1000, -1800 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence6",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector2",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -1500 ),
+"size": Vector2( 169, 52.9995 )
+},
+"name": "repeat6",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter13",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1900 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence2",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1000, -1200 ),
+"size": Vector2( 111, 49 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -1100 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1200 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector3",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
 },
 "name": "inverter21",
 "type": 14
@@ -1890,10 +5972,700 @@ tree = {
 "data": {
 "count": 2,
 "offset": Vector2( 200, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector4",
+"type": 3
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 600, -2500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 600, -2500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 400, -2500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 600, -2500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task5",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 400, -2500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter2",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1000, -2400 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task3",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -2300 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task11",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -2400 ),
+"size": Vector2( 112, 91 )
+},
+"name": "selector",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -2200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task42",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1600, -2100 ),
+"params": [ [ "enemy_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "enemy_seek" ]
+},
+"name": "task25",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -2100 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter16",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 1400, -2000 ),
+"params": [  ],
+"size": Vector2( 279, 71 ),
+"values": [  ]
+},
+"name": "task27",
+"type": 1
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1200, -2200 ),
+"size": Vector2( 131, 112 )
+},
+"name": "sequence16",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -2200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat5",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -2200 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter12",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -2300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence11",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1000, -1900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task12",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_to_turret",
+"offset": Vector2( 1200, -1800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task2",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_discharge_parry",
+"offset": Vector2( 1200, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task7",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 1000, -1800 ),
 "size": Vector2( 125, 91 )
 },
-"name": "sequence8",
+"name": "sequence6",
 "type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector2",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1400, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 84.9998 ),
+"values": [  ]
+},
+"name": "task46",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1600, -1500 ),
+"params": [  ],
+"size": Vector2( 345, 84.9996 ),
+"values": [  ]
+},
+"name": "task14",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1400, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter14",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 1400, -1400 ),
+"params": [ [ "max_shooting", 1 ] ],
+"size": Vector2( 302, 91.0001 ),
+"values": [ "max_shooting" ]
+},
+"name": "task16",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_shoot_enemy",
+"offset": Vector2( 1400, -1300 ),
+"params": [  ],
+"size": Vector2( 345, 85.0006 ),
+"values": [  ]
+},
+"name": "task15",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 1200, -1500 ),
+"size": Vector2( 131, 133 )
+},
+"name": "sequence17",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 980, -1500 ),
+"size": Vector2( 169, 52.9995 )
+},
+"name": "repeat6",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 800, -1500 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter13",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1900 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence2",
+"type": 2
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 1200, -1200 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task4",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 1000, -1200 ),
+"size": Vector2( 111, 49 )
+},
+"name": "inverter",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 1000, -1100 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task6",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 800, -1200 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector3",
+"type": 3
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1700 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -1600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task26",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_charge_ready",
+"offset": Vector2( 2900, -1500 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task8",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter5",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3500, -1400 ),
+"params": [ [ "charge_back_off_flee", 1 ] ],
+"size": Vector2( 302.001, 91 ),
+"values": [ "charge_back_off_flee" ]
+},
+"name": "task9",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_flee",
+"offset": Vector2( 3500, -1300 ),
+"params": [  ],
+"size": Vector2( 345.001, 85 ),
+"values": [  ]
+},
+"name": "task18",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1400 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence7",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1400 ),
+"size": Vector2( 169, 53 )
+},
+"name": "repeat3",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1400 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter6",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 3700, -1200 ),
+"params": [ [ "charge_back_off_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_back_off_seek" ]
+},
+"name": "task19",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 3500, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter9",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 3500, -1100 ),
+"params": [  ],
+"size": Vector2( 279.001, 71.0001 ),
+"values": [  ]
+},
+"name": "task20",
+"type": 1
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 3300, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence9",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 3080, -1200 ),
+"size": Vector2( 169, 53.0001 )
+},
+"name": "repeat4",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2900, -1200 ),
+"size": Vector2( 117, 49.0001 )
+},
+"name": "inverter8",
+"type": 14
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 2700, -1300 ),
+"size": Vector2( 131, 91 )
+},
+"name": "sequence10",
+"type": 2
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1500 ),
+"size": Vector2( 113, 133 )
+},
+"name": "paralel2",
+"type": 6
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1500 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat2",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter4",
+"type": 14
+}, {
+"child": [ {
+"child": [ {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_enemy",
+"offset": Vector2( 2700, -1100 ),
+"params": [  ],
+"size": Vector2( 279, 71.0001 ),
+"values": [  ]
+},
+"name": "task23",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2700, -1000 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task10",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 2700, -900 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task43",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_close",
+"offset": Vector2( 2900, -800 ),
+"params": [ [ "charge_seek", 1 ] ],
+"size": Vector2( 302, 91 ),
+"values": [ "charge_seek" ]
+},
+"name": "task22",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 2700, -800 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter21",
+"type": 14
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2500, -1000 ),
+"size": Vector2( 140, 140 )
+},
+"name": "sequence14",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 2280, -1000 ),
+"size": Vector2( 169, 53.0002 )
+},
+"name": "repeat8",
+"type": 8
+} ],
+"data": {
+"offset": Vector2( 2100, -1000 ),
+"size": Vector2( 123, 49 )
+},
+"name": "inverter15",
+"type": 14
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_weapon_overheating",
+"offset": Vector2( 2300, -800 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task13",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_charge_roll",
+"offset": Vector2( 2300, -700 ),
+"params": [ [ "target", 1 ] ],
+"size": Vector2( 274, 91 ),
+"values": [ "target" ]
+},
+"name": "task37",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_timed_idle",
+"offset": Vector2( 2300, -600 ),
+"params": [ [ "charge_break", 1 ] ],
+"size": Vector2( 271, 91 ),
+"values": [ "charge_break" ]
+},
+"name": "task38",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_idle",
+"offset": Vector2( 2300, -500 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task39",
+"type": 1
+} ],
+"data": {
+"count": 4,
+"offset": Vector2( 2100, -700 ),
+"size": Vector2( 125, 133 )
+},
+"name": "sequence5",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 1900, -1000 ),
+"size": Vector2( 125, 112 )
+},
+"name": "sequence3",
+"type": 2
+} ],
+"data": {
+"count": 0.0,
+"offset": Vector2( 800, -1000 ),
+"size": Vector2( 170, 50 )
+},
+"name": "repeat",
+"type": 8
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 600, -1200 ),
+"size": Vector2( 125, 91 )
+},
+"name": "sequence4",
+"type": 2
+} ],
+"data": {
+"count": 3,
+"offset": Vector2( 400, -1900 ),
+"size": Vector2( 119, 112 )
+},
+"name": "sequence",
+"type": 2
+} ],
+"data": {
+"count": 2,
+"offset": Vector2( 200, -1900 ),
+"size": Vector2( 118, 91 )
+},
+"name": "selector4",
+"type": 3
 }, {
 "child": [ {
 "child": [ {
@@ -1902,7 +6674,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 600, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task51",
@@ -1928,8 +6700,19 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_act_to_roll",
+"fn": "task_cond_is_master_close",
 "offset": Vector2( 400, -700 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 400, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -1943,7 +6726,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -1952,7 +6735,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -1961,7 +6744,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -1973,7 +6756,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -1982,7 +6765,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
+"offset": Vector2( 800, -400 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -1991,7 +6774,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -2001,7 +6784,7 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
@@ -2009,16 +6792,16 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 400, -500 ),
 "size": Vector2( 169, 53.0005 )
 },
 "name": "repeat7",
 "type": 8
 } ],
 "data": {
-"count": 4,
+"count": 5,
 "offset": Vector2( 200, -800 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 131, 154 )
 },
 "name": "sequence18",
 "type": 2
@@ -2026,7 +6809,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_idle",
-"offset": Vector2( 200, -500 ),
+"offset": Vector2( 200, -400 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2042,661 +6825,10 @@ tree = {
 "name": "sequence12",
 "type": 2
 }, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 400, -2500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task5",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1000, -2400 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task3",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -2300 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task11",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -2400 ),
-"size": Vector2( 112, 91 )
-},
-"name": "selector",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -2200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat5",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -2200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter12",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -2300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence11",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1000, -1900 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 1000, -1800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1900 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector2",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
-},
-"name": "repeat6",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter13",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1900 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence2",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1000, -1200 ),
-"size": Vector2( 111, 49 )
-},
-"name": "inverter",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -1100 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1200 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector3",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
 "child": [  ],
 "data": {
 "fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1900, -1000 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 800, -1000 ),
-"size": Vector2( 170, 50 )
-},
-"name": "repeat",
-"type": 8
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence4",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, -1900 ),
-"size": Vector2( 119, 112 )
-},
-"name": "sequence",
-"type": 2
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 200, -1900 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence8",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 200, -500 ),
+"offset": Vector2( 200, -400 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2710,7 +6842,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2719,7 +6851,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -2728,7 +6860,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -2740,7 +6872,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -2749,7 +6881,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
+"offset": Vector2( 800, -400 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -2758,7 +6890,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -2768,7 +6900,7 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
@@ -2776,17 +6908,18 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 400, -500 ),
 "size": Vector2( 169, 53.0005 )
 },
 "name": "repeat7",
 "type": 8
 }, {
 "child": [ {
+"child": [ {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2795,7 +6928,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -2804,7 +6937,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -2816,7 +6949,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -2825,90 +6958,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
-"size": Vector2( 123, 49.0005 )
-},
-"name": "inverter20",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
-"params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 304, 91 ),
-"values": [ "master_seek" ]
-},
-"name": "task31",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_master",
 "offset": Vector2( 800, -400 ),
-"params": [  ],
-"size": Vector2( 281, 71 ),
-"values": [  ]
-},
-"name": "task32",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task47",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task47",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 800, -700 ),
-"size": Vector2( 123, 49.0005 )
-},
-"name": "inverter23",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
-"params": [  ],
-"size": Vector2( 347, 85 ),
-"values": [  ]
-},
-"name": "task48",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
-"params": [ [ "master_seek", 1 ] ],
-"size": Vector2( 304, 91 ),
-"values": [ "master_seek" ]
-},
-"name": "task31",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 800, -500 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -2917,7 +6967,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -2927,11 +6977,104 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
 "type": 2
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1000, -600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task47",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 800, -600 ),
+"size": Vector2( 123, 49.0005 )
+},
+"name": "inverter23",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_enemy_instance_valid",
+"offset": Vector2( 1000, -600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task47",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_master_instance_valid",
+"offset": Vector2( 800, -500 ),
+"params": [  ],
+"size": Vector2( 347, 85 ),
+"values": [  ]
+},
+"name": "task48",
+"type": 1
+}, {
+"child": [ {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_master_close",
+"offset": Vector2( 1000, -400 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task31",
+"type": 1
+} ],
+"data": {
+"offset": Vector2( 800, -400 ),
+"size": Vector2( 123, 49.0005 )
+},
+"name": "inverter20",
+"type": 14
+}, {
+"child": [  ],
+"data": {
+"fn": "task_cond_is_master_close",
+"offset": Vector2( 1000, -400 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task31",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_seek_master",
+"offset": Vector2( 800, -300 ),
+"params": [  ],
+"size": Vector2( 281, 71 ),
+"values": [  ]
+},
+"name": "task32",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 400, -600 ),
+"params": [  ],
+"size": Vector2( 345, 85 ),
+"values": [  ]
+},
+"name": "task49",
+"type": 1
 }, {
 "child": [ {
 "child": [ {
@@ -2940,7 +7083,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 600, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task51",
@@ -2966,8 +7109,19 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_act_to_roll",
+"fn": "task_cond_is_master_close",
 "offset": Vector2( 400, -700 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 400, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2981,7 +7135,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -2990,7 +7144,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -2999,7 +7153,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -3011,7 +7165,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -3020,7 +7174,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
+"offset": Vector2( 800, -400 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -3029,7 +7183,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -3039,7 +7193,7 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
@@ -3047,4102 +7201,53 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 400, -500 ),
 "size": Vector2( 169, 53.0005 )
 },
 "name": "repeat7",
 "type": 8
 } ],
 "data": {
-"count": 4,
+"count": 5,
 "offset": Vector2( 200, -800 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 131, 154 )
 },
 "name": "sequence18",
 "type": 2
 }, {
 "child": [  ],
 "data": {
-"fn": "task_act_to_roll",
+"fn": "task_cond_is_master_close",
 "offset": Vector2( 400, -700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
 },
-"name": "task49",
+"name": "task17",
 "type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 400, -800 ),
-"params": [  ],
-"size": Vector2( 347, 85 ),
-"values": [  ]
-},
-"name": "task50",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 600, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task51",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1000, -1200 ),
-"size": Vector2( 111, 49 )
-},
-"name": "inverter",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -1100 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1200 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector3",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1900, -1000 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 800, -1000 ),
-"size": Vector2( 170, 50 )
-},
-"name": "repeat",
-"type": 8
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence4",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1000, -1200 ),
-"size": Vector2( 111, 49 )
-},
-"name": "inverter",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -1100 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1200 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector3",
-"type": 3
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1000, -1200 ),
-"size": Vector2( 111, 49 )
-},
-"name": "inverter",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -1100 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1900, -1000 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 800, -1000 ),
-"size": Vector2( 170, 50 )
-},
-"name": "repeat",
-"type": 8
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1000, -2400 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task3",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -2300 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task11",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -2400 ),
-"size": Vector2( 112, 91 )
-},
-"name": "selector",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -2200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat5",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -2200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter12",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -2300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence11",
-"type": 2
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1000, -2400 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task3",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -2300 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task11",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -2400 ),
-"size": Vector2( 112, 91 )
-},
-"name": "selector",
-"type": 3
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1000, -2400 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task3",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -2300 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task11",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -2200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat5",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -2200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter12",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -2200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat5",
-"type": 8
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 400, -2500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task5",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1000, -1900 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 1000, -1800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1900 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector2",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
-},
-"name": "repeat6",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter13",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1900 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence2",
-"type": 2
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1000, -1900 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 1000, -1800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1900 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector2",
-"type": 3
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1000, -1900 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 1000, -1800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
-},
-"name": "repeat6",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter13",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
-},
-"name": "repeat6",
-"type": 8
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1900, -1000 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1000, -2400 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task3",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -2300 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task11",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -2400 ),
-"size": Vector2( 112, 91 )
-},
-"name": "selector",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -2200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task42",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1600, -2100 ),
-"params": [ [ "enemy_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "enemy_seek" ]
-},
-"name": "task25",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -2100 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter16",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 1400, -2000 ),
-"params": [  ],
-"size": Vector2( 279, 71 ),
-"values": [  ]
-},
-"name": "task27",
-"type": 1
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1200, -2200 ),
-"size": Vector2( 131, 112 )
-},
-"name": "sequence16",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -2200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat5",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -2200 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter12",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -2300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence11",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1000, -1900 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task12",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_to_turret",
-"offset": Vector2( 1200, -1800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task2",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_discharge_parry",
-"offset": Vector2( 1200, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task7",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 1000, -1800 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence6",
-"type": 2
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1900 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector2",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1400, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 84.9998 ),
-"values": [  ]
-},
-"name": "task46",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1600, -1500 ),
-"params": [  ],
-"size": Vector2( 345, 84.9996 ),
-"values": [  ]
-},
-"name": "task14",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1400, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter14",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 1400, -1400 ),
-"params": [ [ "max_shooting", 1 ] ],
-"size": Vector2( 302, 91.0001 ),
-"values": [ "max_shooting" ]
-},
-"name": "task16",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_shoot_enemy",
-"offset": Vector2( 1400, -1300 ),
-"params": [  ],
-"size": Vector2( 345, 85.0006 ),
-"values": [  ]
-},
-"name": "task15",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 1200, -1500 ),
-"size": Vector2( 131, 133 )
-},
-"name": "sequence17",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
-},
-"name": "repeat6",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 800, -1500 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter13",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1900 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence2",
-"type": 2
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 1200, -1200 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task4",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 1000, -1200 ),
-"size": Vector2( 111, 49 )
-},
-"name": "inverter",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_to_roll",
-"offset": Vector2( 1000, -1100 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task6",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 800, -1200 ),
-"size": Vector2( 118, 91 )
-},
-"name": "selector3",
-"type": 3
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1700 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -1600 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task26",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_charge_ready",
-"offset": Vector2( 2900, -1500 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task8",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter5",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3500, -1400 ),
-"params": [ [ "charge_back_off_flee", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_flee" ]
-},
-"name": "task9",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_flee",
-"offset": Vector2( 3500, -1300 ),
-"params": [  ],
-"size": Vector2( 345.001, 85 ),
-"values": [  ]
-},
-"name": "task18",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1400 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence7",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1400 ),
-"size": Vector2( 169, 53 )
-},
-"name": "repeat3",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1400 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter6",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 3700, -1200 ),
-"params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
-"values": [ "charge_back_off_seek" ]
-},
-"name": "task19",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 3500, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter9",
-"type": 14
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 3500, -1100 ),
-"params": [  ],
-"size": Vector2( 279.001, 71.0001 ),
-"values": [  ]
-},
-"name": "task20",
-"type": 1
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 3300, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence9",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 3080, -1200 ),
-"size": Vector2( 169, 53.0001 )
-},
-"name": "repeat4",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2900, -1200 ),
-"size": Vector2( 117, 49.0001 )
-},
-"name": "inverter8",
-"type": 14
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 2700, -1300 ),
-"size": Vector2( 131, 91 )
-},
-"name": "sequence10",
-"type": 2
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1500 ),
-"size": Vector2( 113, 133 )
-},
-"name": "paralel2",
-"type": 6
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1500 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat2",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1500 ),
-"size": Vector2( 117, 49 )
-},
-"name": "inverter4",
-"type": 14
-}, {
-"child": [ {
-"child": [ {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_act_seek_enemy",
-"offset": Vector2( 2700, -1100 ),
-"params": [  ],
-"size": Vector2( 279, 71.0001 ),
-"values": [  ]
-},
-"name": "task23",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2700, -1000 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task10",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 2700, -900 ),
-"params": [  ],
-"size": Vector2( 345, 85.0001 ),
-"values": [  ]
-},
-"name": "task43",
-"type": 1
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_enemy_close",
-"offset": Vector2( 2900, -800 ),
-"params": [ [ "charge_seek", 1 ] ],
-"size": Vector2( 302, 91 ),
-"values": [ "charge_seek" ]
-},
-"name": "task22",
-"type": 1
-} ],
-"data": {
-"offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
-},
-"name": "inverter21",
-"type": 14
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2500, -1000 ),
-"size": Vector2( 140, 140 )
-},
-"name": "sequence14",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 2280, -1000 ),
-"size": Vector2( 169, 53.0002 )
-},
-"name": "repeat8",
-"type": 8
-} ],
-"data": {
-"offset": Vector2( 2100, -1000 ),
-"size": Vector2( 123, 49 )
-},
-"name": "inverter15",
-"type": 14
-}, {
-"child": [ {
-"child": [  ],
-"data": {
-"fn": "task_cond_is_weapon_overheating",
-"offset": Vector2( 2300, -800 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task13",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_charge_roll",
-"offset": Vector2( 2300, -700 ),
-"params": [ [ "target", 1 ] ],
-"size": Vector2( 274, 91 ),
-"values": [ "target" ]
-},
-"name": "task37",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_timed_idle",
-"offset": Vector2( 2300, -600 ),
-"params": [ [ "charge_break", 1 ] ],
-"size": Vector2( 271, 91 ),
-"values": [ "charge_break" ]
-},
-"name": "task38",
-"type": 1
-}, {
-"child": [  ],
-"data": {
-"fn": "task_act_idle",
-"offset": Vector2( 2300, -500 ),
-"params": [  ],
-"size": Vector2( 345, 85 ),
-"values": [  ]
-},
-"name": "task39",
-"type": 1
-} ],
-"data": {
-"count": 4,
-"offset": Vector2( 2100, -700 ),
-"size": Vector2( 125, 133 )
-},
-"name": "sequence5",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 1900, -1000 ),
-"size": Vector2( 125, 112 )
-},
-"name": "sequence3",
-"type": 2
-} ],
-"data": {
-"count": 0.0,
-"offset": Vector2( 800, -1000 ),
-"size": Vector2( 170, 50 )
-},
-"name": "repeat",
-"type": 8
-} ],
-"data": {
-"count": 2,
-"offset": Vector2( 600, -1200 ),
-"size": Vector2( 125, 91 )
-},
-"name": "sequence4",
-"type": 2
-} ],
-"data": {
-"count": 3,
-"offset": Vector2( 400, -1900 ),
-"size": Vector2( 119, 112 )
-},
-"name": "sequence",
-"type": 2
 } ],
 "root": {
 "child": [ {
 "child": [ {
 "child": [ {
+"child": [ {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 400, -2500 ),
+"offset": Vector2( 600, -2500 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task5",
 "type": 1
+} ],
+"data": {
+"offset": Vector2( 400, -2500 ),
+"size": Vector2( 117, 49 )
+},
+"name": "inverter2",
+"type": 14
 }, {
 "child": [ {
 "child": [ {
@@ -7370,7 +7475,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 980, -1500 ),
-"size": Vector2( 169, 52.9996 )
+"size": Vector2( 169, 52.9995 )
 },
 "name": "repeat6",
 "type": 8
@@ -7534,7 +7639,7 @@ tree = {
 "fn": "task_cond_is_enemy_close",
 "offset": Vector2( 3700, -1200 ),
 "params": [ [ "charge_back_off_seek", 1 ] ],
-"size": Vector2( 302.001, 91 ),
+"size": Vector2( 302, 91 ),
 "values": [ "charge_back_off_seek" ]
 },
 "name": "task19",
@@ -7631,7 +7736,7 @@ tree = {
 "fn": "task_cond_is_weapon_overheating",
 "offset": Vector2( 2700, -1000 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task10",
@@ -7642,7 +7747,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 2700, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task43",
@@ -7662,7 +7767,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 2700, -800 ),
-"size": Vector2( 123, 49.0001 )
+"size": Vector2( 123, 49 )
 },
 "name": "inverter21",
 "type": 14
@@ -7778,10 +7883,10 @@ tree = {
 "data": {
 "count": 2,
 "offset": Vector2( 200, -1900 ),
-"size": Vector2( 125, 91 )
+"size": Vector2( 118, 91 )
 },
-"name": "sequence8",
-"type": 2
+"name": "selector4",
+"type": 3
 }, {
 "child": [ {
 "child": [ {
@@ -7790,7 +7895,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 600, -900 ),
 "params": [  ],
-"size": Vector2( 345, 85.0001 ),
+"size": Vector2( 345, 85 ),
 "values": [  ]
 },
 "name": "task51",
@@ -7816,8 +7921,19 @@ tree = {
 }, {
 "child": [  ],
 "data": {
-"fn": "task_act_to_roll",
+"fn": "task_cond_is_master_close",
 "offset": Vector2( 400, -700 ),
+"params": [ [ "master_seek", 1 ] ],
+"size": Vector2( 304, 91 ),
+"values": [ "master_seek" ]
+},
+"name": "task17",
+"type": 1
+}, {
+"child": [  ],
+"data": {
+"fn": "task_act_to_roll",
+"offset": Vector2( 400, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -7831,7 +7947,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_enemy_instance_valid",
-"offset": Vector2( 1000, -700 ),
+"offset": Vector2( 1000, -600 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -7840,7 +7956,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -700 ),
+"offset": Vector2( 800, -600 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter23",
@@ -7849,7 +7965,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_instance_valid",
-"offset": Vector2( 800, -600 ),
+"offset": Vector2( 800, -500 ),
 "params": [  ],
 "size": Vector2( 347, 85 ),
 "values": [  ]
@@ -7861,7 +7977,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_cond_is_master_close",
-"offset": Vector2( 1000, -500 ),
+"offset": Vector2( 1000, -400 ),
 "params": [ [ "master_seek", 1 ] ],
 "size": Vector2( 304, 91 ),
 "values": [ "master_seek" ]
@@ -7870,7 +7986,7 @@ tree = {
 "type": 1
 } ],
 "data": {
-"offset": Vector2( 800, -500 ),
+"offset": Vector2( 800, -400 ),
 "size": Vector2( 123, 49.0005 )
 },
 "name": "inverter20",
@@ -7879,7 +7995,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_seek_master",
-"offset": Vector2( 800, -400 ),
+"offset": Vector2( 800, -300 ),
 "params": [  ],
 "size": Vector2( 281, 71 ),
 "values": [  ]
@@ -7889,7 +8005,7 @@ tree = {
 } ],
 "data": {
 "count": 4,
-"offset": Vector2( 620, -600 ),
+"offset": Vector2( 620, -500 ),
 "size": Vector2( 131, 133 )
 },
 "name": "sequence19",
@@ -7897,16 +8013,16 @@ tree = {
 } ],
 "data": {
 "count": 0.0,
-"offset": Vector2( 400, -600 ),
+"offset": Vector2( 400, -500 ),
 "size": Vector2( 169, 53.0005 )
 },
 "name": "repeat7",
 "type": 8
 } ],
 "data": {
-"count": 4,
+"count": 5,
 "offset": Vector2( 200, -800 ),
-"size": Vector2( 131, 133 )
+"size": Vector2( 131, 154 )
 },
 "name": "sequence18",
 "type": 2
@@ -7914,7 +8030,7 @@ tree = {
 "child": [  ],
 "data": {
 "fn": "task_act_idle",
-"offset": Vector2( 200, -500 ),
+"offset": Vector2( 200, -400 ),
 "params": [  ],
 "size": Vector2( 345, 85 ),
 "values": [  ]
@@ -7932,10 +8048,10 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( -300, -800 ),
-"size": Vector2( 96, 82.0006 )
+"size": Vector2( 96, 82.0005 )
 },
 "name": "root",
 "type": 0
 }
 }
-_tree_id = "2858405283177619"
+_tree_id = "2631056548215533367"
