@@ -1,31 +1,14 @@
 extends Node
 
 
-var scenes: Dictionary = {
-	"PlayerTut": preload("res://levels proper/0_tutorial/PlayerTut.tscn"),
-	"Player": preload("res://scenes/bots/player/Player.tscn"),
-	"Tutorial": preload("res://levels proper/0_tutorial/Tutorial.tscn"),
-	"Area1-1": preload("res://levels proper/1-1_area/Area1-1.tscn"),
-	"Secret1-1": preload("res://levels proper/1-1_secret/Secret1-1.tscn"),
-	"Checkpoint1-1": preload("res://levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
-	"Area1-2": preload("res://levels proper/1-2_area/Area1-2.tscn"),
-	"Hub": preload("res://levels proper/0_hub/Hub.tscn"),
-	"Area1-3": preload("res://levels proper/1-3_area/Area1-3.tscn"),
-	"Area1-4": preload("res://levels proper/1-4_area/Area1-4.tscn"),
-	"Secret1-2": preload("res://levels proper/1-2_secret/Secret1-2.tscn"),
-	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn"),
-	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn"),
-	"AreaFinal": preload("res://levels proper/1_area_final/AreaFinal.tscn"),
-	"Secret1-3": preload("res://levels proper/1-3_secret/Secret1-3.tscn")
-}
+var scenes: Dictionary = {}
 var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
 	"Spawn": {}, #value -> Lvl: lvl name, Pos: level coords
-	"Keys": [] # lvlname + key name
-}
-var _saved_big_bots: Dictionary #key: lvl name + bot name, value: is_alive
+} #be sure to check savefile.gd to see which other info gets saved
+var _saved_despawnable_bots: Dictionary #key: lvl name + bot name, value: is_alive
 var _saved_depot_items: Dictionary #key: lvl name + depot name, value: arr_items
 var _saved_vault_items: Array #store item filename
 var _saved_paths: Array #store lvl name + destructible name
@@ -58,14 +41,17 @@ func _load_from_disk() -> void:
 		push_error("Save file can't be verified.")
 		return
 	_saved_player = save_file.player
-	_saved_big_bots = save_file.big_bots
+	_saved_despawnable_bots = save_file.despawnable_bots
 	_saved_depot_items = save_file.depot_items
 	_saved_vault_items = save_file.vault_items
 	_saved_paths = save_file.paths
 
 
+const SAVE_DATA: Array = []
+
+
 func _verify_data(save_file) -> bool:
-	var save_data = ["save_name", "player", "big_bots", "depot_items", "vault_items"]
+	var save_data = SAVE_DATA
 	for data in save_data:
 		if save_file.get(data) == null:
 			return false
@@ -79,7 +65,7 @@ func save_to_disk() -> void:
 	var new_save = Global.CLASS_SAVE.new()
 	new_save.save_name = current_save_name
 	new_save.player = _saved_player
-	new_save.big_bots = _saved_big_bots
+	new_save.despawnable_bots = _saved_despawnable_bots
 	new_save.depot_items = _saved_depot_items
 	new_save.vault_items = _saved_vault_items
 	new_save.paths = _saved_paths
@@ -122,7 +108,7 @@ func on_change_scene(new_lvl: String, pos: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_vault_items(_current_scene)
-		_save_big_bots()
+		_save_despawnable_bots()
 	call_deferred("on_change_scene_deferred", new_lvl, pos)
 
 
@@ -132,11 +118,11 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	var player
 	if new_lvl == "Tutorial":
 		if _player_tut == null:
-			_player_tut = scenes["PlayerTut"].instance()
+			_player_tut = scenes["PlayerTut"].instance() # -> player tut instance
 		player = _player_tut
 	else:
 		if _player == null:
-			_player = scenes["Player"].instance()
+			_player = scenes["Player"].instance() # -> player instance
 			_load_player_items()
 		if !_player.is_connected("dead", self, "_on_player_dead"):
 			_player.connect("dead", self, "_on_player_dead")
@@ -146,7 +132,7 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	$CanvasLayer/AreaName.text = _current_scene.disp_name
 	_current_scene.connect("secret_found", self, "on_secret_found")
 	_connect_access(_current_scene)
-	_connect_big_bots(_current_scene)
+	_connect_despawnable_bots(_current_scene)
 	_load_depot_items(_current_scene)
 	_load_vault_items(_current_scene)
 	_load_keys(_current_scene)
@@ -171,14 +157,14 @@ func _connect_access(lvl: Node) -> void:
 					[lvl.name + access.name])
 
 
-func _connect_big_bots(lvl: Node) -> void:
+func _connect_despawnable_bots(lvl: Node) -> void:
 	for bot in lvl.get_node("Bots").get_children():
 		if bot.respawnable == false:
 			var bot_name = lvl.name + bot.name
-			if _saved_big_bots.keys().has(bot_name) == false:
-				_saved_big_bots[bot_name] = true
-			elif (_saved_big_bots.keys().has(bot_name) &&
-				_saved_big_bots[bot_name] == false):
+			if _saved_despawnable_bots.keys().has(bot_name) == false:
+				_saved_despawnable_bots[bot_name] = true
+			elif (_saved_despawnable_bots.keys().has(bot_name) &&
+				_saved_despawnable_bots[bot_name] == false):
 				bot.queue_free()
 				continue
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name, bot.name])
@@ -200,12 +186,8 @@ func _resume(player) -> void:
 ########################################
 # levels that need access to saved info
 ########################################
-const LVL_HUB: = preload("res://levels proper/0_hub/Hub.gd")
-
-
 func _set_info(lvl):
-	if lvl is LVL_HUB:
-		lvl.set_keys(_saved_player["Keys"])
+	pass
 
 
 #######
@@ -230,21 +212,21 @@ func _load_keys(lvl) -> void:
 ###########
 # big bots
 ###########
-var _temp_big_bots: Dictionary = {}
+var _temp_despawnable_bots: Dictionary = {}
 
 
 func _on_big_bot_dead(lvl, bot) -> void:
 	if (is_instance_valid(_player) == false ||
 		_player.state == Global.CLASS_BOT.State.DEAD):
 		return
-	_temp_big_bots[lvl + bot] = false
+	_temp_despawnable_bots[lvl + bot] = false
 	$Anim.play("white_flash")
 
 
-func _save_big_bots() -> void:
-	for key in _temp_big_bots.keys():
-		_saved_big_bots[key] = _temp_big_bots[key]
-	_temp_big_bots = {}
+func _save_despawnable_bots() -> void:
+	for key in _temp_despawnable_bots.keys():
+		_saved_despawnable_bots[key] = _temp_despawnable_bots[key]
+	_temp_despawnable_bots = {}
 
 
 #############
@@ -392,7 +374,7 @@ func _on_Resume_timeout() -> void:
 
 func _on_player_dead() -> void:
 	$CanvasLayer/ColorRect2.modulate.a = 0
-	_temp_big_bots = {}
+	_temp_despawnable_bots = {}
 	_save_player_items()
 	_save_vault_items(_current_scene)
 	_save_depot_items(_current_scene)

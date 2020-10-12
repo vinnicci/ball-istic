@@ -187,7 +187,7 @@ func task_reflect(task):
 		return
 	$TargetRay.global_rotation = _parent_node.global_rotation
 	var body = $TargetRay.get_collider()
-	if body is Global.CLASS_LEVEL_OBJECT:
+	if body is Global.CLASS_LEVEL_WALL || body is Global.CLASS_LEVEL_RIGID:
 		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
 			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180))
 		_parent_node.queue_free()

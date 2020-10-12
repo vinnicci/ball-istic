@@ -39,6 +39,7 @@ weap_heat_cooldown = 5.0
 max_shooting_dist = 700
 
 [node name="HeavyBlaster" parent="Weapons" index="0" instance=ExtResource( 3 )]
+heat_dissipation = 7.5
 
 [node name="Label" parent="Name" index="0"]
 text = "HEAVY FIGHTER"

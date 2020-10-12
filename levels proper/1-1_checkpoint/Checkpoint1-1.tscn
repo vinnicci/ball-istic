@@ -28,7 +28,6 @@ tile_data = PoolIntArray( -851977, 1610612745, 0, -851976, 1610612744, 0, -85197
 position = Vector2( 576, -193 )
 
 [node name="ChargeBlaster" parent="Access/Depot/Items" index="0" instance=ExtResource( 12 )]
-heat_dissipation = 3.0
 
 [node name="BurstBlaster" parent="Access/Depot/Items" index="1" instance=ExtResource( 13 )]
 

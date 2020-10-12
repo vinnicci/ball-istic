@@ -140,8 +140,8 @@ func _get_new_target_enemy() -> void:
 	$Rays/LookAt.look_at(bot.global_position)
 	var potential_enemy = $Rays/LookAt.get_collider()
 	#if target bot is in line of sight
-	if (potential_enemy is Global.CLASS_LEVEL_OBJECT ||
-		potential_enemy is Global.CLASS_RIGID_OBJECT ||
+	if (potential_enemy is Global.CLASS_LEVEL_WALL ||
+		potential_enemy is Global.CLASS_LEVEL_RIGID ||
 		potential_enemy == null):
 		_enemies.erase(bot)
 		_enemies.append(bot)
@@ -436,8 +436,8 @@ func _valid_shooting_target(ray_collider) -> bool:
 	#not stunned & aiming at the enemy
 	return (_parent_node.state != Global.CLASS_BOT.State.STUN &&
 		(ray_collider != null &&
-		((ray_collider is Global.CLASS_LEVEL_OBJECT ||
-		ray_collider is Global.CLASS_RIGID_OBJECT) == false) &&
+		((ray_collider is Global.CLASS_LEVEL_WALL ||
+		ray_collider is Global.CLASS_LEVEL_RIGID) == false) &&
 		(ray_collider is Global.CLASS_BOT &&
 		ray_collider.current_faction != _parent_node.current_faction)))
 

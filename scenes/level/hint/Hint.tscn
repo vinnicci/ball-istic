@@ -63,7 +63,6 @@ autoplay = "fading"
 anims/fading = SubResource( 1 )
 
 [node name="Label" parent="AccessUI" index="0"]
-margin_right = 530.0
 text = "Tutorial hint"
 
 [node name="Label2" type="RichTextLabel" parent="AccessUI" index="1"]

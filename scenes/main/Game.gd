@@ -3,7 +3,7 @@ extends Node2D
 
 var _scenes: Dictionary = {
 	"Menu": preload("res://scenes/main/MenuManager.tscn"),
-	"Level": preload("res://scenes/main/LevelManager.tscn")
+	"Level": null #preload a level manager scene
 }
 var _current_scene = null
 var _current_save_slot: int

@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/level/tileset/green/TileSetGreenLow.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/level/tileset/green/TileMapGreenLow.gd" type="Script" id=3]
+
+[node name="TileMapGreenLow" instance=ExtResource( 2 )]
+tile_set = ExtResource( 1 )
+collision_layer = 16
+collision_mask = 1
+script = ExtResource( 3 )

@@ -13,9 +13,9 @@ const CLASS_PASSIVE = preload("res://scenes/passives/_base/_BasePassive.gd")
 const CLASS_PROJ = preload("res://scenes/weapons/_base/_BaseProjectile.gd")
 
 #level objects include: tilemap walls, static body walls
-const CLASS_LEVEL_OBJECT = preload("res://scenes/level/_base/_BaseLevelObject.gd")
+const CLASS_LEVEL_WALL = preload("res://scenes/level/_base/_BaseLevelObject.gd")
 #rigid body objects
-const CLASS_RIGID_OBJECT = preload("res://scenes/level/_base/_BaseRigidObject.gd")
+const CLASS_LEVEL_RIGID = preload("res://scenes/level/_base/_BaseRigidObject.gd")
 
 const PLAYER_BUILT_IN_WEAP: = preload("res://scenes/weapons/blaster/BuiltInAutoBlaster.gd")
 const BOT_STATION: = preload("res://scenes/level/bot station/BotStation.gd")

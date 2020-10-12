@@ -28,7 +28,6 @@ color_ramp = SubResource( 2 )
 
 [node name="HeavyBlaster" instance=ExtResource( 1 )]
 heat_cap = 74.1
-heat_dissipation = 7.5
 shoot_cooldown = 0.02
 crit_mult = 2.5
 crit_chance = 0.2

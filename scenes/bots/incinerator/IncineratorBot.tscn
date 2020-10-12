@@ -14,7 +14,6 @@ resource_local_to_scene = true
 [node name="IncineratorBot" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
 speed = 1600
-knockback_resist = 0.4
 transform_speed = 0.3
 charge_cooldown = 2.5
 charge_force_mult = 0.7

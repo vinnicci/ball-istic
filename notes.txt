@@ -12,6 +12,7 @@ collision layer:
 	2 - lvl object: staticbody, tilemap, rigid object
 	3 - projectile
 	4 - access
+	5 - low walls
 
 
 collision masks:
@@ -20,6 +21,7 @@ collision masks:
 	bots - 1, 2
 	discharge - 3
 	projectile - 1, 2
+	low walls - 1
 	ai detection - 1
 	ai rays - 1, 2
 	explosion - 1, 2

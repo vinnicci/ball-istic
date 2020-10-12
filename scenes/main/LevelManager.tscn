@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/main/LevelManager.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/in-game/InGameMenu.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 length = 3.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/StatusLabel:rect_scale")
@@ -67,7 +67,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "key_obtained"
 length = 3.5
 tracks/0/type = "value"
@@ -187,9 +187,9 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "white_flash"
+[sub_resource type="Animation" id=5]
 length = 1.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/ColorRect2:modulate")
 tracks/0/interp = 1
@@ -197,7 +197,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.5, 1.5 ),
+"times": PoolRealArray( 0.25, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 0 ) ]
@@ -227,11 +227,11 @@ wait_time = 0.3
 one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/destroyed = SubResource( 2 )
-anims/key_obtained = SubResource( 5 )
+anims/destroyed = SubResource( 1 )
+anims/key_obtained = SubResource( 2 )
 anims/new_area = SubResource( 3 )
 anims/transition = SubResource( 4 )
-anims/white_flash = SubResource( 1 )
+anims/white_flash = SubResource( 5 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

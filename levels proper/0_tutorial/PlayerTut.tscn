@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://levels proper/0_tutorial/PlayerTut.gd" type="Script" id=1]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://levels proper/0_tutorial/TutBlasterProj.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/bots/tex_dummy.png" type="Texture" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
@@ -21,6 +22,10 @@ transform_speed = 0.4
 charge_cooldown = 1.0
 charge_force_mult = 0.8
 weap_dmg_rate = 1.5
+
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 4 )
+uv = PoolVector2Array( 103.918, 64, 98.9285, 71.9837, 93.9387, 79.9673, 88.949, 87.951, 83.9591, 95.9346, 73.9796, 95.9346, 64, 95.9346, 54.0204, 95.9346, 44.0409, 95.9346, 39.051, 87.951, 34.0613, 79.9673, 29.0715, 71.9837, 24.0817, 64, 29.0715, 56.0163, 34.0613, 48.0327, 39.051, 40.049, 44.0409, 32.0653, 54.0204, 32.0653, 64, 32.0653, 73.9796, 32.0653, 83.9591, 32.0653, 88.949, 40.049, 93.9387, 48.0327, 98.9285, 56.0163, 78.9694, 87.951, 68.9898, 87.951, 59.0102, 87.951, 49.0306, 87.951, 83.9591, 79.9673, 73.9796, 79.9673, 64, 79.9673, 54.0204, 79.9673, 44.0409, 79.9673, 39.051, 71.9837, 49.0306, 71.9837, 59.0102, 71.9837, 68.9898, 71.9837, 78.9694, 71.9837, 88.949, 71.9837, 34.0612, 64, 44.0409, 64, 54.0204, 64, 64, 64, 73.9796, 64, 83.9591, 64, 93.9387, 64, 88.949, 56.0163, 78.9694, 56.0163, 68.9898, 56.0163, 59.0102, 56.0163, 49.0306, 56.0163, 39.051, 56.0163, 83.9591, 48.0327, 73.9796, 48.0327, 64, 48.0327, 54.0204, 48.0327, 44.0409, 48.0327, 49.0306, 40.049, 59.0102, 40.049, 68.9898, 40.049, 78.9694, 40.049 )
 
 [node name="CollisionShape" parent="." index="9"]
 shape = SubResource( 2 )
