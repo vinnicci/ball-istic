@@ -181,17 +181,9 @@ position = Vector2( 4800, -1400 )
 [node name="Area2-1" parent="Access" index="0" instance=ExtResource( 4 )]
 position = Vector2( 65, 1631 )
 rotation = 1.5708
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( 65, 1294 )
-
-[node name="Area2-3" parent="Access" index="2" instance=ExtResource( 4 )]
+[node name="Area2-3" parent="Access" index="1" instance=ExtResource( 4 )]
 position = Vector2( 5943, -959 )
-position_node = "Pos1"
-
-[node name="Pos2" type="Position2D" parent="Access" index="3"]
-position = Vector2( 5602, -958 )
 
 [node name="DoorLab" parent="Doors" index="0" instance=ExtResource( 7 )]
 position = Vector2( 64, 836 )

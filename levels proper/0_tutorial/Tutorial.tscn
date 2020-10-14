@@ -136,10 +136,9 @@ wait_time = 5.0
 [node name="Area1-1" parent="Access" index="4" instance=ExtResource( 20 )]
 position = Vector2( -2612, 192 )
 rotation = 3.14159
-position_node = "Pos1"
 
-[node name="Pos1" type="Position2D" parent="Access" index="5"]
-position = Vector2( -2333, 192 )
+[node name="Pos" parent="Access/Area1-1" index="5"]
+position = Vector2( -279, 0 )
 
 [node name="DummyA" parent="Bots" index="0" instance=ExtResource( 17 )]
 position = Vector2( -1163, 243 )
@@ -215,10 +214,12 @@ charge_dmg_rate = 0.05
 
 [node name="AI" parent="Bots/DummyD" index="9" instance=ExtResource( 15 )]
 enemy_seek_dist = 350
-back_off_seek_dist = 390
 back_off_flee_dist = 400
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 16 )]
+
+[node name="Position2D" type="Position2D" parent="." index="6"]
+position = Vector2( -2361, -74 )
 [connection signal="body_exited" from="Nav/DoorA/Area2D" to="Nav/DoorA" method="_on_Area2D_body_exited"]
 [connection signal="body_exited" from="Nav/DoorB/Area2D" to="Nav/DoorB" method="_on_Area2D_body_exited"]
 [connection signal="body_exited" from="Nav/DoorC/Area2D" to="Nav/DoorC" method="_on_Area2D_body_exited"]
@@ -230,5 +231,7 @@ back_off_flee_dist = 400
 [editable path="Access/HintC"]
 
 [editable path="Access/HintD"]
+
+[editable path="Access/Area1-1"]
 
 [editable path="Bots/DummyC"]

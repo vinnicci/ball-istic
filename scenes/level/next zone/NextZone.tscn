@@ -34,7 +34,10 @@ texture = ExtResource( 1 )
 autoplay = "fading"
 anims/fading = SubResource( 1 )
 
-[node name="NextZoneName" type="Node2D" parent="." index="5"]
+[node name="Pos" type="Position2D" parent="." index="5"]
+position = Vector2( -375, 0 )
+
+[node name="NextZoneName" type="Node2D" parent="." index="6"]
 visible = false
 
 [node name="Label" type="Label" parent="NextZoneName" index="0"]

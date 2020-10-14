@@ -68,18 +68,10 @@ position = Vector2( 1342, 705 )
 [node name="Area1-4" parent="Access" index="3" instance=ExtResource( 3 )]
 position = Vector2( 0, -925 )
 rotation = -1.5708
-position_node = "Pos3"
 
-[node name="Pos1" type="Position2D" parent="Access" index="4"]
-position = Vector2( 0, -523 )
-
-[node name="Area1-5" parent="Access" index="5" instance=ExtResource( 3 )]
+[node name="Area1-5" parent="Access" index="4" instance=ExtResource( 3 )]
 position = Vector2( -63, 2259 )
 rotation = 1.5708
-position_node = "Pos1"
-
-[node name="Pos2" type="Position2D" parent="Access" index="6"]
-position = Vector2( -60, 1836 )
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 13 )]
 

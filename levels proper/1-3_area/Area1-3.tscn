@@ -23,18 +23,10 @@ rotation = 1.5708
 
 [node name="Hub" parent="Access" index="0" instance=ExtResource( 3 )]
 position = Vector2( 1538, 579 )
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( 1188, 587 )
-
-[node name="Area1-4" parent="Access" index="2" instance=ExtResource( 3 )]
+[node name="Area1-4" parent="Access" index="1" instance=ExtResource( 3 )]
 position = Vector2( -3030, -832 )
 rotation = 3.14159
-position_node = "Pos1"
-
-[node name="Pos2" type="Position2D" parent="Access" index="3"]
-position = Vector2( -2663, -832 )
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 4 )]
 position = Vector2( 120, 576 )

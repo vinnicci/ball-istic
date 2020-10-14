@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=2]
+[ext_resource path="res://levels proper/2-4_area/Area2-4.gd" type="Script" id=3]
+[ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=4]
+
+[node name="Area2-4" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+disp_name = "Lab Area 4"
+
+[node name="TileMapGreen" parent="Nav" index="0" instance=ExtResource( 2 )]
+tile_data = PoolIntArray( 393215, -1073741821, 0, 327681, -1610612733, 0, 458751, -1073741821, 0, 393217, -1610612733, 0, 524287, -1073741821, 0, 458753, -1610612733, 0, 589823, -1073741821, 0, 524289, -1610612733, 0, 655359, -1073741821, 0, 589825, -1610612733, 0, 720895, -1073741821, 0, 655361, -1610612733, 0, 786431, -1073741821, 0, 720897, -1610612733, 0 )
+
+[node name="NextZone" parent="Access" index="0" instance=ExtResource( 4 )]

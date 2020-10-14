@@ -34,7 +34,7 @@ color_ramp = SubResource( 2 )
 [node name="Incinerator" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_cap = 200.0
+heat_cap = 399.0
 shoot_cooldown = 0.01
 crit_chance = 0.1
 proj_count_per_shot = 2

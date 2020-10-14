@@ -55,20 +55,12 @@ position = Vector2( 64, 320 )
 [node name="Area1-5" parent="Access" index="1" instance=ExtResource( 5 )]
 position = Vector2( 1157, -2032 )
 rotation = -1.5708
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="2"]
-position = Vector2( 1160, -1587 )
-
-[node name="Secret1-3" parent="Access" index="3" instance=ExtResource( 5 )]
+[node name="Secret1-3" parent="Access" index="2" instance=ExtResource( 5 )]
 position = Vector2( -2796, -894 )
 rotation = -3.14159
-position_node = "Pos1"
 
-[node name="Pos2" type="Position2D" parent="Access" index="4"]
-position = Vector2( -2327, -898 )
-
-[node name="Depot" parent="Access" index="5" instance=ExtResource( 4 )]
+[node name="Depot" parent="Access" index="3" instance=ExtResource( 4 )]
 position = Vector2( 64, -1491 )
 
 [node name="HealthCapacityII" parent="Access/Depot/Items" index="0" instance=ExtResource( 10 )]

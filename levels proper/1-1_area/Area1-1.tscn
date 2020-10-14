@@ -32,26 +32,14 @@ rotation = 1.5708
 
 [node name="Tutorial" parent="Access" index="0" instance=ExtResource( 5 )]
 position = Vector2( 1544, 960 )
-position_node = "Pos1"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( 1072, 969 )
-
-[node name="Secret1-1" parent="Access" index="2" instance=ExtResource( 5 )]
+[node name="Secret1-1" parent="Access" index="1" instance=ExtResource( 5 )]
 position = Vector2( -2552, 960 )
 rotation = 3.14159
-position_node = "Pos1"
 
-[node name="Pos3" type="Position2D" parent="Access" index="3"]
-position = Vector2( -2070, 962 )
-
-[node name="Checkpoint1-1" parent="Access" index="4" instance=ExtResource( 5 )]
+[node name="Checkpoint1-1" parent="Access" index="2" instance=ExtResource( 5 )]
 position = Vector2( -2368, -1257 )
 rotation = -1.5708
-position_node = "Pos1"
-
-[node name="Pos2" type="Position2D" parent="Access" index="5"]
-position = Vector2( -2366, -895 )
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 6 )]
 position = Vector2( 192, 120 )

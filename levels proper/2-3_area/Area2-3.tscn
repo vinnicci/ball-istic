@@ -80,33 +80,17 @@ position = Vector2( 3392, 1016 )
 [node name="Area2-2" parent="Access" index="0" instance=ExtResource( 5 )]
 position = Vector2( -962, 64 )
 rotation = 3.14159
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( -599, 64 )
-
-[node name="Checkpoint2-1" parent="Access" index="2" instance=ExtResource( 5 )]
+[node name="Checkpoint2-1" parent="Access" index="1" instance=ExtResource( 5 )]
 position = Vector2( 1857, 1653 )
 rotation = 1.5708
-position_node = "Pos1"
 
-[node name="Pos2" type="Position2D" parent="Access" index="3"]
-position = Vector2( 1859, 1333 )
-
-[node name="Area2-4" parent="Access" index="4" instance=ExtResource( 5 )]
+[node name="Area2-4" parent="Access" index="2" instance=ExtResource( 5 )]
 position = Vector2( 3393, -1961 )
 rotation = -1.5708
-position_node = "Pos1"
 
-[node name="Pos3" type="Position2D" parent="Access" index="5"]
-position = Vector2( 3394, -1536 )
-
-[node name="Area2-5" parent="Access" index="6" instance=ExtResource( 5 )]
+[node name="Area2-5" parent="Access" index="3" instance=ExtResource( 5 )]
 position = Vector2( 5186, 511 )
-position_node = "Pos1"
-
-[node name="Pos4" type="Position2D" parent="Access" index="7"]
-position = Vector2( 4801, 515 )
 
 [node name="DoorLab" parent="Doors" index="0" instance=ExtResource( 6 )]
 position = Vector2( -248, 64 )

@@ -26,8 +26,8 @@ var _saved_player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Spawn": {}, #value -> Lvl: lvl name, Pos: level coords
-	"Keys": [] # lvlname + key name
+	"Keys": [], # lvlname + key name
+	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
 }
 var _saved_despawnable_bots: Dictionary #key: lvl name + bot name, value: is_alive
 var _saved_depot_items: Dictionary #key: lvl name + depot name, value: arr_items
@@ -120,7 +120,7 @@ func _process(_delta: float) -> void:
 		_in_game_menu_visible = false
 
 
-func on_change_scene(new_lvl: String, pos: String) -> void:
+func _change_scene(new_lvl: Node, spawn: String) -> void:
 	$Resume.start()
 	$Anim.play("transition")
 	yield(self, "resume")
@@ -130,26 +130,14 @@ func on_change_scene(new_lvl: String, pos: String) -> void:
 		_save_depot_items(_current_scene)
 		_save_vault_items(_current_scene)
 		_save_despawnable_bots()
-	call_deferred("on_change_scene_deferred", new_lvl, pos)
+	call_deferred("_change_scene_deferred", new_lvl, spawn)
 
 
-func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
+func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
 	if _current_scene != null:
 		_current_scene.free()
-	var player
-	if new_lvl == "Tutorial":
-		if _player_tut == null:
-			_player_tut = scenes["PlayerTut"].instance()
-		player = _player_tut
-	else:
-		if _player == null:
-			_player = scenes["Player"].instance()
-			_load_player_items()
-		if !_player.is_connected("dead", self, "_on_player_dead"):
-			_player.connect("dead", self, "_on_player_dead")
-		player = _player
-		_player.get_node("Name/Label").text = current_save_name
-	_current_scene = scenes[new_lvl].instance()
+	var player = _instance_player(new_lvl.name)
+	_current_scene = new_lvl
 	$CanvasLayer/AreaName.text = _current_scene.disp_name
 	_current_scene.connect("secret_found", self, "on_secret_found")
 	_connect_access(_current_scene)
@@ -159,10 +147,25 @@ func on_change_scene_deferred(new_lvl: String, pos: String) -> void:
 	_load_keys(_current_scene)
 	_set_info(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
-	player.position = _current_scene.get_node("Access/" + str(pos)).position
 	add_child(_current_scene)
+	player.position = _current_scene.get_node(spawn).global_position
 	_load_saved_paths(_current_scene)
 	_resume(player)
+
+
+func _instance_player(new_lvl: String) -> Node:
+	if new_lvl == "Tutorial":
+		if _player_tut == null:
+			_player_tut = scenes["PlayerTut"].instance()
+		return _player_tut
+	else:
+		if _player == null:
+			_player = scenes["Player"].instance()
+			_load_player_items()
+		if !_player.is_connected("dead", self, "_on_player_dead"):
+			_player.connect("dead", self, "_on_player_dead")
+		_player.get_node("Name/Label").text = current_save_name
+		return _player
 
 
 func _connect_access(lvl: Node) -> void:
@@ -172,7 +175,8 @@ func _connect_access(lvl: Node) -> void:
 				access.connect("spawn_saved", self, "on_player_spawn_saved",
 					[lvl.name, access.name])
 			Global.NEXT_ZONE:
-				access.connect("moved", self, "on_change_scene")
+				access.connect("moved", self, "on_next_zone",
+					[lvl.name, access.name])
 			Global.KEY:
 				access.connect("key_obtained", self, "on_key_obtained",
 					[lvl.name + access.name])
@@ -195,6 +199,12 @@ func _on_Anim_animation_finished(anim_name: String) -> void:
 	match anim_name:
 		"transition":
 			$Anim.play("new_area")
+
+
+func on_next_zone(prev_lvl: String, nxt_lvl: String) -> void:
+	var lvl = scenes[nxt_lvl].instance()
+	var spawn = "Access/" + prev_lvl + "/Pos"
+	_change_scene(lvl, spawn)
 
 
 func _resume(player) -> void:
@@ -341,14 +351,17 @@ func _load_player_items() -> void:
 func on_player_spawn_saved(lvl: String, pos: String) -> void:
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
-	_saved_player["Spawn"]["Pos"] = pos
+	_saved_player["Spawn"]["Pos"] = "Access/" + pos
 
 
 func _load_player_spawn() -> void:
+	var level
 	if _saved_player["Spawn"] == null:
-		on_change_scene("Tutorial", "Pos1")
+		level = scenes["Tutorial"].instance()
+		_change_scene(level, "Access/Area1-1/Pos")
 	else:
-		on_change_scene(_saved_player["Spawn"]["Lvl"], _saved_player["Spawn"]["Pos"])
+		level = _saved_player["Spawn"]["Lvl"].instance()
+		_change_scene(level, _saved_player["Spawn"]["Pos"])
 
 
 #############

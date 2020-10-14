@@ -26,18 +26,10 @@ rotation = 1.5708
 [node name="Checkpoint1-2" parent="Access" index="0" instance=ExtResource( 3 )]
 position = Vector2( 1855, -1742 )
 rotation = -1.5708
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( 1866, -1303 )
-
-[node name="AreaFinal" parent="Access" index="2" instance=ExtResource( 3 )]
+[node name="AreaFinal" parent="Access" index="1" instance=ExtResource( 3 )]
 position = Vector2( 1, 3456 )
 rotation = 1.5708
-position_node = "Pos1"
-
-[node name="Pos2" type="Position2D" parent="Access" index="3"]
-position = Vector2( 0, 3079 )
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 7 )]
 position = Vector2( 5.96046e-08, -150 )

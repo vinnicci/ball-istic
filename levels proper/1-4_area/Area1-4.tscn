@@ -42,26 +42,14 @@ tile_data = PoolIntArray( -458768, -1073741821, 0, -458767, -1610612733, 0, -393
 
 [node name="Area1-3" parent="Access" index="0" instance=ExtResource( 4 )]
 position = Vector2( 950, -64 )
-position_node = "Pos2"
 
-[node name="Pos1" type="Position2D" parent="Access" index="1"]
-position = Vector2( 493, -70 )
-
-[node name="Secret1-2" parent="Access" index="2" instance=ExtResource( 4 )]
+[node name="Secret1-2" parent="Access" index="1" instance=ExtResource( 4 )]
 position = Vector2( -1920, -866 )
 rotation = -1.5708
-position_node = "Pos1"
 
-[node name="Pos2" type="Position2D" parent="Access" index="3"]
-position = Vector2( -1918, -497 )
-
-[node name="Checkpoint1-2" parent="Access" index="4" instance=ExtResource( 4 )]
+[node name="Checkpoint1-2" parent="Access" index="2" instance=ExtResource( 4 )]
 position = Vector2( -1279, 5960 )
 rotation = 1.5708
-position_node = "Pos1"
-
-[node name="Pos3" type="Position2D" parent="Access" index="5"]
-position = Vector2( -1278, 5567 )
 
 [node name="Door" parent="Doors" index="0" instance=ExtResource( 9 )]
 position = Vector2( 56, -64 )
