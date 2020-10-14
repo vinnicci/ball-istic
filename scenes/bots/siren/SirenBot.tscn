@@ -33,6 +33,7 @@ shape = SubResource( 1 )
 [node name="AI" parent="." index="10" instance=ExtResource( 7 )]
 enemy_seek_dist = 600
 max_shooting_dist = 650
+max_flee_dist = 750
 
 [node name="Siren" parent="Weapons" index="0" instance=ExtResource( 4 )]
 

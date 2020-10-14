@@ -175,7 +175,7 @@ shield_cap = 100.0
 health_cap = 100.0
 
 [node name="CDroneSpawner2" parent="Bots" index="7" instance=ExtResource( 10 )]
-position = Vector2( 3409, 73 )
+position = Vector2( 3393, 197 )
 rotation = -1.5708
 shield_cap = 100.0
 health_cap = 100.0
@@ -215,6 +215,7 @@ shape = SubResource( 1 )
 detection_range = 2000
 enemy_seek_dist = 6000
 max_shooting_dist = 6000
+max_flee_dist = 850
 
 [node name="SniperBot2" parent="Bots" index="12" instance=ExtResource( 4 )]
 position = Vector2( 1173, -741 )
@@ -235,6 +236,7 @@ shape = SubResource( 1 )
 detection_range = 2000
 enemy_seek_dist = 6000
 max_shooting_dist = 6000
+max_flee_dist = 850
 
 [editable path="Bots/SniperBot"]
 

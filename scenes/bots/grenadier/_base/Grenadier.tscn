@@ -16,7 +16,6 @@ detection_range = 1100
 enemy_seek_dist = 500
 weap_heat_cooldown = 5.0
 max_shooting_dist = 750
-max_flee_dist = 550
 
 [node name="Label" parent="Name" index="0"]
 text = "GRENADIER"

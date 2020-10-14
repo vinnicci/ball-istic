@@ -28,7 +28,8 @@ scale_random = 0.9
 color_ramp = SubResource( 2 )
 
 [node name="Explosion" instance=ExtResource( 1 )]
-explosion_radius = 150
+explosion_radius = 200
+damage = 20.0
 
 [node name="Particles2D" parent="." index="2"]
 process_material = SubResource( 3 )
