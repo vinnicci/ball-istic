@@ -13,7 +13,7 @@ func set_parent(new_parent) -> void:
 
 
 #camera zoom effect
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _parent_node is Global.CLASS_PLAYER:
 		if (_parent_node.current_weapon == self &&
 			(_parent_node.state == Global.CLASS_BOT.State.TURRET ||

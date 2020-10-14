@@ -90,5 +90,5 @@ func _on_bot_dead(bot) -> void:
 
 
 #anim effect cleanup -> critical, deflected, stunned, charge and teleport trail
-func _on_Anim_finished(anim_name: String, anim_obj: Node) -> void:
+func _on_Anim_finished(_anim_name: String, anim_obj: Node) -> void:
 	anim_obj.queue_free()

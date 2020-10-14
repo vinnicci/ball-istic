@@ -17,7 +17,7 @@ func _ready() -> void:
 	current_health = health_capacity
 
 
-func take_damage(damage: float, knockback: Vector2) -> void:
+func take_damage(damage: float, _knockback: Vector2) -> void:
 	if destructible == false:
 		return
 	current_health -= damage

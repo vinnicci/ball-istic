@@ -23,7 +23,7 @@ func _on_HurtBox_area_entered(area: Area2D) -> void:
 		if _parent_node.current_faction == area.shooter_faction():
 			return
 		if area.has_node("Explosion") == true:
-			area.exploded = true
+			area.get_node("Explosion").exploded = true
 		area.stop_projectile()
 
 

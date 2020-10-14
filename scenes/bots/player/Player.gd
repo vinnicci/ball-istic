@@ -50,8 +50,6 @@ func _init_player() -> void:
 	
 	i = 0
 	for weap in arr_weapons:
-		if weap is Global.PLAYER_BUILT_IN_WEAP:
-			ui_inventory.player_built_in_weap = weap
 		ui_inventory.get_node("Loadout/SlotsContainer/WeaponSlots/" + str(i)).set_item(weap)
 		$PlayerUI/WeaponSlots.get_node(str(i)).set_item(weap)
 		i += 1
@@ -87,11 +85,11 @@ func cap_current_vars() -> void:
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_update_bar_weapon_heat()
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_control_player()
 	_control_player_weapon_hotkeys()
 

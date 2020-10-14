@@ -35,7 +35,7 @@ func init_travel(pos: Vector2, dir: float) -> void:
 var _dying: bool = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#glow upon dying
 	if (_lifetime.time_left <= 1 && _dying == false) || state == State.DEAD:
 		_switch_tween.interpolate_property(_glow, "modulate", _glow.modulate,

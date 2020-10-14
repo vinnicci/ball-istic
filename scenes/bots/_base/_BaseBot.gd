@@ -313,10 +313,10 @@ func _process(delta: float) -> void:
 
 
 #ccd may be able to prevent wall phasing on fast moving bots
-func _physics_process(delta: float) -> void:
-	if linear_velocity.length() > 2500 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
+func _physics_process(_delta: float) -> void:
+	if linear_velocity.length() > 2300 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
-	elif linear_velocity.length() <= 2500 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
+	elif linear_velocity.length() <= 2300 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 
 
@@ -565,7 +565,7 @@ func _clear_surrounding_proj() -> void:
 		if current_faction == area.shooter_faction():
 			continue
 		if area.has_node("Explosion") == true:
-			area.exploded = true
+			area.get_node("Explosion").exploded = true
 		area.stop_projectile()
 
 
@@ -678,6 +678,6 @@ func _on_ExplodeDelay_timeout() -> void:
 	$Explosion.start_explosion()
 
 
-func _on_Explode_finished(anim_name: String) -> void:
+func _on_Explode_finished(_anim_name: String) -> void:
 	queue_free()
 

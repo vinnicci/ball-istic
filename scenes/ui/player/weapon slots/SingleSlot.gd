@@ -19,7 +19,7 @@ func set_item(new_item) -> void:
 		add_child(icon)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if item == null:
 		$SlotHeat.value = 0
 		return

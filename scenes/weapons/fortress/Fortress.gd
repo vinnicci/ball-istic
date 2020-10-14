@@ -23,5 +23,5 @@ func _on_FrontShield_area_entered(area: Area2D) -> void:
 	$FrontShield/Anim.play("catch_proj")
 	$ShieldHit.play()
 	if area.has_node("Explosion") == true:
-		area.exploded = true
+		area.get_node("Explosion").exploded = true
 	area.stop_projectile()

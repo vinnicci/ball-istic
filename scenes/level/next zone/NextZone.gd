@@ -11,7 +11,7 @@ func _ready() -> void:
 	$NextZoneName/Label.text = "To " + name
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if global_position.distance_to(get_global_mouse_position()) <= 150:
 		$NextZoneName.visible = true
 	else:

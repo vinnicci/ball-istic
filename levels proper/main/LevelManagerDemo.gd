@@ -18,7 +18,9 @@ var scenes: Dictionary = {
 	"AreaFinal": preload("res://levels proper/1_area_final/AreaFinal.tscn"),
 	"Secret1-3": preload("res://levels proper/1-3_secret/Secret1-3.tscn"),
 	"Area2-1": preload("res://levels proper/2-1_area/Area2-1.tscn"),
-	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn")
+	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn"),
+	"Area2-3": preload("res://levels proper/2-3_area/Area2-3.tscn"),
+	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -100,7 +102,7 @@ func _on_LevelManager_tree_exiting() -> void:
 var _in_game_menu_visible: bool = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_instance_valid(_player) == false:
 		return
 	if Input.is_action_just_pressed("ui_cancel") && _in_game_menu_visible == false:
@@ -295,7 +297,7 @@ func _save_player_items() -> void:
 	#clear player trash
 	var trash_slot = _player.ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot")
 	if trash_slot.item != null:
-		trash_slot.free()
+		trash_slot.item.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
 	#detach items

@@ -3,7 +3,7 @@ z index:
 	weapon sprites - 1
 	feedback scenes - 2
 	bot bars - 2
-	names - 3
+	bot names - 3
 
 
 collision layer:
@@ -32,7 +32,7 @@ collision masks:
 		fortress - 3
 		mine sensor - 1
 		melee weapons - 1, 2
-		paladin hammber - 1, 2, 3
+		paladin hammer - 1, 2, 3
 		phaser raycast - 2
 		siren call area - 1
 		

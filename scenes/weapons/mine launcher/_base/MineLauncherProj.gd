@@ -12,7 +12,7 @@ func init_travel(pos: Vector2, dir: float) -> void:
 var _visibility_dist: int = 350
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if (is_instance_valid(_level_node) == false ||
 		is_instance_valid(_level_node.get_player()) == false):
 		return

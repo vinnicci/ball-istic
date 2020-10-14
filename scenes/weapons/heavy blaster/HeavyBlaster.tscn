@@ -33,7 +33,6 @@ color_ramp = SubResource( 2 )
 [node name="HeavyBlaster" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 Projectile = ExtResource( 4 )
-heat_cap = 199.0
 spread = 7.0
 
 [node name="SlotIcon" parent="." index="0"]

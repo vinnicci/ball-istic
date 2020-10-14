@@ -26,7 +26,4 @@ uv = PoolVector2Array( 220.776, 128, 209.179, 146.555, 197.582, 165.11, 185.985,
 [node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )
 
-[node name="AI" parent="." index="10"]
-weap_heat_cooldown = 60.0
-
 [node name="FDroneSpawnerLauncher" parent="Weapons" index="0" instance=ExtResource( 5 )]

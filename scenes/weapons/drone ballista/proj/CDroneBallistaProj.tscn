@@ -10,6 +10,7 @@ resource_local_to_scene = true
 
 [node name="CDroneBallistaProj" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
+charge_dmg_rate = 0.5
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 4 )

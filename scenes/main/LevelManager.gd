@@ -272,7 +272,7 @@ func _save_player_items() -> void:
 	#clear player trash
 	var trash_slot = _player.ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot")
 	if trash_slot.item != null:
-		trash_slot.free()
+		trash_slot.item.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
 	#detach items

@@ -9,7 +9,7 @@ func _ready() -> void:
 	Projectile = normal_proj
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _is_almost_overheating == true:
 		Projectile = super_proj
 		current_heat_per_shot = 0.25

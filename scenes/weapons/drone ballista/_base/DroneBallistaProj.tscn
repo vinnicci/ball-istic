@@ -7,6 +7,7 @@
 resource_local_to_scene = true
 
 [node name="DroneBallistaProj" instance=ExtResource( 2 )]
+health_cap = 10.0
 
 [node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )

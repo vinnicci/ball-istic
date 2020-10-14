@@ -7,6 +7,7 @@ export (int) var knockback: int = 500
 
 var _player_cam: Camera2D = null
 var _level_cam: Camera2D = null
+var exploded: bool = false
 var is_crit: bool = false
 const PARTICLEV_RADIUS_RATIO: float = 0.35
 
@@ -37,15 +38,18 @@ func _init_explosion() -> void:
 
 
 func start_explosion() -> void:
+	if exploded == true:
+		return
 	if is_instance_valid(_player_cam) && (_player_cam.get_parent().state != Global.CLASS_BOT.State.DEAD &&
 		global_position.distance_to(_player_cam.global_position) < explosion_radius * 3):
 		_player_cam.shake_camera(20, 0.05, 0.05, 1)
 	elif global_position.distance_to(_level_cam.global_position) < explosion_radius * 3:
 		_level_cam.shake_camera(20, 0.1, 0.1, 1)
+	if exploded == false:
+		exploded = true
 	var bodies = get_overlapping_bodies()
 	for body in bodies:
-		if body != get_parent():
-			_apply_effect(body)
+		_apply_effect(body)
 	$Blast/Anim.play("explode")
 	$Particles2D.emitting = true
 	$Sound.play()

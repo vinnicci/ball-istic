@@ -3,7 +3,6 @@ extends Control
 
 var _player: Node
 var _player_weap_hud: Node
-var player_built_in_weap: Node
 var accessing: String
 var held: Node
 
@@ -56,7 +55,7 @@ func set_player(player_node) -> void:
 	$Stats.set_player(_player)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	held.position = get_viewport().get_mouse_position()
 
 
@@ -175,7 +174,7 @@ func _manage_item(slot_node: Node) -> void:
 func _manage_trash(slot_node: Node) -> void:
 	if held.item == null && slot_node.item != null:
 		_swap(slot_node)
-	elif held.item == player_built_in_weap:
+	elif held.item is Global.PLAYER_BUILT_IN_WEAP:
 		_show_inventory_warning("CAN'T REMOVE BUILT-IN WEAPON")
 		return
 	elif held.item is Global.CLASS_WEAPON && _check_if_equipping_weapon() == false:
@@ -248,7 +247,7 @@ func _manage_vault(slot_node: Node) -> void:
 			held.from_slot == "passive")):
 			_show_inventory_warning(NOT_IN_BOT_STATION)
 			return
-		if held.item == player_built_in_weap:
+		if held.item is Global.PLAYER_BUILT_IN_WEAP:
 			_show_inventory_warning("CAN'T STORE BUILT-IN WEAPON")
 			return
 	_swap(slot_node)

@@ -29,6 +29,6 @@ func update_stats() -> void:
 		get_node("VBoxContainer/" + stat + "/Val").text = str(stats[stat])
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$VBoxContainer/Health/CurrentVal.text = str(_player.get_current_health())
 	$VBoxContainer/Shield/CurrentVal.text = str(_player.get_current_shield())

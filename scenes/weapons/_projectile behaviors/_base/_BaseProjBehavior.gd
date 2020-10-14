@@ -29,7 +29,7 @@ func set_level(new_level: Node) -> void:
 	_level_node = new_level
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	#only used by homing effect
 	if _detected.size() != 0 && _target_bot == null:
 		var target = _detected.pop_front()

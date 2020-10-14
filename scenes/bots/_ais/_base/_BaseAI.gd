@@ -67,7 +67,7 @@ func set_level(level: Node) -> void:
 	_level_node = level
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _check_if_valid_bot(_enemy) == false:
 		_get_new_target_enemy()
 	if (_check_if_valid_bot(_enemy) == true &&
@@ -86,7 +86,7 @@ func _physics_process(delta: float) -> void:
 			_flee()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$FleeRays.global_rotation = 0
 	$Rays.global_rotation = 0
 
@@ -210,7 +210,10 @@ func _on_FleeEvaluate_timeout() -> void:
 			continue
 		var flee_points: int = _enemy.global_position.distance_to(ray.get_node("Pos").global_position)
 		_flee_routes[flee_points] = ray
-	$Rays/Velocity.global_rotation = _flee_routes[_flee_routes.keys().max()].global_rotation
+	if _flee_routes.keys().size() != 0:
+		$Rays/Velocity.global_rotation = _flee_routes[_flee_routes.keys().max()].global_rotation
+	else:
+		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:

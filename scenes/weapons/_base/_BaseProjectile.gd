@@ -12,7 +12,6 @@ var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
 var is_stopped: bool = false
 var is_crit: bool = false
-var exploded: bool = false
 var _level_node: Node = null
 var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
@@ -93,7 +92,6 @@ func _damage_bot(bot: Node) -> void:
 	else:
 		if has_node("Explosion") == true:
 			$Explosion.start_explosion()
-			exploded = true
 		else:
 			bot.take_damage(damage, Vector2(knockback, 0).rotated(rotation))
 			if is_crit == true:
@@ -126,9 +124,7 @@ func stop_projectile(body = null) -> void:
 	set_deferred("monitoring", false)
 	_play_hit_blast_anim(body)
 	if has_node("Explosion") == true:
-		if exploded == false:
-			$Explosion.start_explosion()
-			exploded = true
+		$Explosion.start_explosion()
 		var explode_anim = $Explosion/Blast/Anim
 		if explode_anim.is_playing() == true:
 			_connect_blast_anim(explode_anim)
@@ -153,5 +149,5 @@ func _play_hit_blast_anim(object) -> void:
 	$OnHitParticles.emitting = true
 
 
-func _on_anim_finished(anim_name: String) -> void:
+func _on_anim_finished(_anim_name: String) -> void:
 	queue_free()
