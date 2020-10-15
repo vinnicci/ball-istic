@@ -47,6 +47,7 @@ shield_cap = 150.0
 health_cap = 500.0
 speed = 2500
 weap_dmg_rate = 2.0
+respawnable = false
 
 [node name="CollisionShape" parent="Bots/BigCSpawner" index="8"]
 shape = SubResource( 1 )

@@ -447,7 +447,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -455,7 +455,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -485,7 +485,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -495,7 +495,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -523,7 +523,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 369, -797.622 ),
-"size": Vector2( 169, 53.0005 )
+"size": Vector2( 169, 53.0004 )
 },
 "name": "repeat7",
 "type": 8
@@ -1384,7 +1384,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -1392,7 +1392,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -1422,7 +1422,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -1432,7 +1432,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -1460,7 +1460,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 369, -797.622 ),
-"size": Vector2( 169, 53.0005 )
+"size": Vector2( 169, 53.0004 )
 },
 "name": "repeat7",
 "type": 8
@@ -2220,7 +2220,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2228,7 +2228,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -2258,7 +2258,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -2268,7 +2268,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -2296,7 +2296,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 369, -797.622 ),
-"size": Vector2( 169, 53.0005 )
+"size": Vector2( 169, 53.0004 )
 },
 "name": "repeat7",
 "type": 8
@@ -2316,7 +2316,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2324,7 +2324,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -2354,7 +2354,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -2364,7 +2364,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -2392,7 +2392,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 369, -797.622 ),
-"size": Vector2( 169, 53.0005 )
+"size": Vector2( 169, 53.0004 )
 },
 "name": "repeat7",
 "type": 8
@@ -2404,7 +2404,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2412,7 +2412,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -2442,7 +2442,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -2452,7 +2452,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -2483,7 +2483,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2491,7 +2491,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -2501,7 +2501,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2532,7 +2532,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -2553,7 +2553,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -2837,7 +2837,7 @@ tree = {
 "fn": "task_cond_is_enemy_instance_valid",
 "offset": Vector2( 999, -897.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task47",
@@ -2845,7 +2845,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -897.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter23",
 "type": 14
@@ -2875,7 +2875,7 @@ tree = {
 } ],
 "data": {
 "offset": Vector2( 799, -697.622 ),
-"size": Vector2( 123, 49.0005 )
+"size": Vector2( 123, 49.0004 )
 },
 "name": "inverter20",
 "type": 14
@@ -2885,7 +2885,7 @@ tree = {
 "fn": "task_act_to_roll",
 "offset": Vector2( 799, -597.622 ),
 "params": [  ],
-"size": Vector2( 345, 85 ),
+"size": Vector2( 345, 84.9999 ),
 "values": [  ]
 },
 "name": "task3",
@@ -2913,7 +2913,7 @@ tree = {
 "data": {
 "count": 0.0,
 "offset": Vector2( 369, -797.622 ),
-"size": Vector2( 169, 53.0005 )
+"size": Vector2( 169, 53.0004 )
 },
 "name": "repeat7",
 "type": 8
@@ -2952,4 +2952,4 @@ tree = {
 "type": 0
 }
 }
-_tree_id = "2783606402177619"
+_tree_id = "2387095170215533367"

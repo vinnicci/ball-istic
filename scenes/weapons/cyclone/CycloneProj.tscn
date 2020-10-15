@@ -14,7 +14,7 @@ _data = [ Vector2( 0, 0 ), 0.0, -2.2387, 0, 1, Vector2( 0.0805501, -0.180328 ), 
 
 [node name="CycloneProj" instance=ExtResource( 4 )]
 script = ExtResource( 2 )
-damage = 2.0
+damage = 4.0
 knockback = 75
 
 [node name="Sprite" parent="." index="1"]

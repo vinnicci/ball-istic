@@ -116,7 +116,7 @@ func _clear_path_points() -> void:
 func _get_path_points(start: Vector2, end: Vector2) -> void:
 	_clear_path_points()
 	_path_points = _level_node.get_points(start, end)
-	_next_path_point = _path_points.pop_front()
+	_next_path_point = _path_points.front()
 
 
 func _get_distance(start_node: Node, target_node: Node) -> int:
@@ -125,8 +125,6 @@ func _get_distance(start_node: Node, target_node: Node) -> int:
 	var start: Vector2 = start_node.global_position
 	var end: Vector2 = target_node.global_position
 	var arr: Array = _level_node.get_points(start, end)
-	if arr.size() <= 1:
-		return 0
 	var dist: int = arr.pop_front().distance_to(arr.front())
 	while arr.size() != 1:
 		dist += arr.pop_front().distance_to(arr.front())
@@ -191,7 +189,10 @@ func _seek(target: Global.CLASS_BOT) -> void:
 		$Rays/Velocity.look_at(_next_path_point)
 		_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 		return
-	_next_path_point = _path_points.pop_front()
+	_path_points.pop_front()
+	if _path_points.size() == 0:
+		return
+	_next_path_point = _path_points.front()
 	$Rays/Velocity.look_at(_next_path_point)
 	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
 

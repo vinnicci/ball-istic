@@ -4,6 +4,8 @@
 [ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.gd" type="Script" id=2]
 [ext_resource path="res://addons/btree/script/btree.gd" type="Script" id=3]
 
+
+
 [node name="AI" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 enemy_seek_dist = 500
