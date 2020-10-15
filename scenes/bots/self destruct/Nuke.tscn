@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/global/explosions/nuclear/NuclearExplosion.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/bots/self destruct/_base/SelfDestructAI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/_ais/self destruct ai/SelfDestructAI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/bots/self destruct/Nuke.gd" type="Script" id=3]
 [ext_resource path="res://assets/bots/tex_nuke_bot.png" type="Texture" id=4]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=5]

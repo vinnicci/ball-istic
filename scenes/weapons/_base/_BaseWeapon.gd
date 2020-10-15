@@ -230,8 +230,16 @@ func _modify_proj(proj_pack) -> Node:
 	var proj = proj_pack.instance()
 	proj.set_shooter(_parent_node, _parent_node.current_faction)
 	proj.set_level(_level_node)
+	if proj is Global.CLASS_BOT_PROJ:
+		_apply_bot_proj_stats(proj)
 	_apply_crit(proj)
 	return proj
+
+
+func _apply_bot_proj_stats(proj) -> void:
+	proj.health_cap *= _parent_node.current_weap_dmg_rate
+	proj.weap_dmg_rate *= 0.5 * _parent_node.current_weap_dmg_rate
+	proj.charge_dmg_rate += 0.05 * _parent_node.current_weap_dmg_rate
 
 
 func _apply_crit(proj) -> void:

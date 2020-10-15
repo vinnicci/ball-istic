@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/level/_base/_BaseTileMap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallicLow.gd" type="Script" id=2]
+[ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallicLow.tres" type="TileSet" id=3]
+
+[node name="TileMapMetallicLow" instance=ExtResource( 1 )]
+tile_set = ExtResource( 3 )
+collision_layer = 16
+collision_mask = 1
+script = ExtResource( 2 )

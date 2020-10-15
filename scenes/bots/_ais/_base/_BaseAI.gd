@@ -4,6 +4,7 @@ extends Node2D
 export (int) var detection_range: int = 1000
 export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
+export (float) var charge_break: float = 0.5
 export (float) var weap_heat_cooldown: float = 0
 
 var _params_dict: Dictionary
@@ -47,6 +48,7 @@ func _ready() -> void:
 	#export vars in dictionary
 	_params_dict["master_seek"] = master_seek_dist
 	_params_dict["enemy_seek"] = enemy_seek_dist
+	_params_dict["charge_break"] = charge_break
 
 
 func set_parent(new_parent: Global.CLASS_BOT):

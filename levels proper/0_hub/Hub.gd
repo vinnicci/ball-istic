@@ -7,6 +7,8 @@ var keys: Array
 
 func _ready() -> void:
 	main_door.set_level(self)
+	$Nav/Destructible.set_level(self)
+	$Nav/Destructible.set_secret($Nav/Secret)
 
 
 func set_keys(player_keys: Array) -> void:

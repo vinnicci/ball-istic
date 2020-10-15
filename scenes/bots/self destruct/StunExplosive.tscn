@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/global/explosions/pulse/PulseExplosion.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/bots/self destruct/StunExplosive.gd" type="Script" id=4]
-[ext_resource path="res://scenes/bots/self destruct/_base/SelfDestructAI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/bots/_ais/self destruct ai/SelfDestructAI.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true

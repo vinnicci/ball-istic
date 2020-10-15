@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/bots/spawner/FDroneSpawner.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=24]
 [ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=27]
@@ -112,6 +113,8 @@ rotation = 1.5708
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
 position = Vector2( 357, 711 )
 speed = 1500
+charge_force_mult = 0.8
+charge_dmg_rate = 0.4
 destructible = false
 
 [node name="SniperBot" parent="Bots" index="1" instance=ExtResource( 2 )]
@@ -130,14 +133,13 @@ weap_heat_cooldown = 10.0
 [node name="Sniper" parent="Bots/SniperBot/Weapons" index="0"]
 shoot_cooldown = 0.5
 
-[node name="Fighter" parent="Bots" index="2" instance=ExtResource( 17 )]
-position = Vector2( 2795, 1490 )
-deployed = true
-
-[node name="Fighter2" parent="Bots" index="3" instance=ExtResource( 17 )]
+[node name="Fighter2" parent="Bots" index="2" instance=ExtResource( 17 )]
 position = Vector2( 644, 1733 )
 deployed = true
 faction = Color( 0, 1, 0, 1 )
+
+[node name="FDroneSpawner" parent="Bots" index="3" instance=ExtResource( 22 )]
+position = Vector2( 3029, 1841 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

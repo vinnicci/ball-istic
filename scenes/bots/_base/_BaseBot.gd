@@ -20,7 +20,7 @@ export (bool) var deployed: bool = false
 export (Color) var faction: Color = Color(1, 0, 0) setget , get_faction
 export (Color) var charge_outline: = Color(1, 0, 0.9) setget , get_charge_outline
 
-const OUTLINE_SIZE: int = 5
+const OUTLINE_SIZE: int = 6
 const ROLLING_SPEED: float = 0.6
 const ROLL_MODE_DAMP: int = 2
 const TURRET_MODE_DAMP: int = 5

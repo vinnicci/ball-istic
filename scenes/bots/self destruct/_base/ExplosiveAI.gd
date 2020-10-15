@@ -1,1 +1,1 @@
-extends "res://scenes/bots/self destruct/_base/SelfDestructAI.gd"
+extends "res://scenes/bots/_ais/self destruct ai/SelfDestructAI.gd"

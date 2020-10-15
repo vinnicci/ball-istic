@@ -15,12 +15,16 @@ var scenes: Dictionary = {
 	"Secret1-2": preload("res://levels proper/1-2_secret/Secret1-2.tscn"),
 	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn"),
 	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn"),
-	"AreaFinal": preload("res://levels proper/1_area_final/AreaFinal.tscn"),
+	"Area1Final": preload("res://levels proper/1_area_final/Area1Final.tscn"),
 	"Secret1-3": preload("res://levels proper/1-3_secret/Secret1-3.tscn"),
+	"Secret1-4": preload("res://levels proper/1-4_secret/Secret1-4.tscn"),
 	"Area2-1": preload("res://levels proper/2-1_area/Area2-1.tscn"),
 	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn"),
 	"Area2-3": preload("res://levels proper/2-3_area/Area2-3.tscn"),
-	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn")
+	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn"),
+	"Area2-4": preload("res://levels proper/2-4_area/Area2-4.tscn"),
+	"Secret2-1": preload("res://levels proper/2-1_secret/Secret2-1.tscn"),
+	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -360,7 +364,7 @@ func _load_player_spawn() -> void:
 		level = scenes["Tutorial"].instance()
 		_change_scene(level, "Access/Area1-1/Pos")
 	else:
-		level = _saved_player["Spawn"]["Lvl"].instance()
+		level = scenes[_saved_player["Spawn"]["Lvl"]].instance()
 		_change_scene(level, _saved_player["Spawn"]["Pos"])
 
 

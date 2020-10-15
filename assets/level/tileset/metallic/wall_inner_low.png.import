@@ -1,0 +1,36 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path.s3tc="res://.import/wall_inner_low.png-bd1175e195b0cad3d8057cd2b2b83977.s3tc.stex"
+path.etc2="res://.import/wall_inner_low.png-bd1175e195b0cad3d8057cd2b2b83977.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
+
+[deps]
+
+source_file="res://assets/level/tileset/metallic/wall_inner_low.png"
+dest_files=[ "res://.import/wall_inner_low.png-bd1175e195b0cad3d8057cd2b2b83977.s3tc.stex", "res://.import/wall_inner_low.png-bd1175e195b0cad3d8057cd2b2b83977.etc2.stex" ]
+
+[params]
+
+compress/mode=2
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=true
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
