@@ -121,7 +121,6 @@ rotation = -1.5708
 physics_material_override = SubResource( 1 )
 shield_cap = 50.0
 health_cap = 100.0
-weap_dmg_rate = 0.75
 respawnable = false
 deployed = true
 

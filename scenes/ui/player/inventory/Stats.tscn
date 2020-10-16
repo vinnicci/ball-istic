@@ -17,7 +17,7 @@ __meta__ = {
 modulate = Color( 0.243137, 0.466667, 0.243137, 0.784314 )
 margin_top = 43.0
 margin_right = 400.0
-margin_bottom = 458.0
+margin_bottom = 494.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -34,14 +34,14 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 20.0
 margin_top = 48.0
-margin_right = 262.0
+margin_right = 380.0
 margin_bottom = 451.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Health" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 33.0
 custom_constants/separation = 10
 
@@ -84,7 +84,7 @@ __meta__ = {
 
 [node name="Shield" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 37.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 70.0
 custom_constants/separation = 10
 
@@ -127,7 +127,7 @@ __meta__ = {
 
 [node name="ShieldRegen" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 74.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 107.0
 custom_constants/separation = 10
 
@@ -161,7 +161,7 @@ __meta__ = {
 
 [node name="Speed" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 111.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 144.0
 custom_constants/separation = 15
 
@@ -186,7 +186,7 @@ __meta__ = {
 
 [node name="TransformSpeed" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 148.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 181.0
 custom_constants/separation = 10
 
@@ -220,7 +220,7 @@ __meta__ = {
 
 [node name="ChargeCooldown" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 185.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 218.0
 custom_constants/separation = 10
 
@@ -254,7 +254,7 @@ __meta__ = {
 
 [node name="ChargeForceMult" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 222.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 255.0
 custom_constants/separation = 10
 
@@ -288,7 +288,7 @@ __meta__ = {
 
 [node name="ChargeDmg" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 259.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 292.0
 custom_constants/separation = 10
 
@@ -322,7 +322,7 @@ __meta__ = {
 
 [node name="ChargeDmgValue" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 296.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 329.0
 custom_constants/separation = 15
 
@@ -347,7 +347,7 @@ __meta__ = {
 
 [node name="WeaponDmg" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 333.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 366.0
 custom_constants/separation = 10
 
@@ -379,10 +379,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KnockbackResist" type="HBoxContainer" parent="VBoxContainer"]
+[node name="DmgResist" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 370.0
-margin_right = 242.0
+margin_right = 360.0
 margin_bottom = 403.0
+custom_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/DmgResist"]
+margin_right = 87.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "DMG RESIST:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Val" type="Label" parent="VBoxContainer/DmgResist"]
+margin_left = 97.0
+margin_right = 97.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Unit" type="Label" parent="VBoxContainer/DmgResist"]
+margin_left = 107.0
+margin_right = 123.0
+margin_bottom = 33.0
+custom_fonts/font = ExtResource( 1 )
+text = "%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KnockbackResist" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 407.0
+margin_right = 360.0
+margin_bottom = 440.0
 custom_constants/separation = 10
 
 [node name="Label" type="Label" parent="VBoxContainer/KnockbackResist"]

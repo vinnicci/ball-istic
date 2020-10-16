@@ -14,7 +14,9 @@
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityII.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield regen/ShieldRegenII.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/passives/resistance/ResistanceII.tscn" type="PackedScene" id=15]
+
+
 
 [node name="Area1Final" instance=ExtResource( 2 )]
 script = ExtResource( 1 )

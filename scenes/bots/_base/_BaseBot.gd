@@ -6,7 +6,6 @@ export (float) var shield_cap: float = 10 setget , get_shield_cap
 export (float) var shield_regen: float = 1.0 setget , get_shield_regen
 export (float) var health_cap: float = 10 setget , get_health_cap
 export (int, 0, 9999) var speed: int = 1000 setget , get_speed
-export (float, 0, 1.0) var knockback_resist: float = 0.1 setget , get_knockback_resist
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.3, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
 export (float, 0.1, 2.0) var charge_force_mult: float = 0.5 setget , get_charge_force_mult
@@ -14,6 +13,8 @@ export (float) var charge_crit_mult: float = 2 setget , get_charge_crit_mult
 export (float, 0, 1.0) var charge_crit_chance: float = 0.2 setget , get_charge_crit_chance
 export (float) var charge_dmg_rate: float = 0.2 setget , get_charge_dmg_rate
 export (float) var weap_dmg_rate: float = 1 setget , get_weap_dmg_rate
+export (float, 0, 1.0) var dmg_resist: float = 0 setget , get_dmg_resist
+export (float, 0, 1.0) var knockback_resist: float = 0 setget , get_knockback_resist
 export (bool) var destructible: bool = true
 export (bool) var respawnable: bool = true
 export (bool) var deployed: bool = false
@@ -34,6 +35,7 @@ var current_shield_cap: float
 var current_shield: float setget set_current_shield, get_current_shield
 var current_health_cap: float
 var current_health: float setget set_current_health, get_current_health
+var current_dmg_resist: float
 var current_speed: int
 var current_shield_regen: float
 var current_transform_speed: float
@@ -77,6 +79,9 @@ func get_shield_cap():
 
 func get_health_cap():
 	return health_cap
+
+func get_dmg_resist():
+	return dmg_resist
 
 func get_speed():
 	return speed
@@ -280,8 +285,8 @@ func reset_bot_vars() -> void:
 	current_charge_crit_chance = charge_crit_chance
 	current_charge_dmg_rate = charge_dmg_rate
 	current_weap_dmg_rate = weap_dmg_rate
-	
 	current_speed = speed
+	current_dmg_resist = dmg_resist
 	current_knockback_resist = knockback_resist
 	
 	current_faction = faction
@@ -529,18 +534,19 @@ func apply_knockback(knockback: Vector2) -> void:
 
 func take_damage(damage: float, knockback: Vector2) -> void:
 	apply_knockback(knockback)
-	dmg_effect(damage)
+	var real_dmg = damage - (damage * current_dmg_resist)
+	dmg_effect(real_dmg)
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
 	if state == State.DEAD:
 		return
-	if current_shield - damage >= 0:
+	if current_shield - real_dmg >= 0:
 		$Sounds/ShieldDamage.play()
-		current_shield -= damage
-	elif current_shield - damage < 0:
+		current_shield -= real_dmg
+	elif current_shield - real_dmg < 0:
 		$Sounds/HealthDamage.play()
-		current_health += current_shield - damage
+		current_health += current_shield - real_dmg
 		current_shield = 0
 	bar_shield.value = current_shield
 	bar_health.value = current_health

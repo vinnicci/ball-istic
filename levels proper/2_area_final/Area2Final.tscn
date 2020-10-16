@@ -12,9 +12,11 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistIII.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/passives/resistance/ResistanceIII.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=15]
+
+
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true

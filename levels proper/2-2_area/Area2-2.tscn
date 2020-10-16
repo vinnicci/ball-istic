@@ -224,7 +224,7 @@ health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot4" parent="Bots" index="2" instance=ExtResource( 11 )]
-position = Vector2( 1299, 152 )
+position = Vector2( 1269, -147 )
 rotation = 1.63539
 shield_cap = 95.0
 health_cap = 95.0

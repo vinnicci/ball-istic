@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.gd" type="Script" id=1]
-[ext_resource path="res://scenes/passives/knockback resist/_base/KnockbackResist.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/resistance/ResistanceI.gd" type="Script" id=1]
+[ext_resource path="res://scenes/passives/resistance/_base/Resistance.tscn" type="PackedScene" id=2]
 
 [sub_resource type="StreamTexture" id=1]
 resource_local_to_scene = true
 flags = 3
 load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5ee.s3tc.stex"
 
-[node name="KnockbackResistI" instance=ExtResource( 2 )]
+[node name="ResistanceI" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-effect = 0.267
+effect = 0.25
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 0.145098, 1, 0.239216, 1 )

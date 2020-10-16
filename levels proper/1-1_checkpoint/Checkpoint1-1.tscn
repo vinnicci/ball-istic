@@ -13,9 +13,11 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityI.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/blaster/ChargeBlaster.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/weapons/blaster/BurstBlaster.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/passives/resistance/ResistanceI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownI.tscn" type="PackedScene" id=16]
+
+
 
 [node name="Checkpoint1-1" instance=ExtResource( 2 )]
 script = ExtResource( 1 )

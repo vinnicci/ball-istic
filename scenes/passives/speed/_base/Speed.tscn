@@ -11,7 +11,6 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="Speed" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-description = "speed."
 
 [node name="SlotIcon" parent="." index="0"]
 texture = SubResource( 1 )

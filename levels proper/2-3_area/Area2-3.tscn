@@ -91,7 +91,7 @@ health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot3" parent="Bots" index="3" instance=ExtResource( 8 )]
-position = Vector2( 2965, -122 )
+position = Vector2( 2944, -394 )
 shield_cap = 95.0
 health_cap = 95.0
 weap_dmg_rate = 2.0
@@ -118,7 +118,7 @@ health_cap = 100.0
 weap_dmg_rate = 2.0
 
 [node name="CDroneSpawner2" parent="Bots" index="7" instance=ExtResource( 10 )]
-position = Vector2( 3393, 197 )
+position = Vector2( 3837, 905 )
 rotation = -1.5708
 shield_cap = 100.0
 health_cap = 100.0
@@ -139,7 +139,7 @@ health_cap = 95.0
 charge_dmg_rate = 0.4
 
 [node name="Charger2" parent="Bots" index="10" instance=ExtResource( 7 )]
-position = Vector2( 3840, -115 )
+position = Vector2( 3859, -385 )
 rotation = 3.14159
 shield_cap = 95.0
 health_cap = 95.0

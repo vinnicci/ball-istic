@@ -22,9 +22,11 @@
 [ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels proper/0_hub/MainDoor.gd" type="Script" id=21]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=22]
-[ext_resource path="res://scenes/passives/knockback resist/KnockbackResistI.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/passives/resistance/ResistanceI.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrownLow.tscn" type="PackedScene" id=26]
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 400, 100 )

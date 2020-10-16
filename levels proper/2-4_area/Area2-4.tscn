@@ -192,15 +192,9 @@ position = Vector2( -699, -1550 )
 shield_cap = 150.0
 health_cap = 600.0
 weap_dmg_rate = 4.0
+respawnable = false
 
-[node name="SniperBot" parent="Bots" index="8" instance=ExtResource( 7 )]
-position = Vector2( -418, -2638 )
-shield_cap = 50.0
-health_cap = 50.0
-weap_dmg_rate = 2.0
-deployed = true
-
-[node name="SniperBot3" parent="Bots" index="9" instance=ExtResource( 7 )]
+[node name="SniperBot3" parent="Bots" index="8" instance=ExtResource( 7 )]
 position = Vector2( -1083, -1897 )
 rotation = 1.52856
 shield_cap = 50.0
@@ -208,8 +202,8 @@ health_cap = 50.0
 weap_dmg_rate = 2.0
 deployed = true
 
-[node name="SniperBot2" parent="Bots" index="10" instance=ExtResource( 7 )]
-position = Vector2( 1220, -2678 )
+[node name="SniperBot2" parent="Bots" index="9" instance=ExtResource( 7 )]
+position = Vector2( 1213, -2396 )
 rotation = 1.59525
 shield_cap = 50.0
 health_cap = 50.0
@@ -228,21 +222,21 @@ detection_range = 2000
 enemy_seek_dist = 4000
 max_shooting_dist = 4000
 
-[node name="Charger" parent="Bots" index="11" instance=ExtResource( 5 )]
+[node name="Charger" parent="Bots" index="10" instance=ExtResource( 5 )]
 position = Vector2( 489, 116 )
 rotation = -1.80547
 shield_cap = 95.0
 health_cap = 95.0
 charge_dmg_rate = 0.4
 
-[node name="Charger2" parent="Bots" index="12" instance=ExtResource( 5 )]
+[node name="Charger2" parent="Bots" index="11" instance=ExtResource( 5 )]
 position = Vector2( 493, -2245 )
 rotation = -4.48269
 shield_cap = 95.0
 health_cap = 95.0
 charge_dmg_rate = 0.4
 
-[node name="Berserker" parent="Bots" index="13" instance=ExtResource( 21 )]
+[node name="Berserker" parent="Bots" index="12" instance=ExtResource( 21 )]
 position = Vector2( -1090, -755 )
 shield_cap = 250.0
 shield_regen = 25.0

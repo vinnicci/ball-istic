@@ -23,6 +23,7 @@ func update_stats() -> void:
 			round((_player.current_speed * 0.125 * _player.current_charge_force_mult) *
 			_player.current_charge_dmg_rate),
 		"WeaponDmg": round(_player.current_weap_dmg_rate * 100),
+		"DmgResist": round(_player.current_dmg_resist * 100),
 		"KnockbackResist": round(_player.current_knockback_resist * 100)
 	}
 	for stat in stats.keys():
