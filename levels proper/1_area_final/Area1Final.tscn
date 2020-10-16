@@ -16,7 +16,7 @@
 [ext_resource path="res://scenes/passives/shield regen/ShieldRegenII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/knockback resist/KnockbackResistII.tscn" type="PackedScene" id=15]
 
-[node name="AreaFinal" instance=ExtResource( 2 )]
+[node name="Area1Final" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 disp_name = "Area Final"
 

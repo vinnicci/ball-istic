@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=1]
 [ext_resource path="res://scenes/bots/player/Player.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/weapons/sfx_Weap_Almost_Overheating.wav" type="AudioStream" id=8]
 [ext_resource path="res://scenes/global/camera with shake/Camera2D.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/ui/player/PlayerUI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/ui/transform_bar.png" type="Texture" id=11]
 [ext_resource path="res://scenes/weapons/blaster/BuiltInAutoBlaster.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=1]
@@ -79,6 +80,21 @@ __meta__ = {
 [node name="ChargeTweenTimer" type="Timer" parent="Bars/ChargeLevel" index="1"]
 one_shot = true
 
+[node name="Transforming" type="TextureProgress" parent="Bars" index="4"]
+modulate = Color( 0.14902, 1, 0.239216, 0 )
+margin_left = -92.0
+margin_top = -92.0
+margin_right = 32.0
+margin_bottom = 32.0
+rect_scale = Vector2( 1.5, 1.5 )
+texture_progress = ExtResource( 11 )
+fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TransformTween" type="Tween" parent="Bars/Transforming" index="0"]
+
 [node name="ChargeReady" type="AudioStreamPlayer2D" parent="Sounds" index="6"]
 stream = ExtResource( 6 )
 
@@ -104,3 +120,4 @@ text = "PLAYER"
 
 [node name="PlayerUI" parent="." index="15" instance=ExtResource( 10 )]
 [connection signal="timeout" from="Bars/ChargeLevel/ChargeTweenTimer" to="." method="_on_ChargeTweenTimer_timeout"]
+[connection signal="tween_all_completed" from="Bars/Transforming/TransformTween" to="." method="_on_TransformTween_all_completed"]

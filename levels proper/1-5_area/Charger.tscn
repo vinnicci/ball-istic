@@ -11,8 +11,8 @@ resource_local_to_scene = true
 
 [node name="Charger" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-shield_cap = 15.0
-health_cap = 15.0
+shield_cap = 20.0
+health_cap = 20.0
 speed = 1500
 charge_cooldown = 2.0
 charge_force_mult = 0.7

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=7]
 [ext_resource path="res://levels proper/main/Spawn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://levels proper/1-5_area/Spawn.gd" type="Script" id=9]
-[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -29,7 +28,7 @@ rotation = 1.5708
 position = Vector2( 1855, -1742 )
 rotation = -1.5708
 
-[node name="AreaFinal" parent="Access" index="1" instance=ExtResource( 3 )]
+[node name="Area1Final" parent="Access" index="1" instance=ExtResource( 3 )]
 position = Vector2( 1, 3456 )
 rotation = 1.5708
 
@@ -56,10 +55,6 @@ shape = SubResource( 1 )
 detection_range = 2300
 enemy_seek_dist = 500
 max_shooting_dist = 800
-
-[node name="Player" parent="Bots" index="1" instance=ExtResource( 10 )]
-position = Vector2( 1877, -1383 )
-destructible = false
 
 [node name="Spawn" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( -2038, 903 )

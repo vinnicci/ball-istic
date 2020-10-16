@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels proper/2-5_area/Area2-5.gd" type="Script" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=7]
 [ext_resource path="res://levels proper/2-5_area/Spawn.gd" type="Script" id=8]
-[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreenLow.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -43,7 +42,7 @@ scale = Vector2( 1.5, 1.5 )
 
 [node name="BigCSpawner" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( -144, 0 )
-shield_cap = 150.0
+shield_cap = 200.0
 health_cap = 500.0
 speed = 2500
 weap_dmg_rate = 2.0
@@ -54,12 +53,6 @@ shape = SubResource( 1 )
 
 [node name="AI" parent="Bots/BigCSpawner" index="10"]
 detection_range = 3500
-
-[node name="Player" parent="Bots" index="1" instance=ExtResource( 9 )]
-position = Vector2( -1876, 0 )
-speed = 1700
-charge_force_mult = 0.7
-destructible = false
 
 [node name="Spawn" parent="." index="5" instance=ExtResource( 5 )]
 position = Vector2( 2038, -1024 )

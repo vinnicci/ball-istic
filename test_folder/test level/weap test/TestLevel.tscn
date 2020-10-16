@@ -113,6 +113,7 @@ rotation = 1.5708
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
 position = Vector2( 357, 711 )
 speed = 1500
+transform_speed = 0.0
 charge_force_mult = 0.8
 charge_dmg_rate = 0.4
 destructible = false

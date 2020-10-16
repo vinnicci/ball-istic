@@ -129,6 +129,13 @@ func _control_player() -> void:
 		return
 	if Input.is_action_just_pressed("change_mode"):
 		switch_mode()
+		var tween = $Bars/Transforming/TransformTween
+		if tween.is_active() == false:
+			var transforming = $Bars/Transforming
+			transforming.modulate.a = 0.6
+			tween.interpolate_property(transforming, "value", 0, 100,
+				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+			tween.start()
 	if Input.is_action_just_pressed("charge_roll"):
 		if _timer_charge_cooldown.is_stopped() == true && state == State.ROLL:
 			update_bar_charge_level(current_charge_cooldown)
@@ -204,3 +211,7 @@ func _on_Bot_body_entered(body: Node) -> void:
 	elif state == State.CHARGE_ROLL:
 		$Camera2D.shake_camera(20, 0.05, 0.05, 1)
 	._on_Bot_body_entered(body)
+
+
+func _on_TransformTween_all_completed() -> void:
+	$Bars/Transforming.value = 0

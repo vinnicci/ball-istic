@@ -38,8 +38,8 @@ position = Vector2( 576, -2679 )
 [node name="Fighter" parent="Bots" index="0" instance=ExtResource( 7 )]
 position = Vector2( 216, 147 )
 rotation = -0.326377
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 35.0
+health_cap = 35.0
 transform_speed = 0.7
 charge_cooldown = 3.5
 respawnable = false
@@ -49,27 +49,27 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Fighter2" parent="Bots" index="1" instance=ExtResource( 7 )]
 position = Vector2( 361, 630 )
 rotation = -1.14319
-shield_cap = 30.0
+shield_cap = 35.0
 shield_regen = 2.0
-health_cap = 30.0
+health_cap = 35.0
 respawnable = false
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger" parent="Bots" index="2" instance=ExtResource( 8 )]
 position = Vector2( 324, 117 )
-shield_cap = 30.0
+shield_cap = 35.0
 shield_regen = 2.0
-health_cap = 30.0
+health_cap = 35.0
 speed = 1700
 charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger2" parent="Bots" index="3" instance=ExtResource( 8 )]
 position = Vector2( 337, 239 )
-shield_cap = 30.0
+shield_cap = 35.0
 shield_regen = 2.0
-health_cap = 30.0
+health_cap = 35.0
 speed = 1700
 charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
@@ -77,9 +77,9 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger3" parent="Bots" index="4" instance=ExtResource( 8 )]
 position = Vector2( 387, 486 )
 rotation = -1.03323
-shield_cap = 30.0
+shield_cap = 35.0
 shield_regen = 2.0
-health_cap = 30.0
+health_cap = 35.0
 speed = 1700
 charge_force_mult = 0.75
 respawnable = false
@@ -88,45 +88,45 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger4" parent="Bots" index="5" instance=ExtResource( 8 )]
 position = Vector2( 507, 536 )
 rotation = -1.37706
-shield_cap = 30.0
+shield_cap = 35.0
 shield_regen = 2.0
-health_cap = 30.0
+health_cap = 35.0
 speed = 1700
 charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="6" instance=ExtResource( 9 )]
 position = Vector2( 251, -2480 )
-shield_cap = 50.0
-health_cap = 75.0
+shield_cap = 60.0
+health_cap = 60.0
 respawnable = false
 
 [node name="FighterBig2" parent="Bots" index="7" instance=ExtResource( 9 )]
 position = Vector2( 965, -2472 )
-shield_cap = 50.0
-health_cap = 75.0
+shield_cap = 60.0
+health_cap = 60.0
 respawnable = false
 
 [node name="Fighter3" parent="Bots" index="8" instance=ExtResource( 7 )]
 position = Vector2( -51, -2565 )
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 25.0
+health_cap = 25.0
 
 [node name="Fighter4" parent="Bots" index="9" instance=ExtResource( 7 )]
 position = Vector2( 1233, -2560 )
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 25.0
+health_cap = 25.0
 
 [node name="Shotgunner" parent="Bots" index="10" instance=ExtResource( 10 )]
 position = Vector2( 440, -2343 )
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 25.0
+health_cap = 25.0
 respawnable = false
 
 [node name="Shotgunner2" parent="Bots" index="11" instance=ExtResource( 10 )]
 position = Vector2( 806, -2343 )
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 25.0
+health_cap = 25.0
 respawnable = false
 
 [node name="Follow" type="Area2D" parent="." index="5"]

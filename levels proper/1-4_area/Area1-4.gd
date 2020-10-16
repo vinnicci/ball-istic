@@ -1,12 +1,12 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
-onready var _bot = $Bots/MadMoose
-
-
 func _ready() -> void:
 	$Nav/Destructible.set_level(self)
 	$Nav/Destructible.set_secret($Nav/Secret)
+
+
+onready var _bot = $Bots/MadMoose
 
 
 func _on_Follow_body_entered(body: Node) -> void:

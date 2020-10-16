@@ -91,16 +91,16 @@ deployed = true
 position = Vector2( -1870, 3177 )
 rotation = -1.47477
 physics_material_override = SubResource( 1 )
-shield_cap = 30.0
-health_cap = 45.0
+shield_cap = 40.0
+health_cap = 40.0
 respawnable = false
 
 [node name="HeavyFighter2" parent="Bots" index="6" instance=ExtResource( 11 )]
 position = Vector2( -715, 4044 )
 rotation = -1.66852
 physics_material_override = SubResource( 1 )
-shield_cap = 30.0
-health_cap = 45.0
+shield_cap = 40.0
+health_cap = 40.0
 
 [node name="Shotgunner" parent="Bots" index="7" instance=ExtResource( 7 )]
 position = Vector2( -706, 3206 )
@@ -133,7 +133,7 @@ health_cap = 70.0
 speed = 1800
 knockback_resist = 0.95
 charge_cooldown = 1.0
-charge_force_mult = 0.8
+charge_force_mult = 0.85
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Texture" parent="Bots/MadMoose/Body" index="1"]

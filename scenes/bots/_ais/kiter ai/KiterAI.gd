@@ -16,13 +16,17 @@ var _current_enemy_proj: PackedScene
 
 
 func _process(delta: float) -> void:
-	if _check_if_valid_bot(_enemy) == true && _enemy.current_weapon != null:
+	if (_check_if_valid_bot(_enemy) == true &&
+		(_enemy.state == Global.CLASS_BOT.State.TURRET ||
+		_enemy.state == Global.CLASS_BOT.State.TO_TURRET ||
+		_enemy.state == Global.CLASS_BOT.State.WEAP_COMMIT)):
 		var enemy_proj: PackedScene = _enemy.current_weapon.Projectile
 		if _current_enemy_proj == enemy_proj:
 			return
 		_current_enemy_proj = enemy_proj
-		if enemy_proj == null:
-			_params_dict["max_flee"] = max_flee_dist
-		else:
+		if enemy_proj != null:
 			var sample_proj = enemy_proj.instance()
-			_params_dict["max_flee"] = sample_proj.proj_range + 300
+			if sample_proj is Global.CLASS_PROJ:
+				_params_dict["max_flee"] = sample_proj.proj_range + 300
+				return
+		_params_dict["max_flee"] = max_flee_dist

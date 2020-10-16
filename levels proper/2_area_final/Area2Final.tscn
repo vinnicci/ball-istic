@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scenes/level/key/Key.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/self destruct/Explosive.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=12]
@@ -54,7 +55,7 @@ position = Vector2( 1903, 123 )
 position = Vector2( 3328, 1280 )
 
 [node name="Depot" parent="Access" index="3" instance=ExtResource( 10 )]
-position = Vector2( 1478, 949 )
+position = Vector2( 1471, 955 )
 
 [node name="Cyclone" parent="Access/Depot/Items" index="0" instance=ExtResource( 11 )]
 
@@ -65,6 +66,9 @@ position = Vector2( 1478, 949 )
 [node name="ShieldCapacityIII" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
 
 [node name="HealthCapacityIII" parent="Access/Depot/Items" index="4" instance=ExtResource( 15 )]
+
+[node name="BotStation" parent="Access" index="4" instance=ExtResource( 9 )]
+position = Vector2( 1474, -572 )
 
 [node name="Explosive" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( 1896, -510 )

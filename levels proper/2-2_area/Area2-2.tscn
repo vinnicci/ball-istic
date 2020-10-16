@@ -212,29 +212,29 @@ rotation = -1.5708
 [node name="IncineratorBot" parent="Bots" index="0" instance=ExtResource( 11 )]
 position = Vector2( 3017, -897 )
 rotation = -2.99261
-shield_cap = 75.0
-health_cap = 75.0
+shield_cap = 95.0
+health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot3" parent="Bots" index="1" instance=ExtResource( 11 )]
 position = Vector2( 2660, -976 )
 rotation = 3.08285
-shield_cap = 75.0
-health_cap = 75.0
+shield_cap = 95.0
+health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot4" parent="Bots" index="2" instance=ExtResource( 11 )]
-position = Vector2( 468, 486 )
-rotation = 4.46589
-shield_cap = 75.0
-health_cap = 75.0
+position = Vector2( 1299, 152 )
+rotation = 1.63539
+shield_cap = 95.0
+health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot2" parent="Bots" index="3" instance=ExtResource( 11 )]
 position = Vector2( 3329, -1282 )
 rotation = 1.53648
-shield_cap = 75.0
-health_cap = 75.0
+shield_cap = 95.0
+health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="SniperBot" parent="Bots" index="4" instance=ExtResource( 10 )]
@@ -242,7 +242,7 @@ position = Vector2( 4038, -508 )
 rotation = 3.04123
 shield_cap = 30.0
 health_cap = 30.0
-weap_dmg_rate = 1.5
+weap_dmg_rate = 2.0
 deployed = true
 
 [node name="CollisionShape" parent="Bots/SniperBot" index="8"]
@@ -258,7 +258,7 @@ position = Vector2( 4048, 79 )
 rotation = 3.2695
 shield_cap = 30.0
 health_cap = 30.0
-weap_dmg_rate = 1.5
+weap_dmg_rate = 2.0
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot2/Body/ChargeEffect" index="0"]
@@ -278,7 +278,7 @@ position = Vector2( -321, -571 )
 rotation = 1.54607
 shield_cap = 30.0
 health_cap = 30.0
-weap_dmg_rate = 1.5
+weap_dmg_rate = 2.0
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot3/Body/ChargeEffect" index="0"]
@@ -298,7 +298,7 @@ position = Vector2( 837, -574 )
 rotation = 1.76817
 shield_cap = 30.0
 health_cap = 30.0
-weap_dmg_rate = 1.5
+weap_dmg_rate = 2.0
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot4/Body/ChargeEffect" index="0"]
@@ -315,10 +315,10 @@ max_shooting_dist = 9000
 
 [node name="ChargerBig" parent="Bots" index="8" instance=ExtResource( 12 )]
 position = Vector2( 4008, -254 )
-shield_cap = 120.0
-health_cap = 300.0
+shield_cap = 175.0
+health_cap = 275.0
 speed = 3200
-charge_force_mult = 0.8
+charge_dmg_rate = 0.3
 respawnable = false
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 3 )]
