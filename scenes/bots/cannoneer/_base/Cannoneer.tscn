@@ -6,10 +6,10 @@
 
 [node name="Cannoneer" instance=ExtResource( 1 )]
 speed = 800
-knockback_resist = 0.75
 transform_speed = 0.5
 charge_cooldown = 2.0
 charge_force_mult = 0.7
+knockback_resist = 0.7
 
 [node name="Explosion" parent="." index="9" instance=ExtResource( 2 )]
 

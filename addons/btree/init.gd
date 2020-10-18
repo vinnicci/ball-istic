@@ -90,6 +90,18 @@ func _enter_tree():
 	get_tree().connect("node_added", self, "nodes")
 	get_tree().connect("node_renamed", self, "nodes")
 	get_undo_redo().clear_history()
+	get_editor_interface().get_resource_filesystem().connect("resources_reload", self, "fs_reload")
+	return
+
+func fs_reload(names):
+	dock.halt(null)
+	var graph = dock.get_node("editor/graph")
+	var selection = get_editor_interface().get_selection().get_selected_nodes()
+	if  selection.size() == 1:
+		if  selection[0] is btree:
+			graph.clear_editor()
+			graph.load_data(selection[0], self)
+			graph.reload()
 	return
 
 func nodes(node):
@@ -113,14 +125,28 @@ func _exit_tree():
 	get_tree().disconnect("node_renamed", self, "nodes")
 	remove_custom_type("BTREE")
 	remove_autoload_singleton("BTDebugServer")
+	get_editor_interface().get_resource_filesystem().disconnect("resources_reload", self, "fs_reload")
+	get_undo_redo().clear_history()
 	if  not dock:
 		return
 	dock.queue_free()
 	dock = null
-	get_undo_redo().clear_history()
 	return
 
 func handles(object):
 	if  object is btree:
 		return true
 	return false
+
+var try = 0
+func _process(delta):
+	var interface = get_editor_interface()
+	if  interface.is_playing_scene():
+		if  dock:
+			var debug = dock.get_node("rtree/client_debugger")
+			if  not debug.is_debug():
+				try -= 1
+				if  try <= 0:
+					try = 60
+					debug.ensure_connection()
+	return

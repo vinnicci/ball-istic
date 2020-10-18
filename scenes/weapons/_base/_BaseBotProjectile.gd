@@ -46,4 +46,4 @@ func _process(_delta: float) -> void:
 
 func _on_Lifetime_timeout() -> void:
 	if state != State.DEAD:
-		current_health = 0
+		take_damage(999, Vector2(0,0), false)

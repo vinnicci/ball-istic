@@ -34,28 +34,19 @@ func add_bot(bot: Node) -> void:
 		$Bots.add_child(bot)
 
 
-var _doors_open: bool
-
-
 func open_doors() -> void:
 	for door in $Doors.get_children():
 		door.open()
-	_doors_open = true
 
 
 func close_doors() -> void:
 	for door in $Doors.get_children():
 		door.close()
-	_doors_open = false
 
 
 func spawn_projectile(proj_inst, proj_pos: Vector2, proj_dir: float) -> void:
 	if proj_inst is Global.CLASS_BOT_PROJ == true:
-		proj_inst.connect("dead", self, "_on_bot_dead", [proj_inst])
-		if proj_inst.has_node("AI") == true:
-			proj_inst.get_node("AI").connect("engaged", self,
-				"_on_bot_engaged", [proj_inst])
-		$Bots.add_child(proj_inst)
+		add_bot(proj_inst)
 	else:
 		add_child(proj_inst)
 	proj_inst.init_travel(proj_pos, proj_dir)
@@ -78,13 +69,13 @@ func _on_bot_dead(bot) -> void:
 		$Camera2D.current = true
 		return
 	for lvlbot in $Bots.get_children():
-		if (lvlbot == bot || lvlbot.current_faction == _player_faction ||
-			lvlbot.state == Global.CLASS_BOT.State.DEAD ||
-			lvlbot.has_node("AI") == false):
+		if lvlbot.has_node("AI") == false || lvlbot == bot:
 			continue
 		var ai = lvlbot.get_node("AI")
-		if (ai.get_enemy() != null &&
-			ai.get_enemy().current_faction == _player_faction):
+		var enemy = ai.get_enemy()
+		if (enemy != null &&
+			enemy.state != Global.CLASS_BOT.State.DEAD &&
+			enemy.current_faction == _player_faction):
 			return
 	open_doors()
 

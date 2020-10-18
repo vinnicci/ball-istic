@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://levels proper/1-1_checkpoint/Checkpoint1-1.gd" type="Script" id=1]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -13,11 +13,8 @@
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityI.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/blaster/ChargeBlaster.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/weapons/blaster/BurstBlaster.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/passives/resistance/ResistanceI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/transform speed/TransformSpeedI.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/passives/charge cooldown/ChargeCooldownI.tscn" type="PackedScene" id=16]
-
-
 
 [node name="Checkpoint1-1" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -41,8 +38,6 @@ position = Vector2( 576, -193 )
 
 [node name="ChargeCooldownI" parent="Access/Depot/Items" index="5" instance=ExtResource( 16 )]
 
-[node name="KnockbackResistI" parent="Access/Depot/Items" index="6" instance=ExtResource( 14 )]
-
 [node name="BotStation" parent="Access" index="1" instance=ExtResource( 9 )]
 position = Vector2( 568, 194 )
 
@@ -60,13 +55,15 @@ bbcode_enabled = true
 bbcode_text = "Press TAB to open inventory.
 Stand in one of the logos to gain access of it's funtionalities and containers.
 [color=#ff8b0f]Depot:[/color] Get new equipment here.
-[color=#00ff10]Bot Station:[/color] Autorepairs and allows you to customize your loadout.
-[color=#04ecfe]Vault:[/color] Store your items here. Bounty rewards are also sent here."
+[color=#00ff10]Bot Station:[/color] Restores HP & shield and allows loadout customization. New spawn point is also set here.
+[color=#04ecfe]Vault:[/color] Store extra items here. Bounty rewards are also sent here.
+"
 text = "Press TAB to open inventory.
 Stand in one of the logos to gain access of it's funtionalities and containers.
 Depot: Get new equipment here.
-Bot Station: Autorepairs and allows you to customize your loadout.
-Vault: Store your items here. Bounty rewards are also sent here."
+Bot Station: Restores HP & shield and allows loadout customization. New spawn point is also set here.
+Vault: Store extra items here. Bounty rewards are also sent here.
+"
 
 [node name="Label2" parent="Access/Hint/AccessUI" index="1"]
 visible = false

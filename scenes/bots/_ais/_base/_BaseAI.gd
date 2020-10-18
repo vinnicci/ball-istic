@@ -6,6 +6,7 @@ export (int) var master_seek_dist: int = 300
 export (int) var enemy_seek_dist: int = 300
 export (float) var charge_break: float = 0.5
 export (float) var weap_heat_cooldown: float = 0
+export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
 var _enemies: Array
@@ -34,6 +35,8 @@ func get_enemy():
 func _ready() -> void:
 	if has_node("BTREE") == false:
 		push_error(_parent_node.name + " AI has no BTREE node. Please attach one.")
+	elif enabled == false:
+		$BTREE.enable = false
 	$DetectionRange/CollisionShape2D.shape = CircleShape2D.new()
 	$DetectionRange/CollisionShape2D.shape.radius = detection_range
 	$Rays/Target.cast_to = Vector2(detection_range, 0)
@@ -129,6 +132,21 @@ func _get_distance(start_node: Node, target_node: Node) -> int:
 	while arr.size() != 1:
 		dist += arr.pop_front().distance_to(arr.front())
 	return dist
+
+
+var _dist_to_enemy: int
+var _dist_to_master: int
+
+
+func _on_DistEvaluate_timeout() -> void:
+	if _check_if_valid_bot(_enemy) == true:
+		_dist_to_enemy = _get_distance(self, _enemy)
+	else:
+		_dist_to_enemy = -1
+	if _check_if_valid_bot(_master) == true:
+		_dist_to_master = _get_distance(self, _master)
+	else:
+		_dist_to_master = -1
 
 
 func _get_new_target_enemy() -> void:
@@ -266,7 +284,9 @@ func task_act_seek_enemy(task):
 
 
 func task_cond_is_enemy_close(task):
-	if _get_distance(self, _enemy) <= _params_dict[task.get_param(0)]:
+	if _dist_to_enemy == -1:
+		task.failed()
+	elif _dist_to_enemy <= _params_dict[task.get_param(0)]:
 		task.succeed()
 	else:
 		task.failed()
@@ -460,7 +480,9 @@ func task_cond_is_master_instance_valid(task):
 
 
 func task_cond_is_master_close(task):
-	if _get_distance(self, _master) <= _params_dict[task.get_param(0)]:
+	if _dist_to_master == -1:
+		task.failed()
+	elif _dist_to_master <= _params_dict[task.get_param(0)]:
 		task.succeed()
 	else:
 		task.failed()

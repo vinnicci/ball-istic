@@ -85,9 +85,14 @@ one_shot = true
 [node name="FleeEvaluate" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="DistEvaluate" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
 [node name="FoundTarget" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 3 )
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
 [connection signal="timeout" from="Resume" to="." method="_on_Resume_timeout"]
 [connection signal="timeout" from="FleeEvaluate" to="." method="_on_FleeEvaluate_timeout"]
+[connection signal="timeout" from="DistEvaluate" to="." method="_on_DistEvaluate_timeout"]

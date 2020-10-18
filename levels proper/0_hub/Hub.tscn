@@ -26,8 +26,6 @@
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrownLow.tscn" type="PackedScene" id=26]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 400, 100 )
 
@@ -96,9 +94,9 @@ position = Vector2( -584, -926 )
 
 [node name="ChargeDmgRateI" parent="Access/Depot/Items" index="4" instance=ExtResource( 17 )]
 
-[node name="SpeedI" parent="Access/Depot/Items" index="5" instance=ExtResource( 14 )]
+[node name="ResistanceI" parent="Access/Depot/Items" index="5" instance=ExtResource( 23 )]
 
-[node name="KnockbackResistI" parent="Access/Depot/Items" index="6" instance=ExtResource( 23 )]
+[node name="SpeedI" parent="Access/Depot/Items" index="6" instance=ExtResource( 14 )]
 
 [node name="ShieldRegenI" parent="Access/Depot/Items" index="7" instance=ExtResource( 18 )]
 

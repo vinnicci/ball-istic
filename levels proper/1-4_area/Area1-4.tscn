@@ -130,9 +130,9 @@ physics_material_override = SubResource( 1 )
 shield_cap = 70.0
 health_cap = 70.0
 speed = 1800
-knockback_resist = 0.95
 charge_cooldown = 1.0
 charge_force_mult = 0.85
+knockback_resist = 0.95
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Texture" parent="Bots/MadMoose/Body" index="1"]

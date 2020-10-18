@@ -49,8 +49,14 @@ func valid_script():
 	var pscript:GDScript = data.get_parent().get_script()
 	if  not pscript:
 		return false
+	
+	var file = File.new()
+	file.open(pscript.resource_path, File.READ)
+	var source_code = file.get_as_text()
+	file.close()
+	
 	var cscript:GDScript = GDScript.new()
-	cscript.set_source_code(pscript.get_source_code())
+	cscript.set_source_code(source_code)
 	if  cscript.reload(false) != OK:
 		return false
 	return true
@@ -87,7 +93,8 @@ var general_decorator_script = preload("res://addons/btree/Editor/general_decora
 var general_fcall_class = preload("res://addons/btree/Editor/general_fcall/general_fcall.gd")
 var minim_scene = preload("res://addons/btree/Editor/minim_node/minim_node.tscn")
 var inverter_scene = preload("res://addons/btree/Editor/inverter/inverter.tscn")
-
+var random_repeat_scene = preload("res://addons/btree/Editor/repeat/random_repeat.tscn")
+var random_wait_scene = preload("res://addons/btree/Editor/wait_node/random_wait_node.tscn")
 const Runtime = preload("res://addons/btree/Runtime/runtime.gd")
 
 func build_tree_from_data():
@@ -169,6 +176,14 @@ func create_node(n):
 		node.set_data(n.data)
 	elif  n.type == Runtime.TNodeTypes.MINIM:
 		node = minim_scene.instance()
+		node.name = n.name
+		node.set_data(n.data)
+	elif n.type == Runtime.TNodeTypes.RANDOM_REPEAT:
+		node = random_repeat_scene.instance()
+		node.name = n.name
+		node.set_data(n.data)
+	elif n.type == Runtime.TNodeTypes.RANDOM_WAIT:
+		node = random_wait_scene.instance()
 		node.name = n.name
 		node.set_data(n.data)
 	(node as GraphNode).connect("dragged", self, "node_dragged", [node])
@@ -455,6 +470,12 @@ func gui_input(event):
 		if  event.scancode == KEY_J  and not event.pressed and event.control:
 			jump_to_sourcecode()
 			hint("Jump To Sourcecode")
+			accept_event()
+		if  event.scancode == KEY_LEFT and not event.pressed and event.control and event.shift:
+			hint("Prev search")
+			accept_event()
+		if  event.scancode == KEY_RIGHT and not event.pressed and event.control and event.shift:
+			hint("Next search")
 			accept_event()
 		return
 
@@ -852,24 +873,51 @@ func focus_selected():
 	scroll_offset = selected.offset * zoom - ((rect_size / 2) - (selected.rect_size / 2))
 	return
 
+var tindex = 0
+var search_text = ""
+
 func _on_search_bar_text_changed(new_text):
-	var most_similar:Node = null
+	tindex = 0
+	search_text = new_text
+	var tpairs = comp_pairs(new_text)
+	if  not tpairs.empty():
+		var si = tpairs[tindex][1]
+		scroll_offset = si.offset * zoom - ((rect_size / 2) - (si.rect_size / 2))
+	return
+
+func _on_next_pressed():
+	tindex += 1
+	var tpairs = comp_pairs(search_text)
+	if  not tpairs.empty():
+		tindex = clamp(tindex, 0, tpairs.size() - 1)
+		var si = tpairs[tindex][1]
+		scroll_offset = si.offset * zoom - ((rect_size / 2) - (si.rect_size / 2))
+	return
+
+func _on_prev_pressed():
+	tindex -= 1
+	var tpairs = comp_pairs(search_text)
+	if  not tpairs.empty():
+		tindex = clamp(tindex, 0, tpairs.size() - 1)
+		var si = tpairs[tindex][1]
+		scroll_offset = si.offset * zoom - ((rect_size / 2) - (si.rect_size / 2))
+	return
+
+func comp_pairs(text):
+	var tpairs = []
 	for i in get_children():
 		if  i is GraphNode:
-			if  most_similar == null:
-				most_similar = i
-			else:
-				var itoken = i.name
-				var mtoken = most_similar.name
-				if  i is general_fcall_class or i is minim_class:
-					itoken = i.search_token()
-				if  most_similar is general_fcall_class:
-					mtoken = most_similar.search_token()
-				if  mtoken.similarity(new_text) < itoken.similarity(new_text):
-					most_similar = i
-	if  most_similar:
-		scroll_offset = most_similar.offset * zoom - ((rect_size / 2) - (most_similar.rect_size / 2))
-	return
+			var itoken = i.name
+			if  i is general_fcall_class or i is minim_class:
+				itoken = i.search_token()
+			var similarity = itoken.similarity(text)
+			if  similarity > 0.2:
+				tpairs.append([itoken.similarity(text), i])
+	tpairs.sort_custom(self, "sort_tp")
+	return tpairs
+
+func sort_tp(a, b):
+	return a[0] > b[0]
 
 export(NodePath) var create_path
 

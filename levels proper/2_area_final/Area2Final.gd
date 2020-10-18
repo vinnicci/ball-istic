@@ -7,11 +7,11 @@ func _ready() -> void:
 
 
 func _on_bot_dead(body) -> void:
-	if body == $Bots/Explosive:
+	if body == $Bots/ExplosiveDummy:
 		$Nav/Destructible.destructible = true
 	._on_bot_dead(body)
 
 
 func _on_ChargeArea_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-		$Bots/Fighter/AI.set_master(body)
+		$Bots/Fighter/AI.engage($Bots/ExplosiveDummy)

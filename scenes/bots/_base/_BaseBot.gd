@@ -532,10 +532,11 @@ func apply_knockback(knockback: Vector2) -> void:
 	apply_central_impulse(knockback - (knockback*current_knockback_resist))
 
 
-func take_damage(damage: float, knockback: Vector2) -> void:
+func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 	apply_knockback(knockback)
 	var real_dmg = damage - (damage * current_dmg_resist)
-	dmg_effect(real_dmg)
+	if disp == true:
+		dmg_effect(real_dmg)
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return

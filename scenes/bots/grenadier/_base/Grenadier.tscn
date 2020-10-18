@@ -5,9 +5,9 @@
 [ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=3]
 
 [node name="Grenadier" instance=ExtResource( 1 )]
-knockback_resist = 0.7
 transform_speed = 0.4
 charge_cooldown = 2.5
+knockback_resist = 0.5
 
 [node name="Explosion" parent="." index="9" instance=ExtResource( 2 )]
 

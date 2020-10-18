@@ -13,6 +13,7 @@ bot_radius = 20
 shield_cap = 0.0
 shield_regen = 0.0
 health_cap = 5.0
+transform_speed = 0.25
 charge_cooldown = 2.0
 
 [node name="Texture" parent="Body" index="1"]

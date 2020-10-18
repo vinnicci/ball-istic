@@ -6,6 +6,7 @@ const WEAP_HEAT_COLOR: = Color(1, 0.7, 0.15) #orange
 
 onready var bar_weapon_heat: = $Bars/WeaponHeat
 onready var bar_charge_level: = $Bars/ChargeLevel
+onready var bar_transform: = $Bars/Transforming
 onready var hud_weapon_slots: = $PlayerUI/WeaponSlots
 onready var ui_inventory: = $PlayerUI/Inventory
 
@@ -129,11 +130,9 @@ func _control_player() -> void:
 		return
 	if Input.is_action_just_pressed("change_mode"):
 		switch_mode()
-		var tween = $Bars/Transforming/TransformTween
+		var tween = bar_transform.get_node("TransformTween")
 		if tween.is_active() == false:
-			var transforming = $Bars/Transforming
-			transforming.modulate.a = 0.6
-			tween.interpolate_property(transforming, "value", 0, 100,
+			tween.interpolate_property(bar_transform, "value", 0, 100,
 				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 			tween.start()
 	if Input.is_action_just_pressed("charge_roll"):
@@ -169,6 +168,17 @@ func _control_player_weapon_hotkeys() -> void:
 		slot_num = -1
 
 
+func stun_effect(stun_timer: float) -> void:
+	if state == State.CHARGE_ROLL:
+		return
+	var tween = bar_transform.get_node("TransformTween")
+	bar_transform.modulate = Color(1, 0.15, 0.15, 0.6)
+	tween.interpolate_property(bar_transform, "value", 100, 0, stun_timer,
+		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	tween.start()
+	.stun_effect(stun_timer)
+
+
 func update_bar_charge_level(time: float) -> void:
 	bar_charge_level.value = time
 	bar_charge_level.modulate = Color(0.6, 0.6, 0.6)
@@ -198,7 +208,7 @@ func _update_bar_weapon_heat() -> void:
 	bar_weapon_heat.value = current_weapon.current_heat
 
 
-func take_damage(damage: float, knockback: Vector2) -> void:
+func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 	if current_shield <= 0:
 		$Camera2D.shake_camera(10, 0.05, 0.05, 1)
 	.take_damage(damage, knockback)
@@ -214,4 +224,5 @@ func _on_Bot_body_entered(body: Node) -> void:
 
 
 func _on_TransformTween_all_completed() -> void:
-	$Bars/Transforming.value = 0
+	bar_transform.value = 0
+	bar_transform.modulate = Color(0.15, 1, 0.24, 0.6)

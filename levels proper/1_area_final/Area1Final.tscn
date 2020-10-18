@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://levels proper/1_area_final/Area1Final.gd" type="Script" id=1]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -14,9 +14,6 @@
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityII.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield regen/ShieldRegenII.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/passives/resistance/ResistanceII.tscn" type="PackedScene" id=15]
-
-
 
 [node name="Area1Final" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -74,8 +71,6 @@ position = Vector2( 64, -1491 )
 [node name="ChargeDmgRateII" parent="Access/Depot/Items" index="3" instance=ExtResource( 13 )]
 
 [node name="ShieldRegenII" parent="Access/Depot/Items" index="4" instance=ExtResource( 14 )]
-
-[node name="KnockbackResistII" parent="Access/Depot/Items" index="5" instance=ExtResource( 15 )]
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 4 )]
 

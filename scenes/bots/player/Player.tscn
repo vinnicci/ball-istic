@@ -81,7 +81,7 @@ __meta__ = {
 one_shot = true
 
 [node name="Transforming" type="TextureProgress" parent="Bars" index="4"]
-modulate = Color( 0.14902, 1, 0.239216, 0 )
+modulate = Color( 0.15, 1, 0.24, 0.6 )
 margin_left = -92.0
 margin_top = -92.0
 margin_right = 32.0

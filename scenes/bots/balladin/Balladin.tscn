@@ -13,9 +13,9 @@ resource_local_to_scene = true
 
 [node name="Balladin" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
-knockback_resist = 0.5
 transform_speed = 0.2
 charge_cooldown = 2.0
+knockback_resist = 0.5
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 1, 0.984314, 0.113725, 1 )

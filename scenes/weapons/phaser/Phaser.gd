@@ -4,7 +4,7 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 var _is_line_colliding: bool = false
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#blob sprite
 	if _is_overheating == true:
 		_animate_glow(false)
@@ -20,11 +20,10 @@ func _process(delta: float) -> void:
 		if _timer_shoot_cooldown.is_stopped() == true && _is_overheating == false:
 			$Line2D.show()
 			$Line2D.points[1] = $TeleLine.cast_to
-			if $TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT && _is_line_colliding == false:
+			if $TeleLine.get_collider() != null && _is_line_colliding == false:
 				$Line2D/Anim.play("shift_color")
 				_is_line_colliding = true
-			elif ($TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT == false &&
-				_is_line_colliding == true):
+			elif $TeleLine.get_collider() == null && _is_line_colliding == true:
 				$Line2D/Anim.play_backwards("shift_color")
 				_is_line_colliding = false
 		else:
@@ -57,7 +56,7 @@ func _animate_glow(to_show: bool) -> void:
 
 
 func _fire_other(to_pos = null) -> void:
-	if $TeleLine.get_collider() is Global.CLASS_LEVEL_OBJECT:
+	if $TeleLine.get_collider() != null:
 		current_heat -= heat_per_shot
 		_timer_shoot_cooldown.stop()
 		return

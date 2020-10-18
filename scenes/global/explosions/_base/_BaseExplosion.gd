@@ -49,6 +49,8 @@ func start_explosion() -> void:
 		exploded = true
 	var bodies = get_overlapping_bodies()
 	for body in bodies:
+		if body == get_parent():
+			continue
 		_apply_effect(body)
 	$Blast/Anim.play("explode")
 	$Particles2D.emitting = true

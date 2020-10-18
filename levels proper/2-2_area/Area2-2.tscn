@@ -211,14 +211,14 @@ rotation = -1.5708
 
 [node name="IncineratorBot" parent="Bots" index="0" instance=ExtResource( 11 )]
 position = Vector2( 3017, -897 )
-rotation = -2.99261
+rotation = 3.14159
 shield_cap = 95.0
 health_cap = 95.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot3" parent="Bots" index="1" instance=ExtResource( 11 )]
 position = Vector2( 2660, -976 )
-rotation = 3.08285
+rotation = 3.14159
 shield_cap = 95.0
 health_cap = 95.0
 weap_dmg_rate = 2.0

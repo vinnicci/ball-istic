@@ -22,11 +22,12 @@ var scenes: Dictionary = {
 	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn"),
 	"Area2-3": preload("res://levels proper/2-3_area/Area2-3.tscn"),
 	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn"),
+	"Secret2-1": null,
 	"Area2-4": preload("res://levels proper/2-4_area/Area2-4.tscn"),
-	"Secret2-1": preload("res://levels proper/2-1_secret/Secret2-1.tscn"),
+	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn"),
 	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
 	"Area2Final": preload("res://levels proper/2_area_final/Area2Final.tscn"),
-	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn")
+	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
