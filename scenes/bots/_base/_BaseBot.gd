@@ -471,14 +471,11 @@ func change_weapon(slot_num: int) -> bool:
 func charge_roll(charge_direction: float) -> void:
 	if state == State.ROLL && is_charge_roll_ready() == true:
 		$StateMachine.charge_dir = charge_direction
-		_apply_charge_impulse($StateMachine.charge_dir)
-
-
-func _apply_charge_impulse(dir: float) -> void:
-	apply_central_impulse(Vector2(current_speed,0).rotated(dir) * current_charge_force_mult)
-	$Timers/ChargeEffectDelay.start()
-	$Sounds/ChargeAttack.play()
-	_timer_charge_cooldown.start()
+		apply_central_impulse(Vector2(current_speed,0).rotated($StateMachine.charge_dir) *
+			current_charge_force_mult)
+		$Timers/ChargeEffectDelay.start()
+		$Sounds/ChargeAttack.play()
+		_timer_charge_cooldown.start()
 
 
 #0.05 sec delay in order to get almost peak linear velocity
@@ -535,8 +532,6 @@ func apply_knockback(knockback: Vector2) -> void:
 func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 	apply_knockback(knockback)
 	var real_dmg = damage - (damage * current_dmg_resist)
-	if disp == true:
-		dmg_effect(real_dmg)
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -549,6 +544,11 @@ func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - real_dmg
 		current_shield = 0
+	if disp == true:
+		dmg_effect(real_dmg)
+	else:
+		$Sounds/ShieldDamage.stop()
+		$Sounds/HealthDamage.stop()
 	bar_shield.value = current_shield
 	bar_health.value = current_health
 

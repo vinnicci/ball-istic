@@ -15,7 +15,6 @@ script = ExtResource( 3 )
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.0901961, 0.0431373, 0.0431373, 1 )
 texture = ExtResource( 1 )
-offset = Vector2( 13, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 color = Color( 0.141176, 0.0666667, 0.0666667, 1 )

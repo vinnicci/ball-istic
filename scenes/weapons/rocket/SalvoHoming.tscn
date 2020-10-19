@@ -6,7 +6,6 @@
 [ext_resource path="res://scenes/weapons/rocket/proj/RocketHomingProj.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/weapons/tex_siren_light.png" type="Texture" id=5]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -38,6 +37,7 @@ Projectile = ExtResource( 4 )
 shoot_cooldown = 2.0
 proj_count_per_shot = 10
 cam_shake_intensity = 15.0
+burst_count = 1
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 0.188235, 0.196078, 0.211765, 1 )

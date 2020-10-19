@@ -14,7 +14,7 @@
 [ext_resource path="res://assets/bots/sfx_Bot_teleport.wav" type="AudioStream" id=13]
 [ext_resource path="res://scenes/bots/_base/_BaseBot.gd" type="Script" id=15]
 
-[sub_resource type="PhysicsMaterial" id=7]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
@@ -86,7 +86,7 @@ color_ramp = SubResource( 5 )
 
 [node name="Bot" type="RigidBody2D"]
 collision_mask = 3
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 15 )
@@ -96,6 +96,7 @@ script = ExtResource( 15 )
 [node name="Legs" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Legs"]
+offset = Vector2( 14, 0 )
 
 [node name="Leg0" type="Position2D" parent="Legs"]
 

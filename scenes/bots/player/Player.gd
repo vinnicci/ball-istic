@@ -130,23 +130,16 @@ func _control_player() -> void:
 		return
 	if Input.is_action_just_pressed("change_mode"):
 		switch_mode()
-		var tween = bar_transform.get_node("TransformTween")
-		if tween.is_active() == false:
-			tween.interpolate_property(bar_transform, "value", 0, 100,
-				current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-			tween.start()
-	if Input.is_action_just_pressed("charge_roll"):
-		if _timer_charge_cooldown.is_stopped() == true && state == State.ROLL:
-			update_bar_charge_level(current_charge_cooldown)
-		charge_roll((mouse_pos - global_position).angle())
+		animate_transform_cooldown()
 	if Input.is_action_pressed("shoot"):
 		shoot_weapon()
-	if Input.is_action_just_pressed("discharge_parry"):
-		if _timer_charge_cooldown.is_stopped() == true:
-			match state:
-				State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
-					update_bar_charge_level(current_charge_cooldown)
-		discharge_parry()
+	if is_charge_roll_ready() == true:
+		if Input.is_action_just_pressed("charge_roll"):
+			charge_roll((mouse_pos - global_position).angle())
+			animate_bar_charge_level(current_charge_cooldown)
+		if Input.is_action_just_pressed("discharge_parry") :
+			discharge_parry()
+			animate_bar_charge_level(current_charge_cooldown)
 
 
 func _control_player_weapon_hotkeys() -> void:
@@ -179,7 +172,18 @@ func stun_effect(stun_timer: float) -> void:
 	.stun_effect(stun_timer)
 
 
-func update_bar_charge_level(time: float) -> void:
+func animate_transform_cooldown() -> void:
+	var tween = bar_transform.get_node("TransformTween")
+	if ((state == State.ROLL || state == State.TURRET) &&
+		tween.is_active() == false):
+		tween.interpolate_property(bar_transform, "value", 0, 100,
+			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween.start()
+
+
+func animate_bar_charge_level(time: float) -> void:
+	if _timer_charge_cooldown.is_stopped() == true:
+		return
 	bar_charge_level.value = time
 	bar_charge_level.modulate = Color(0.6, 0.6, 0.6)
 	var tween: = bar_charge_level.get_node("ChargeTween")

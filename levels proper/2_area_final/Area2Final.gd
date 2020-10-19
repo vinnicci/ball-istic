@@ -14,4 +14,4 @@ func _on_bot_dead(body) -> void:
 
 func _on_ChargeArea_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER && body.state == Global.CLASS_BOT.State.CHARGE_ROLL:
-		$Bots/Fighter/AI.engage($Bots/ExplosiveDummy)
+		$Bots/Explosive/AI.engage($Bots/ExplosiveDummy)

@@ -22,7 +22,7 @@ var scenes: Dictionary = {
 	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn"),
 	"Area2-3": preload("res://levels proper/2-3_area/Area2-3.tscn"),
 	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn"),
-	"Secret2-1": null,
+	"Secret2-1": preload("res://levels proper/2-1_secret/Secret2-1.tscn"),
 	"Area2-4": preload("res://levels proper/2-4_area/Area2-4.tscn"),
 	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn"),
 	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
@@ -218,7 +218,7 @@ func _resume(player) -> void:
 	#resume interrupted charge cooldown
 	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
 	if player_charge_time > 0:
-		player.update_bar_charge_level(player_charge_time)
+		player.animate_bar_charge_level(player_charge_time)
 
 
 ########################################

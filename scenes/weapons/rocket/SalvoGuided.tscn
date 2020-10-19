@@ -5,7 +5,6 @@
 [ext_resource path="res://scenes/weapons/rocket/SalvoGuided.gd" type="Script" id=3]
 [ext_resource path="res://scenes/weapons/rocket/proj/RocketGuidedProj.tscn" type="PackedScene" id=4]
 
-
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
 colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
@@ -37,6 +36,7 @@ Projectile = ExtResource( 4 )
 shoot_cooldown = 2.0
 proj_count_per_shot = 10
 cam_shake_intensity = 15.0
+burst_count = 1
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0, 0.231373, 0.690196, 1 )

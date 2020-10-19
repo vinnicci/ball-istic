@@ -75,7 +75,7 @@ func set_level(level: Node) -> void:
 func _physics_process(_delta: float) -> void:
 	if _check_if_valid_bot(_enemy) == false:
 		_get_new_target_enemy()
-	if (_check_if_valid_bot(_enemy) == true &&
+	elif (_check_if_valid_bot(_enemy) == true &&
 		_parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT):
 		$Rays/Target.look_at(_enemy.global_position)
 	match _current_act:
@@ -124,7 +124,7 @@ func _get_path_points(start: Vector2, end: Vector2) -> void:
 
 func _get_distance(start_node: Node, target_node: Node) -> int:
 	if _check_if_valid_bot(target_node) == false:
-		return 0
+		return -1
 	var start: Vector2 = start_node.global_position
 	var end: Vector2 = target_node.global_position
 	var arr: Array = _level_node.get_points(start, end)
@@ -134,19 +134,13 @@ func _get_distance(start_node: Node, target_node: Node) -> int:
 	return dist
 
 
-var _dist_to_enemy: int
-var _dist_to_master: int
+var _dist_to_enemy: int = -1
+var _dist_to_master: int = -1
 
 
 func _on_DistEvaluate_timeout() -> void:
-	if _check_if_valid_bot(_enemy) == true:
-		_dist_to_enemy = _get_distance(self, _enemy)
-	else:
-		_dist_to_enemy = -1
-	if _check_if_valid_bot(_master) == true:
-		_dist_to_master = _get_distance(self, _master)
-	else:
-		_dist_to_master = -1
+	_dist_to_enemy = _get_distance(self, _enemy)
+	_dist_to_master = _get_distance(self, _master)
 
 
 func _get_new_target_enemy() -> void:
@@ -285,8 +279,8 @@ func task_act_seek_enemy(task):
 
 func task_cond_is_enemy_close(task):
 	if _dist_to_enemy == -1:
-		task.failed()
-	elif _dist_to_enemy <= _params_dict[task.get_param(0)]:
+		_on_DistEvaluate_timeout()
+	if _dist_to_enemy <= _params_dict[task.get_param(0)]:
 		task.succeed()
 	else:
 		task.failed()
@@ -481,8 +475,8 @@ func task_cond_is_master_instance_valid(task):
 
 func task_cond_is_master_close(task):
 	if _dist_to_master == -1:
-		task.failed()
-	elif _dist_to_master <= _params_dict[task.get_param(0)]:
+		_on_DistEvaluate_timeout()
+	if _dist_to_master <= _params_dict[task.get_param(0)]:
 		task.succeed()
 	else:
 		task.failed()

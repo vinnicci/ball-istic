@@ -38,7 +38,6 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.372549, 0.380392, 0.803922, 1 )
 texture = ExtResource( 1 )
-offset = Vector2( 14, 1 )
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 7 )

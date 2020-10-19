@@ -20,7 +20,6 @@ charge_force_mult = 0.7
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.439216, 0.439216, 0.439216, 1 )
 texture = ExtResource( 2 )
-offset = Vector2( 13, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 1 )

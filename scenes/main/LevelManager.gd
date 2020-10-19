@@ -194,7 +194,7 @@ func _resume(player) -> void:
 	#resume interrupted charge cooldown
 	var player_charge_time: float = player.get_node("Timers/ChargeCooldown").time_left
 	if player_charge_time > 0:
-		player.update_bar_charge_level(player_charge_time)
+		player.animate_bar_charge_level(player_charge_time)
 
 
 ########################################

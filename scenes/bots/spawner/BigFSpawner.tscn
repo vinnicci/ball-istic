@@ -17,7 +17,6 @@ knockback_resist = 0.8
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.611765, 0.603922, 0.117647, 1 )
 texture = ExtResource( 2 )
-offset = Vector2( 13, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 1 )

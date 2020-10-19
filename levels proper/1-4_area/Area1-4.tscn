@@ -132,6 +132,7 @@ health_cap = 70.0
 speed = 1800
 charge_cooldown = 1.0
 charge_force_mult = 0.85
+dmg_resist = 0.25
 knockback_resist = 0.95
 faction = Color( 0, 1, 0, 1 )
 

@@ -40,8 +40,6 @@ position = Vector2( 216, 147 )
 rotation = -0.326377
 shield_cap = 35.0
 health_cap = 35.0
-transform_speed = 0.7
-charge_cooldown = 3.5
 respawnable = false
 deployed = true
 faction = Color( 0, 1, 0, 1 )
@@ -50,7 +48,6 @@ faction = Color( 0, 1, 0, 1 )
 position = Vector2( 361, 630 )
 rotation = -1.14319
 shield_cap = 35.0
-shield_regen = 2.0
 health_cap = 35.0
 respawnable = false
 deployed = true
@@ -82,7 +79,6 @@ shield_regen = 2.0
 health_cap = 35.0
 speed = 1700
 charge_force_mult = 0.75
-respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger4" parent="Bots" index="5" instance=ExtResource( 8 )]
@@ -109,13 +105,13 @@ respawnable = false
 
 [node name="Fighter3" parent="Bots" index="8" instance=ExtResource( 7 )]
 position = Vector2( -51, -2565 )
-shield_cap = 25.0
-health_cap = 25.0
+shield_cap = 30.0
+health_cap = 30.0
 
 [node name="Fighter4" parent="Bots" index="9" instance=ExtResource( 7 )]
 position = Vector2( 1233, -2560 )
-shield_cap = 25.0
-health_cap = 25.0
+shield_cap = 30.0
+health_cap = 30.0
 
 [node name="Shotgunner" parent="Bots" index="10" instance=ExtResource( 10 )]
 position = Vector2( 440, -2343 )

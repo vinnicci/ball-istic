@@ -122,20 +122,35 @@ func get_description() -> String:
 	var dmg_rate = _level_node.get_player().current_weap_dmg_rate
 	match fire_mode:
 		FireModes.MELEE:
-			s_description = "MELEE DMG: " + str(dmg_rate * melee_damage)
+			var f_dmg: int = dmg_rate * melee_damage
+			s_description = ("MELEE DMG: " + str(f_dmg) +
+				" DPS: " + str(int(f_dmg / current_shoot_cooldown)))
 		FireModes.AUTO, FireModes.BURST, FireModes.CHARGE:
 			if (sample_proj is Global.CLASS_BOT_PROJ &&
 				sample_proj.has_node("AI") == true):
 				pass
 			elif sample_proj.has_node("Explosion") == true:
-				s_description = "EXPLOSION DMG: " + str(dmg_rate *
-					sample_proj.get_node("Explosion").damage)
+				s_description = "EXPLOSION DMG: " + str(int(dmg_rate *
+					sample_proj.get_node("Explosion").damage))
 			else:
-				s_description = "PROJECTILE DMG: " + str(dmg_rate * sample_proj.damage)
+				var f_dmg: int = dmg_rate * sample_proj.damage
+				s_description = ("PROJECTILE DMG: " + str(f_dmg) + " DPS: " +
+					_get_dps(f_dmg))
 	if s_description == "":
 		return description
 	else:
 		return s_description + "\n" + description
+
+
+func _get_dps(f_dmg) -> String:
+	if proj_count_per_shot != 1 && burst_count == 1:
+		return str(f_dmg) + " x " + str(proj_count_per_shot)
+	elif proj_count_per_shot == 1 && burst_count != 1:
+		return str(f_dmg) + " x " + str(burst_count)
+	elif proj_count_per_shot != 1 && burst_count != 1:
+		return str(f_dmg) + " x " + str(proj_count_per_shot * burst_count)
+	else:
+		return str(int(f_dmg/current_shoot_cooldown))
 
 
 func reset_weap_vars() -> void:

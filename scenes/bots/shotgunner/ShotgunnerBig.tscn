@@ -15,15 +15,14 @@ resource_local_to_scene = true
 script = ExtResource( 3 )
 bot_radius = 64
 speed = 2200
-knockback_resist = 0.5
 transform_speed = 0.4
 charge_cooldown = 2.5
 charge_force_mult = 0.6
+knockback_resist = 0.5
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0, 0.403922, 0.054902, 1 )
 texture = ExtResource( 2 )
-offset = Vector2( 13, 0 )
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 1 )

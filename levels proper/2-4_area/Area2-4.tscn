@@ -23,12 +23,11 @@
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=22]
 
-[sub_resource type="PhysicsMaterial" id=7]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="Animation" id=1]
-resource_name = "discharge_parry"
+[sub_resource type="Animation" id=2]
 length = 0.25
 step = 0.01
 tracks/0/type = "value"
@@ -56,7 +55,7 @@ tracks/1/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 8, 8 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -71,13 +70,13 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=3]
-resource_local_to_scene = true
-
 [sub_resource type="CircleShape2D" id=4]
 resource_local_to_scene = true
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=5]
+resource_local_to_scene = true
+
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 100, 25 )
 
 [node name="Area2-4" instance=ExtResource( 1 )]
@@ -138,12 +137,12 @@ position = Vector2( -2184, -1088 )
 rotation = -1.5708
 
 [node name="DoorLab4" parent="Doors" index="3" instance=ExtResource( 18 )]
-position = Vector2( -632, -2624 )
+position = Vector2( -776, -2624 )
 rotation = -1.5708
 
 [node name="ChargerBig" parent="Bots" index="0" instance=ExtResource( 6 )]
 position = Vector2( 533, -3208 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 175.0
 health_cap = 275.0
 speed = 3200
@@ -152,7 +151,7 @@ respawnable = false
 
 [node name="ChargerBig2" parent="Bots" index="1" instance=ExtResource( 6 )]
 position = Vector2( -425, -3232 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 175.0
 health_cap = 275.0
 speed = 3200
@@ -161,7 +160,7 @@ respawnable = false
 
 [node name="StunExplosiveSpawner" parent="Bots" index="2" instance=ExtResource( 8 )]
 position = Vector2( 31, -3222 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 150.0
 health_cap = 600.0
 weap_dmg_rate = 4.0
@@ -169,14 +168,14 @@ respawnable = false
 
 [node name="Grenadier" parent="Bots" index="3" instance=ExtResource( 10 )]
 position = Vector2( -621, -1924 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 100.0
 health_cap = 100.0
 weap_dmg_rate = 3.0
 
 [node name="Grenadier2" parent="Bots" index="4" instance=ExtResource( 10 )]
 position = Vector2( -699, -364 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 100.0
 health_cap = 100.0
 weap_dmg_rate = 3.0
@@ -184,7 +183,7 @@ weap_dmg_rate = 3.0
 [node name="Grenadier3" parent="Bots" index="5" instance=ExtResource( 10 )]
 position = Vector2( 19, -2242 )
 rotation = 1.33866
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 100.0
 health_cap = 100.0
 weap_dmg_rate = 3.0
@@ -192,14 +191,14 @@ weap_dmg_rate = 3.0
 [node name="Grenadier4" parent="Bots" index="6" instance=ExtResource( 10 )]
 position = Vector2( -7, 121 )
 rotation = -1.28279
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 100.0
 health_cap = 100.0
 weap_dmg_rate = 3.0
 
 [node name="ExplosiveSpawner" parent="Bots" index="7" instance=ExtResource( 9 )]
 position = Vector2( -699, -1550 )
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 150.0
 health_cap = 600.0
 weap_dmg_rate = 4.0
@@ -208,7 +207,7 @@ respawnable = false
 [node name="SniperBot3" parent="Bots" index="8" instance=ExtResource( 7 )]
 position = Vector2( -1083, -1897 )
 rotation = 1.52856
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 50.0
 health_cap = 50.0
 weap_dmg_rate = 2.0
@@ -217,18 +216,18 @@ deployed = true
 [node name="SniperBot2" parent="Bots" index="9" instance=ExtResource( 7 )]
 position = Vector2( 1213, -2396 )
 rotation = 1.59525
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 50.0
 health_cap = 50.0
 weap_dmg_rate = 2.0
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot2/Body/ChargeEffect" index="0"]
-anims/discharge_parry = SubResource( 1 )
-anims/trail = SubResource( 6 )
+anims/discharge_parry = SubResource( 2 )
+anims/trail = SubResource( 3 )
 
 [node name="CollisionShape" parent="Bots/SniperBot2" index="8"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="AI" parent="Bots/SniperBot2" index="10"]
 detection_range = 2000
@@ -238,7 +237,7 @@ max_shooting_dist = 4000
 [node name="Charger" parent="Bots" index="10" instance=ExtResource( 5 )]
 position = Vector2( 489, 116 )
 rotation = -1.80547
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 95.0
 health_cap = 95.0
 charge_dmg_rate = 0.4
@@ -246,16 +245,16 @@ charge_dmg_rate = 0.4
 [node name="Charger2" parent="Bots" index="11" instance=ExtResource( 5 )]
 position = Vector2( 493, -2245 )
 rotation = -4.48269
-physics_material_override = SubResource( 7 )
+physics_material_override = SubResource( 1 )
 shield_cap = 95.0
 health_cap = 95.0
 charge_dmg_rate = 0.4
 
 [node name="Berserker" parent="Bots" index="12" instance=ExtResource( 21 )]
 position = Vector2( -1090, -755 )
-physics_material_override = SubResource( 7 )
-shield_cap = 250.0
-shield_regen = 25.0
+physics_material_override = SubResource( 1 )
+shield_cap = 300.0
+shield_regen = 15.0
 weap_dmg_rate = 4.0
 faction = Color( 0, 1, 0, 1 )
 
@@ -263,7 +262,7 @@ faction = Color( 0, 1, 0, 1 )
 modulate = Color( 1, 0.192157, 0.0862745, 1 )
 
 [node name="CollisionShape" parent="Bots/Berserker" index="8"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Label" parent="Bots/Berserker/Name" index="0"]
 text = "BERSERKER"
@@ -274,7 +273,7 @@ text = "BERSERKER"
 position = Vector2( -1087, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Follow" index="0"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 [connection signal="body_entered" from="Follow" to="." method="_on_Follow_body_entered"]
 
 [editable path="Access/Depot"]
