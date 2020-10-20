@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateI.tscn" type="PackedScene" id=17]
@@ -97,9 +96,7 @@ position = Vector2( -584, -926 )
 
 [node name="ResistanceI" parent="Access/Depot/Items" index="5" instance=ExtResource( 23 )]
 
-[node name="SpeedI" parent="Access/Depot/Items" index="6" instance=ExtResource( 14 )]
-
-[node name="ShieldRegenI" parent="Access/Depot/Items" index="7" instance=ExtResource( 18 )]
+[node name="ShieldRegenI" parent="Access/Depot/Items" index="6" instance=ExtResource( 18 )]
 
 [node name="MainDoor" parent="Doors" index="0" instance=ExtResource( 7 )]
 position = Vector2( -64, -1972 )
@@ -108,62 +105,86 @@ script = ExtResource( 21 )
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -1000, -1570 )
+shield_cap = 70.0
+health_cap = 70.0
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger2" parent="Bots" index="1" instance=ExtResource( 8 )]
 position = Vector2( 894, -1549 )
+shield_cap = 70.0
+health_cap = 70.0
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger3" parent="Bots" index="2" instance=ExtResource( 8 )]
 position = Vector2( 297, -1722 )
+shield_cap = 70.0
+health_cap = 70.0
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger4" parent="Bots" index="3" instance=ExtResource( 8 )]
 position = Vector2( 272, 790 )
+shield_cap = 70.0
+health_cap = 70.0
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger5" parent="Bots" index="4" instance=ExtResource( 8 )]
 position = Vector2( 481, 444 )
+shield_cap = 70.0
+health_cap = 70.0
 faction = Color( 0, 1, 0, 1 )
 
 [node name="HeavyFighter" parent="Bots" index="5" instance=ExtResource( 10 )]
 position = Vector2( 403, -521 )
+shield_cap = 70.0
+health_cap = 70.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="HeavyFighter2" parent="Bots" index="6" instance=ExtResource( 10 )]
 position = Vector2( -546, -568 )
 rotation = -2.36841
+shield_cap = 70.0
+health_cap = 70.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Fighter" parent="Bots" index="7" instance=ExtResource( 5 )]
 position = Vector2( 555, 127 )
 rotation = 1.45735
+shield_cap = 70.0
+health_cap = 70.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Fighter2" parent="Bots" index="8" instance=ExtResource( 5 )]
 position = Vector2( 453, -962 )
 rotation = -0.546288
+shield_cap = 70.0
+health_cap = 70.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Fighter3" parent="Bots" index="9" instance=ExtResource( 5 )]
 position = Vector2( 568, -1716 )
 rotation = -3.09621
+shield_cap = 70.0
+health_cap = 70.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="10" instance=ExtResource( 9 )]
 position = Vector2( -602, -1250 )
 rotation = -0.911062
+shield_cap = 120.0
+health_cap = 120.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig2" parent="Bots" index="11" instance=ExtResource( 9 )]
 position = Vector2( -631, 85 )
 rotation = 0.911062
+shield_cap = 120.0
+health_cap = 120.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 

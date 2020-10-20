@@ -62,9 +62,9 @@ tracks/1/keys = {
 [node name="HeatEdge" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
 description = "Shoots more powerful projectiles when it gets close to overheating."
-heat_cap = 20.0
+heat_cap = 15.0
 heat_dissipation = 2.0
-almost_overheating_threshold = 0.7
+almost_overheating_threshold = 0.8
 shoot_cooldown = 0.2
 crit_mult = 3.0
 crit_chance = 0.1

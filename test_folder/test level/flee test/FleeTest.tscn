@@ -1,15 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://test_folder/test level/flee test/FleeTest.gd" type="Script" id=1]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.tscn" type="PackedScene" id=13]
-
-[sub_resource type="CircleShape2D" id=1]
-resource_local_to_scene = true
 
 [node name="FleeTest" instance=ExtResource( 9 )]
 script = ExtResource( 1 )
@@ -27,17 +23,6 @@ enemy_seek_dist = 1200
 [node name="Player" parent="Bots" index="1" instance=ExtResource( 2 )]
 position = Vector2( 696, 1053 )
 
-[node name="Camera2D" parent="Bots/Player" index="6"]
-zoom = Vector2( 2, 2 )
-
-[node name="CollisionShape" parent="Bots/Player" index="9"]
-shape = SubResource( 1 )
-
-[node name="HeavyBlaster" parent="Bots/Player/Weapons" index="1" instance=ExtResource( 3 )]
-heat_cap = 999.0
-
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 212, 899 )
 zoom = Vector2( 2, 2 )
-
-[editable path="Bots/Player"]

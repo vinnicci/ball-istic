@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/bots/artillery/big weap/LongArtillery.gd" type="Script" id=1]
+[ext_resource path="res://scenes/bots/artillery/big weap/_base/Artillery.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/weapons/tex_long_artillery.png" type="Texture" id=3]
+
+[node name="LongArtillery" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+shoot_cooldown = 6.0
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 390, 0 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 3 )
+offset = Vector2( 50, 0 )

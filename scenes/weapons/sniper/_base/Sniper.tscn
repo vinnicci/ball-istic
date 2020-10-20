@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/weapons/sniper/_base/Sniper.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/sfx_sniper.wav" type="AudioStream" id=3]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -38,3 +39,7 @@ cam_shake_intensity = 15.0
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )
+
+[node name="ShootingSound" parent="." index="6"]
+stream = ExtResource( 3 )
+max_distance = 2800.0

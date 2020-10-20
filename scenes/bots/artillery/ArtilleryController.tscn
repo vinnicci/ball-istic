@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/bots/_base/_BaseBot.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/bots/_base/BotExplosion.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/_ais/kiter ai/KiterAI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/weapons/blaster/BurstBlasterHoming.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/bots/artillery/ArtilleryController.gd" type="Script" id=5]
+[ext_resource path="res://assets/bots/tex_artillery_controller.png" type="Texture" id=6]
+[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=7]
+
+[node name="ArtilleryController" instance=ExtResource( 1 )]
+script = ExtResource( 5 )
+speed = 1200
+transform_speed = 0.4
+charge_cooldown = 2.5
+charge_force_mult = 0.6
+
+[node name="Sprite" parent="Legs" index="0"]
+modulate = Color( 0.0823529, 0.0784314, 0.0784314, 1 )
+texture = ExtResource( 7 )
+
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 6 )
+uv = PoolVector2Array( 115.225, 64, 108.822, 74.245, 102.419, 84.49, 96.0156, 94.735, 89.6125, 104.98, 76.8062, 104.98, 64, 104.98, 51.1938, 104.98, 38.3875, 104.98, 31.9844, 94.735, 25.5812, 84.49, 19.1781, 74.245, 12.775, 64, 19.1781, 53.755, 25.5812, 43.51, 31.9844, 33.265, 38.3875, 23.02, 51.1938, 23.02, 64, 23.02, 76.8062, 23.02, 89.6125, 23.02, 96.0156, 33.265, 102.419, 43.51, 108.822, 53.755, 83.2094, 94.735, 70.4031, 94.735, 57.5969, 94.735, 44.7906, 94.735, 89.6125, 84.49, 76.8062, 84.49, 64, 84.49, 51.1938, 84.49, 38.3875, 84.49, 31.9844, 74.245, 44.7906, 74.245, 57.5969, 74.245, 70.4031, 74.245, 83.2094, 74.245, 96.0156, 74.245, 25.5812, 64, 38.3875, 64, 51.1938, 64, 64, 64, 76.8062, 64, 89.6125, 64, 102.419, 64, 96.0156, 53.755, 83.2094, 53.755, 70.4031, 53.755, 57.5969, 53.755, 44.7906, 53.755, 31.9844, 53.755, 89.6125, 43.51, 76.8062, 43.51, 64, 43.51, 51.1938, 43.51, 38.3875, 43.51, 44.7906, 33.265, 57.5969, 33.265, 70.4031, 33.265, 83.2094, 33.265 )
+
+[node name="Explosion" parent="." index="9" instance=ExtResource( 2 )]
+
+[node name="AI" parent="." index="10" instance=ExtResource( 3 )]
+enemy_seek_dist = 700
+weap_heat_cooldown = 3.0
+max_shooting_dist = 800
+enemy_too_close_dist = 300
+
+[node name="BurstBlasterHoming" parent="Weapons" index="0" instance=ExtResource( 4 )]
+
+[node name="Label" parent="Name" index="0"]
+margin_bottom = 52.0
+text = "ARTILLERY CONTROLLER"

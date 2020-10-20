@@ -2,8 +2,32 @@ extends Node
 
 
 var scenes: Dictionary = {
-	#all needed game scenes here -> levels and player scenes
-	"Player": preload("res://scenes/bots/player/Player.tscn")
+	"PlayerTut": preload("res://levels proper/0_tutorial/PlayerTut.tscn"),
+	"Player": preload("res://scenes/bots/player/Player.tscn"),
+	"Tutorial": preload("res://levels proper/0_tutorial/Tutorial.tscn"),
+	"Area1-1": preload("res://levels proper/1-1_area/Area1-1.tscn"),
+	"Secret1-1": preload("res://levels proper/1-1_secret/Secret1-1.tscn"),
+	"Checkpoint1-1": preload("res://levels proper/1-1_checkpoint/Checkpoint1-1.tscn"),
+	"Area1-2": preload("res://levels proper/1-2_area/Area1-2.tscn"),
+	"Hub": preload("res://levels proper/0_hub/Hub.tscn"),
+	"Area1-3": preload("res://levels proper/1-3_area/Area1-3.tscn"),
+	"Area1-4": preload("res://levels proper/1-4_area/Area1-4.tscn"),
+	"Secret1-2": preload("res://levels proper/1-2_secret/Secret1-2.tscn"),
+	"Checkpoint1-2": preload("res://levels proper/1-2_checkpoint/Checkpoint1-2.tscn"),
+	"Area1-5": preload("res://levels proper/1-5_area/Area1-5.tscn"),
+	"Area1Final": preload("res://levels proper/1_area_final/Area1Final.tscn"),
+	"Secret1-3": preload("res://levels proper/1-3_secret/Secret1-3.tscn"),
+	"Secret1-4": preload("res://levels proper/1-4_secret/Secret1-4.tscn"),
+	"Area2-1": preload("res://levels proper/2-1_area/Area2-1.tscn"),
+	"Area2-2": preload("res://levels proper/2-2_area/Area2-2.tscn"),
+	"Area2-3": preload("res://levels proper/2-3_area/Area2-3.tscn"),
+	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn"),
+	"Secret2-1": preload("res://levels proper/2-1_secret/Secret2-1.tscn"),
+	"Area2-4": preload("res://levels proper/2-4_area/Area2-4.tscn"),
+	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn"),
+	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
+	"Area2Final": preload("res://levels proper/2_area_final/Area2Final.tscn"),
+	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -112,7 +136,6 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_vault_items(_current_scene)
-		_save_despawnable_bots()
 	call_deferred("_change_scene_deferred", new_lvl, spawn)
 
 
@@ -332,6 +355,7 @@ func _load_player_items() -> void:
 # player spawn
 ###############
 func on_player_spawn_saved(lvl: String, pos: String) -> void:
+	_save_despawnable_bots()
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
 	_saved_player["Spawn"]["Pos"] = "Access/" + pos

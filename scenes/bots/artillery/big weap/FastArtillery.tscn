@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/weapons/tex_fast_artillery.png" type="Texture" id=1]
+[ext_resource path="res://scenes/bots/artillery/big weap/_base/Artillery.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bots/artillery/big weap/FastArtillery.gd" type="Script" id=3]
+
+[node name="FastArtillery" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 327, 0 )
+
+[node name="Sprite" parent="." index="2"]
+texture = ExtResource( 1 )
+offset = Vector2( 40, 0 )

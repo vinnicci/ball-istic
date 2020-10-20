@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/bots/tex_fast_artillery.png" type="Texture" id=1]
+[ext_resource path="res://assets/bots/tex_generic_bot_leg.png" type="Texture" id=2]
+[ext_resource path="res://scenes/bots/artillery/FastArtilleryBot.gd" type="Script" id=3]
+[ext_resource path="res://scenes/bots/artillery/_base/Artillery.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/bots/artillery/big weap/FastArtillery.tscn" type="PackedScene" id=5]
+
+[node name="FastArtilleryBot" instance=ExtResource( 4 )]
+script = ExtResource( 3 )
+
+[node name="Sprite" parent="Legs" index="0"]
+modulate = Color( 0.239216, 0.247059, 0.176471, 1 )
+texture = ExtResource( 2 )
+
+[node name="Texture" parent="Body" index="1"]
+texture = ExtResource( 1 )
+uv = PoolVector2Array( 146.462, 64, 136.154, 80.4924, 125.847, 96.9848, 115.539, 113.477, 105.231, 129.97, 84.6155, 129.97, 64, 129.97, 43.3845, 129.97, 22.7689, 129.97, 12.4612, 113.477, 2.1534, 96.9848, -8.15437, 80.4924, -18.4621, 64, -8.15437, 47.5076, 2.1534, 31.0152, 12.4612, 14.5227, 22.7689, -1.96969, 43.3845, -1.96969, 64, -1.96969, 84.6155, -1.96969, 105.231, -1.96969, 115.539, 14.5227, 125.847, 31.0152, 136.154, 47.5076, 94.9233, 113.477, 74.3078, 113.477, 53.6922, 113.477, 33.0767, 113.477, 105.231, 96.9848, 84.6155, 96.9848, 64, 96.9848, 43.3845, 96.9848, 22.7689, 96.9848, 12.4611, 80.4924, 33.0767, 80.4924, 53.6922, 80.4924, 74.3078, 80.4924, 94.9233, 80.4924, 115.539, 80.4924, 2.15338, 64, 22.7689, 64, 43.3845, 64, 64, 64, 84.6155, 64, 105.231, 64, 125.847, 64, 115.539, 47.5076, 94.9233, 47.5076, 74.3078, 47.5076, 53.6922, 47.5076, 33.0767, 47.5076, 12.4611, 47.5076, 105.231, 31.0152, 84.6155, 31.0152, 64, 31.0152, 43.3845, 31.0152, 22.7689, 31.0152, 33.0767, 14.5227, 53.6922, 14.5227, 74.3078, 14.5227, 94.9233, 14.5227 )
+
+[node name="Shoot" parent="Timers" index="8"]
+wait_time = 3.0
+
+[node name="FastArtillery" parent="Weapons" index="0" instance=ExtResource( 5 )]

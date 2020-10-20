@@ -136,7 +136,6 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_vault_items(_current_scene)
-		_save_despawnable_bots()
 	call_deferred("_change_scene_deferred", new_lvl, spawn)
 
 
@@ -356,6 +355,7 @@ func _load_player_items() -> void:
 # player spawn
 ###############
 func on_player_spawn_saved(lvl: String, pos: String) -> void:
+	_save_despawnable_bots()
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
 	_saved_player["Spawn"]["Pos"] = "Access/" + pos

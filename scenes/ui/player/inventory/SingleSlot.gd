@@ -28,11 +28,11 @@ func _display_item_info(disp: bool) -> void:
 	var regex = RegEx.new()
 	regex.compile("[A-Za-z]+")
 	item_info.get_node("VBoxContainer/Name").text = regex.search(item.name).get_string()
-	regex.compile("res://scenes/[\\w]+")
-	var type = regex.search(item.filename).get_string()
-	regex.compile("[\\w]+$")
-	type = regex.search(type).get_string()
-	type = "[" + type.to_upper().trim_suffix("S") + "]"
+	var type: String
+	if item is Global.CLASS_WEAPON:
+		type = "[WEAPON]"
+	elif item is Global.CLASS_PASSIVE:
+		type = "[PASSIVE]"
 	item_info.get_node("VBoxContainer/Type").text = type
 	item_info.get_node("Description").text = item.get_description()
 

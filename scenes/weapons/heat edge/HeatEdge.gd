@@ -13,7 +13,7 @@ func _process(_delta: float) -> void:
 	if _is_almost_overheating == true:
 		Projectile = super_proj
 		current_heat_per_shot = 0.25
-		self.shoot_cooldown = 0.05
+		self.shoot_cooldown = 0.08
 		$Sprite/Anim.playback_speed = 8
 		$Sprite/Barrel.modulate = Color(0.95, 0.15, 0.15)
 		$Sprite/Tank1.modulate = Color(0.95, 0.15, 0.15)

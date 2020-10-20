@@ -124,18 +124,19 @@ func get_description() -> String:
 		FireModes.MELEE:
 			var f_dmg: int = dmg_rate * melee_damage
 			s_description = ("MELEE DMG: " + str(f_dmg) +
-				" DPS: " + str(int(f_dmg / current_shoot_cooldown)))
+				"	DPS: " + str(int(f_dmg / current_shoot_cooldown)))
 		FireModes.AUTO, FireModes.BURST, FireModes.CHARGE:
 			if (sample_proj is Global.CLASS_BOT_PROJ &&
 				sample_proj.has_node("AI") == true):
 				pass
-			elif sample_proj.has_node("Explosion") == true:
-				s_description = "EXPLOSION DMG: " + str(int(dmg_rate *
-					sample_proj.get_node("Explosion").damage))
 			else:
-				var f_dmg: int = dmg_rate * sample_proj.damage
-				s_description = ("PROJECTILE DMG: " + str(f_dmg) + " DPS: " +
-					_get_dps(f_dmg))
+				var f_dmg: int
+				if sample_proj.has_node("Explosion") == true:
+					f_dmg = dmg_rate * sample_proj.get_node("Explosion").damage
+					s_description = "EXPLOSION DMG: " + str(f_dmg) + _get_dps(f_dmg)
+				else:
+					f_dmg = dmg_rate * sample_proj.damage
+					s_description = ("PROJECTILE DMG: " + str(f_dmg) + _get_dps(f_dmg))
 	if s_description == "":
 		return description
 	else:
@@ -143,14 +144,18 @@ func get_description() -> String:
 
 
 func _get_dps(f_dmg) -> String:
-	if proj_count_per_shot != 1 && burst_count == 1:
-		return str(f_dmg) + " x " + str(proj_count_per_shot)
-	elif proj_count_per_shot == 1 && burst_count != 1:
-		return str(f_dmg) + " x " + str(burst_count)
-	elif proj_count_per_shot != 1 && burst_count != 1:
-		return str(f_dmg) + " x " + str(proj_count_per_shot * burst_count)
-	else:
-		return str(int(f_dmg/current_shoot_cooldown))
+	var f_dps: int = f_dmg/current_shoot_cooldown
+	match fire_mode:
+		FireModes.AUTO:
+			return "	DPS: " + (str(int(f_dmg/current_shoot_cooldown)) +
+				" x " + str(proj_count_per_shot))
+		FireModes.BURST:
+			return "	DPS: " + (str(int(f_dmg/current_shoot_cooldown)) +
+				" x " + str(proj_count_per_shot * burst_count))
+		FireModes.CHARGE:
+			return ("	DPC: " +
+				str(int(f_dmg * proj_count_per_shot * burst_count)))
+	return ""
 
 
 func reset_weap_vars() -> void:

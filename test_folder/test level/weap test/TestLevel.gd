@@ -1,6 +1,10 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
+func _ready() -> void:
+	$Bots/FastArtilleryBot.set_controller($Bots/ArtilleryController)
+
+
 func get_points(start: Vector2, end: Vector2) -> Array:
 	var points: Array = $Nav.get_simple_path(start, end)
 	var line = Line2D.new()

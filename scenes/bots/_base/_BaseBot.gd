@@ -319,9 +319,9 @@ func _process(delta: float) -> void:
 
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(_delta: float) -> void:
-	if linear_velocity.length() > 2300 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
+	if linear_velocity.length() > 2800 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
-	elif linear_velocity.length() <= 2300 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
+	elif linear_velocity.length() <= 2800 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 
 
@@ -532,6 +532,8 @@ func apply_knockback(knockback: Vector2) -> void:
 func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 	apply_knockback(knockback)
 	var real_dmg = damage - (damage * current_dmg_resist)
+	if disp == true:
+		dmg_effect(real_dmg)
 	if destructible == false:
 		$Sounds/ShieldDamage.play()
 		return
@@ -544,9 +546,7 @@ func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 		$Sounds/HealthDamage.play()
 		current_health += current_shield - real_dmg
 		current_shield = 0
-	if disp == true:
-		dmg_effect(real_dmg)
-	else:
+	if disp == false:
 		$Sounds/ShieldDamage.stop()
 		$Sounds/HealthDamage.stop()
 	bar_shield.value = current_shield
