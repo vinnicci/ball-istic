@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -16,7 +16,6 @@
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateI.tscn" type="PackedScene" id=17]
-[ext_resource path="res://scenes/passives/shield regen/ShieldRegenI.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels proper/0_hub/MainDoor.gd" type="Script" id=21]
@@ -96,11 +95,10 @@ position = Vector2( -584, -926 )
 
 [node name="ResistanceI" parent="Access/Depot/Items" index="5" instance=ExtResource( 23 )]
 
-[node name="ShieldRegenI" parent="Access/Depot/Items" index="6" instance=ExtResource( 18 )]
-
 [node name="MainDoor" parent="Doors" index="0" instance=ExtResource( 7 )]
 position = Vector2( -64, -1972 )
 scale = Vector2( 2, 2 )
+z_index = 0
 script = ExtResource( 21 )
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 8 )]

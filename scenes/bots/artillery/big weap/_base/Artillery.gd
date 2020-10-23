@@ -9,10 +9,9 @@ const SHAKE: int = 15
 
 func _fire_other() -> void:
 	$ShootingSound.play()
-	if is_instance_valid(_player_cam) == false:
+	if is_instance_valid(_level_node.get_player()) == true:
 		_player_cam = _level_node.get_player().get_node("Camera2D")
-	if is_instance_valid(_level_cam) == false:
-		_level_cam = _level_node.get_node("Camera2D")
+	_level_cam = _level_node.get_node("Camera2D")
 	if is_instance_valid(_player_cam) && (_player_cam.get_parent().state != Global.CLASS_BOT.State.DEAD &&
 		global_position.distance_to(_player_cam.global_position) < DIST_SHAKE):
 		_player_cam.shake_camera(SHAKE, 0.05, 0.05, 1)

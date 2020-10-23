@@ -73,6 +73,8 @@ func set_level(level: Node) -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if enabled == false:
+		return
 	if _check_if_valid_bot(_enemy) == false:
 		_get_new_target_enemy()
 	elif (_check_if_valid_bot(_enemy) == true &&

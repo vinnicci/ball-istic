@@ -6,7 +6,6 @@ extends Node2D
 export var disp_name: String
 var _player: Global.CLASS_PLAYER = null setget , get_player
 var _player_faction: Color
-signal secret_found
 
 
 func get_player():

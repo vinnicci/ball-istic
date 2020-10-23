@@ -43,9 +43,9 @@ scale = Vector2( 1.5, 1.5 )
 [node name="BigCSpawner" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( -144, 0 )
 shield_cap = 200.0
-health_cap = 500.0
+health_cap = 1600.0
 speed = 2500
-weap_dmg_rate = 2.0
+weap_dmg_rate = 4.0
 respawnable = false
 
 [node name="CollisionShape" parent="Bots/BigCSpawner" index="8"]
@@ -58,8 +58,18 @@ detection_range = 3500
 position = Vector2( 2038, -1024 )
 script = ExtResource( 8 )
 
+[node name="SpawnTimer" parent="Spawn" index="0"]
+wait_time = 5.0
+
 [node name="Spawn2" parent="." index="6" instance=ExtResource( 5 )]
 position = Vector2( 2038, 1024 )
 script = ExtResource( 8 )
 
+[node name="SpawnTimer" parent="Spawn2" index="0"]
+wait_time = 5.0
+
 [editable path="Bots/BigCSpawner"]
+
+[editable path="Spawn"]
+
+[editable path="Spawn2"]

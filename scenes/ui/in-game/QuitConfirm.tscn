@@ -21,8 +21,8 @@ custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 bbcode_text = "Make sure to save your progress
 in a bot station. Confirm?"
-text = "Make sure to save your progress
-in a bot station. Confirm?"
+text = "Be sure to save your progress
+in a bot station. Continue?"
 __meta__ = {
 "_edit_use_anchors_": false
 }

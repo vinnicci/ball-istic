@@ -46,53 +46,61 @@ rotation = 1.5708
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 5 )]
 position = Vector2( -139, -106 )
-shield_cap = 25.0
-health_cap = 25.0
-charge_dmg_rate = 0.15
+shield_cap = 60.0
+health_cap = 60.0
 
 [node name="Charger2" parent="Bots" index="1" instance=ExtResource( 5 )]
 position = Vector2( -30, 11 )
-shield_cap = 25.0
-health_cap = 25.0
-charge_dmg_rate = 0.15
+shield_cap = 60.0
+health_cap = 60.0
 
 [node name="SniperBot" parent="Bots" index="2" instance=ExtResource( 7 )]
 position = Vector2( 54, -82 )
 rotation = -4.71239
+shield_cap = 20.0
+health_cap = 20.0
 deployed = true
 
 [node name="SniperBot2" parent="Bots" index="3" instance=ExtResource( 7 )]
 position = Vector2( -43, -159 )
 rotation = -1.5708
+shield_cap = 20.0
+health_cap = 20.0
 deployed = true
 
 [node name="SniperBot3" parent="Bots" index="4" instance=ExtResource( 7 )]
 position = Vector2( -641, -93 )
 rotation = -1.5708
+shield_cap = 20.0
+health_cap = 20.0
 deployed = true
 
 [node name="Fighter" parent="Bots" index="5" instance=ExtResource( 8 )]
 position = Vector2( -930, -36 )
 rotation = 1.46608
-shield_cap = 20.0
-health_cap = 20.0
+shield_cap = 60.0
+health_cap = 60.0
 deployed = true
 
 [node name="Fighter2" parent="Bots" index="6" instance=ExtResource( 8 )]
 position = Vector2( -1023, -79 )
 rotation = 1.46608
-shield_cap = 20.0
-health_cap = 20.0
+shield_cap = 60.0
+health_cap = 60.0
 deployed = true
 
 [node name="SniperBot4" parent="Bots" index="7" instance=ExtResource( 7 )]
 position = Vector2( -962, -307 )
 rotation = -2.36667
+shield_cap = 20.0
+health_cap = 20.0
 deployed = true
 
 [node name="SniperBot5" parent="Bots" index="8" instance=ExtResource( 7 )]
 position = Vector2( -1076, -229 )
 rotation = 1.53589
+shield_cap = 20.0
+health_cap = 20.0
 deployed = true
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 9 )]

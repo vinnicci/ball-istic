@@ -1,4 +1,6 @@
 z index:
+	level object - -2
+	bot legs - -1
 	everything - 0
 	weapon sprites - 1
 	feedback scenes - 2

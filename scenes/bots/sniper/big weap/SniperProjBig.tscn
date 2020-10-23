@@ -29,4 +29,4 @@ visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
 explosion_radius = 150
-damage = 35.0
+damage = 75.0

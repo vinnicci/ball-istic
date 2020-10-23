@@ -33,10 +33,7 @@ func _apply_resistance() -> void:
 func _apply_shield_cap() -> void:
 	_parent_node.current_shield_cap += effect
 	_parent_node.set_current_shield(_parent_node.current_shield_cap)
-
-
-func _apply_shield_regen() -> void:
-	_parent_node.current_shield_regen += effect
+	_parent_node.current_shield_regen += (effect*0.1)
 
 
 func _apply_speed() -> void:

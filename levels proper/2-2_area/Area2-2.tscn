@@ -212,36 +212,36 @@ rotation = -1.5708
 [node name="IncineratorBot" parent="Bots" index="0" instance=ExtResource( 11 )]
 position = Vector2( 3017, -897 )
 rotation = 3.14159
-shield_cap = 95.0
-health_cap = 95.0
+shield_cap = 120.0
+health_cap = 120.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot3" parent="Bots" index="1" instance=ExtResource( 11 )]
 position = Vector2( 2660, -976 )
 rotation = 3.14159
-shield_cap = 95.0
-health_cap = 95.0
+shield_cap = 120.0
+health_cap = 120.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot4" parent="Bots" index="2" instance=ExtResource( 11 )]
 position = Vector2( 1269, -147 )
 rotation = 1.63539
-shield_cap = 95.0
-health_cap = 95.0
+shield_cap = 120.0
+health_cap = 120.0
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot2" parent="Bots" index="3" instance=ExtResource( 11 )]
 position = Vector2( 3329, -1282 )
 rotation = 1.53648
-shield_cap = 95.0
-health_cap = 95.0
+shield_cap = 120.0
+health_cap = 120.0
 weap_dmg_rate = 2.0
 
 [node name="SniperBot" parent="Bots" index="4" instance=ExtResource( 10 )]
 position = Vector2( 4038, -508 )
 rotation = 3.04123
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 60.0
+health_cap = 60.0
 weap_dmg_rate = 2.0
 deployed = true
 
@@ -256,8 +256,8 @@ max_shooting_dist = 4000
 [node name="SniperBot2" parent="Bots" index="5" instance=ExtResource( 10 )]
 position = Vector2( 4048, 79 )
 rotation = 3.2695
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 60.0
+health_cap = 60.0
 weap_dmg_rate = 2.0
 deployed = true
 
@@ -276,8 +276,8 @@ max_shooting_dist = 4000
 [node name="SniperBot3" parent="Bots" index="6" instance=ExtResource( 10 )]
 position = Vector2( -321, -571 )
 rotation = 1.54607
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 60.0
+health_cap = 60.0
 weap_dmg_rate = 2.0
 deployed = true
 
@@ -296,8 +296,8 @@ max_shooting_dist = 9000
 [node name="SniperBot4" parent="Bots" index="7" instance=ExtResource( 10 )]
 position = Vector2( 837, -574 )
 rotation = 1.76817
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 60.0
+health_cap = 60.0
 weap_dmg_rate = 2.0
 deployed = true
 
@@ -315,8 +315,8 @@ max_shooting_dist = 9000
 
 [node name="ChargerBig" parent="Bots" index="8" instance=ExtResource( 12 )]
 position = Vector2( 4008, -254 )
-shield_cap = 175.0
-health_cap = 275.0
+shield_cap = 200.0
+health_cap = 600.0
 speed = 3200
 charge_dmg_rate = 0.3
 respawnable = false

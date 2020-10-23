@@ -1,14 +1,14 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
-onready var main_door = $Doors/MainDoor
-var keys: Array
-
-
 func _ready() -> void:
 	main_door.set_level(self)
 	$Nav/Destructible.set_level(self)
-	$Nav/Destructible.set_secret($Nav/Secret)
+	$Nav/Destructible.set_hidden($Nav/Secret)
+
+
+onready var main_door = $Doors/MainDoor
+var keys: Array
 
 
 func set_keys(player_keys: Array) -> void:

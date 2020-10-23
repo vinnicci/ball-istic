@@ -4,19 +4,22 @@ extends "res://scenes/level/_base/_BaseLevelObject.gd"
 #and attach this to nav node
 #commonly linked to a secret path
 var _level_node: Node
-var _secret_path: TileMap
+var _hidden_path: TileMap
 
 
 func set_level(new_level: Node) -> void:
 	_level_node = new_level
 
 
-func set_secret(new_secret_path: TileMap) -> void:
-	_secret_path = new_secret_path
+func set_hidden(new_hidden_path: TileMap) -> void:
+	_hidden_path = new_hidden_path
+
+
+signal path_found
 
 
 func destroy() -> void:
-	if _secret_path != null:
-		_secret_path.visible = true
-		_level_node.emit_signal("secret_found", _level_node, self)
+	if _hidden_path != null:
+		_hidden_path.visible = true
+		emit_signal("path_found")
 	queue_free()

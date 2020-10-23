@@ -6,8 +6,11 @@ export (Dictionary) var player: Dictionary = {
 	"Items": [],
 	"Weapons": [],
 	"Passives": [],
-	"Keys": [],
 	"Spawn": null, #value -> Lvl: level name, Pos: access name
+}
+export (Dictionary) var quests: Dictionary = {
+	"KEYS": [],
+	"DACS": []
 }
 export (Dictionary) var despawnable_bots: Dictionary
 export (Dictionary) var depot_items: Dictionary

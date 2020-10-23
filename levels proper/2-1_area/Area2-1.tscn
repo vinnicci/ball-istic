@@ -52,35 +52,47 @@ scale = Vector2( 1.5, 1.5 )
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 9 )]
 position = Vector2( 1154, -366 )
 rotation = 1.47583
-shield_cap = 75.0
-health_cap = 75.0
-charge_dmg_rate = 0.4
+shield_cap = 120.0
+health_cap = 120.0
+charge_dmg_rate = 0.6
 
 [node name="IncineratorBot" parent="Bots" index="1" instance=ExtResource( 10 )]
 position = Vector2( 2042, 1477 )
 rotation = -1.59239
-shield_cap = 75.0
-health_cap = 75.0
+shield_cap = 120.0
+health_cap = 120.0
 charge_dmg_rate = 0.4
 weap_dmg_rate = 2.0
 
 [node name="IncineratorBot2" parent="Bots" index="2" instance=ExtResource( 10 )]
 position = Vector2( 1133, 648 )
 rotation = -1.42922
-shield_cap = 75.0
-health_cap = 75.0
+shield_cap = 120.0
+health_cap = 120.0
 charge_dmg_rate = 0.4
 weap_dmg_rate = 2.0
 
 [node name="SniperBot" parent="Bots" index="3" instance=ExtResource( 12 )]
 position = Vector2( 2195, -70 )
 rotation = -3.24696
-shield_cap = 30.0
-health_cap = 30.0
+shield_cap = 60.0
+health_cap = 60.0
 weap_dmg_rate = 2.0
 deployed = true
 
+[node name="Sprite" parent="Bots/SniperBot/Legs" index="0"]
+z_index = -1
+offset = Vector2( 14, 0 )
+
+[node name="Leg1" parent="Bots/SniperBot/Legs" index="2"]
+modulate = Color( 1, 1, 1, 1 )
+
+[node name="Texture" parent="Bots/SniperBot/Body" index="1"]
+polygons = [ PoolIntArray( 9, 27, 8 ), PoolIntArray( 27, 7, 8 ), PoolIntArray( 27, 26, 7 ), PoolIntArray( 26, 6, 7 ), PoolIntArray( 26, 25, 6 ), PoolIntArray( 25, 5, 6 ), PoolIntArray( 25, 24, 5 ), PoolIntArray( 24, 4, 5 ), PoolIntArray( 24, 3, 4 ), PoolIntArray( 10, 9, 32 ), PoolIntArray( 32, 9, 27 ), PoolIntArray( 32, 31, 27 ), PoolIntArray( 26, 31, 27 ), PoolIntArray( 26, 31, 30 ), PoolIntArray( 26, 25, 30 ), PoolIntArray( 25, 29, 30 ), PoolIntArray( 25, 29, 24 ), PoolIntArray( 24, 28, 29 ), PoolIntArray( 24, 3, 28 ), PoolIntArray( 28, 2, 3 ), PoolIntArray( 10, 11, 33 ), PoolIntArray( 10, 32, 33 ), PoolIntArray( 33, 34, 32 ), PoolIntArray( 34, 31, 32 ), PoolIntArray( 34, 35, 31 ), PoolIntArray( 35, 30, 31 ), PoolIntArray( 35, 36, 30 ), PoolIntArray( 36, 29, 30 ), PoolIntArray( 36, 37, 29 ), PoolIntArray( 37, 28, 29 ), PoolIntArray( 37, 38, 28 ), PoolIntArray( 38, 2, 28 ), PoolIntArray( 38, 1, 2 ), PoolIntArray( 0, 45, 1 ), PoolIntArray( 0, 23, 45 ), PoolIntArray( 38, 45, 1 ), PoolIntArray( 38, 44, 37 ), PoolIntArray( 38, 45, 44 ), PoolIntArray( 46, 44, 45 ), PoolIntArray( 46, 23, 45 ), PoolIntArray( 46, 47, 44 ), PoolIntArray( 43, 44, 47 ), PoolIntArray( 43, 47, 48 ), PoolIntArray( 43, 48, 42 ), PoolIntArray( 43, 36, 37 ), PoolIntArray( 43, 44, 37 ), PoolIntArray( 43, 36, 42 ), PoolIntArray( 42, 48, 49 ), PoolIntArray( 42, 49, 41 ), PoolIntArray( 42, 41, 35 ), PoolIntArray( 42, 35, 36 ), PoolIntArray( 41, 49, 50 ), PoolIntArray( 41, 50, 40 ), PoolIntArray( 41, 34, 35 ), PoolIntArray( 41, 40, 34 ), PoolIntArray( 40, 51, 50 ), PoolIntArray( 40, 39, 51 ), PoolIntArray( 40, 34, 33 ), PoolIntArray( 40, 33, 39 ), PoolIntArray( 12, 13, 39 ), PoolIntArray( 13, 51, 39 ), PoolIntArray( 12, 11, 39 ), PoolIntArray( 11, 33, 39 ), PoolIntArray( 13, 14, 51 ), PoolIntArray( 14, 56, 51 ), PoolIntArray( 23, 22, 46 ), PoolIntArray( 22, 52, 46 ), PoolIntArray( 52, 47, 46 ), PoolIntArray( 52, 53, 47 ), PoolIntArray( 53, 48, 47 ), PoolIntArray( 48, 54, 53 ), PoolIntArray( 54, 48, 49 ), PoolIntArray( 54, 55, 49 ), PoolIntArray( 55, 50, 49 ), PoolIntArray( 55, 56, 50 ), PoolIntArray( 56, 51, 50 ), PoolIntArray( 15, 16, 57 ), PoolIntArray( 15, 14, 56 ), PoolIntArray( 15, 57, 56 ), PoolIntArray( 57, 55, 56 ), PoolIntArray( 57, 58, 55 ), PoolIntArray( 57, 17, 16 ), PoolIntArray( 17, 58, 57 ), PoolIntArray( 58, 54, 55 ), PoolIntArray( 58, 17, 18 ), PoolIntArray( 54, 59, 58 ), PoolIntArray( 18, 59, 58 ), PoolIntArray( 59, 53, 54 ), PoolIntArray( 59, 19, 18 ), PoolIntArray( 59, 60, 53 ), PoolIntArray( 59, 60, 19 ), PoolIntArray( 60, 20, 19 ), PoolIntArray( 60, 21, 20 ), PoolIntArray( 60, 52, 53 ), PoolIntArray( 60, 21, 52 ), PoolIntArray( 22, 21, 52 ) ]
+internal_vertex_count = 37
+
 [node name="CollisionShape" parent="Bots/SniperBot" index="8"]
+visible = false
 shape = SubResource( 1 )
 
 [node name="AI" parent="Bots/SniperBot" index="10"]

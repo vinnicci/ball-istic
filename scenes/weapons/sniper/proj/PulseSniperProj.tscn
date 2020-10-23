@@ -50,7 +50,7 @@ visible = false
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 3 )]
 explosion_radius = 75
-damage = 10.0
+damage = 20.0
 knockback = 850
 stun_time = 5.0
 

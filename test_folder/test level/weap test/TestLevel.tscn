@@ -29,14 +29,14 @@
 [ext_resource path="res://scenes/weapons/incinerator/Incinerator.tscn" type="PackedScene" id=29]
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=30]
 
-[sub_resource type="PhysicsMaterial" id=2]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id=3]
 friction = 0.25
 bounce = 0.5
 
@@ -114,23 +114,24 @@ rotation = 1.5708
 
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
 position = Vector2( 627, 1239 )
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
+speed = 2500
 transform_speed = 1.0
 charge_cooldown = 1.4
-charge_force_mult = 0.7
+charge_force_mult = 2.0
 charge_dmg_rate = 0.4
 destructible = false
 
 [node name="SniperBot" parent="Bots" index="1" instance=ExtResource( 2 )]
 position = Vector2( -1010, 3685 )
 rotation = -0.013683
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
 speed = 1800
 transform_speed = 0.2
 deployed = true
 
 [node name="CollisionShape" parent="Bots/SniperBot" index="8"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="AI" parent="Bots/SniperBot" index="10"]
 detection_range = 2000
@@ -154,10 +155,7 @@ health_cap = 25.0
 [node name="FastArtilleryBot" parent="Bots" index="5" instance=ExtResource( 22 )]
 position = Vector2( 3089, 1280 )
 rotation = -1.56194
-collision_mask = 3
-physics_material_override = SubResource( 1 )
-contacts_reported = 1
-contact_monitor = true
+physics_material_override = SubResource( 3 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

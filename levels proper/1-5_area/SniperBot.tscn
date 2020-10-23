@@ -11,6 +11,8 @@ resource_local_to_scene = true
 
 [node name="SniperBot" instance=ExtResource( 4 )]
 script = ExtResource( 5 )
+shield_cap = 20.0
+health_cap = 20.0
 
 [node name="Sprite" parent="Legs" index="0"]
 modulate = Color( 0.156863, 0.733333, 0.235294, 1 )
@@ -26,3 +28,4 @@ uv = PoolVector2Array( 72.0484, 32, 67.0424, 40.0097, 62.0363, 48.0194, 57.0303,
 shape = SubResource( 1 )
 
 [node name="Sniper" parent="Weapons" index="0" instance=ExtResource( 3 )]
+crit_chance = 0.1

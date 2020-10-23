@@ -25,3 +25,4 @@ uv = PoolVector2Array( 72.0484, 32, 67.0424, 40.0097, 62.0363, 48.0194, 57.0303,
 shape = SubResource( 1 )
 
 [node name="Sniper" parent="Weapons" index="0" instance=ExtResource( 3 )]
+crit_chance = 0.1

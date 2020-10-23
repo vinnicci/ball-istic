@@ -96,6 +96,7 @@ script = ExtResource( 15 )
 [node name="Legs" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Legs"]
+z_index = -1
 offset = Vector2( 14, 0 )
 
 [node name="Leg0" type="Position2D" parent="Legs"]

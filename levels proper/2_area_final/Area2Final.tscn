@@ -5,14 +5,14 @@
 [ext_resource path="res://levels proper/2_area_final/Area2Final.gd" type="Script" id=3]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/self destruct/Explosive.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/level/key/Key.tscn" type="PackedScene" id=6]
+[ext_resource path="res://levels proper/main/Key.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/dummy/ExplosiveDummy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=12]
-[ext_resource path="res://levels proper/2_area_final/SniperMkII.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.tscn" type="PackedScene" id=17]
@@ -54,16 +54,13 @@ rotation = 1.5708
 position = Vector2( -943, 127 )
 rotation = 3.14159
 
-[node name="Key" parent="Access" index="1" instance=ExtResource( 6 )]
-position = Vector2( 1861, 197 )
-
-[node name="Secret2-3" parent="Access" index="2" instance=ExtResource( 4 )]
+[node name="Secret2-3" parent="Access" index="1" instance=ExtResource( 4 )]
 position = Vector2( 3328, 1280 )
 
-[node name="Depot" parent="Access" index="3" instance=ExtResource( 10 )]
+[node name="Depot" parent="Access" index="2" instance=ExtResource( 10 )]
 position = Vector2( 1471, 955 )
 
-[node name="SniperMkII" parent="Access/Depot/Items" index="0" instance=ExtResource( 13 )]
+[node name="Sniper" parent="Access/Depot/Items" index="0" instance=ExtResource( 13 )]
 
 [node name="Cyclone" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
 
@@ -73,8 +70,11 @@ position = Vector2( 1471, 955 )
 
 [node name="HealthCapacityIII" parent="Access/Depot/Items" index="4" instance=ExtResource( 15 )]
 
-[node name="BotStation" parent="Access" index="4" instance=ExtResource( 9 )]
+[node name="BotStation" parent="Access" index="3" instance=ExtResource( 9 )]
 position = Vector2( 1474, -572 )
+
+[node name="Key" parent="Access" index="4" instance=ExtResource( 6 )]
+position = Vector2( 1856, 193 )
 
 [node name="Explosive" parent="Bots" index="0" instance=ExtResource( 5 )]
 position = Vector2( 900, 924 )
