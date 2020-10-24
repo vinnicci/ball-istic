@@ -5,8 +5,8 @@ export (int) var explosion_radius: int = 100
 export (float) var damage: float = 15
 export (int) var knockback: int = 500
 
-var _player_cam: Camera2D = null
-var _level_cam: Camera2D = null
+var _player_cam: Camera2D
+var _level_cam: Camera2D
 var exploded: bool = false
 var is_crit: bool = false
 const PARTICLEV_RADIUS_RATIO: float = 0.35

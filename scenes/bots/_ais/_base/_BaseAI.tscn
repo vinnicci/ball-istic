@@ -29,6 +29,7 @@ cast_to = Vector2( 1000, 0 )
 collision_mask = 3
 
 [node name="FleeRays" type="Node2D" parent="."]
+visible = false
 
 [node name="R0" type="RayCast2D" parent="FleeRays"]
 position = Vector2( 0, 1 )

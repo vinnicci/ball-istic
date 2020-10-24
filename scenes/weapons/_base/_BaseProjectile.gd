@@ -12,7 +12,7 @@ var acceleration: Vector2 = Vector2(0,0)
 var current_speed: int
 var is_stopped: bool = false
 var is_crit: bool = false
-var _level_node: Node = null
+var _level_node: Node
 var _shooter: Node setget , shooter
 var _shooter_faction: Color setget , shooter_faction
 

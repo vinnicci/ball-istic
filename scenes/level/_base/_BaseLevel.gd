@@ -4,7 +4,7 @@ extends Node2D
 #Nav node: attach tilemaps/static bodies with nav mesh and collision
 #Bots node: attach bots
 export var disp_name: String
-var _player: Global.CLASS_PLAYER = null setget , get_player
+var _player: Global.CLASS_PLAYER setget , get_player
 var _player_faction: Color
 
 
@@ -13,6 +13,7 @@ func get_player():
 
 
 func _ready() -> void:
+	randomize()
 	for bot in $Bots.get_children():
 		if bot is Global.CLASS_PLAYER:
 			_player = bot
@@ -72,7 +73,7 @@ func _on_bot_dead(bot) -> void:
 			continue
 		var ai = lvlbot.get_node("AI")
 		var enemy = ai.get_enemy()
-		if (enemy != null &&
+		if (is_instance_valid(enemy) == true &&
 			enemy.state != Global.CLASS_BOT.State.DEAD &&
 			enemy.current_faction == _player_faction):
 			return

@@ -20,7 +20,7 @@ offset = Vector2( -8, 0 )
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="7"]
-damage = 15.0
+damage = 40.0
 
 [node name="ProjBehavior" parent="." index="8" instance=ExtResource( 3 )]
 homing_steer_magnitude = 75.0

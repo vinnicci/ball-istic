@@ -5,7 +5,7 @@ var _scenes: Dictionary = {
 	"Menu": preload("res://scenes/main/MenuManager.tscn"),
 	"Level": preload("res://levels proper/main/LevelManagerDemo.tscn")
 }
-var _current_scene = null
+var _current_scene
 var _current_save_slot: int
 
 
@@ -32,7 +32,7 @@ func on_change_scene(new_scene: String, slot_num = -1, slot_name = "") -> void:
 
 
 func on_change_scene_deferred(new_scene: String, slot_num, slot_name) -> void:
-	if _current_scene != null:
+	if is_instance_valid(_current_scene) == true:
 		_current_scene.free()
 	_current_scene = _scenes[new_scene].instance()
 	if new_scene == "Level" && slot_num != -1:

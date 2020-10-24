@@ -12,7 +12,7 @@ func parent_node():
 
 
 func _ready() -> void:
-	if _parent_node is Global.CLASS_PLAYER && $SlotIcon.texture == null:
+	if _parent_node is Global.CLASS_PLAYER && is_instance_valid($SlotIcon.texture) == false:
 		push_error(name + " has no inventory icon. Please add one.")
 
 

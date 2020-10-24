@@ -106,7 +106,7 @@ crit_chance = 0.3
 fire_mode = 3
 recoil = -1500
 cam_shake_intensity = 20.0
-melee_damage = 15.0
+melee_damage = 60.0
 melee_crit_stun_time = 5.0
 melee_knockaback = 1500
 

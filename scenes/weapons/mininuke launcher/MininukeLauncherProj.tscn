@@ -49,7 +49,7 @@ texture = ExtResource( 4 )
 shape = SubResource( 4 )
 
 [node name="Explosion" parent="." index="6" instance=ExtResource( 2 )]
-damage = 125.0
+damage = 500.0
 knockback = 2000
 
 [node name="ProjBehavior" parent="." index="7" instance=ExtResource( 5 )]

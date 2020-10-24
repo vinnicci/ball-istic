@@ -19,7 +19,7 @@ signal path_found
 
 
 func destroy() -> void:
-	if _hidden_path != null:
+	if is_instance_valid(_hidden_path) == true:
 		_hidden_path.visible = true
 		emit_signal("path_found")
 	queue_free()

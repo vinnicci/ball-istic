@@ -10,7 +10,7 @@ var held: Node
 func set_item(new_item) -> void:
 	if has_node("SlotIcon") == true:
 		remove_child($SlotIcon)
-	if new_item == null:
+	if is_instance_valid(new_item) == false:
 		item = null
 	else:
 		item = new_item
@@ -39,7 +39,7 @@ func _display_item_info(disp: bool) -> void:
 
 func _on_Slot_mouse_entered() -> void:
 	$Highlight.visible = true
-	if item != null:
+	if is_instance_valid(item) == true:
 		_display_item_info(true)
 	else:
 		_display_item_info(false)

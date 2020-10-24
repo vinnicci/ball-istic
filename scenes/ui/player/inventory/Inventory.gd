@@ -71,7 +71,8 @@ func _on_SwitchAccess_pressed() -> void:
 
 
 func on_slot_pressed(slot_node) -> void:
-	if held.item == null && slot_node.item == null:
+	if (is_instance_valid(held.item) == false &&
+		is_instance_valid(slot_node.item) == false):
 		return
 	match slot_node.from_slot:
 		"weapon": _manage_weapon(slot_node)
@@ -102,7 +103,7 @@ func _swap(slot_node: Node) -> void:
 
 
 func _change_parent(item, new_parent) -> void:
-	if item != null:
+	if is_instance_valid(item) == true:
 		item.get_parent().remove_child(item)
 		new_parent.add_child(item)
 		if new_parent.get_parent() is Global.CLASS_PLAYER:
@@ -119,7 +120,7 @@ func _show_inventory_warning(warning_text: String) -> void:
 
 func _check_if_equipping_weapon() -> bool:
 	for weap in _loadout_weapon_slots.get_children():
-		if weap.item != null:
+		if is_instance_valid(weap.item) == true:
 			return true
 	return false
 
@@ -128,7 +129,7 @@ const NOT_IN_BOT_STATION : String = "CAN'T CUSTOMIZE OUTSIDE BOT STATION"
 
 
 func _manage_weapon(slot_node: Node) -> void:
-	if held.item != null:
+	if is_instance_valid(held.item) == true:
 		if accessing != "bot_station" && held.from_slot == "item":
 			_show_inventory_warning(NOT_IN_BOT_STATION)
 			return
@@ -142,7 +143,7 @@ func _manage_weapon(slot_node: Node) -> void:
 
 
 func _manage_passive(slot_node: Node) -> void:
-	if held.item != null:
+	if is_instance_valid(held.item) == true:
 		if accessing != "bot_station" && held.from_slot == "item":
 			_show_inventory_warning(NOT_IN_BOT_STATION)
 			return
@@ -158,7 +159,7 @@ const NO_WEAPON: String = "EQUIP AT LEAST ONE WEAPON"
 
 
 func _manage_item(slot_node: Node) -> void:
-	if held.item != null:
+	if is_instance_valid(held.item) == true:
 		if (accessing != "bot_station" && 
 			(held.from_slot == "weapon" ||
 			held.from_slot == "passive")):
@@ -172,7 +173,8 @@ func _manage_item(slot_node: Node) -> void:
 
 
 func _manage_trash(slot_node: Node) -> void:
-	if held.item == null && slot_node.item != null:
+	if (is_instance_valid(held.item) == false &&
+		is_instance_valid(slot_node.item) == true):
 		_swap(slot_node)
 	elif held.item is Global.PLAYER_BUILT_IN_WEAP:
 		_show_inventory_warning("CAN'T REMOVE BUILT-IN WEAPON")
@@ -180,13 +182,13 @@ func _manage_trash(slot_node: Node) -> void:
 	elif held.item is Global.CLASS_WEAPON && _check_if_equipping_weapon() == false:
 		_show_inventory_warning(NO_WEAPON)
 		return
-	elif (held.item != null && accessing != "bot_station" &&
+	elif (is_instance_valid(held.item) == true && accessing != "bot_station" &&
 		(held.from_slot == "weapon" ||
 		held.from_slot == "passive")):
 		_show_inventory_warning(NOT_IN_BOT_STATION)
 		return
 	else:
-		if slot_node.item != null:
+		if is_instance_valid(slot_node.item) == true:
 			slot_node.item.queue_free()
 			slot_node.set_item(null)
 		_swap(slot_node)
@@ -219,7 +221,7 @@ func _manage_depot(slot_node: Node) -> void:
 	var text1 = _depot.get_node("Instruction1")
 	var text2 = _depot.get_node("Instruction2")
 	var text_anim = _depot.get_node("InstructionAnim")
-	if held.item == null:
+	if is_instance_valid(held.item) == false:
 		if _get_inv_count() >= 20:
 			text1.text = "EXCEPTION OCCURRED: INVENTORY IS FULL"
 			text2.text = "EXCEPTION HANDLED: PREVENT TAKE OUT"
@@ -241,7 +243,7 @@ func _manage_depot(slot_node: Node) -> void:
 
 
 func _manage_vault(slot_node: Node) -> void:
-	if held.item != null:
+	if is_instance_valid(held.item) == true:
 		if (accessing != "bot_station" &&
 			(held.from_slot == "weapon" ||
 			held.from_slot == "passive")):
@@ -256,7 +258,7 @@ func _manage_vault(slot_node: Node) -> void:
 func _get_inv_count() -> int:
 	var count: int = 0
 	for slot in _all_item_slots.get_children():
-		if slot.item == null:
+		if is_instance_valid(slot.item) == false:
 			continue
 		count += 1
 	return count

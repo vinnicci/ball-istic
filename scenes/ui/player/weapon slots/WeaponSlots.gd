@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var _player = null
+var _player: Node
 
 
 func set_player(player_node) -> void:

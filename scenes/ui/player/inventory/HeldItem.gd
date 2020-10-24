@@ -8,7 +8,7 @@ var from_slot: String
 func set_item(new_item: Node, new_from_slot: String) -> void:
 	if has_node("SlotIcon") == true:
 		remove_child($SlotIcon)
-	if new_item == null:
+	if is_instance_valid(new_item) == false:
 		item = null
 	else:
 		item = new_item

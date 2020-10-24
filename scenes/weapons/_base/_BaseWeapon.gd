@@ -117,7 +117,7 @@ func _ready() -> void:
 func get_description() -> String:
 	var s_description: String
 	var sample_proj
-	if Projectile != null:
+	if is_instance_valid(Projectile) == true:
 		sample_proj = Projectile.instance()
 	var dmg_rate = _level_node.get_player().current_weap_dmg_rate
 	match fire_mode:
@@ -133,7 +133,7 @@ func get_description() -> String:
 				var f_dmg: int
 				if sample_proj.has_node("Explosion") == true:
 					f_dmg = dmg_rate * sample_proj.get_node("Explosion").damage
-					s_description = "EXPLOSION DMG: " + str(f_dmg) + _get_dps(f_dmg)
+					s_description = ("EXPLOSION DMG: " + str(f_dmg) + _get_dps(f_dmg))
 				else:
 					f_dmg = dmg_rate * sample_proj.damage
 					s_description = ("PROJECTILE DMG: " + str(f_dmg) + _get_dps(f_dmg))
@@ -144,14 +144,10 @@ func get_description() -> String:
 
 
 func _get_dps(f_dmg) -> String:
-	var f_dps: int = f_dmg/current_shoot_cooldown
+	var f_dps: int = (f_dmg * proj_count_per_shot * burst_count)/current_shoot_cooldown
 	match fire_mode:
-		FireModes.AUTO:
-			return "	DPS: " + (str(int(f_dmg/current_shoot_cooldown)) +
-				" x " + str(proj_count_per_shot))
-		FireModes.BURST:
-			return "	DPS: " + (str(int(f_dmg/current_shoot_cooldown)) +
-				" x " + str(proj_count_per_shot * burst_count))
+		FireModes.AUTO, FireModes.BURST:
+			return "	DPS: " + str(f_dps)
 		FireModes.CHARGE:
 			return ("	DPC: " +
 				str(int(f_dmg * proj_count_per_shot * burst_count)))

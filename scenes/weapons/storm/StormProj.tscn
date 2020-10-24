@@ -27,7 +27,7 @@ disabled = true
 
 [node name="Explosion" parent="." index="5" instance=ExtResource( 5 )]
 explosion_radius = 200
-damage = 20.0
+damage = 50.0
 knockback = 1000
 
 [node name="ProjBehavior" parent="." index="6" instance=ExtResource( 3 )]

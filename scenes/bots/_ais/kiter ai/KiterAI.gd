@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		if _current_enemy_proj == enemy_proj:
 			return
 		_current_enemy_proj = enemy_proj
-		if enemy_proj != null:
+		if is_instance_valid(enemy_proj) == true:
 			var sample_proj = enemy_proj.instance()
 			if sample_proj is Global.CLASS_PROJ:
 				_params_dict["max_flee"] = sample_proj.proj_range + 300

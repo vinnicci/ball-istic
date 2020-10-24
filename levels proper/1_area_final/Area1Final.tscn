@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://levels proper/1_area_final/Area1Final.gd" type="Script" id=1]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -10,10 +10,9 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://levels proper/main/Key.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityII.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateII.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/passives/random/RandomPassiveII.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityII.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=14]
 
 [node name="Area1Final" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -64,9 +63,9 @@ position = Vector2( 64, -1491 )
 
 [node name="ShieldCapacityII" parent="Access/Depot/Items" index="1" instance=ExtResource( 12 )]
 
-[node name="ChargeDmgRateII" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
+[node name="RandomPassiveII" parent="Access/Depot/Items" index="2" instance=ExtResource( 11 )]
 
-[node name="WeapDmgRateII" parent="Access/Depot/Items" index="3" instance=ExtResource( 11 )]
+[node name="RandomPassiveII2" parent="Access/Depot/Items" index="3" instance=ExtResource( 11 )]
 
 [node name="BotStation" parent="Access" index="3" instance=ExtResource( 13 )]
 position = Vector2( 1768, -892 )

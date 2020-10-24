@@ -7,7 +7,7 @@ var item: Node
 func set_item(new_item) -> void:
 	if has_node("SlotIcon") == true:
 		remove_child($SlotIcon)
-	if new_item == null:
+	if is_instance_valid(new_item) == false:
 		item = null
 		$SlotHeat.value = 0
 	else:
@@ -20,7 +20,7 @@ func set_item(new_item) -> void:
 
 
 func _process(_delta: float) -> void:
-	if item == null:
+	if is_instance_valid(item) == false:
 		$SlotHeat.value = 0
 		return
 	if item.is_overheating() == true:

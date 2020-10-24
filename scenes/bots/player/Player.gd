@@ -106,7 +106,8 @@ func _control_player() -> void:
 	
 	#inventory
 	#can't close the ui if holding an item
-	if Input.is_action_just_pressed("ui_inventory") && ui_inventory.held.item == null:
+	if (Input.is_action_just_pressed("ui_inventory") &&
+		is_instance_valid(ui_inventory.held.item) == false):
 		ui_inventory.visible = !ui_inventory.visible
 		$PlayerUI/HeldItem.visible = ui_inventory.visible
 	

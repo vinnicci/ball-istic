@@ -32,6 +32,7 @@ color_ramp = SubResource( 2 )
 
 [node name="Pincer" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
+melee_damage = 36.0
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.988235, 0.568627, 0.12549, 1 )

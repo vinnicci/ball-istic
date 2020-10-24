@@ -30,7 +30,8 @@ var scenes: Dictionary = {
 	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn"),
 	"Area3-1": preload("res://levels proper/3-1_area/Area3-1.tscn"),
 	"Area3-2": preload("res://levels proper/3-2_area/Area3-2.tscn"),
-	"Area3-3": preload("res://levels proper/3-3_area/Area3-3.tscn")
+	"Area3-3": preload("res://levels proper/3-3_area/Area3-3.tscn"),
+	"Checkpoint3-1": preload("res://levels proper/3-1_checkpoint/Checkpoint3-1.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -49,15 +50,14 @@ var _saved_paths: Array #store lvl name + destructible name
 var current_save_slot: int
 var current_save_name: String
 
-var _player_tut = null
-var _player = null
-var _current_scene = null
+var _player_tut: Node
+var _player: Node
+var _current_scene: Node
 const SAVE_DIR: String = "user://saves/"
 signal moved
 
 
 func _ready() -> void:
-	randomize()
 	$CanvasLayer/InGameMenu.set_parent(self)
 	_load_from_disk()
 	_load_player_spawn()
@@ -88,7 +88,7 @@ const SAVE_DATA: Array = ["save_name", "player", "despawnable_bots", "depot_item
 func _verify_data(save_file) -> bool:
 	var save_data = SAVE_DATA
 	for data in save_data:
-		if save_file.get(data) == null:
+		if is_instance_valid(save_file.get(data)) == false:
 			return false
 	return true
 
@@ -139,7 +139,7 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 	$Resume.start()
 	$Anim.play("transition")
 	yield(self, "resume")
-	if _current_scene != null:
+	if is_instance_valid(_current_scene) == true:
 		if _current_scene.get_node("Bots").get_children().has(_player):
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
@@ -148,7 +148,7 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 
 
 func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
-	if _current_scene != null:
+	if is_instance_valid(_current_scene) == true:
 		_current_scene.free()
 	var player = _instance_player(new_lvl.name)
 	_current_scene = new_lvl
@@ -164,11 +164,11 @@ func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
 
 func _instance_player(new_lvl: String) -> Node:
 	if new_lvl == "Tutorial":
-		if _player_tut == null:
+		if is_instance_valid(_player_tut) == false:
 			_player_tut = scenes["PlayerTut"].instance()
 		return _player_tut
 	else:
-		if _player == null:
+		if is_instance_valid(_player) == false:
 			_player = scenes["Player"].instance()
 			_load_player_items()
 		if _player.is_connected("dead", self, "_on_player_dead") == false:
@@ -348,7 +348,7 @@ func _save_player_items() -> void:
 		return
 	#clear player trash
 	var trash_slot = _player.ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot")
-	if trash_slot.item != null:
+	if is_instance_valid(trash_slot.item) == true:
 		trash_slot.item.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
@@ -357,7 +357,7 @@ func _save_player_items() -> void:
 	for key in keys:
 		if key == "Weapons":
 			for weap in _player.arr_weapons:
-				if weap != null:
+				if is_instance_valid(weap) == true:
 					items.append(weap)
 		else:
 			items = _player.get_node(key).get_children()
@@ -399,7 +399,7 @@ func _on_player_spawn_saved(lvl: String, pos: String) -> void:
 
 func _load_player_spawn() -> void:
 	var level
-	if _saved_player["Spawn"] == null:
+	if is_instance_valid(_saved_player["Spawn"]) == false:
 		level = scenes["Tutorial"].instance()
 		_change_scene(level, "Access/Area1-1/Pos")
 	else:

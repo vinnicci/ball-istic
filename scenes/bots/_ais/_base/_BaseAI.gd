@@ -10,8 +10,8 @@ export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
 var _enemies: Array
-var _enemy: Global.CLASS_BOT = null setget , get_enemy
-var _master: Global.CLASS_BOT = null
+var _enemy: Global.CLASS_BOT setget , get_enemy
+var _master: Global.CLASS_BOT
 var _path_points: Array
 var _next_path_point
 var _flee_routes: Dictionary
@@ -156,7 +156,7 @@ func _get_new_target_enemy() -> void:
 	#if target bot is in line of sight
 	if (potential_enemy is Global.CLASS_LEVEL_WALL ||
 		potential_enemy is Global.CLASS_LEVEL_RIGID ||
-		potential_enemy == null):
+		is_instance_valid(potential_enemy) == false):
 		_enemies.erase(bot)
 		_enemies.append(bot)
 		return
@@ -223,7 +223,7 @@ func _on_FleeEvaluate_timeout() -> void:
 	_flee_routes = {}
 	for ray in $FleeRays.get_children():
 		#skip ray that is colliding with walls or a physics object
-		if ray.get_collider() != null:
+		if is_instance_valid(ray.get_collider()) == true:
 			continue
 		var flee_points: int = _enemy.global_position.distance_to(ray.get_node("Pos").global_position)
 		_flee_routes[flee_points] = ray
@@ -457,7 +457,7 @@ func _valid_shooting_target(ray_collider) -> bool:
 	#ai can only shoot when
 	#not stunned & aiming at the enemy
 	return (_parent_node.state != Global.CLASS_BOT.State.STUN &&
-		(ray_collider != null &&
+		(is_instance_valid(ray_collider) == true &&
 		((ray_collider is Global.CLASS_LEVEL_WALL ||
 		ray_collider is Global.CLASS_LEVEL_RIGID) == false) &&
 		(ray_collider is Global.CLASS_BOT &&

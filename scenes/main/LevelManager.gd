@@ -27,7 +27,11 @@ var scenes: Dictionary = {
 	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn"),
 	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
 	"Area2Final": preload("res://levels proper/2_area_final/Area2Final.tscn"),
-	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn")
+	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn"),
+	"Area3-1": preload("res://levels proper/3-1_area/Area3-1.tscn"),
+	"Area3-2": preload("res://levels proper/3-2_area/Area3-2.tscn"),
+	"Area3-3": preload("res://levels proper/3-3_area/Area3-3.tscn"),
+	"Checkpoint3-1": preload("res://levels proper/3-1_checkpoint/Checkpoint3-1.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -36,8 +40,8 @@ var _saved_player: Dictionary = {
 	"Spawn": {} #value -> Lvl: lvl name, Pos: level coords
 }
 var _saved_quests: Dictionary = {
-	"FoundKeys": [],
-	"DestroyedArtilleryControllers": []
+	"KEYS": [],
+	"DACS": []
 }
 var _saved_despawnable_bots: Dictionary #key: lvl name + bot name, value: is_alive
 var _saved_depot_items: Dictionary #key: lvl name + depot name, value: arr_items
@@ -46,15 +50,14 @@ var _saved_paths: Array #store lvl name + destructible name
 var current_save_slot: int
 var current_save_name: String
 
-var _player_tut = null
-var _player = null
-var _current_scene = null
+var _player_tut: Node
+var _player: Node
+var _current_scene: Node
 const SAVE_DIR: String = "user://saves/"
 signal moved
 
 
 func _ready() -> void:
-	randomize()
 	$CanvasLayer/InGameMenu.set_parent(self)
 	_load_from_disk()
 	_load_player_spawn()
@@ -85,7 +88,7 @@ const SAVE_DATA: Array = ["save_name", "player", "despawnable_bots", "depot_item
 func _verify_data(save_file) -> bool:
 	var save_data = SAVE_DATA
 	for data in save_data:
-		if save_file.get(data) == null:
+		if is_instance_valid(save_file.get(data)) == false:
 			return false
 	return true
 
@@ -136,7 +139,7 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 	$Resume.start()
 	$Anim.play("transition")
 	yield(self, "resume")
-	if _current_scene != null:
+	if is_instance_valid(_current_scene) == true:
 		if _current_scene.get_node("Bots").get_children().has(_player):
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
@@ -145,7 +148,7 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 
 
 func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
-	if _current_scene != null:
+	if is_instance_valid(_current_scene) == true:
 		_current_scene.free()
 	var player = _instance_player(new_lvl.name)
 	_current_scene = new_lvl
@@ -161,20 +164,22 @@ func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
 
 func _instance_player(new_lvl: String) -> Node:
 	if new_lvl == "Tutorial":
-		if _player_tut == null:
+		if is_instance_valid(_player_tut) == false:
 			_player_tut = scenes["PlayerTut"].instance()
 		return _player_tut
 	else:
-		if _player == null:
+		if is_instance_valid(_player) == false:
 			_player = scenes["Player"].instance()
 			_load_player_items()
-		if !_player.is_connected("dead", self, "_on_player_dead"):
+		if _player.is_connected("dead", self, "_on_player_dead") == false:
 			_player.connect("dead", self, "_on_player_dead")
 		_player.get_node("Name/Label").text = current_save_name
 		return _player
 
 
 func _connect_level_components(lvl: Node) -> void:
+	if lvl.has_signal("quest_updated") == true:
+		lvl.connect("quest_updated", self, "_on_quest_updated")
 	_connect_access(lvl)
 	_connect_bots(lvl)
 	_connect_nav(lvl)
@@ -193,15 +198,19 @@ func _connect_access(lvl: Node) -> void:
 				_load_depot_items(lvl, access)
 			Global.VAULT:
 				_load_vault_items(access)
-			Global.KEY:
-				access.connect("key_obtained", self, "_on_quest_updated",
-					["FoundKeys", lvl.name + access.name])
 
 
 func _connect_bots(lvl: Node) -> void:
 	for bot in lvl.get_node("Bots").get_children():
 		if bot.respawnable == false:
 			var bot_name = lvl.name + bot.name
+			if _temp_despawnable_bots.keys().size() != 0:
+				if _temp_despawnable_bots.keys().has(bot_name) == false:
+					pass
+				elif (_temp_despawnable_bots.keys().has(bot_name) &&
+					_temp_despawnable_bots[bot_name] == false):
+					bot.queue_free()
+					continue
 			if _saved_despawnable_bots.keys().has(bot_name) == false:
 				_saved_despawnable_bots[bot_name] = true
 			elif (_saved_despawnable_bots.keys().has(bot_name) &&
@@ -209,15 +218,12 @@ func _connect_bots(lvl: Node) -> void:
 				bot.queue_free()
 				continue
 			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name + bot.name])
-		if bot.quest_key != "":
-			bot.connect("quest_updated", self, "_on_quest_updated",
-				[bot.quest_key, lvl.name + bot.name])
 
 
 func _connect_nav(lvl: Node) -> void:
 	for nav in lvl.get_node("Nav").get_children():
-		if nav.has_signal("secret_found") == true:
-			nav.connect("secret_found", self, "_on_secret_found",
+		if nav.has_signal("path_found") == true:
+			nav.connect("path_found", self, "_on_hidden_path_found",
 				[lvl.name, nav.name])
 
 
@@ -245,13 +251,16 @@ func _resume(player) -> void:
 ########################################
 # levels that need access to saved info
 ########################################
+const HUB_KEY: = preload("res://levels proper/main/Key.gd")
 const LVL_HUB: = preload("res://levels proper/0_hub/Hub.gd")
 const LVL_AREA31: = preload("res://levels proper/3-1_area/Area3-1.gd")
 
 
 func _set_info(lvl):
 	if lvl is LVL_HUB:
-		lvl.set_keys(_saved_quests["FoundKeys"])
+		lvl.set_keys(_saved_quests["KEYS"])
+	elif lvl is LVL_AREA31:
+		lvl.set_destroyed(_saved_quests["DACS"])
 
 
 ########
@@ -262,7 +271,7 @@ func _on_quest_updated(quest_key: String, val_name: String) -> void:
 		return
 	_saved_quests[quest_key].append(val_name)
 	match quest_key:
-		"FoundKeys":
+		"KEYS":
 			$CanvasLayer/StatusLabel.text = "KEY OBTAINED"
 			if $Anim.is_playing() == true:
 				$Anim.stop()
@@ -271,9 +280,9 @@ func _on_quest_updated(quest_key: String, val_name: String) -> void:
 
 func _load_quest(lvl: Node) -> void:
 	for access in lvl.get_node("Access").get_children():
-		if access is Global.KEY:
+		if access is HUB_KEY:
 			var key_name: String = lvl.name + access.name
-			if _saved_quests["FoundKeys"].has(key_name) == true:
+			if _saved_quests["KEYS"].has(key_name) == true:
 				access.queue_free()
 	_set_info(lvl)
 
@@ -339,7 +348,7 @@ func _save_player_items() -> void:
 		return
 	#clear player trash
 	var trash_slot = _player.ui_inventory.get_node("AllItems/SlotsContainer/HBoxContainer/TrashSlot")
-	if trash_slot.item != null:
+	if is_instance_valid(trash_slot.item) == true:
 		trash_slot.item.free()
 	#save as array
 	var keys = ["Items", "Weapons", "Passives"]
@@ -348,7 +357,7 @@ func _save_player_items() -> void:
 	for key in keys:
 		if key == "Weapons":
 			for weap in _player.arr_weapons:
-				if weap != null:
+				if is_instance_valid(weap) == true:
 					items.append(weap)
 		else:
 			items = _player.get_node(key).get_children()
@@ -390,7 +399,7 @@ func _on_player_spawn_saved(lvl: String, pos: String) -> void:
 
 func _load_player_spawn() -> void:
 	var level
-	if _saved_player["Spawn"] == null:
+	if is_instance_valid(_saved_player["Spawn"]) == false:
 		level = scenes["Tutorial"].instance()
 		_change_scene(level, "Access/Area1-1/Pos")
 	else:
@@ -420,7 +429,7 @@ func _load_vault_items(access: Node) -> void:
 ##############
 # secret paths
 ##############
-func _on_secret_found(lvl: String, destructible: String) -> void:
+func _on_hidden_path_found(lvl: String, destructible: String) -> void:
 	var path_name: String = lvl + destructible
 	if _saved_paths.has(path_name) == false:
 		_saved_paths.append(path_name)

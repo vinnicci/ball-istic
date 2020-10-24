@@ -2,7 +2,7 @@ extends Node2D
 
 
 var _parent_node: Area2D
-var _level_node: Node = null
+var _level_node: Node
 
 
 func _init_detector(radius) -> void:
@@ -31,7 +31,7 @@ func set_level(new_level: Node) -> void:
 
 func _physics_process(_delta: float) -> void:
 	#only used by homing effect
-	if _detected.size() != 0 && _target_bot == null:
+	if _detected.size() != 0 && is_instance_valid(_target_bot) == false:
 		var target = _detected.pop_front()
 		if is_instance_valid(target) == false || target.state == Global.CLASS_BOT.State.DEAD:
 			_detected.erase(target)
@@ -59,7 +59,7 @@ func _seek(target_pos: Vector2) -> Vector2:
 ########
 export (float) var homing_steer_magnitude: float = 100
 var _detected: Array = []
-var _target_bot: Node = null
+var _target_bot: Node
 
 
 func task_homing(task):
@@ -160,7 +160,7 @@ var _old_v = null
 
 func task_curve_steer(task):
 	# for compatibility with homing, this behavior will stop if homing target is detected
-	if _target_bot != null || _parent_node.is_stopped == true:
+	if is_instance_valid(_target_bot) == true || _parent_node.is_stopped == true:
 		task.failed()
 		return
 	if _old_v == null:

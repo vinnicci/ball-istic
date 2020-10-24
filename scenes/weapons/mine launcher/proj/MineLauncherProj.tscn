@@ -27,7 +27,7 @@ shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="9" instance=ExtResource( 4 )]
 explosion_radius = 300
-damage = 50.0
+damage = 100.0
 knockback = 1000
 
 [node name="MineSensor" parent="Weapons" index="0" instance=ExtResource( 5 )]

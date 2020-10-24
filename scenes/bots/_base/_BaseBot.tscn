@@ -204,11 +204,11 @@ stream = ExtResource( 12 )
 stream = ExtResource( 13 )
 
 [node name="DischargeRadius" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DischargeRadius"]
-visible = false
 
 [node name="CollisionSpark" type="Particles2D" parent="."]
 emitting = false

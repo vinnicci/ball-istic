@@ -50,7 +50,7 @@ var current_faction: Color
 var current_weapon: Node
 var velocity: Vector2
 var arr_weapons: Array = [null, null, null, null, null]
-var _level_node: Node = null
+var _level_node: Node
 enum State {
 	ROLL, TO_TURRET, TURRET, TO_ROLL, WEAP_COMMIT, CHARGE_ROLL, STUN, DEAD
 }
@@ -294,7 +294,7 @@ func reset_bot_vars() -> void:
 	_body_weapon_hatch.modulate = current_faction
 	
 	for weap in arr_weapons:
-		if weap == null:
+		if is_instance_valid(weap) == false:
 			continue
 		weap.reset_weap_vars()
 
@@ -397,13 +397,14 @@ func switch_to_turret() -> void:
 
 func _animate_legs_to_turret() -> void:
 	for leg in _legs_position.keys():
+		leg.visible == true
 		_switch_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	_switch_tween.start()
 
 
 func _animate_weapon_hatch_to_turret() -> void:
-	if current_weapon != null:
+	if is_instance_valid(current_weapon) == true:
 		_body_weapon_hatch.global_rotation = current_weapon.global_rotation
 		current_weapon.animate_transform(current_transform_speed, true)
 	_body_weapon_hatch.show()
@@ -431,7 +432,7 @@ func _animate_legs_to_roll() -> void:
 
 
 func _animate_weapon_hatch_to_roll() -> void:
-	if current_weapon != null:
+	if is_instance_valid(current_weapon) == true:
 		current_weapon.global_rotation = _body_weapon_hatch.global_rotation
 		current_weapon.animate_transform(current_transform_speed, false)
 	_switch_tween.interpolate_property(_body_weapon_hatch, 'scale', Vector2(1,1), Vector2(1,0),
@@ -442,6 +443,8 @@ func _animate_weapon_hatch_to_roll() -> void:
 func _on_SwitchTween_tween_all_completed() -> void:
 	if state == State.TO_ROLL:
 		_body_weapon_hatch.hide()
+		for leg in _legs_position.keys():
+			leg.visible == false
 	$StateMachine.switching = false
 
 
@@ -453,7 +456,7 @@ func shoot_weapon() -> void:
 #some weapon have longer deploy animation -- will use shoot_commit var
 func change_weapon(slot_num: int) -> bool:
 	var weap = arr_weapons[slot_num]
-	if weap == null:
+	if is_instance_valid(weap) == false:
 		return false
 	match state:
 		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT, State.DEAD:
@@ -488,6 +491,7 @@ func _peak_charge_roll() -> void:
 		$Timers/ChargeTrail.start()
 		_body_outline.modulate = charge_outline
 		_body_charge_effect.modulate.a = 1.0
+		_body_charge_effect.visible = true
 
 
 func _on_ChargeTrail_timeout() -> void:
@@ -501,6 +505,7 @@ func _end_charging_effect() -> void:
 			State.CHARGE_ROLL, State.DEAD, State.STUN:
 				_body_outline.modulate = current_faction
 				_body_charge_effect.modulate.a = 0
+				_body_charge_effect.visible = false
 				$Timers/ChargeTrail.stop()
 				$StateMachine.charge_dir = null
 
@@ -675,7 +680,7 @@ func explode() -> void:
 
 func _on_ExplodeDelay_timeout() -> void:
 	$CollisionShape.disabled = true
-	if current_weapon != null:
+	if is_instance_valid(current_weapon) == true:
 		current_weapon.modulate.a = 0
 	$Legs.hide()
 	$Body.hide()

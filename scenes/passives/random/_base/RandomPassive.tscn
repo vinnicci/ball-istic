@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/passives/_base/_BasePassive.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/passives/random/_base/RandomPassive.gd" type="Script" id=2]
+
+[sub_resource type="StreamTexture" id=1]
+resource_local_to_scene = true
+flags = 3
+load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5ee.s3tc.stex"
+
+[node name="RandomPassive" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="SlotIcon" parent="." index="0"]
+texture = SubResource( 1 )

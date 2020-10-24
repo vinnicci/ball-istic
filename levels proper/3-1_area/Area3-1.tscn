@@ -25,10 +25,10 @@
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 300, 50 )
 
 [node name="Area3-1" instance=ExtResource( 2 )]
@@ -208,7 +208,7 @@ charge_force_mult = 0.5
 faction = Color( 0, 1, 0, 1 )
 
 [node name="CollisionShape" parent="Bots/Explosive" index="8"]
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="Explosion" parent="Bots/Explosive" index="9"]
 collision_mask = 35
@@ -239,7 +239,7 @@ position = Vector2( 393, -1063 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarredDoorDisp" index="0"]
 position = Vector2( -6, -59 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
 
