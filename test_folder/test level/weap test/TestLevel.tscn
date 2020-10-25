@@ -107,11 +107,11 @@ rotation = 1.5708
 [node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
 position = Vector2( 494, 39 )
 physics_material_override = SubResource( 1 )
-speed = 2500
+speed = 1500
 transform_speed = 1.0
 charge_cooldown = 1.4
-charge_force_mult = 2.0
-charge_dmg_rate = 0.4
+charge_force_mult = 0.75
+charge_dmg_rate = 0.8
 destructible = false
 
 [node name="SniperBot" parent="Bots" index="1" instance=ExtResource( 2 )]

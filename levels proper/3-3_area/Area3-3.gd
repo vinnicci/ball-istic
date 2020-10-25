@@ -1,18 +1,21 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
+signal quest_updated
+var _enemies: Array
+var allies: Array
+
+
 func _ready() -> void:
 	$Bots/LongArtilleryBot.set_controller($Bots/ArtilleryController)
 	$Follow.set_level(self)
-
-
-onready var _enemies: Array = [
-	$Bots/ArtilleryController, $Bots/SniperBot, $Bots/Balladin, $Bots/Balladin2,
-	$Bots/Cannoneer
-]
-onready var allies: Array = [
-	$Bots/Charger, $Bots/Charger2, $Bots/Fighter
-]
+	for bot in $Bots.get_children():
+		if bot.destructible == false:
+			continue
+		if bot.current_faction == Color(0,1,0):
+			allies.append(bot)
+		else:
+			_enemies.append(bot)
 
 
 func _on_bot_dead(bot) -> void:

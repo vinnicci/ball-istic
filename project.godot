@@ -147,6 +147,7 @@ weap_slot_4={
 2d_physics/layer_3="projectiles"
 2d_physics/layer_4="access"
 2d_physics/layer_5="low_walls"
+2d_physics/layer_6="invisible"
 
 [physics]
 
@@ -158,5 +159,4 @@ quality/filters/anisotropic_filter_level=2
 quality/shadows/filter_mode=0
 quality/shading/force_vertex_shading=true
 quality/subsurface_scattering/quality=0
-quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

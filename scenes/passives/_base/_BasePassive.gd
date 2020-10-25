@@ -26,7 +26,7 @@ func _apply_health_cap() -> void:
 
 
 func _apply_resistance() -> void:
-	_parent_node.current_dmg_resist += effect/2
+	_parent_node.current_dmg_resist += effect*0.75
 	_parent_node.current_knockback_resist += effect
 
 

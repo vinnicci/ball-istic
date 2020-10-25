@@ -67,7 +67,7 @@ tracks/0/keys = {
 
 [node name="Phaser" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-description = "Short range teleporter, but cannot phase through walls."
+description = "Teleporter, but cannot phase through high walls. Take precaution on phasing through low walls as there were reported cases for getting stuck."
 heat_per_shot = 10.0
 heat_cap = 9.0
 heat_dissipation = 5.0
@@ -126,4 +126,4 @@ anims/rotate = SubResource( 5 )
 
 [node name="TeleLine" type="RayCast2D" parent="." index="5"]
 enabled = true
-collision_mask = 2
+collision_mask = 34

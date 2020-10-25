@@ -6,8 +6,8 @@
 resource_local_to_scene = true
 
 [node name="Charger" instance=ExtResource( 1 )]
-shield_cap = 60.0
-health_cap = 60.0
+shield_cap = 30.0
+health_cap = 30.0
 
 [node name="CollisionShape" parent="." index="8"]
 shape = SubResource( 1 )

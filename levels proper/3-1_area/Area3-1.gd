@@ -7,13 +7,14 @@ func _ready() -> void:
 	$Bots/FastArtilleryBot.set_controller($Bots/ArtilleryController3)
 	$Nav/Destructible.set_level(self)
 	$Nav/Destructible.set_hidden($Nav/Secret)
+	$Nav/BarredGate.set_level(self)
 
 
 onready var door: = $Nav/BarredGate
 var destroyed_bots: Array
 
 
-func set_destroyed(i_destroyed_bots: Array):
+func set_quest(i_destroyed_bots: Array):
 	destroyed_bots = i_destroyed_bots
 
 

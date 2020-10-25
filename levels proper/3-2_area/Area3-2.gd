@@ -2,19 +2,12 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
 signal quest_updated
-
+onready var _enemies: Array
+onready var allies: Array
 
 onready var _explosives: Array = [
 	$Bots/ExplosiveDummy, $Bots/ExplosiveDummy2, $Bots/ExplosiveDummy3,
 	$Bots/ExplosiveDummy4, $Bots/ExplosiveDummy5
-]
-onready var _enemies: Array = [
-	$Bots/ArtilleryController, $Bots/ArtilleryController2, $Bots/SniperBot,
-	$Bots/SniperBot2, $Bots/Fighter3, $Bots/Fighter4, $Bots/Fighter5
-]
-onready var allies: Array = [
-	$Bots/Charger, $Bots/Charger2, $Bots/Charger3, $Bots/Charger4, $Bots/Fighter,
-	$Bots/Fighter2, $Bots/FighterBig
 ]
 
 
@@ -24,6 +17,13 @@ func _ready() -> void:
 	$Nav/Destructible.set_level(self)
 	$Nav/Destructible.set_hidden($Nav/Secret)
 	$Follow.set_level(self)
+	for bot in $Bots.get_children():
+		if bot.destructible == false:
+			continue
+		if bot.current_faction == Color(0,1,0):
+			allies.append(bot)
+		else:
+			_enemies.append(bot)
 
 
 func _on_bot_dead(bot) -> void:

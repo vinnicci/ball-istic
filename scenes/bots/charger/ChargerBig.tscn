@@ -12,9 +12,10 @@ resource_local_to_scene = true
 [node name="ChargerBig" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 bot_radius = 64
-speed = 2700
+speed = 3000
 charge_cooldown = 2.0
 charge_force_mult = 0.75
+charge_dmg_rate = 0.4
 knockback_resist = 0.7
 
 [node name="Texture" parent="Body" index="1"]

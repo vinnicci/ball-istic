@@ -9,7 +9,6 @@ func set_level(lvl_node) -> void:
 
 
 func open() -> void:
-	if (is_instance_valid(_level_node) == false ||
-		_level_node.destroyed_bots.size() != 5):
+	if _level_node.destroyed_bots.size() != 5:
 		return
 	.open()

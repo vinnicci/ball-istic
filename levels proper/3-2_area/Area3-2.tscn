@@ -205,8 +205,8 @@ faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="20" instance=ExtResource( 10 )]
 position = Vector2( 441, -1340 )
-shield_cap = 250.0
-health_cap = 500.0
+shield_cap = 660.0
+health_cap = 1100.0
 weap_dmg_rate = 4.0
 respawnable = false
 faction = Color( 0, 1, 0, 1 )

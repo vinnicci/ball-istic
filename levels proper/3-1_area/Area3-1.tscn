@@ -61,29 +61,29 @@ rotation = 3.14159
 [node name="Area3-2" parent="Access" index="1" instance=ExtResource( 4 )]
 position = Vector2( 4295, 448 )
 
-[node name="BattleZone" parent="Access" index="2" instance=ExtResource( 4 )]
-position = Vector2( 384, -2430 )
+[node name="Area3Final" parent="Access" index="2" instance=ExtResource( 4 )]
+position = Vector2( 384, -1901 )
 rotation = -1.5708
 
 [node name="Secret3-1" parent="Access" index="3" instance=ExtResource( 4 )]
 position = Vector2( 3199, 1977 )
 rotation = 1.5708
 
-[node name="LongArtilleryBot" parent="Bots" index="0" instance=ExtResource( 8 )]
+[node name="FastArtilleryBot" parent="Bots" index="0" instance=ExtResource( 9 )]
+position = Vector2( 962, -949 )
+rotation = -1.82869
+physics_material_override = SubResource( 1 )
+faction = Color( 0, 1, 0, 1 )
+
+[node name="LongArtilleryBot" parent="Bots" index="1" instance=ExtResource( 8 )]
 position = Vector2( -121, -362 )
 rotation = -1.36933
 physics_material_override = SubResource( 1 )
 faction = Color( 0, 1, 0, 1 )
 
-[node name="LongArtilleryBot2" parent="Bots" index="1" instance=ExtResource( 8 )]
+[node name="LongArtilleryBot2" parent="Bots" index="2" instance=ExtResource( 8 )]
 position = Vector2( 895, -365 )
 rotation = -1.76367
-physics_material_override = SubResource( 1 )
-faction = Color( 0, 1, 0, 1 )
-
-[node name="FastArtilleryBot" parent="Bots" index="2" instance=ExtResource( 9 )]
-position = Vector2( 962, -949 )
-rotation = -1.82869
 physics_material_override = SubResource( 1 )
 faction = Color( 0, 1, 0, 1 )
 
@@ -123,53 +123,42 @@ weap_dmg_rate = 4.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Fighter3" parent="Bots" index="7" instance=ExtResource( 12 )]
-position = Vector2( 724, 280 )
-rotation = -1.75674
-shield_cap = 220.0
-health_cap = 220.0
-weap_dmg_rate = 4.0
-deployed = true
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Fighter4" parent="Bots" index="8" instance=ExtResource( 12 )]
-position = Vector2( 184, 384 )
-rotation = -1.54409
-shield_cap = 220.0
-health_cap = 220.0
-weap_dmg_rate = 4.0
-deployed = true
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Charger" parent="Bots" index="9" instance=ExtResource( 13 )]
+[node name="Charger" parent="Bots" index="7" instance=ExtResource( 13 )]
 position = Vector2( 547, -436 )
 shield_cap = 220.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Charger2" parent="Bots" index="10" instance=ExtResource( 13 )]
+[node name="Charger2" parent="Bots" index="8" instance=ExtResource( 13 )]
 position = Vector2( 311, -560 )
 shield_cap = 220.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Charger3" parent="Bots" index="11" instance=ExtResource( 13 )]
-position = Vector2( -290, 318 )
+[node name="Charger3" parent="Bots" index="9" instance=ExtResource( 13 )]
+position = Vector2( -260, 153 )
 shield_cap = 220.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="FighterBig" parent="Bots" index="12" instance=ExtResource( 14 )]
+[node name="Charger4" parent="Bots" index="10" instance=ExtResource( 13 )]
+position = Vector2( 810, 42 )
+shield_cap = 220.0
+health_cap = 220.0
+charge_dmg_rate = 1.0
+faction = Color( 0, 1, 0, 1 )
+
+[node name="FighterBig" parent="Bots" index="11" instance=ExtResource( 14 )]
 position = Vector2( 1208, -389 )
 shield_cap = 250.0
 health_cap = 500.0
 weap_dmg_rate = 4.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="FighterBig2" parent="Bots" index="13" instance=ExtResource( 14 )]
+[node name="FighterBig2" parent="Bots" index="12" instance=ExtResource( 14 )]
 position = Vector2( 107, -837 )
 rotation = -1.33082
 shield_cap = 250.0
@@ -178,28 +167,28 @@ weap_dmg_rate = 4.0
 deployed = true
 faction = Color( 0, 1, 0, 1 )
 
-[node name="ArtilleryController" parent="Bots" index="14" instance=ExtResource( 6 )]
+[node name="ArtilleryController" parent="Bots" index="13" instance=ExtResource( 6 )]
 position = Vector2( -17, -185 )
 shield_cap = 220.0
 health_cap = 220.0
 weap_dmg_rate = 4.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="ArtilleryController2" parent="Bots" index="15" instance=ExtResource( 6 )]
+[node name="ArtilleryController2" parent="Bots" index="14" instance=ExtResource( 6 )]
 position = Vector2( 789, -186 )
 shield_cap = 220.0
 health_cap = 220.0
 weap_dmg_rate = 4.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="ArtilleryController3" parent="Bots" index="16" instance=ExtResource( 6 )]
+[node name="ArtilleryController3" parent="Bots" index="15" instance=ExtResource( 6 )]
 position = Vector2( 1143, -825 )
 shield_cap = 220.0
 health_cap = 220.0
 weap_dmg_rate = 4.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Explosive" parent="Bots" index="17" instance=ExtResource( 19 )]
+[node name="Explosive" parent="Bots" index="16" instance=ExtResource( 19 )]
 position = Vector2( 1450, -970 )
 script = ExtResource( 20 )
 shield_cap = 100.0
@@ -213,19 +202,19 @@ shape = SubResource( 2 )
 [node name="Explosion" parent="Bots/Explosive" index="9"]
 collision_mask = 35
 
-[node name="Explosive2" parent="Bots" index="18" instance=ExtResource( 19 )]
+[node name="Explosive2" parent="Bots" index="17" instance=ExtResource( 19 )]
 position = Vector2( 449, -719 )
 shield_cap = 100.0
 health_cap = 100.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Explosive3" parent="Bots" index="19" instance=ExtResource( 19 )]
+[node name="Explosive3" parent="Bots" index="18" instance=ExtResource( 19 )]
 position = Vector2( -346, -1076 )
 shield_cap = 100.0
 health_cap = 100.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="ExplosiveDummy" parent="Bots" index="20" instance=ExtResource( 18 )]
+[node name="ExplosiveDummy" parent="Bots" index="19" instance=ExtResource( 18 )]
 visible = false
 position = Vector2( 3175, 498 )
 collision_layer = 32
@@ -235,13 +224,18 @@ collision_mask = 0
 enabled = false
 
 [node name="BarredDoorDisp" type="Area2D" parent="." index="5"]
-position = Vector2( 393, -1063 )
+position = Vector2( 390, -1088 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarredDoorDisp" index="0"]
-position = Vector2( -6, -59 )
 shape = SubResource( 3 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
+[node name="BarredDoorDisp2" type="Area2D" parent="." index="6"]
+position = Vector2( 384, -1526 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BarredDoorDisp2" index="0"]
+shape = SubResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="7"]
 
 [node name="GateDisp" type="Label" parent="CanvasLayer" index="0"]
 visible = false
@@ -255,9 +249,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ParallaxBG" parent="." index="7" instance=ExtResource( 17 )]
+[node name="ParallaxBG" parent="." index="8" instance=ExtResource( 17 )]
 [connection signal="visibility_changed" from="Nav/Secret" to="." method="_on_Secret_visibility_changed"]
 [connection signal="body_entered" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_entered"]
 [connection signal="body_exited" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_exited"]
+[connection signal="body_entered" from="BarredDoorDisp2" to="." method="_on_BarredDoorDisp_body_entered"]
+[connection signal="body_exited" from="BarredDoorDisp2" to="." method="_on_BarredDoorDisp_body_exited"]
 
 [editable path="Bots/Explosive"]

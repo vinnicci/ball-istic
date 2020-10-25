@@ -2,9 +2,9 @@ extends RigidBody2D
 
 
 export (int, 20, 150) var bot_radius: int = 32 setget , get_bot_radius
-export (float) var shield_cap: float = 10 setget , get_shield_cap
+export (float) var shield_cap: float = 15 setget , get_shield_cap
 export (float) var shield_regen: float = 1.0 setget , get_shield_regen
-export (float) var health_cap: float = 10 setget , get_health_cap
+export (float) var health_cap: float = 15 setget , get_health_cap
 export (int, 0, 9999) var speed: int = 1000 setget , get_speed
 export (float, 0, 1.0) var transform_speed: float = 0.7 setget , get_transform_speed
 export (float, 0.3, 5.0) var charge_cooldown: float = 3.5 setget , get_charge_cooldown
@@ -141,6 +141,7 @@ func get_current_health():
 
 func set_current_charge_cooldown(new_charge_cooldown: float):
 	current_charge_cooldown = new_charge_cooldown
+	current_charge_cooldown = clamp(current_charge_cooldown, 0.3, 5.0)
 	_timer_charge_cooldown.wait_time = current_charge_cooldown
 
 func get_current_charge_cooldown():
@@ -524,9 +525,6 @@ var _teleport_pos = null
 func teleport(to_position: Vector2) -> void:
 	_teleport_pos = to_position
 	var current_pos = global_position
-	while current_pos.distance_to(to_position) > bot_radius * 3:
-		_play_anim(current_pos, _body_charge_effect.duplicate(), "trail")
-		current_pos = current_pos.move_toward(to_position, bot_radius * 3)
 	$Sounds/Teleport.play()
 
 

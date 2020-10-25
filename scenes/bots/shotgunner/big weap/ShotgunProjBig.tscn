@@ -9,7 +9,7 @@
 [node name="ShotgunProjBig" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 speed = 1000
-damage = 3.0
+damage = 15.0
 proj_range = 900
 
 [node name="Sprite" parent="." index="1"]

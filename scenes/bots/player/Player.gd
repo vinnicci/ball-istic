@@ -81,7 +81,7 @@ func cap_current_vars() -> void:
 	current_health = clamp(current_health, 1, 9999)
 	current_speed = clamp(current_speed, 0, 2500)
 	current_transform_speed = clamp(current_transform_speed, 0, 1.0)
-	current_charge_cooldown = clamp(current_charge_cooldown, 0.3, 5.0)
+	set_current_charge_cooldown(current_charge_cooldown)
 	current_charge_force_mult = clamp(current_charge_force_mult, 0.1, 2.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 

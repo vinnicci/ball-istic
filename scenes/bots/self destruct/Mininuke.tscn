@@ -22,6 +22,7 @@ uv = PoolVector2Array( 104, 64, 99, 72, 94, 80, 89, 88, 84, 96, 74, 96, 64, 96, 
 shape = SubResource( 1 )
 
 [node name="Explosion" parent="." index="9" instance=ExtResource( 1 )]
+damage = 500.0
 
 [node name="AI" parent="." index="10" instance=ExtResource( 2 )]
 script = ExtResource( 6 )

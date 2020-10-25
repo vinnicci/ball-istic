@@ -2,7 +2,7 @@ extends "res://scenes/passives/_base/_BasePassive.gd"
 
 
 func _ready() -> void:
-	description = ("+" + str((effect/2) * 100) + "% to damage resistance\n+" +
+	description = ("+" + str((effect*0.75) * 100) + "% to damage resistance\n+" +
 		str(effect * 100) + "% to knockback resistance.")
 
 

@@ -122,8 +122,8 @@ health_cap = 60.0
 position = Vector2( -1282, 4729 )
 rotation = -1.5708
 physics_material_override = SubResource( 1 )
-shield_cap = 60.0
-health_cap = 120.0
+shield_cap = 120.0
+health_cap = 240.0
 respawnable = false
 deployed = true
 

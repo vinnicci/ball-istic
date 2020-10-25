@@ -6,7 +6,7 @@
 [node name="Buttons" type="VBoxContainer"]
 margin_right = 95.0
 margin_bottom = 129.0
-rect_scale = Vector2( 1.3, 1.3 )
+rect_pivot_offset = Vector2( 47, 64 )
 alignment = 1
 script = ExtResource( 1 )
 __meta__ = {

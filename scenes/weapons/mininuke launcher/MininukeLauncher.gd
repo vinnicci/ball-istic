@@ -10,5 +10,5 @@ func _process(delta: float) -> void:
 
 func _modify_proj(proj_pack) -> Node:
 	var proj = ._modify_proj(proj_pack)
-	proj.z_index = 1
+	proj.z_index = 2
 	return proj

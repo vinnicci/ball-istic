@@ -24,14 +24,20 @@ var scenes: Dictionary = {
 	"Checkpoint2-1": preload("res://levels proper/2-1_checkpoint/Checkpoint2-1.tscn"),
 	"Secret2-1": preload("res://levels proper/2-1_secret/Secret2-1.tscn"),
 	"Area2-4": preload("res://levels proper/2-4_area/Area2-4.tscn"),
+	"Checkpoint2-2": preload("res://levels proper/2-2_checkpoint/Checkpoint2-2.tscn"),
 	"Secret2-2": preload("res://levels proper/2-2_secret/Secret2-2.tscn"),
 	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
 	"Area2Final": preload("res://levels proper/2_area_final/Area2Final.tscn"),
 	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn"),
 	"Area3-1": preload("res://levels proper/3-1_area/Area3-1.tscn"),
+	"Secret3-1": preload("res://levels proper/3-1_secret/Secret3-1.tscn"),
 	"Area3-2": preload("res://levels proper/3-2_area/Area3-2.tscn"),
 	"Area3-3": preload("res://levels proper/3-3_area/Area3-3.tscn"),
-	"Checkpoint3-1": preload("res://levels proper/3-1_checkpoint/Checkpoint3-1.tscn")
+	"Checkpoint3-1": preload("res://levels proper/3-1_checkpoint/Checkpoint3-1.tscn"),
+	"Area3-4": preload("res://levels proper/3-4_area/Area3-4.tscn"),
+	"Secret3-2": preload("res://levels proper/3-2_secret/Secret3-2.tscn"),
+	"Checkpoint3-2": preload("res://levels proper/3-2_checkpoint/Checkpoint3-2.tscn"),
+	"Area3-5": preload("res://levels proper/3-5_area/Area3-5.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -82,13 +88,16 @@ func _load_from_disk() -> void:
 	_saved_paths = save_file.paths
 
 
-const SAVE_DATA: Array = ["save_name", "player", "despawnable_bots", "depot_items", "vault_items"]
+const SAVE_DATA: Array = [
+	"save_name", "player", "quests", "despawnable_bots", "depot_items",
+	"vault_items", "paths"
+]
 
 
 func _verify_data(save_file) -> bool:
 	var save_data = SAVE_DATA
 	for data in save_data:
-		if is_instance_valid(save_file.get(data)) == false:
+		if save_file.get(data) == null:
 			return false
 	return true
 
@@ -267,15 +276,21 @@ func _set_info(lvl):
 # quests
 ########
 func _on_quest_updated(quest_key: String, val_name: String) -> void:
+	if _saved_quests.keys().has(quest_key) == false:
+		_saved_quests[quest_key] = []
 	if _saved_quests[quest_key].has(val_name) == true:
 		return
 	_saved_quests[quest_key].append(val_name)
 	match quest_key:
 		"KEYS":
 			$CanvasLayer/StatusLabel.text = "KEY OBTAINED"
-			if $Anim.is_playing() == true:
-				$Anim.stop()
-			$Anim.play("objective")
+			if $Anim.current_animation != "destroyed":
+				$Anim.play("objective")
+		"DACS":
+			$CanvasLayer/StatusLabel.text = ("CANNONS DISABLED: %s/5" %
+				_saved_quests["DACS"].size())
+			if $Anim.current_animation != "destoyed":
+				$Anim.play("objective")
 
 
 func _load_quest(lvl: Node) -> void:
@@ -399,7 +414,7 @@ func _on_player_spawn_saved(lvl: String, pos: String) -> void:
 
 func _load_player_spawn() -> void:
 	var level
-	if is_instance_valid(_saved_player["Spawn"]) == false:
+	if _saved_player["Spawn"] == null:
 		level = scenes["Tutorial"].instance()
 		_change_scene(level, "Access/Area1-1/Pos")
 	else:

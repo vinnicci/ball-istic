@@ -13,7 +13,8 @@ resource_local_to_scene = true
 script = ExtResource( 3 )
 speed = 1500
 charge_cooldown = 2.0
-charge_force_mult = 0.7
+charge_force_mult = 0.75
+charge_dmg_rate = 0.4
 knockback_resist = 0.7
 
 [node name="Texture" parent="Body" index="1"]

@@ -379,6 +379,8 @@ func task_act_to_turret(task):
 func task_act_charge_roll(task):
 	match task.get_param(0):
 		"target":
+			if _check_if_valid_bot(_enemy) == true:
+				$Rays/Target.look_at(_enemy.global_position)
 			if $Rays/Target.get_collider() == _enemy:
 				_parent_node.charge_roll($Rays/Target.global_rotation)
 		"velocity":

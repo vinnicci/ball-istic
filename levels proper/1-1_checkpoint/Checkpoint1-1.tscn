@@ -34,6 +34,12 @@ position = Vector2( 576, -193 )
 [node name="HealthCapacityI" parent="Access/Depot/Items" index="3" instance=ExtResource( 11 )]
 
 [node name="RandomPassiveI" parent="Access/Depot/Items" index="4" instance=ExtResource( 15 )]
+description = ""
+effect = 0.0
+
+[node name="RandomPassiveI2" parent="Access/Depot/Items" index="5" instance=ExtResource( 15 )]
+description = ""
+effect = 0.0
 
 [node name="BotStation" parent="Access" index="1" instance=ExtResource( 9 )]
 position = Vector2( 568, 194 )

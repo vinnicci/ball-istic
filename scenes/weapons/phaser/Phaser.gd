@@ -56,6 +56,7 @@ func _animate_glow(to_show: bool) -> void:
 
 
 func _fire_other(to_pos = null) -> void:
+	$TeleLine.cast_to = get_local_mouse_position()
 	if $TeleLine.get_collider() != null:
 		current_heat -= heat_per_shot
 		_timer_shoot_cooldown.stop()

@@ -60,7 +60,6 @@ shield_cap = 60.0
 shield_regen = 2.0
 health_cap = 60.0
 speed = 1700
-charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger2" parent="Bots" index="3" instance=ExtResource( 8 )]
@@ -69,7 +68,6 @@ shield_cap = 60.0
 shield_regen = 2.0
 health_cap = 60.0
 speed = 1700
-charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger3" parent="Bots" index="4" instance=ExtResource( 8 )]
@@ -79,7 +77,6 @@ shield_cap = 60.0
 shield_regen = 2.0
 health_cap = 60.0
 speed = 1700
-charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger4" parent="Bots" index="5" instance=ExtResource( 8 )]
@@ -89,7 +86,6 @@ shield_cap = 60.0
 shield_regen = 2.0
 health_cap = 60.0
 speed = 1700
-charge_force_mult = 0.75
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="6" instance=ExtResource( 9 )]

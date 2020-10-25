@@ -318,7 +318,6 @@ position = Vector2( 4008, -254 )
 shield_cap = 200.0
 health_cap = 600.0
 speed = 3200
-charge_dmg_rate = 0.3
 respawnable = false
 
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 3 )]

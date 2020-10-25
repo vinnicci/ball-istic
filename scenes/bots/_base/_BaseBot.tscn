@@ -46,6 +46,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 8, 8 ), Vector2( 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "trail"
@@ -120,6 +132,7 @@ internal_vertex_count = 37
 polygon = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 
 [node name="ChargeEffect" type="Polygon2D" parent="Body"]
+visible = false
 modulate = Color( 1, 1, 1, 0 )
 
 [node name="Anim" type="AnimationPlayer" parent="Body/ChargeEffect"]
@@ -172,7 +185,7 @@ one_shot = true
 one_shot = true
 
 [node name="DischargeParry" type="Timer" parent="Timers"]
-wait_time = 0.2
+wait_time = 0.25
 one_shot = true
 
 [node name="Resume" type="Timer" parent="Timers"]
