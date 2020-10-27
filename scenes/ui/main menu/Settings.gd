@@ -1,8 +1,8 @@
 extends Control
 
 
-signal moved
+signal scene_changed
 
 
 func _on_Back_pressed() -> void:
-	emit_signal("moved", "MainMenu")
+	emit_signal("scene_changed", "MainMenu")

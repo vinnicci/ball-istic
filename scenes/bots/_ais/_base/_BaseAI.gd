@@ -9,7 +9,7 @@ export (float) var weap_heat_cooldown: float = 0
 export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
-var _enemies: Array
+var _enemies: Dictionary
 var _enemy: Global.CLASS_BOT setget , get_enemy
 var _master: Global.CLASS_BOT
 var _path_points: Array
@@ -75,9 +75,7 @@ func set_level(level: Node) -> void:
 func _physics_process(_delta: float) -> void:
 	if enabled == false:
 		return
-	if _check_if_valid_bot(_enemy) == false:
-		_get_new_target_enemy()
-	elif (_check_if_valid_bot(_enemy) == true &&
+	if (_check_if_valid_bot(_enemy) == true &&
 		_parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT):
 		$Rays/Target.look_at(_enemy.global_position)
 	match _current_act:
@@ -103,7 +101,7 @@ func _on_parent_dead() -> void:
 
 
 func clear_enemies() -> void:
-	_enemies = []
+	_enemies = {}
 	_enemy = null
 
 
@@ -130,8 +128,10 @@ func _get_distance(start_node: Node, target_node: Node) -> int:
 	var start: Vector2 = start_node.global_position
 	var end: Vector2 = target_node.global_position
 	var arr: Array = _level_node.get_points(start, end)
-	var dist: int = arr.pop_front().distance_to(arr.front())
-	while arr.size() != 1:
+	var dist: int
+	if arr.size() > 1:
+		dist = arr.pop_front().distance_to(arr.front())
+	while arr.size() > 1:
 		dist += arr.pop_front().distance_to(arr.front())
 	return dist
 
@@ -145,35 +145,43 @@ func _on_DistEvaluate_timeout() -> void:
 	_dist_to_master = _get_distance(self, _master)
 
 
+func _on_EnemyEvaluate_timeout() -> void:
+	if _enemies.size() == 0 || enabled == false:
+		return
+	for enemy in _enemies.keys():
+		if _check_if_valid_bot(enemy) == false:
+			continue
+		$Rays/LookAt.look_at(enemy.global_position)
+		if $Rays/LookAt.get_collider() == enemy:
+			_enemies[enemy]["Visible"] = true
+			_enemies[enemy]["Dist"] = _get_distance(self, enemy)
+		else:
+			_enemies[enemy]["Visible"] = false
+	_get_new_target_enemy()
+
+
 func _get_new_target_enemy() -> void:
 	if _enemies.size() == 0:
 		return
-	var bot = _enemies.front()
-	if _check_if_valid_bot(bot) == false:
-		return
-	$Rays/LookAt.look_at(bot.global_position)
-	var potential_enemy = $Rays/LookAt.get_collider()
-	#if target bot is in line of sight
-	if (potential_enemy is Global.CLASS_LEVEL_WALL ||
-		potential_enemy is Global.CLASS_LEVEL_RIGID ||
-		is_instance_valid(potential_enemy) == false):
-		_enemies.erase(bot)
-		_enemies.append(bot)
-		return
-	if potential_enemy == bot:
-		engage(potential_enemy)
-	#if target bot is blocked by another enemy bot,
-	#engage the blocking bot instead
-	elif (potential_enemy is Global.CLASS_BOT &&
-		potential_enemy.current_faction != _parent_node.current_faction):
-		if (potential_enemy is Global.CLASS_PLAYER ||
-			potential_enemy.has_node("AI") == true):
-			engage(potential_enemy)
+	var potential_enemy: Node
+	for enemy in _enemies.keys():
+		if (_check_if_valid_bot(potential_enemy) == false &&
+			_enemies[enemy]["Visible"] == true):
+			potential_enemy = enemy
+			continue
+		if (potential_enemy == enemy || _enemies[enemy]["Visible"] == false ||
+			_check_if_valid_bot(potential_enemy) == false):
+			continue
+		if _enemies[enemy]["Dist"] <= _enemies[potential_enemy]["Dist"]:
+			potential_enemy = enemy
+	engage(potential_enemy)
 
 
 func engage(bot) -> void:
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
+	if _check_if_valid_bot(bot) == false:
+		return
 	if _check_if_valid_bot(_enemy) != false:
 		if _get_distance(bot, self) > _get_distance(_enemy, self):
 			return
@@ -236,10 +244,16 @@ func _on_FleeEvaluate_timeout() -> void:
 func _on_DetectionRange_body_entered(body: Node) -> void:
 	if _parent_node.state == Global.CLASS_BOT.State.DEAD:
 		return
-	if body.current_faction != _parent_node.current_faction:
+	if body.current_faction == _parent_node.current_faction:
+		$Rays/Target.add_exception(body)
+		$Rays/LookAt.add_exception(body)
+	elif body.current_faction != _parent_node.current_faction:
 		if (_enemies.has(body) == false &&
 			(body.has_node("AI") == true || body is Global.CLASS_PLAYER)):
-			_enemies.append(body)
+			_enemies[body] = {
+				"Dist": 0,
+				"Visible": false
+			}
 			if body.is_connected("dead", self, "_erase_enemy") == false:
 				body.connect("dead", self, "_erase_enemy", [body])
 
@@ -459,11 +473,11 @@ func _valid_shooting_target(ray_collider) -> bool:
 	#ai can only shoot when
 	#not stunned & aiming at the enemy
 	return (_parent_node.state != Global.CLASS_BOT.State.STUN &&
-		(is_instance_valid(ray_collider) == true &&
-		((ray_collider is Global.CLASS_LEVEL_WALL ||
-		ray_collider is Global.CLASS_LEVEL_RIGID) == false) &&
+		is_instance_valid(ray_collider) == true &&
+		(ray_collider is Global.CLASS_LEVEL_WALL == false ||
+		ray_collider is Global.CLASS_LEVEL_RIGID == false) &&
 		(ray_collider is Global.CLASS_BOT &&
-		ray_collider.current_faction != _parent_node.current_faction)))
+		ray_collider.current_faction != _parent_node.current_faction))
 
 
 ####################

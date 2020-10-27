@@ -22,16 +22,16 @@
 [ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/bots/cannoneer/Cannoneer.tscn" type="PackedScene" id=22]
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
-[sub_resource type="CircleShape2D" id=8]
+[sub_resource type="CircleShape2D" id=2]
 resource_local_to_scene = true
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=3]
 resource_local_to_scene = true
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=4]
 length = 0.25
 step = 0.01
 tracks/0/type = "value"
@@ -91,7 +91,7 @@ extents = Vector2( 100, 25 )
 
 [node name="Area3-5" instance=ExtResource( 1 )]
 script = ExtResource( 6 )
-disp_name = "Area 3-5"
+disp_name = "Artillery Area 5"
 
 [node name="TileMapBrownDecor" parent="Nav" index="0" instance=ExtResource( 2 )]
 collision_layer = 0
@@ -120,7 +120,7 @@ rotation = 1.5708
 position = Vector2( 4545, -4694 )
 
 [node name="Label" parent="Access/Hint/AccessUI" index="0"]
-text = "Hi! Glad you found this place. Take my gifts."
+text = "Hi! Glad you found this place."
 
 [node name="Label2" parent="Access/Hint/AccessUI" index="1"]
 visible = false
@@ -141,7 +141,7 @@ rotation = 2.91936
 position = Vector2( -444, -3385 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="SniperBigBot" parent="Bots" index="2" instance=ExtResource( 18 )]
@@ -149,12 +149,12 @@ position = Vector2( -550, -2675 )
 rotation = 0.742713
 shield_cap = 440.0
 health_cap = 880.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 deployed = true
 
 [node name="CollisionShape" parent="Bots/SniperBigBot" index="8"]
-shape = SubResource( 7 )
+shape = SubResource( 1 )
 
 [node name="AI" parent="Bots/SniperBigBot" index="10"]
 detection_range = 2000
@@ -165,21 +165,21 @@ max_shooting_dist = 8000
 position = Vector2( -114, 58 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="Balladin2" parent="Bots" index="4" instance=ExtResource( 21 )]
 position = Vector2( 282, 69 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="Balladin3" parent="Bots" index="5" instance=ExtResource( 21 )]
 position = Vector2( 3050, -995 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="Cannoneer" parent="Bots" index="6" instance=ExtResource( 22 )]
@@ -187,32 +187,29 @@ position = Vector2( 359, -1078 )
 rotation = 1.46269
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="CollisionShape" parent="Bots/Cannoneer" index="8"]
-shape = SubResource( 8 )
+shape = SubResource( 2 )
 
 [node name="AI" parent="Bots/Cannoneer" index="10"]
 detection_range = 1800
 enemy_seek_dist = 10000
 max_shooting_dist = 10000
 
-[node name="EnergyCannon" parent="Bots/Cannoneer/Weapons" index="0"]
-z_index = 1
-
 [node name="Fighter" parent="Bots" index="7" instance=ExtResource( 15 )]
 position = Vector2( 967, -1863 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="Fighter2" parent="Bots" index="8" instance=ExtResource( 15 )]
 position = Vector2( 1981, -1003 )
 shield_cap = 220.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 
 [node name="Charger" parent="Bots" index="9" instance=ExtResource( 16 )]
@@ -234,12 +231,12 @@ position = Vector2( 1040, -3706 )
 rotation = 1.5837
 shield_cap = 100.0
 health_cap = 100.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 deployed = true
 
 [node name="CollisionShape" parent="Bots/SniperBot" index="8"]
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="AI" parent="Bots/SniperBot" index="10"]
 detection_range = 2000
@@ -251,16 +248,16 @@ position = Vector2( 3070, 137 )
 rotation = -3.13655
 shield_cap = 100.0
 health_cap = 100.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot2/Body/ChargeEffect" index="0"]
-anims/discharge_parry = SubResource( 10 )
+anims/discharge_parry = SubResource( 4 )
 anims/trail = SubResource( 5 )
 
 [node name="CollisionShape" parent="Bots/SniperBot2" index="8"]
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="AI" parent="Bots/SniperBot2" index="10"]
 detection_range = 2000
@@ -270,6 +267,7 @@ max_shooting_dist = 10000
 [node name="Charger3" parent="Bots" index="13" instance=ExtResource( 16 )]
 position = Vector2( -62, 888 )
 shield_cap = 220.0
+shield_regen = 22.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -278,6 +276,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger4" parent="Bots" index="14" instance=ExtResource( 16 )]
 position = Vector2( 204, 884 )
 shield_cap = 220.0
+shield_regen = 22.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -286,16 +285,18 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Fighter4" parent="Bots" index="15" instance=ExtResource( 15 )]
 position = Vector2( 150, 1496 )
 shield_cap = 220.0
+shield_regen = 22.0
 health_cap = 220.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="16" instance=ExtResource( 7 )]
 position = Vector2( 67, 931 )
 shield_cap = 660.0
+shield_regen = 66.0
 health_cap = 1100.0
-weap_dmg_rate = 4.0
+weap_dmg_rate = 3.0
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 

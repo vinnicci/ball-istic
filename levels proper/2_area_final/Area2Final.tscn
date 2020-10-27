@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=2]
@@ -10,8 +10,7 @@
 [ext_resource path="res://scenes/bots/dummy/ExplosiveDummy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
-[ext_resource path="res://scenes/weapons/cyclone/Cyclone.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=12]
+[ext_resource path="res://levels proper/main/RandomWeaponSecretII.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=15]
@@ -62,13 +61,11 @@ position = Vector2( 1471, 955 )
 
 [node name="Sniper" parent="Access/Depot/Items" index="0" instance=ExtResource( 13 )]
 
-[node name="Cyclone" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
+[node name="RandomWeaponSecretII" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
 
-[node name="Sweeper" parent="Access/Depot/Items" index="2" instance=ExtResource( 12 )]
+[node name="ShieldCapacityIII" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
 
-[node name="ShieldCapacityIII" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
-
-[node name="HealthCapacityIII" parent="Access/Depot/Items" index="4" instance=ExtResource( 15 )]
+[node name="HealthCapacityIII" parent="Access/Depot/Items" index="3" instance=ExtResource( 15 )]
 
 [node name="BotStation" parent="Access" index="3" instance=ExtResource( 9 )]
 position = Vector2( 1474, -572 )
@@ -84,9 +81,6 @@ faction = Color( 0, 1, 0, 1 )
 
 [node name="CollisionShape" parent="Bots/Explosive" index="8"]
 shape = SubResource( 1 )
-
-[node name="Explosion" parent="Bots/Explosive" index="9"]
-damage = 50.0
 
 [node name="ExplosiveDummy" parent="Bots" index="1" instance=ExtResource( 8 )]
 position = Vector2( 2558, -32 )

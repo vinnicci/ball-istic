@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -13,10 +13,9 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/passives/random/RandomPassiveI.tscn" type="PackedScene" id=14]
+[ext_resource path="res://levels proper/main/RandomPassiveI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=20]
 [ext_resource path="res://levels proper/0_hub/MainDoor.gd" type="Script" id=21]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=22]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=25]
@@ -87,19 +86,13 @@ position = Vector2( 190, -446 )
 [node name="Depot" parent="Access" index="7" instance=ExtResource( 13 )]
 position = Vector2( -584, -926 )
 
-[node name="RepairNanobots" parent="Access/Depot/Items" index="0" instance=ExtResource( 19 )]
+[node name="Shotgun" parent="Access/Depot/Items" index="0" instance=ExtResource( 15 )]
 
-[node name="ShieldRecharger" parent="Access/Depot/Items" index="1" instance=ExtResource( 20 )]
+[node name="RepairNanobots" parent="Access/Depot/Items" index="1" instance=ExtResource( 19 )]
 
-[node name="Shotgun" parent="Access/Depot/Items" index="2" instance=ExtResource( 15 )]
+[node name="RandomPassiveI" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
 
-[node name="RandomPassiveI" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
-description = ""
-effect = 0.0
-
-[node name="RandomPassiveI2" parent="Access/Depot/Items" index="4" instance=ExtResource( 14 )]
-description = ""
-effect = 0.0
+[node name="RandomPassiveI2" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 8 )]
 position = Vector2( -1000, -1570 )

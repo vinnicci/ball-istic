@@ -3,12 +3,11 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 signal quest_updated
 var _enemies: Array
-var allies: Array
 
 
 func _ready() -> void:
 	$Bots/LongArtilleryBot.set_controller($Bots/ArtilleryController)
-	$Follow.set_level(self)
+	var allies: Array
 	for bot in $Bots.get_children():
 		if bot.destructible == false:
 			continue
@@ -16,6 +15,7 @@ func _ready() -> void:
 			allies.append(bot)
 		else:
 			_enemies.append(bot)
+	$Follow.set_allies(allies)
 
 
 func _on_bot_dead(bot) -> void:

@@ -2,7 +2,6 @@ extends Node2D
 
 
 export var description: String
-
 var _parent_node: Node
 var _level_node: Node
 

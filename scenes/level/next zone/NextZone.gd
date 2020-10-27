@@ -1,7 +1,7 @@
 extends "res://scenes/level/_base/_BaseAccess.gd"
 
 
-signal moved
+signal scene_changed
 var _entered: bool = false
 
 
@@ -19,5 +19,5 @@ func _process(_delta: float) -> void:
 
 func _on_Access_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER == true && _entered == false:
-		emit_signal("moved")
+		emit_signal("scene_changed")
 		_entered = true

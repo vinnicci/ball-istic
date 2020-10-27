@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels proper/3-1_checkpoint/Checkpoint3-1.gd" type="Script" id=2]
-[ext_resource path="res://scenes/passives/random/RandomPassiveII.tscn" type="PackedScene" id=3]
+[ext_resource path="res://levels proper/main/RandomPassiveIII.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=6]
@@ -11,8 +11,8 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=12]
-[ext_resource path="res://scenes/weapons/fortress/Fortress.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=12]
+[ext_resource path="res://levels proper/main/RandomWeaponSecretIII.tscn" type="PackedScene" id=13]
 
 [node name="Checkpoint3-1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -40,11 +40,11 @@ position = Vector2( 693, -439 )
 [node name="Depot" parent="Access" index="2" instance=ExtResource( 9 )]
 position = Vector2( 329, -440 )
 
-[node name="Fortress" parent="Access/Depot/Items" index="0" instance=ExtResource( 13 )]
+[node name="Phaser" parent="Access/Depot/Items" index="0" instance=ExtResource( 12 )]
 
-[node name="PaladinHammer" parent="Access/Depot/Items" index="1" instance=ExtResource( 12 )]
+[node name="RandomWeaponSecretIII" parent="Access/Depot/Items" index="1" instance=ExtResource( 13 )]
 
-[node name="RandomPassiveII" parent="Access/Depot/Items" index="2" instance=ExtResource( 3 )]
+[node name="RandomPassiveIII" parent="Access/Depot/Items" index="2" instance=ExtResource( 3 )]
 
 [node name="Area3-3" parent="Access" index="3" instance=ExtResource( 8 )]
 position = Vector2( -1839, 63 )

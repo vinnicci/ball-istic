@@ -1,7 +1,7 @@
 extends Control
 
 
-signal moved
+signal scene_changed
 const SAVE_DIR = "user://saves/"
 
 
@@ -54,7 +54,7 @@ func _activate_renaming(slot_num: int) -> void:
 
 
 func _on_Back_pressed() -> void:
-	emit_signal("moved", "MainMenu")
+	emit_signal("scene_changed", "MainMenu")
 
 
 var _slot_name: String
@@ -86,7 +86,7 @@ func _on_ConfirmYes_pressed() -> void:
 	new_save.save_name = _slot_name
 	var save_path: String = SAVE_DIR + "save_" + str(_current_slot) + ".tres"
 	ResourceSaver.save(save_path, new_save)
-	emit_signal("moved", "Play", _current_slot, _slot_name)
+	emit_signal("scene_changed", "Play", _current_slot, _slot_name)
 
 
 func _on_Cancel_pressed() -> void:

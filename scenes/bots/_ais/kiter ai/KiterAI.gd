@@ -29,4 +29,4 @@ func _process(delta: float) -> void:
 			if sample_proj is Global.CLASS_PROJ:
 				_params_dict["max_flee"] = sample_proj.proj_range + 300
 				return
-		_params_dict["max_flee"] = max_flee_dist
+	_params_dict["max_flee"] = max_flee_dist

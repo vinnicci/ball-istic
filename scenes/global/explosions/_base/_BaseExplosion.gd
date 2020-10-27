@@ -49,7 +49,8 @@ func start_explosion() -> void:
 		exploded = true
 	var bodies = get_overlapping_bodies()
 	for body in bodies:
-		if body == get_parent():
+		if (body == get_parent() ||
+			(body is Global.CLASS_BOT && body.state == Global.CLASS_BOT.State.CHARGE_ROLL)):
 			continue
 		_apply_effect(body)
 	$Blast/Anim.play("explode")

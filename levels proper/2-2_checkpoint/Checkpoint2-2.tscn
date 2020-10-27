@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/passives/random/RandomPassiveII.tscn" type="PackedScene" id=7]
+[ext_resource path="res://levels proper/main/RandomPassiveII.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/weapons/drone ballista/FDroneBallista.tscn" type="PackedScene" id=10]
@@ -35,9 +35,9 @@ position = Vector2( -253, -448 )
 [node name="Depot" parent="Access" index="3" instance=ExtResource( 4 )]
 position = Vector2( -767, 318 )
 
-[node name="PulseGrenadeBallista" parent="Access/Depot/Items" index="0" instance=ExtResource( 11 )]
+[node name="FDroneBallista" parent="Access/Depot/Items" index="0" instance=ExtResource( 10 )]
 
-[node name="FDroneBallista" parent="Access/Depot/Items" index="1" instance=ExtResource( 10 )]
+[node name="PulseGrenadeBallista" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
 
 [node name="RandomPassiveII" parent="Access/Depot/Items" index="2" instance=ExtResource( 7 )]
 

@@ -15,7 +15,7 @@ func set_buttons(buttons_node) -> void:
 
 func _on_Confirm_pressed() -> void:
 	get_tree().paused = false
-	_parent_node.emit_signal("moved", "Menu")
+	_parent_node.emit_signal("scene_changed", "Menu")
 
 
 func _on_Cancel_pressed() -> void:

@@ -9,9 +9,9 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=8]
 [ext_resource path="res://levels proper/3-2_checkpoint/Checkpoint3-2.gd" type="Script" id=9]
-[ext_resource path="res://scenes/passives/random/RandomPassiveII.tscn" type="PackedScene" id=10]
+[ext_resource path="res://levels proper/main/RandomPassiveIII.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/cannon/EnergyCannon.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=12]
+[ext_resource path="res://levels proper/main/RandomWeaponSecretIII.tscn" type="PackedScene" id=12]
 
 [node name="Checkpoint3-2" instance=ExtResource( 1 )]
 script = ExtResource( 9 )
@@ -29,12 +29,11 @@ position = Vector2( 1018, 646 )
 [node name="Depot" parent="Access" index="1" instance=ExtResource( 6 )]
 position = Vector2( 1030, 1008 )
 
-[node name="Phaser" parent="Access/Depot/Items" index="0" instance=ExtResource( 12 )]
+[node name="EnergyCannon" parent="Access/Depot/Items" index="0" instance=ExtResource( 11 )]
 
-[node name="EnergyCannon" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
-z_index = 1
+[node name="RandomWeaponSecretIII" parent="Access/Depot/Items" index="1" instance=ExtResource( 12 )]
 
-[node name="RandomPassiveII" parent="Access/Depot/Items" index="2" instance=ExtResource( 10 )]
+[node name="RandomPassiveIII" parent="Access/Depot/Items" index="2" instance=ExtResource( 10 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 7 )]
 position = Vector2( 1022, 267 )

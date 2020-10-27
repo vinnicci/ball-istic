@@ -1,11 +1,11 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
-onready var allies: Array = [
-	$Bots/Fighter, $Bots/Fighter2, $Bots/Charger,
-	$Bots/Charger2, $Bots/Charger3, $Bots/Charger4
-]
-
-
 func _ready() -> void:
-	$Follow.set_level(self)
+	var allies: Array
+	for bot in $Bots.get_children():
+		if bot.destructible == false:
+			continue
+		if bot.current_faction == Color(0,1,0):
+			allies.append(bot)
+	$Follow.set_allies(allies)

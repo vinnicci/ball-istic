@@ -1,7 +1,7 @@
 extends Control
 
 
-signal moved
+signal scene_changed
 const SAVE_DIR: String = "user://saves/"
 
 
@@ -37,8 +37,8 @@ func _on_Save4_pressed() -> void:
 
 
 func _load_save(current_slot: int, slot_name: String) -> void:
-	emit_signal("moved", "Play", current_slot, slot_name)
+	emit_signal("scene_changed", "Play", current_slot, slot_name)
 
 
 func _on_Back_pressed() -> void:
-	emit_signal("moved", "MainMenu")
+	emit_signal("scene_changed", "MainMenu")

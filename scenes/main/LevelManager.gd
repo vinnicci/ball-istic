@@ -60,7 +60,7 @@ var _player_tut: Node
 var _player: Node
 var _current_scene: Node
 const SAVE_DIR: String = "user://saves/"
-signal moved
+signal scene_changed
 
 
 func _ready() -> void:
@@ -144,7 +144,7 @@ func _process(_delta: float) -> void:
 		_in_game_menu_visible = false
 
 
-func _change_scene(new_lvl: Node, spawn: String) -> void:
+func _on_scene_changed(new_lvl: Node, spawn: String) -> void:
 	$Resume.start()
 	$Anim.play("transition")
 	yield(self, "resume")
@@ -153,10 +153,11 @@ func _change_scene(new_lvl: Node, spawn: String) -> void:
 			_player.get_parent().remove_child(_player)
 		_save_depot_items(_current_scene)
 		_save_vault_items(_current_scene)
-	call_deferred("_change_scene_deferred", new_lvl, spawn)
+		_save_despawnable_bots()
+	call_deferred("_on_scene_changed_deferred", new_lvl, spawn)
 
 
-func _change_scene_deferred(new_lvl: Node, spawn: String) -> void:
+func _on_scene_changed_deferred(new_lvl: Node, spawn: String) -> void:
 	if is_instance_valid(_current_scene) == true:
 		_current_scene.free()
 	var player = _instance_player(new_lvl.name)
@@ -201,7 +202,7 @@ func _connect_access(lvl: Node) -> void:
 				access.connect("spawn_saved", self, "_on_player_spawn_saved",
 					[lvl.name, access.name])
 			Global.NEXT_ZONE:
-				access.connect("moved", self, "_on_next_zone",
+				access.connect("scene_changed", self, "_on_next_zone",
 					[lvl.name, access.name])
 			Global.DEPOT:
 				_load_depot_items(lvl, access)
@@ -245,9 +246,10 @@ func _on_Anim_animation_finished(anim_name: String) -> void:
 
 
 func _on_next_zone(prev_lvl: String, nxt_lvl: String) -> void:
+	$CanvasLayer/AreaName.visible = false
 	var lvl = scenes[nxt_lvl].instance()
 	var spawn = "Access/" + prev_lvl + "/Pos"
-	_change_scene(lvl, spawn)
+	_on_scene_changed(lvl, spawn)
 
 
 func _resume(player) -> void:
@@ -261,15 +263,31 @@ func _resume(player) -> void:
 # levels that need access to saved info
 ########################################
 const HUB_KEY: = preload("res://levels proper/main/Key.gd")
-const LVL_HUB: = preload("res://levels proper/0_hub/Hub.gd")
-const LVL_AREA31: = preload("res://levels proper/3-1_area/Area3-1.gd")
+
+
+var _quest_dict: Dictionary = {
+	"Hub": {
+		"Script": preload("res://levels proper/0_hub/Hub.gd"),
+		"Quest": "KEYS"
+	},
+	"Area3-1": {
+		"Script": preload("res://levels proper/3-1_area/Area3-1.gd"),
+		"Quest": "DACS"
+	}
+}
 
 
 func _set_info(lvl):
-	if lvl is LVL_HUB:
-		lvl.set_keys(_saved_quests["KEYS"])
-	elif lvl is LVL_AREA31:
-		lvl.set_destroyed(_saved_quests["DACS"])
+	if lvl is _quest_dict["Hub"]["Script"]:
+		_pass_info_to_lvl(lvl, _quest_dict["Hub"])
+	elif lvl is _quest_dict["Area3-1"]["Script"]:
+		_pass_info_to_lvl(lvl, _quest_dict["Area3-1"])
+
+
+func _pass_info_to_lvl(lvl: Node, dict: Dictionary) -> void:
+	if _saved_quests.keys().has(dict["Quest"]) == false:
+		_saved_quests[dict["Quest"]] = []
+	lvl.set_quest(_saved_quests[dict["Quest"]])
 
 
 ########
@@ -406,7 +424,6 @@ func _load_player_items() -> void:
 # player spawn
 ###############
 func _on_player_spawn_saved(lvl: String, pos: String) -> void:
-	_save_despawnable_bots()
 	_saved_player["Spawn"] = {}
 	_saved_player["Spawn"]["Lvl"] = lvl
 	_saved_player["Spawn"]["Pos"] = "Access/" + pos
@@ -416,10 +433,10 @@ func _load_player_spawn() -> void:
 	var level
 	if _saved_player["Spawn"] == null:
 		level = scenes["Tutorial"].instance()
-		_change_scene(level, "Access/Area1-1/Pos")
+		_on_scene_changed(level, "Access/Area1-1/Pos")
 	else:
 		level = scenes[_saved_player["Spawn"]["Lvl"]].instance()
-		_change_scene(level, _saved_player["Spawn"]["Pos"])
+		_on_scene_changed(level, _saved_player["Spawn"]["Pos"])
 
 
 #############

@@ -398,7 +398,7 @@ func switch_to_turret() -> void:
 
 func _animate_legs_to_turret() -> void:
 	for leg in _legs_position.keys():
-		leg.visible == true
+		leg.visible = true
 		_switch_tween.interpolate_property(leg, 'position', Vector2(0,0), _legs_position[leg],
 			current_transform_speed, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	_switch_tween.start()
@@ -445,7 +445,7 @@ func _on_SwitchTween_tween_all_completed() -> void:
 	if state == State.TO_ROLL:
 		_body_weapon_hatch.hide()
 		for leg in _legs_position.keys():
-			leg.visible == false
+			leg.visible = false
 	$StateMachine.switching = false
 
 
@@ -524,7 +524,6 @@ var _teleport_pos = null
 
 func teleport(to_position: Vector2) -> void:
 	_teleport_pos = to_position
-	var current_pos = global_position
 	$Sounds/Teleport.play()
 
 
