@@ -4,14 +4,15 @@ extends Camera2D
 var _amp: float
 var _priority: int = 0
 var _shaking: bool = false
+var _d_val: float
+
 onready var _shake_tween = $ShakeTween
 
 
 #due to having the dynamic y-offset
 #physics process loop is used instead of returning it to V(0,0) offset
-func _physics_process(delta: float) -> void:
-	if (get_parent() is Global.CLASS_PLAYER == false || _shaking == true ||
-		delta > 0.05):
+func _physics_process(_delta: float) -> void:
+	if get_parent() is Global.CLASS_PLAYER == false || _shaking == true:
 		return
 	var v_distance: float = 0.5
 	var mouse_pos: float = (get_global_mouse_position().y - global_position.y) * v_distance
@@ -20,8 +21,12 @@ func _physics_process(delta: float) -> void:
 	offset.y = clamp(offset.y, -400, 400)
 
 
+func _process(delta: float) -> void:
+	_d_val = delta
+
+
 func shake_camera(amplitude: float, frequency: float, duration: float, priority: int = 0) -> void:
-	if (current == false || priority < _priority ||
+	if (current == false || priority < _priority || _d_val > 0.05 ||
 		get_parent() is Global.CLASS_PLAYER == false):
 		return
 	_amp = amplitude

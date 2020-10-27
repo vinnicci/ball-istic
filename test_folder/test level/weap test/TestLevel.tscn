@@ -1,10 +1,8 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=2]
 [ext_resource path="res://levels proper/main/RandomPassiveI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/bots/artillery/ArtilleryController.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/bots/charger/ChargerBig.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=8]
@@ -21,7 +19,6 @@
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/shotgun/PulseShotgun.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/bots/artillery/FastArtilleryBot.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/scattershot/Sweeper.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/weapons/scattershot/Scattershot.tscn" type="PackedScene" id=24]
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=25]
@@ -31,7 +28,7 @@
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "discharge_parry"
 length = 0.25
 step = 0.01
@@ -72,7 +69,7 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "trail"
 length = 0.2
 tracks/0/type = "value"
@@ -88,12 +85,8 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=4]
 resource_local_to_scene = true
-
-[sub_resource type="PhysicsMaterial" id=5]
-friction = 0.25
-bounce = 0.5
 
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
@@ -162,17 +155,7 @@ rotation = 1.5708
 position = Vector2( 1400, 1600 )
 rotation = 1.5708
 
-[node name="Player" parent="Bots" index="0" instance=ExtResource( 15 )]
-position = Vector2( 494, 39 )
-physics_material_override = SubResource( 1 )
-speed = 1500
-transform_speed = 1.0
-charge_cooldown = 1.4
-charge_force_mult = 0.75
-charge_dmg_rate = 0.8
-destructible = false
-
-[node name="SniperBot2" parent="Bots" index="1" instance=ExtResource( 2 )]
+[node name="SniperBot2" parent="Bots" index="0" instance=ExtResource( 2 )]
 position = Vector2( -1089, 3481 )
 rotation = -0.013683
 physics_material_override = SubResource( 1 )
@@ -182,8 +165,8 @@ destructible = false
 deployed = true
 
 [node name="Anim" parent="Bots/SniperBot2/Body/ChargeEffect" index="0"]
-anims/discharge_parry = SubResource( 3 )
-anims/trail = SubResource( 4 )
+anims/discharge_parry = SubResource( 2 )
+anims/trail = SubResource( 3 )
 
 [node name="DischargeRadius" parent="Bots/SniperBot2" index="6"]
 visible = true
@@ -192,7 +175,7 @@ visible = true
 visible = false
 
 [node name="CollisionShape" parent="Bots/SniperBot2" index="8"]
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="AI" parent="Bots/SniperBot2" index="10"]
 detection_range = 2000
@@ -200,39 +183,16 @@ enemy_seek_dist = 4000
 weap_heat_cooldown = 10.0
 max_shooting_dist = 4000
 
-[node name="ChargerBig" parent="Bots" index="2" instance=ExtResource( 5 )]
-position = Vector2( 302, 1053 )
-shield_cap = 100.0
-health_cap = 500.0
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Charger" parent="Bots" index="3" instance=ExtResource( 16 )]
+[node name="Charger" parent="Bots" index="1" instance=ExtResource( 16 )]
 position = Vector2( 324, 1287 )
 shield_cap = 100.0
 health_cap = 500.0
+destructible = false
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Charger2" parent="Bots" index="4" instance=ExtResource( 16 )]
-position = Vector2( 652, 1183 )
-shield_cap = 100.0
-health_cap = 500.0
-faction = Color( 0, 1, 0, 1 )
-
-[node name="Charger3" parent="Bots" index="5" instance=ExtResource( 16 )]
-position = Vector2( 516, 959 )
-shield_cap = 100.0
-health_cap = 500.0
-faction = Color( 0, 1, 0, 1 )
-
-[node name="ArtilleryController" parent="Bots" index="6" instance=ExtResource( 4 )]
-position = Vector2( 3262, 1500 )
-shield_cap = 25.0
-health_cap = 25.0
-
-[node name="FastArtilleryBot" parent="Bots" index="7" instance=ExtResource( 22 )]
-position = Vector2( 3089, 1280 )
-rotation = -1.56194
-physics_material_override = SubResource( 5 )
+[node name="Player" parent="Bots" index="2" instance=ExtResource( 15 )]
+speed = 1500
+destructible = false
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

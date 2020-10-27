@@ -91,7 +91,7 @@ wait_time = 0.2
 autostart = true
 
 [node name="EnemyEvaluate" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.2
 autostart = true
 
 [node name="FoundTarget" type="AudioStreamPlayer2D" parent="."]

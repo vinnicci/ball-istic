@@ -2,7 +2,7 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 
 
 const ZOOMED_OUT: = Vector2(2.25, 2.25)
-const ZOOMED_NORM: = Vector2(1.5, 1.5)
+const ZOOMED_NORM: = Vector2(1.3, 1.3)
 enum State {
 	NONE, ZOOMED_OUT, ZOOMED_NORM
 }
