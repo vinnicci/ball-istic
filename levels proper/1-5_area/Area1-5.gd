@@ -1,17 +1,18 @@
 extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
-onready var spawns: Array = [$Spawn, $Spawn2]
-onready var big_bot: = $Bots/HeavyFighterBig
+onready var _spawns: Array = [$Spawn, $Spawn2]
+onready var _big_bot: = $Bots/HeavyFighterBig
 
 
 func _ready() -> void:
-	for spawn in spawns:
+	for spawn in _spawns:
 		spawn.set_level(self)
+		spawn.set_big_bot(_big_bot)
 
 
 func _on_bot_engaged(bot: Node) -> void:
-	if bot == big_bot:
+	if bot == _big_bot:
 		_trigger_spawn()
 	._on_bot_engaged(bot)
 
@@ -22,6 +23,6 @@ func _on_bot_dead(bot: Node) -> void:
 
 
 func _trigger_spawn() -> void:
-	if is_instance_valid(big_bot) == true:
-		for spawn in spawns:
+	if is_instance_valid(_big_bot) == true:
+		for spawn in _spawns:
 			spawn.spawn_bot()

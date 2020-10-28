@@ -10,7 +10,7 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ChargeForceIII" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-effect = 1.5
+effect = 1.0
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 1, 0.647059, 0.145098, 1 )

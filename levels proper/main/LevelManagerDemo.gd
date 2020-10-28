@@ -29,6 +29,7 @@ var scenes: Dictionary = {
 	"Area2-5": preload("res://levels proper/2-5_area/Area2-5.tscn"),
 	"Area2Final": preload("res://levels proper/2_area_final/Area2Final.tscn"),
 	"Secret2-3": preload("res://levels proper/2-3_secret/Secret2-3.tscn"),
+	"Secret2-4": preload("res://levels proper/2-4_secret/Secret2-4.tscn"),
 	"Area3-1": preload("res://levels proper/3-1_area/Area3-1.tscn"),
 	"Secret3-1": preload("res://levels proper/3-1_secret/Secret3-1.tscn"),
 	"Area3-2": preload("res://levels proper/3-2_area/Area3-2.tscn"),
@@ -38,7 +39,8 @@ var scenes: Dictionary = {
 	"Secret3-2": preload("res://levels proper/3-2_secret/Secret3-2.tscn"),
 	"Checkpoint3-2": preload("res://levels proper/3-2_checkpoint/Checkpoint3-2.tscn"),
 	"Area3-5": preload("res://levels proper/3-5_area/Area3-5.tscn"),
-	"Area3Final": preload("res://levels proper/3_area_final/Area3Final.tscn")
+	"Area3Final": preload("res://levels proper/3_area_final/Area3Final.tscn"),
+	"Secret3-3": preload("res://levels proper/3-3_secret/Secret3-3.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],

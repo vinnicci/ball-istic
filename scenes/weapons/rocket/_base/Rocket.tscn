@@ -35,7 +35,7 @@ crit_chance = 0.1
 spread = 5.0
 cam_shake_intensity = 10.0
 burst_count = 10
-burst_timer = 0.1
+burst_timer = 0.15
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )
