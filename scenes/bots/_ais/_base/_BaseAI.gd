@@ -435,7 +435,7 @@ func task_act_discharge_parry(task):
 # shoot weapon
 ##############
 func task_cond_is_weapon_overheating(task):
-	if _parent_node.current_weapon.is_overheating() == true:
+	if _parent_node.current_weapon.heat_state == Global.CLASS_WEAPON.HeatStates.OVERHEATING:
 		task.succeed()
 	else:
 		task.failed()

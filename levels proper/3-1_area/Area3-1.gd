@@ -21,7 +21,7 @@ func set_quest(i_destroyed_bots: Array):
 func _on_BarredDoorDisp_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		door.open()
-		$CanvasLayer/GateDisp.text = "ENEMY ARTILLERIES DISABLED: %s/5" % destroyed_bots.size()
+		$CanvasLayer/GateDisp.text = "ENEMY CANNONS DISABLED: %s/5" % destroyed_bots.size()
 		$CanvasLayer/GateDisp.visible = true
 
 

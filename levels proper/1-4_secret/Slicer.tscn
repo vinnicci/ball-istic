@@ -13,9 +13,12 @@ resource_local_to_scene = true
 
 [node name="Slicer" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
+shield_cap = 220.0
+health_cap = 220.0
 speed = 1800
 transform_speed = 0.2
 charge_cooldown = 2.0
+weap_dmg_rate = 3.0
 knockback_resist = 0.25
 
 [node name="Sprite" parent="Legs" index="0"]

@@ -5,19 +5,19 @@ var _is_line_colliding: bool = false
 
 
 func _process(_delta: float) -> void:
-	#blob sprite
-	if _is_overheating == true:
-		_animate_glow(false)
-		$Sprite/Anim.stop(false)
-	else:
-		_animate_glow(true)
-		$Sprite/Anim.play("rotate")
+	match heat_state:
+		HeatStates.OVERHEATING:
+			_animate_glow(false)
+			$Sprite/Anim.stop(false)
+		_:
+			_animate_glow(true)
+			$Sprite/Anim.play("rotate")
 	
 	#line
 	if (_parent_node != null && _parent_node is Global.CLASS_PLAYER &&
 		_parent_node.state == Global.CLASS_BOT.State.TURRET && _parent_node.current_weapon == self):
 		$TeleLine.cast_to = get_local_mouse_position()
-		if _timer_shoot_cooldown.is_stopped() == true && _is_overheating == false:
+		if _timer_shoot_cooldown.is_stopped() == true && heat_state != HeatStates.OVERHEATING:
 			$Line2D.show()
 			$Line2D.points[1] = $TeleLine.cast_to
 			if $TeleLine.get_collider() != null && _is_line_colliding == false:

@@ -293,6 +293,7 @@ func reset_bot_vars() -> void:
 	current_faction = faction
 	_body_outline.modulate = current_faction
 	_body_weapon_hatch.modulate = current_faction
+	$Name/Label.set("custom_colors/font_color", current_faction)
 	
 	for weap in arr_weapons:
 		if is_instance_valid(weap) == false:
@@ -320,9 +321,9 @@ func _process(delta: float) -> void:
 
 #ccd may be able to prevent wall phasing on fast moving bots
 func _physics_process(_delta: float) -> void:
-	if linear_velocity.length() > 2800 && continuous_cd == RigidBody2D.CCD_MODE_DISABLED:
+	if continuous_cd == RigidBody2D.CCD_MODE_DISABLED && linear_velocity.length() > 2800:
 		continuous_cd = RigidBody2D.CCD_MODE_CAST_RAY
-	elif linear_velocity.length() <= 2800 && continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY:
+	elif continuous_cd == RigidBody2D.CCD_MODE_CAST_RAY && linear_velocity.length() <= 2800:
 		continuous_cd = RigidBody2D.CCD_MODE_DISABLED
 
 
@@ -463,11 +464,12 @@ func change_weapon(slot_num: int) -> bool:
 		State.TO_ROLL, State.TO_TURRET, State.STUN, State.WEAP_COMMIT, State.DEAD:
 			return false
 	current_weapon.modulate = Color(1,1,1,0)
-	if state == State.TURRET:
-		current_weapon = weap
-		current_weapon.modulate = Color(1,1,1,1)
-	elif state == State.ROLL || state == State.CHARGE_ROLL:
-		current_weapon = weap
+	match state:
+		State.TURRET:
+			current_weapon = weap
+			current_weapon.modulate = Color(1,1,1,1)
+		State.ROLL, State.CHARGE_ROLL:
+			current_weapon = weap
 	return true
 
 
@@ -501,9 +503,9 @@ func _on_ChargeTrail_timeout() -> void:
 
 func _end_charging_effect() -> void:
 	#stun state is included because of discharge parry/stun eventually
-	if linear_velocity.length() <= current_speed * _charge_commit_velocity:
-		match state:
-			State.CHARGE_ROLL, State.DEAD, State.STUN:
+	match state:
+		State.CHARGE_ROLL, State.DEAD, State.STUN:
+			if linear_velocity.length() <= current_speed * _charge_commit_velocity:
 				_body_outline.modulate = current_faction
 				_body_charge_effect.modulate.a = 0
 				_body_charge_effect.visible = false
@@ -556,9 +558,9 @@ func take_damage(damage: float, knockback: Vector2, disp: bool = true) -> void:
 
 
 func discharge_parry() -> void:
-	if _timer_charge_cooldown.is_stopped() == true:
-		match state:
-			State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
+	match state:
+		State.TURRET, State.TO_TURRET, State.WEAP_COMMIT, State.TO_ROLL:
+			if _timer_charge_cooldown.is_stopped() == true:	
 				_clear_surrounding_proj()
 				if _body_charge_effect.get_node("Anim").is_playing() == false:
 					_body_charge_effect.get_node("Anim").play("discharge_parry")
@@ -606,8 +608,6 @@ func _on_Bot_body_entered(body: Node) -> void:
 			deflect_effect()
 			return
 	body.take_damage(damage, Vector2(0,0))
-	if body.has_node("AI") == true:
-		body.get_node("AI").engage(self)
 
 
 func emit_spark(pos: Vector2) -> void:

@@ -4,7 +4,7 @@ extends "res://scenes/weapons/_base/_BaseWeapon.gd"
 onready var _energy_sprite = $Sprite/Energy
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _timer_charge_cancel_timer.is_stopped() == false:
 		_energy_sprite.modulate.a = current_heat / heat_cap
 	else:

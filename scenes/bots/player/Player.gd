@@ -102,7 +102,6 @@ var stopped: bool = false
 func _control_player() -> void:
 	if stopped == true:
 		return
-	var mouse_pos = get_global_mouse_position()
 	
 	#inventory
 	#can't close the ui if holding an item
@@ -110,6 +109,8 @@ func _control_player() -> void:
 		is_instance_valid(ui_inventory.held.item) == false):
 		ui_inventory.visible = !ui_inventory.visible
 		$PlayerUI/HeldItem.visible = ui_inventory.visible
+	
+	var mouse_pos = get_global_mouse_position()
 	
 	if state == State.TURRET || state == State.ROLL:
 		current_weapon.look_at(mouse_pos)
@@ -199,16 +200,26 @@ func _on_ChargeTweenTimer_timeout() -> void:
 	bar_charge_level.modulate = Color(1, 0.24, 0.88)
 
 
+onready var bar_weapon_heat_anim: = bar_weapon_heat.get_node("Anim")
+
+
 func _update_bar_weapon_heat() -> void:
-	var bar_weapon_heat_anim: = bar_weapon_heat.get_node("Anim")
-	if current_weapon.is_overheating() == true:
-		bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
-	elif current_weapon.is_overheating() == false && bar_weapon_heat_anim.is_playing() == false:
-		bar_weapon_heat.modulate = WEAP_HEAT_COLOR
-	if current_weapon.is_almost_overheating() == true:
-		if bar_weapon_heat_anim.is_playing() == false && current_weapon.is_overheating() == false:
-			bar_weapon_heat_anim.play("too_much_heat")
-			$Sounds/CloseToOverheating.play()
+	match current_weapon.heat_state:
+		Global.CLASS_WEAPON.HeatStates.OVERHEATING:
+			if bar_weapon_heat.modulate != WEAP_OVERHEAT_COLOR:
+				bar_weapon_heat.modulate = WEAP_OVERHEAT_COLOR
+		Global.CLASS_WEAPON.HeatStates.ALMOST_OVERHEATING:
+			if bar_weapon_heat_anim.is_playing() == false:
+				bar_weapon_heat_anim.play("too_much_heat")
+			if $Sounds/CloseToOverheating.playing == false:
+				$Sounds/CloseToOverheating.play()
+		Global.CLASS_WEAPON.HeatStates.NOT_OVERHEATING:
+			if bar_weapon_heat_anim.is_playing() == true:
+				bar_weapon_heat_anim.stop()
+			if $Sounds/CloseToOverheating.playing == true:
+				$Sounds/CloseToOverheating.stop()
+			if bar_weapon_heat.modulate != WEAP_HEAT_COLOR:
+				bar_weapon_heat.modulate = WEAP_HEAT_COLOR
 	bar_weapon_heat.max_value = current_weapon.current_heat_cap
 	bar_weapon_heat.value = current_weapon.current_heat
 

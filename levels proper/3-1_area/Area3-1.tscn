@@ -29,7 +29,7 @@ bounce = 0.5
 resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 300, 50 )
+extents = Vector2( 182, 222 )
 
 [node name="Area3-1" instance=ExtResource( 2 )]
 script = ExtResource( 10 )
@@ -62,7 +62,7 @@ rotation = 3.14159
 position = Vector2( 4295, 448 )
 
 [node name="Area3Final" parent="Access" index="2" instance=ExtResource( 4 )]
-position = Vector2( 384, -1901 )
+position = Vector2( 386, -1901 )
 rotation = -1.5708
 
 [node name="Secret3-1" parent="Access" index="3" instance=ExtResource( 4 )]
@@ -224,18 +224,12 @@ collision_mask = 0
 enabled = false
 
 [node name="BarredDoorDisp" type="Area2D" parent="." index="5"]
-position = Vector2( 390, -1088 )
+position = Vector2( 386, -1302 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarredDoorDisp" index="0"]
 shape = SubResource( 3 )
 
-[node name="BarredDoorDisp2" type="Area2D" parent="." index="6"]
-position = Vector2( 384, -1526 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BarredDoorDisp2" index="0"]
-shape = SubResource( 3 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="7"]
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
 
 [node name="GateDisp" type="Label" parent="CanvasLayer" index="0"]
 visible = false
@@ -249,11 +243,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ParallaxBG" parent="." index="8" instance=ExtResource( 17 )]
+[node name="ParallaxBG" parent="." index="7" instance=ExtResource( 17 )]
 [connection signal="visibility_changed" from="Nav/Secret" to="." method="_on_Secret_visibility_changed"]
 [connection signal="body_entered" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_entered"]
 [connection signal="body_exited" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_exited"]
-[connection signal="body_entered" from="BarredDoorDisp2" to="." method="_on_BarredDoorDisp_body_entered"]
-[connection signal="body_exited" from="BarredDoorDisp2" to="." method="_on_BarredDoorDisp_body_exited"]
 
 [editable path="Bots/Explosive"]

@@ -156,6 +156,7 @@ max_shooting_dist = 5000
 [node name="Balladin" parent="Bots" index="4" instance=ExtResource( 10 )]
 position = Vector2( 719, -746 )
 shield_cap = 220.0
+shield_regen = 5.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -163,6 +164,7 @@ respawnable = false
 [node name="Balladin2" parent="Bots" index="5" instance=ExtResource( 10 )]
 position = Vector2( 821, -1530 )
 shield_cap = 220.0
+shield_regen = 5.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -170,6 +172,7 @@ respawnable = false
 [node name="Balladin4" parent="Bots" index="6" instance=ExtResource( 10 )]
 position = Vector2( 142, -1603 )
 shield_cap = 220.0
+shield_regen = 5.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -177,6 +180,7 @@ respawnable = false
 [node name="Balladin5" parent="Bots" index="7" instance=ExtResource( 10 )]
 position = Vector2( 272, -1413 )
 shield_cap = 220.0
+shield_regen = 5.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -193,6 +197,7 @@ deployed = true
 [node name="Balladin3" parent="Bots" index="9" instance=ExtResource( 10 )]
 position = Vector2( 1997, -622 )
 shield_cap = 220.0
+shield_regen = 5.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -207,7 +212,7 @@ respawnable = false
 [node name="Charger" parent="Bots" index="11" instance=ExtResource( 14 )]
 position = Vector2( -259, 848 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -216,7 +221,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger2" parent="Bots" index="12" instance=ExtResource( 14 )]
 position = Vector2( -257, 586 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -225,7 +230,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger4" parent="Bots" index="13" instance=ExtResource( 14 )]
 position = Vector2( 103, 894 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -234,7 +239,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Charger5" parent="Bots" index="14" instance=ExtResource( 14 )]
 position = Vector2( 5, 374 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 charge_dmg_rate = 1.0
 respawnable = false
@@ -243,7 +248,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Fighter" parent="Bots" index="15" instance=ExtResource( 13 )]
 position = Vector2( -4, 593 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -252,7 +257,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="Fighter2" parent="Bots" index="16" instance=ExtResource( 13 )]
 position = Vector2( -261, 1092 )
 shield_cap = 220.0
-shield_regen = 22.0
+shield_regen = 10.0
 health_cap = 220.0
 weap_dmg_rate = 3.0
 respawnable = false
@@ -261,7 +266,7 @@ faction = Color( 0, 1, 0, 1 )
 [node name="FighterBig" parent="Bots" index="17" instance=ExtResource( 16 )]
 position = Vector2( 444, 899 )
 shield_cap = 660.0
-shield_regen = 66.0
+shield_regen = 10.0
 health_cap = 1100.0
 weap_dmg_rate = 3.0
 faction = Color( 0, 1, 0, 1 )

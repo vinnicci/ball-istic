@@ -35,8 +35,12 @@ var current_heat_disspation: float
 var current_shoot_cooldown: float
 var current_crit_mult: float
 var current_crit_chance: float
-var _is_almost_overheating: bool = false setget , is_almost_overheating
-var _is_overheating: bool = false setget , is_overheating
+enum HeatStates {
+	NOT_OVERHEATING,
+	ALMOST_OVERHEATING,
+	OVERHEATING
+}
+var heat_state = HeatStates.NOT_OVERHEATING
 var weap_commit: bool = false
 
 onready var _timer_shoot_cooldown: Node = $Timers/ShootCooldown
@@ -102,12 +106,6 @@ func get_melee_crit_stun_time():
 
 func get_melee_knockback():
 	return melee_knockaback
-
-func is_almost_overheating():
-	return _is_almost_overheating
-
-func is_overheating():
-	return _is_overheating
 
 
 func _ready() -> void:
@@ -181,18 +179,19 @@ func reset_weap_vars() -> void:
 func _process(_delta: float) -> void:
 	#almost overheat state
 	#use this for weapons that make use of heat mechanics
-	if (_is_almost_overheating == false &&
+	if (heat_state == HeatStates.NOT_OVERHEATING &&
 		current_heat > current_heat_cap * almost_overheating_threshold):
-		_is_almost_overheating = true
-	elif (_is_almost_overheating == true &&
+		heat_state = HeatStates.ALMOST_OVERHEATING
+	elif (heat_state == HeatStates.ALMOST_OVERHEATING &&
 		current_heat <= current_heat_cap * almost_overheating_threshold):
-		_is_almost_overheating = false
+		heat_state = HeatStates.NOT_OVERHEATING
 	
 	#overheat state
-	if _is_overheating == false && current_heat > current_heat_cap:
-		_is_overheating = true
-	elif _is_overheating == true && current_heat <= current_heat_cap * heat_below_threshold:
-		_is_overheating = false
+	if heat_state == HeatStates.ALMOST_OVERHEATING && current_heat > current_heat_cap:
+		heat_state = HeatStates.OVERHEATING
+	elif (heat_state == HeatStates.OVERHEATING &&
+		current_heat <= current_heat_cap * heat_below_threshold):
+		heat_state = HeatStates.ALMOST_OVERHEATING
 
 
 func _on_DissipationCooldown_timeout() -> void:
@@ -222,7 +221,7 @@ func animate_transform(transform_speed: float, visibility: bool) -> void:
 # all the firing modes
 ######################
 func fire() -> void:
-	if _timer_shoot_cooldown.is_stopped() == false || _is_overheating == true:
+	if _timer_shoot_cooldown.is_stopped() == false || heat_state == HeatStates.OVERHEATING:
 #		_parent_node.state != Global.CLASS_BOT.State.TURRET):
 		return
 	_timer_shoot_cooldown.start()
@@ -368,8 +367,8 @@ onready var _timer_charge_cooldown = $Timers/ChargeCooldown
 
 
 func _fire_charged() -> void:
-	if _is_overheating == true || _timer_charge_cooldown.is_stopped() == false:
-#		_parent_node.state != Global.CLASS_BOT.State.TURRET):
+	if (heat_state == HeatStates.OVERHEATING ||
+		_timer_charge_cooldown.is_stopped() == false):
 		_cancel_charge()
 		return
 	if current_heat == current_heat_cap:

@@ -5,13 +5,6 @@
 
 [node name="ProjBehavior" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-homing_steer_magnitude = 100.0
-split_count = 2
-split_delay = 0.5
-speed_curve = null
-steer_curve = null
-steer_curve_randomize_dir = false
-reflect_count = 3
 
 [node name="BTREE" parent="." index="0"]
 tree = {
@@ -73,6 +66,7 @@ tree = {
 "type": 0
 }
 }
+_tree_id = "880611172215533367"
 
 [node name="TargetRay" parent="." index="2"]
-cast_to = Vector2( 30, 0 )
+cast_to = Vector2( 0, 50 )

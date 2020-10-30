@@ -15,7 +15,7 @@ func _ready() -> void:
 var _current_enemy_proj: PackedScene
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if (_check_if_valid_bot(_enemy) == true &&
 		(_enemy.state == Global.CLASS_BOT.State.TURRET ||
 		_enemy.state == Global.CLASS_BOT.State.TO_TURRET ||

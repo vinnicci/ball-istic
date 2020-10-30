@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 	if is_instance_valid(item) == false:
 		$SlotHeat.value = 0
 		return
-	if item.is_overheating() == true:
+	if item.heat_state == Global.CLASS_WEAPON.HeatStates.OVERHEATING:
 		$SlotHeat.modulate = Global.CLASS_PLAYER.WEAP_OVERHEAT_COLOR
 	else:
 		$SlotHeat.modulate = Global.CLASS_PLAYER.WEAP_HEAT_COLOR

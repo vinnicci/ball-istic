@@ -20,71 +20,17 @@
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 [ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
 [ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=26]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
-[sub_resource type="Animation" id=2]
-resource_name = "discharge_parry"
-length = 0.25
-step = 0.01
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0.4 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.24, 0.25 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 8, 8 ), Vector2( 1, 1 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath(".:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.25 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "trail"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-
-[sub_resource type="CircleShape2D" id=4]
-resource_local_to_scene = true
+[sub_resource type="PhysicsMaterial" id=2]
+friction = 0.25
+bounce = 0.5
 
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
@@ -120,6 +66,10 @@ position = Vector2( 323, -190 )
 [node name="BarrageEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 17 )]
 
 [node name="Storm" parent="Access/Depot/Items" index="6" instance=ExtResource( 20 )]
+
+[node name="Siren" parent="Access/Depot/Items" index="7" instance=ExtResource( 21 )]
+
+[node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="8" instance=ExtResource( 22 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -158,34 +108,27 @@ transform_speed = 0.2
 destructible = false
 deployed = true
 
-[node name="Anim" parent="Bots/SniperBot2/Body/ChargeEffect" index="0"]
-anims/discharge_parry = SubResource( 2 )
-anims/trail = SubResource( 3 )
-
-[node name="DischargeRadius" parent="Bots/SniperBot2" index="6"]
-visible = true
-
-[node name="CollisionShape2D" parent="Bots/SniperBot2/DischargeRadius" index="0"]
-visible = false
-
-[node name="CollisionShape" parent="Bots/SniperBot2" index="8"]
-shape = SubResource( 4 )
-
-[node name="AI" parent="Bots/SniperBot2" index="10"]
-detection_range = 2000
-enemy_seek_dist = 4000
-weap_heat_cooldown = 10.0
-max_shooting_dist = 4000
-
 [node name="Charger" parent="Bots" index="1" instance=ExtResource( 16 )]
 position = Vector2( 324, 1287 )
+physics_material_override = SubResource( 2 )
 shield_cap = 100.0
 health_cap = 500.0
+speed = 1200
 destructible = false
 faction = Color( 0, 1, 0, 1 )
 
-[node name="Player" parent="Bots" index="2" instance=ExtResource( 15 )]
-speed = 1500
+[node name="Charger2" parent="Bots" index="2" instance=ExtResource( 16 )]
+position = Vector2( 455, 1213 )
+physics_material_override = SubResource( 2 )
+shield_cap = 100.0
+health_cap = 500.0
+speed = 1200
+destructible = false
+faction = Color( 0, 1, 0, 1 )
+
+[node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
+physics_material_override = SubResource( 2 )
+speed = 1200
 destructible = false
 
 [node name="Camera2D" parent="." index="4"]
@@ -194,5 +137,3 @@ position = Vector2( 79, -4 )
 [node name="ParallaxBG" parent="." index="5" instance=ExtResource( 26 )]
 
 [editable path="Access/Depot"]
-
-[editable path="Bots/SniperBot2"]

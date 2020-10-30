@@ -13,8 +13,12 @@ func _init_detector(radius) -> void:
 	$DetectionRange.connect("body_exited", self, "_on_DetectionRange_body_exited")
 
 
-func _init_raycast(cast_to) -> void:
+func _init_target_raycast(cast_to) -> void:
 	$TargetRay.cast_to = Vector2(cast_to, 0)
+
+
+func _init_reflect_raycast(cast_to) -> void:
+	$ReflectRay.cast_to = Vector2(cast_to, 0)
 
 
 func _init_timer() -> void:
@@ -23,6 +27,7 @@ func _init_timer() -> void:
 
 func set_parent(new_parent: Area2D) -> void:
 	_parent_node = new_parent
+	$ReflectRay.global_rotation = _parent_node.global_rotation
 
 
 func set_level(new_level: Node) -> void:
@@ -185,14 +190,17 @@ func task_reflect(task):
 	if _parent_node.is_stopped == true || reflect_count == 0:
 		task.failed()
 		return
-	$TargetRay.global_rotation = _parent_node.global_rotation
-	var body = $TargetRay.get_collider()
-	if body is Global.CLASS_LEVEL_WALL || body is Global.CLASS_LEVEL_RIGID:
-		_level_node.spawn_projectile(_clone_proj(_parent_node), _parent_node.global_position, 
-			Vector2(1,0).rotated($TargetRay.global_rotation).reflect($TargetRay.get_collision_normal()).angle() - deg2rad(180))
+	if is_instance_valid($ReflectRay.get_collider()) == true:
+		_level_node.spawn_projectile(_clone_proj(_parent_node),
+			_parent_node.global_position, _rotate_by_reflection())
 		_parent_node.queue_free()
 	task.succeed()
 	return
+
+
+func _rotate_by_reflection() -> float:
+	return (Vector2(1,0).rotated($ReflectRay.global_rotation).reflect(
+			$ReflectRay.get_collision_normal()).angle() - deg2rad(180))
 
 
 ########
