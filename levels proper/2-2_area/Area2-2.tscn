@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels proper/2-2_area/Area2-2.gd" type="Script" id=2]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=3]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=7]
@@ -10,6 +10,8 @@
 [ext_resource path="res://levels proper/1-5_area/SniperBot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/bots/incinerator/IncineratorBot.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/bots/charger/ChargerBig.tscn" type="PackedScene" id=12]
+
+
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true

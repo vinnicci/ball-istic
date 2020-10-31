@@ -3,7 +3,7 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 onready var _spawns: Array = [$Spawn, $Spawn2]
 onready var _big_bots: Array = [
-	$Bots/ShotgunnerBig, $Bots/FighterBig, $Bots/FighterBig2, $Bots/FighterBig3
+	$Bots/ShotgunnerBig, $Bots/FighterBig, $Bots/FighterBig2
 ]
 
 

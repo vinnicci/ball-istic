@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels proper/2-1_area/Area2-1.gd" type="Script" id=2]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=3]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=4]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=7]
@@ -62,6 +62,10 @@ rotation = 1.5708
 [node name="DoorLab" parent="Doors" index="0" instance=ExtResource( 11 )]
 position = Vector2( 2050, -1114 )
 scale = Vector2( 1.5, 1.5 )
+
+[node name="DoorBrown" parent="Doors" index="1" instance=ExtResource( 6 )]
+position = Vector2( -968, 64 )
+rotation = 1.5708
 
 [node name="Charger" parent="Bots" index="0" instance=ExtResource( 9 )]
 position = Vector2( 1154, -366 )

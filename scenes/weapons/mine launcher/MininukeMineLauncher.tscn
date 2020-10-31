@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/weapons/mine launcher/_base/MineLauncher.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/weapons/mine launcher/MininukeMineLauncher.gd" type="Script" id=2]
+[ext_resource path="res://assets/weapons/tex_ballista.png" type="Texture" id=3]
+[ext_resource path="res://scenes/weapons/mine launcher/proj/MininukeMineLauncherProj.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.482143, 1 )
+colors = PoolColorArray( 1, 0.84375, 0, 1, 0.652832, 0.652832, 0.652832, 0.580357, 0.678431, 0.678431, 0.678431, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+resource_local_to_scene = true
+lifetime_randomness = 0.9
+emission_shape = 1
+emission_sphere_radius = 1.0
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 300.0
+initial_velocity_random = 0.9
+angular_velocity = 500.0
+angular_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 0.5
+color_ramp = SubResource( 2 )
+
+[node name="MininukeMineLauncher" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+Projectile = ExtResource( 4 )
+
+[node name="SlotIcon" parent="." index="0"]
+modulate = Color( 0.219608, 0.996078, 0, 1 )
+scale = Vector2( 0.45, 0.45 )
+texture = ExtResource( 3 )
+offset = Vector2( -23, 0 )
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2( 18, 0 )
+
+[node name="MuzzleParticles" parent="Muzzle" index="0"]
+visible = false
+process_material = SubResource( 3 )
+
+[node name="Sprite" parent="." index="2"]
+modulate = Color( 0.219608, 0.996078, 0, 1 )
+texture = ExtResource( 3 )
+offset = Vector2( 10, 0 )

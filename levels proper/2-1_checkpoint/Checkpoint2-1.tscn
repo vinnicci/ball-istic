@@ -10,10 +10,12 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=10]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=11]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/heat edge/HeatEdge.tscn" type="PackedScene" id=12]
 [ext_resource path="res://levels proper/main/RandomPassiveII.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/dummy/ExplosiveDummy.tscn" type="PackedScene" id=21]
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25

@@ -16,10 +16,12 @@
 [ext_resource path="res://scenes/bots/fighter/FighterBig.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=16]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=17]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/bots/dummy/ExplosiveDummy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/bots/self destruct/Explosive.tscn" type="PackedScene" id=19]
 [ext_resource path="res://levels proper/3-1_area/Explosive.gd" type="Script" id=20]
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25

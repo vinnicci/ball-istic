@@ -8,16 +8,16 @@ func _ready() -> void:
 			preload("res://scenes/weapons/blaster/BurstBlasterReflecting.tscn"),
 			preload("res://scenes/weapons/blaster/ChargeBlasterReflecting.tscn")
 		],
-		80: [
+		50: [
 			preload("res://scenes/weapons/heavy blaster/HeavyBlasterReflecting.tscn"),
 			preload("res://scenes/weapons/shotgun/PulseShotgun.tscn")
 		],
-		50: [
+		25: [
 			preload("res://scenes/weapons/pincer/Pincer.tscn"),
 			preload("res://scenes/weapons/pincer/StunPincer.tscn"),
 			preload("res://scenes/weapons/dagger/Dagger.tscn")
 		],
-		10: [
+		13: [
 			preload("res://scenes/weapons/blaster/AutoBlasterHoming.tscn"),
 			preload("res://scenes/weapons/blaster/BurstBlasterHoming.tscn"),
 			preload("res://scenes/weapons/blaster/ChargeBlasterHoming.tscn"),

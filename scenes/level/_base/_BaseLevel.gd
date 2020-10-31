@@ -63,13 +63,17 @@ func _on_bot_engaged(bot) -> void:
 		close_doors()
 
 
+const MININUKE_BOT: = preload("res://scenes/bots/self destruct/Mininuke.gd")
+
+
 func _on_bot_dead(bot) -> void:
 	if bot == _player:
 		$Camera2D.global_position = _player.global_position
 		$Camera2D.current = true
 		return
 	for lvlbot in $Bots.get_children():
-		if lvlbot.has_node("AI") == false || lvlbot == bot:
+		if (lvlbot.has_node("AI") == false || lvlbot == bot ||
+			lvlbot is MININUKE_BOT):
 			continue
 		var ai = lvlbot.get_node("AI")
 		var enemy = ai.get_enemy()

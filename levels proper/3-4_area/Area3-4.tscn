@@ -7,7 +7,7 @@
 [ext_resource path="res://levels proper/3-4_area/Area3-4.gd" type="Script" id=5]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=8]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=10]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/bots/sniper/SniperBigBot.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/artillery/ArtilleryController.tscn" type="PackedScene" id=13]

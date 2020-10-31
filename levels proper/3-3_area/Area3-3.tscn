@@ -11,11 +11,13 @@
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/bots/cannoneer/Cannoneer.tscn" type="PackedScene" id=11]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=12]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=14]
 [ext_resource path="res://levels proper/main/Follow.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/fighter/FighterBig.tscn" type="PackedScene" id=16]
+
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "discharge_parry"

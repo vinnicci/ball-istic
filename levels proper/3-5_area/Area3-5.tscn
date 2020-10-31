@@ -8,7 +8,7 @@
 [ext_resource path="res://levels proper/3-5_area/Area3-5.gd" type="Script" id=6]
 [ext_resource path="res://scenes/bots/fighter/FighterBig.tscn" type="PackedScene" id=7]
 [ext_resource path="res://levels proper/main/Follow.tscn" type="PackedScene" id=8]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=9]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/hint/Hint.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=12]
@@ -200,7 +200,7 @@ respawnable = false
 shape = SubResource( 2 )
 
 [node name="AI" parent="Bots/Cannoneer" index="10"]
-detection_range = 1800
+detection_range = 1500
 enemy_seek_dist = 10000
 max_shooting_dist = 10000
 

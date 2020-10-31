@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://levels proper/0_hub/Hub.gd" type="Script" id=4]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=5]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=6]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/fighter/FighterBig.tscn" type="PackedScene" id=9]
@@ -20,6 +20,8 @@
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=22]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrownLow.tscn" type="PackedScene" id=26]
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 400, 100 )

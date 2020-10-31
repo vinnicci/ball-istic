@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/level/tex_bg_0.png" type="Texture" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/level/_base/_BaseParallaxBG.tscn" type="PackedScene" id=3]
+
+[node name="ParallaxBG" instance=ExtResource( 3 )]
+
+[node name="ParallaxLayer2" parent="." index="0"]
+motion_scale = Vector2( 0.7, 0.7 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer2" index="0"]
+modulate = Color( 0.0823529, 0.0705882, 0.0705882, 1 )
+position = Vector2( 212.712, 147.628 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxLayer2" index="1"]
+modulate = Color( 0.0823529, 0.0705882, 0.0705882, 1 )
+position = Vector2( 457.024, 399.39 )
+rotation = -0.516231
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="ParallaxLayer2" index="2"]
+modulate = Color( 0.0823529, 0.0705882, 0.0705882, 1 )
+position = Vector2( 789.464, 198.959 )
+rotation = 0.0918953
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Sprite4" type="Sprite" parent="ParallaxLayer2" index="3"]
+modulate = Color( 0.0823529, 0.0705882, 0.0705882, 1 )
+position = Vector2( 1039.53, 560.19 )
+rotation = 0.074646
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxLayer" index="0"]
+modulate = Color( 1, 1, 1, 0.705882 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 1 )
+offset = Vector2( 160, 90 )

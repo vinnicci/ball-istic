@@ -10,11 +10,13 @@
 [ext_resource path="res://scenes/bots/spawner/StunExplosiveSpawner.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/bots/spawner/ExplosiveSpawner.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/bots/grenadier/Grenadier.tscn" type="PackedScene" id=10]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=11]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/green/DoorLab.tscn" type="PackedScene" id=18]
 [ext_resource path="res://levels proper/main/Follow.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=21]
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25

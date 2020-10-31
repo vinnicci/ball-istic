@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=2]
@@ -22,7 +22,8 @@
 [ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=26]
+[ext_resource path="res://scenes/weapons/mine launcher/MininukeMineLauncher.tscn" type="PackedScene" id=23]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=26]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
@@ -70,6 +71,8 @@ position = Vector2( 323, -190 )
 [node name="Siren" parent="Access/Depot/Items" index="7" instance=ExtResource( 21 )]
 
 [node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="8" instance=ExtResource( 22 )]
+
+[node name="MininukeMineLauncher" parent="Access/Depot/Items" index="9" instance=ExtResource( 23 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -127,6 +130,7 @@ destructible = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
+position = Vector2( 84, 31 )
 physics_material_override = SubResource( 2 )
 speed = 1200
 destructible = false

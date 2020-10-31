@@ -10,6 +10,9 @@ resource_local_to_scene = true
 script = ExtResource( 2 )
 deployed = true
 
+[node name="WeaponHatch" parent="Body" index="2"]
+color = Color( 1, 1, 1, 0 )
+
 [node name="Lifetime" parent="Timers" index="5"]
 wait_time = 5.0
 

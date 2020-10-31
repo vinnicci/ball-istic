@@ -8,7 +8,9 @@
 [ext_resource path="res://levels proper/1-3_area/Area1-3.gd" type="Script" id=6]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scenes/bots/fighter/Fighter.tscn" type="PackedScene" id=8]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=9]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=9]
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25

@@ -11,7 +11,9 @@
 [ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=9]
 [ext_resource path="res://levels proper/main/RandomPassiveI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=11]
-[ext_resource path="res://test_folder/test level/weap test/TestParallaxBG.tscn" type="PackedScene" id=13]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=13]
+
+
 
 [node name="Checkpoint1-2" instance=ExtResource( 1 )]
 script = ExtResource( 8 )

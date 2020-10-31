@@ -32,7 +32,6 @@ color_ramp = SubResource( 2 )
 [node name="MineLauncher" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 Projectile = ExtResource( 4 )
-crit_chance = 0.2
 
 [node name="SlotIcon" parent="." index="0"]
 modulate = Color( 0.501961, 0.368627, 0.490196, 1 )
