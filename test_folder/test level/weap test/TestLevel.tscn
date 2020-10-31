@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=2]
@@ -23,7 +23,10 @@
 [ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scenes/weapons/mine launcher/MininukeMineLauncher.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=24]
+[ext_resource path="res://levels proper/1-4_secret/Slicer.tscn" type="PackedScene" id=25]
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=26]
+[ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=27]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
@@ -134,6 +137,18 @@ position = Vector2( 84, 31 )
 physics_material_override = SubResource( 2 )
 speed = 1200
 destructible = false
+
+[node name="Slasher" parent="Bots" index="4" instance=ExtResource( 24 )]
+position = Vector2( 3282, 1375 )
+
+[node name="Slasher2" parent="Bots" index="5" instance=ExtResource( 24 )]
+position = Vector2( 3215, 1666 )
+
+[node name="Slicer" parent="Bots" index="6" instance=ExtResource( 25 )]
+position = Vector2( 2932, 1873 )
+
+[node name="Balladin" parent="Bots" index="7" instance=ExtResource( 27 )]
+position = Vector2( 2699, 1899 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

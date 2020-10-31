@@ -384,7 +384,8 @@ func task_act_charge_roll(task):
 			if $Rays/Target.get_collider() == _enemy:
 				_parent_node.charge_roll($Rays/Target.global_rotation)
 		"velocity":
-			_parent_node.charge_roll($Rays/Velocity.global_rotation)
+			if _next_path_point != null:
+				_parent_node.charge_roll($Rays/Velocity.global_rotation)
 	task.succeed()
 	return
 

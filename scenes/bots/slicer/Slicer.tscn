@@ -14,7 +14,7 @@ resource_local_to_scene = true
 [node name="Slicer" instance=ExtResource( 3 )]
 script = ExtResource( 5 )
 speed = 1800
-transform_speed = 0.2
+transform_speed = 0.1
 charge_cooldown = 2.0
 knockback_resist = 0.25
 
