@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/ui/main menu/Settings.gd" type="Script" id=2]
 [ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=3]
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=4]
 
 [node name="Credits" type="Control"]
 anchor_right = 1.0
@@ -27,10 +28,41 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Credits" type="Label" parent="."]
+margin_top = 75.0
+margin_right = 247.0
+margin_bottom = 396.0
+custom_fonts/font = ExtResource( 4 )
+text = "Game created by:
+   Zethru B. a.k.a Vic Ben
+
+
+Plugins:
+   Visual Behavior Tree by fian46
+
+Font:
+   Lady Ice by Apostrophic Labs"
+
+[node name="LinkYoutube" parent="." instance=ExtResource( 1 )]
+margin_left = 13.0
+margin_top = 141.0
+margin_right = 105.0
+margin_bottom = 180.0
+text = "YT channel"
+
+[node name="LinkTwitter" parent="." instance=ExtResource( 1 )]
+margin_left = 120.0
+margin_top = 141.0
+margin_right = 212.0
+margin_bottom = 180.0
+text = "Twitter"
+
 [node name="Back" parent="." instance=ExtResource( 1 )]
 margin_top = 580.0
 margin_right = 74.0
 margin_bottom = 619.0
 custom_fonts/font = ExtResource( 3 )
 text = "<BACK"
+[connection signal="pressed" from="LinkYoutube" to="." method="_on_LinkYoutube_pressed"]
+[connection signal="pressed" from="LinkTwitter" to="." method="_on_LinkTwitter_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

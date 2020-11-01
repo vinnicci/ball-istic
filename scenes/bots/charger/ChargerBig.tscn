@@ -16,7 +16,7 @@ speed = 3000
 charge_cooldown = 2.0
 charge_force_mult = 0.75
 charge_dmg_rate = 0.4
-knockback_resist = 0.7
+knockback_resist = 1.0
 
 [node name="Texture" parent="Body" index="1"]
 texture = ExtResource( 2 )

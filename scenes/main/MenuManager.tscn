@@ -40,6 +40,7 @@ tracks/1/keys = {
 script = ExtResource( 6 )
 
 [node name="MainMenuArena" parent="." instance=ExtResource( 7 )]
+z_index = -5
 
 [node name="MainMenu" parent="." groups=[
 "Scene",

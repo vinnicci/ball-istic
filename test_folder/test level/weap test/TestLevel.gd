@@ -12,3 +12,7 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 #	tween.start()
 #	tween.connect("tween_all_completed", self, "on_line_faded", [line])
 #	return points
+
+
+#func _ready() -> void:
+#	Engine.time_scale = 0.3

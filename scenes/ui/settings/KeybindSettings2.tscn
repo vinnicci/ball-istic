@@ -1,0 +1,310 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/tex_controls.png" type="Texture" id=3]
+
+[node name="KeybindSettings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -760.0
+margin_bottom = -340.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.454902, 0.670588, 0.423529, 0.980392 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="NotRebindable" type="Label" parent="."]
+margin_left = 249.804
+margin_top = 602.76
+margin_right = 593.804
+margin_bottom = 635.76
+custom_fonts/font = ExtResource( 1 )
+text = "Keys aren't rebindable in the current version."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoveUp" type="HBoxContainer" parent="."]
+margin_left = 384.377
+margin_top = 240.473
+margin_right = 562.377
+margin_bottom = 279.473
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeyName" type="Label" parent="MoveUp"]
+margin_top = 3.0
+margin_right = 74.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "MOVE UP: "
+
+[node name="MenuButton" parent="MoveUp" instance=ExtResource( 2 )]
+margin_left = 78.0
+margin_right = 104.0
+margin_bottom = 39.0
+text = "W"
+
+[node name="MoveDown" type="HBoxContainer" parent="."]
+margin_left = 366.076
+margin_top = 357.714
+margin_right = 544.076
+margin_bottom = 396.714
+
+[node name="KeyName" type="Label" parent="MoveDown"]
+margin_top = 3.0
+margin_right = 97.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "MOVE DOWN: "
+
+[node name="MenuButton" parent="MoveDown" instance=ExtResource( 2 )]
+margin_left = 101.0
+margin_right = 121.0
+margin_bottom = 39.0
+text = "S"
+
+[node name="MoveLeft" type="HBoxContainer" parent="."]
+margin_left = 282.603
+margin_top = 302.059
+margin_right = 460.603
+margin_bottom = 341.059
+
+[node name="KeyName" type="Label" parent="MoveLeft"]
+margin_top = 3.0
+margin_right = 87.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "MOVE LEFT: "
+
+[node name="MenuButton" parent="MoveLeft" instance=ExtResource( 2 )]
+margin_left = 91.0
+margin_right = 113.0
+margin_bottom = 39.0
+text = "A"
+
+[node name="MoveRight" type="HBoxContainer" parent="."]
+margin_left = 495.88
+margin_top = 302.34
+margin_right = 673.88
+margin_bottom = 341.34
+
+[node name="KeyName" type="Label" parent="MoveRight"]
+margin_top = 3.0
+margin_right = 96.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "MOVE RIGHT: "
+
+[node name="MenuButton" parent="MoveRight" instance=ExtResource( 2 )]
+margin_left = 100.0
+margin_right = 121.0
+margin_bottom = 39.0
+text = "D"
+
+[node name="ChargeRoll" type="HBoxContainer" parent="."]
+margin_left = 45.8166
+margin_top = 416.492
+margin_right = 223.817
+margin_bottom = 455.492
+
+[node name="KeyName" type="Label" parent="ChargeRoll"]
+margin_top = 3.0
+margin_right = 102.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "CHARGE ROLL: "
+
+[node name="MenuButton" parent="ChargeRoll" instance=ExtResource( 2 )]
+margin_left = 106.0
+margin_right = 148.0
+margin_bottom = 39.0
+text = "LMB"
+
+[node name="ChangeMode" type="HBoxContainer" parent="."]
+margin_left = 542.578
+margin_top = 118.264
+margin_right = 720.578
+margin_bottom = 157.264
+
+[node name="KeyName" type="Label" parent="ChangeMode"]
+margin_top = 3.0
+margin_right = 108.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "SWITCH MODE: "
+
+[node name="MenuButton" parent="ChangeMode" instance=ExtResource( 2 )]
+margin_left = 112.0
+margin_right = 156.0
+margin_bottom = 39.0
+text = "RMB"
+
+[node name="FireWeapon" type="HBoxContainer" parent="."]
+margin_left = 959.515
+margin_top = 115.547
+margin_right = 1169.52
+margin_bottom = 154.547
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeyName" type="Label" parent="FireWeapon"]
+margin_top = 3.0
+margin_right = 104.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "FIRE WEAPON: "
+
+[node name="MenuButton" parent="FireWeapon" instance=ExtResource( 2 )]
+margin_left = 108.0
+margin_right = 150.0
+margin_bottom = 39.0
+text = "LMB"
+
+[node name="DischargeParry" type="HBoxContainer" parent="."]
+margin_left = 993.503
+margin_top = 403.848
+margin_right = 1203.5
+margin_bottom = 442.848
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KeyName" type="Label" parent="DischargeParry"]
+margin_top = 3.0
+margin_right = 142.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "TURRET DISCHARGE: "
+
+[node name="MenuButton" parent="DischargeParry" instance=ExtResource( 2 )]
+margin_left = 146.0
+margin_right = 166.0
+margin_bottom = 39.0
+text = "E"
+
+[node name="WeapSlot0" type="HBoxContainer" parent="."]
+margin_left = 636.384
+margin_top = 478.319
+margin_right = 846.384
+margin_bottom = 517.319
+custom_constants/separation = 32
+
+[node name="KeyName" type="Label" parent="WeapSlot0"]
+margin_top = 3.0
+margin_right = 119.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON SLOT 1: "
+
+[node name="MenuButton" parent="WeapSlot0" instance=ExtResource( 2 )]
+margin_left = 151.0
+margin_right = 169.0
+margin_bottom = 39.0
+text = "1"
+
+[node name="WeapSlot1" type="HBoxContainer" parent="."]
+margin_left = 636.384
+margin_top = 521.319
+margin_right = 846.384
+margin_bottom = 560.319
+custom_constants/separation = 28
+
+[node name="KeyName" type="Label" parent="WeapSlot1"]
+margin_top = 3.0
+margin_right = 122.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON SLOT 2: "
+
+[node name="MenuButton" parent="WeapSlot1" instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_right = 171.0
+margin_bottom = 39.0
+text = "2"
+
+[node name="WeapSlot2" type="HBoxContainer" parent="."]
+margin_left = 636.384
+margin_top = 564.319
+margin_right = 846.384
+margin_bottom = 603.319
+custom_constants/separation = 28
+
+[node name="KeyName" type="Label" parent="WeapSlot2"]
+margin_top = 3.0
+margin_right = 122.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON SLOT 3: "
+
+[node name="MenuButton" parent="WeapSlot2" instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_right = 171.0
+margin_bottom = 39.0
+text = "3"
+
+[node name="WeapSlot3" type="HBoxContainer" parent="."]
+margin_left = 636.384
+margin_top = 607.319
+margin_right = 846.384
+margin_bottom = 646.319
+custom_constants/separation = 28
+
+[node name="KeyName" type="Label" parent="WeapSlot3"]
+margin_top = 3.0
+margin_right = 122.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON SLOT 4: "
+
+[node name="MenuButton" parent="WeapSlot3" instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_right = 171.0
+margin_bottom = 39.0
+text = "4"
+
+[node name="WeapSlot4" type="HBoxContainer" parent="."]
+margin_left = 636.384
+margin_top = 650.319
+margin_right = 846.384
+margin_bottom = 689.319
+custom_constants/separation = 28
+
+[node name="KeyName" type="Label" parent="WeapSlot4"]
+margin_top = 3.0
+margin_right = 122.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "WEAPON SLOT 5: "
+
+[node name="MenuButton" parent="WeapSlot4" instance=ExtResource( 2 )]
+margin_left = 150.0
+margin_right = 171.0
+margin_bottom = 39.0
+text = "5"
+
+[node name="InventoryUI" type="HBoxContainer" parent="."]
+margin_left = 449.591
+margin_top = 479.048
+margin_right = 659.591
+margin_bottom = 518.048
+
+[node name="KeyName" type="Label" parent="InventoryUI"]
+margin_top = 3.0
+margin_right = 103.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 1 )
+text = "INVENTORY UI: "
+
+[node name="MenuButton" parent="InventoryUI" instance=ExtResource( 2 )]
+margin_left = 107.0
+margin_right = 146.0
+margin_bottom = 39.0
+text = "TAB"

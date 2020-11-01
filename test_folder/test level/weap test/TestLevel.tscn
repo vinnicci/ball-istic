@@ -25,7 +25,6 @@
 [ext_resource path="res://scenes/weapons/mine launcher/MininukeMineLauncher.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=24]
 [ext_resource path="res://levels proper/1-4_secret/Slicer.tscn" type="PackedScene" id=25]
-[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=26]
 [ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=27]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -35,6 +34,9 @@ bounce = 0.5
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.25
 bounce = 0.5
+
+[sub_resource type="CircleShape2D" id=3]
+resource_local_to_scene = true
 
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
@@ -106,7 +108,7 @@ position = Vector2( 1400, 1600 )
 rotation = 1.5708
 
 [node name="SniperBot2" parent="Bots" index="0" instance=ExtResource( 2 )]
-position = Vector2( -1089, 3481 )
+position = Vector2( 3364, 2067 )
 rotation = -0.013683
 physics_material_override = SubResource( 1 )
 speed = 1800
@@ -133,10 +135,17 @@ destructible = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
-position = Vector2( 84, 31 )
+position = Vector2( -2326, 664 )
 physics_material_override = SubResource( 2 )
 speed = 1200
+charge_force_mult = 1.0
 destructible = false
+
+[node name="Camera2D" parent="Bots/Player" index="6"]
+zoom = Vector2( 1, 1 )
+
+[node name="CollisionShape" parent="Bots/Player" index="9"]
+shape = SubResource( 3 )
 
 [node name="Slasher" parent="Bots" index="4" instance=ExtResource( 24 )]
 position = Vector2( 3282, 1375 )
@@ -153,6 +162,6 @@ position = Vector2( 2699, 1899 )
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )
 
-[node name="ParallaxBG" parent="." index="5" instance=ExtResource( 26 )]
-
 [editable path="Access/Depot"]
+
+[editable path="Bots/Player"]
