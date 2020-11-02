@@ -42,8 +42,9 @@ scale = Vector2( 1.5, 1.5 )
 
 [node name="BigCSpawner" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( -144, 0 )
-shield_cap = 200.0
-health_cap = 1600.0
+shield_cap = 480.0
+shield_regen = 2.0
+health_cap = 1200.0
 speed = 2500
 weap_dmg_rate = 2.0
 respawnable = false

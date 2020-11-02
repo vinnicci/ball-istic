@@ -10,8 +10,6 @@
 [ext_resource path="res://levels proper/main/Spawn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://levels proper/1-5_area/Spawn.gd" type="Script" id=9]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
@@ -44,7 +42,7 @@ scale = Vector2( 1.5, 1.5 )
 
 [node name="HeavyFighterBig" parent="Bots" index="0" instance=ExtResource( 4 )]
 position = Vector2( -6, 1740 )
-shield_cap = 120.0
+shield_cap = 300.0
 shield_regen = 2.0
 health_cap = 600.0
 speed = 2000

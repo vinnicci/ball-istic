@@ -19,10 +19,6 @@ func _on_Resume_pressed() -> void:
 	get_tree().paused = false
 
 
-func _on_Settings_pressed() -> void:
-	pass # Replace with function body.
-
-
 func _on_MainMenu_pressed() -> void:
 	visible = false
 	_confirm_node.visible = true

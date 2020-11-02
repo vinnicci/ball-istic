@@ -14,26 +14,18 @@ __meta__ = {
 }
 
 [node name="Resume" parent="." instance=ExtResource( 2 )]
-margin_top = 2.0
+margin_top = 23.0
 margin_right = 95.0
-margin_bottom = 41.0
+margin_bottom = 62.0
 text = "RESUME"
-align = 1
-
-[node name="Settings" parent="." instance=ExtResource( 2 )]
-margin_top = 45.0
-margin_right = 95.0
-margin_bottom = 84.0
-text = "SETTINGS"
 align = 1
 
 [node name="MainMenu" parent="." instance=ExtResource( 2 )]
 pause_mode = 2
-margin_top = 88.0
+margin_top = 66.0
 margin_right = 95.0
-margin_bottom = 127.0
+margin_bottom = 105.0
 text = "MAIN MENU"
 align = 1
 [connection signal="pressed" from="Resume" to="." method="_on_Resume_pressed"]
-[connection signal="pressed" from="Settings" to="." method="_on_Settings_pressed"]
 [connection signal="pressed" from="MainMenu" to="." method="_on_MainMenu_pressed"]

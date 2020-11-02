@@ -1,311 +1,375 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/ui/MenuButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/ui/tex_controls.png" type="Texture" id=3]
+[ext_resource path="res://scenes/ui/settings/KeybindSettings.gd" type="Script" id=4]
+[ext_resource path="res://scenes/ui/settings/MenuButton.gd" type="Script" id=5]
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=6]
 
 [node name="KeybindSettings" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -760.0
-margin_bottom = -340.0
+margin_bottom = 6.10352e-05
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="."]
-modulate = Color( 0.243137, 0.466667, 0.243137, 0.784314 )
-margin_right = 520.0
-margin_bottom = 380.0
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.454902, 0.670588, 0.423529, 0.980392 )
+texture = ExtResource( 3 )
+centered = false
 
-[node name="NotRebindable" type="Label" parent="."]
-margin_left = 76.0
-margin_top = 388.0
-margin_right = 420.0
-margin_bottom = 421.0
+[node name="CancellingInst" type="Label" parent="."]
+margin_left = 368.0
+margin_top = 638.0
+margin_right = 592.0
+margin_bottom = 671.0
 custom_fonts/font = ExtResource( 1 )
-text = "Keys aren't rebindable in the current version."
+text = "Press ESC to cancel rebinding."
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RollMode" type="VBoxContainer" parent="."]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 198.0
-margin_bottom = 360.0
+[node name="KeyRebinding" type="Label" parent="."]
+margin_left = 130.0
+margin_top = 122.0
+margin_right = 354.0
+margin_bottom = 174.0
+custom_fonts/font = ExtResource( 6 )
+text = "REBIND KEYS"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MoveUp" type="HBoxContainer" parent="RollMode"]
-margin_right = 178.0
+[node name="ResetDefault" type="HBoxContainer" parent="."]
+margin_left = 950.0
+margin_top = 633.0
+margin_right = 1128.0
+margin_bottom = 672.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButton" parent="ResetDefault" instance=ExtResource( 2 )]
+margin_right = 118.0
 margin_bottom = 39.0
-custom_constants/separation = 50
+text = "RESET DEFAULT"
+
+[node name="MoveUp" type="HBoxContainer" parent="."]
+margin_left = 415.0
+margin_top = 240.0
+margin_right = 593.0
+margin_bottom = 279.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KeyName" type="Label" parent="RollMode/MoveUp"]
+[node name="KeyName" type="Label" parent="MoveUp"]
 margin_top = 3.0
 margin_right = 74.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "MOVE UP: "
 
-[node name="MenuButton" parent="RollMode/MoveUp" instance=ExtResource( 2 )]
-margin_left = 124.0
-margin_right = 150.0
+[node name="MenuButton" parent="MoveUp" instance=ExtResource( 2 )]
+margin_left = 78.0
+margin_right = 104.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "W"
+script = ExtResource( 5 )
 
-[node name="MoveDown" type="HBoxContainer" parent="RollMode"]
-margin_top = 43.0
-margin_right = 178.0
-margin_bottom = 82.0
-custom_constants/separation = 30
+[node name="MoveDown" type="HBoxContainer" parent="."]
+margin_left = 345.0
+margin_top = 365.0
+margin_right = 523.0
+margin_bottom = 404.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="KeyName" type="Label" parent="RollMode/MoveDown"]
+[node name="KeyName" type="Label" parent="MoveDown"]
 margin_top = 3.0
 margin_right = 97.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "MOVE DOWN: "
 
-[node name="MenuButton" parent="RollMode/MoveDown" instance=ExtResource( 2 )]
-margin_left = 127.0
-margin_right = 147.0
+[node name="MenuButton" parent="MoveDown" instance=ExtResource( 2 )]
+margin_left = 101.0
+margin_right = 121.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "S"
+script = ExtResource( 5 )
 
-[node name="MoveLeft" type="HBoxContainer" parent="RollMode"]
-margin_top = 86.0
-margin_right = 178.0
-margin_bottom = 125.0
-custom_constants/separation = 40
+[node name="MoveLeft" type="HBoxContainer" parent="."]
+margin_left = 266.0
+margin_top = 285.0
+margin_right = 444.0
+margin_bottom = 324.0
 
-[node name="KeyName" type="Label" parent="RollMode/MoveLeft"]
+[node name="KeyName" type="Label" parent="MoveLeft"]
 margin_top = 3.0
 margin_right = 87.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "MOVE LEFT: "
 
-[node name="MenuButton" parent="RollMode/MoveLeft" instance=ExtResource( 2 )]
-margin_left = 127.0
-margin_right = 149.0
+[node name="MenuButton" parent="MoveLeft" instance=ExtResource( 2 )]
+margin_left = 91.0
+margin_right = 113.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "A"
+script = ExtResource( 5 )
 
-[node name="MoveRight" type="HBoxContainer" parent="RollMode"]
-margin_top = 129.0
-margin_right = 178.0
-margin_bottom = 168.0
-custom_constants/separation = 33
+[node name="MoveRight" type="HBoxContainer" parent="."]
+margin_left = 510.0
+margin_top = 315.0
+margin_right = 688.0
+margin_bottom = 354.0
 
-[node name="KeyName" type="Label" parent="RollMode/MoveRight"]
+[node name="KeyName" type="Label" parent="MoveRight"]
 margin_top = 3.0
 margin_right = 96.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "MOVE RIGHT: "
 
-[node name="MenuButton" parent="RollMode/MoveRight" instance=ExtResource( 2 )]
-margin_left = 129.0
-margin_right = 150.0
+[node name="MenuButton" parent="MoveRight" instance=ExtResource( 2 )]
+margin_left = 100.0
+margin_right = 121.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "D"
+script = ExtResource( 5 )
 
-[node name="ChargeRoll" type="HBoxContainer" parent="RollMode"]
-margin_top = 172.0
-margin_right = 178.0
-margin_bottom = 211.0
-custom_constants/separation = 18
+[node name="ChargeRoll" type="HBoxContainer" parent="."]
+margin_left = 90.0
+margin_top = 390.0
+margin_right = 268.0
+margin_bottom = 429.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="KeyName" type="Label" parent="RollMode/ChargeRoll"]
+[node name="KeyName" type="Label" parent="ChargeRoll"]
 margin_top = 3.0
 margin_right = 102.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "CHARGE ROLL: "
 
-[node name="MenuButton" parent="RollMode/ChargeRoll" instance=ExtResource( 2 )]
-margin_left = 120.0
-margin_right = 162.0
+[node name="MenuButton" parent="ChargeRoll" instance=ExtResource( 2 )]
+margin_left = 106.0
+margin_right = 148.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "LMB"
+script = ExtResource( 5 )
 
-[node name="ChangeMode" type="HBoxContainer" parent="RollMode"]
-margin_top = 215.0
-margin_right = 178.0
-margin_bottom = 254.0
-custom_constants/separation = 11
+[node name="ChangeMode" type="HBoxContainer" parent="."]
+margin_left = 540.0
+margin_top = 117.0
+margin_right = 718.0
+margin_bottom = 156.0
 
-[node name="KeyName" type="Label" parent="RollMode/ChangeMode"]
+[node name="KeyName" type="Label" parent="ChangeMode"]
 margin_top = 3.0
 margin_right = 108.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "SWITCH MODE: "
 
-[node name="MenuButton" parent="RollMode/ChangeMode" instance=ExtResource( 2 )]
-margin_left = 119.0
-margin_right = 163.0
+[node name="MenuButton" parent="ChangeMode" instance=ExtResource( 2 )]
+margin_left = 112.0
+margin_right = 156.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "RMB"
+script = ExtResource( 5 )
 
-[node name="TurretMode" type="Control" parent="."]
-margin_left = 295.0
-margin_top = 20.0
-margin_right = 505.0
-margin_bottom = 360.0
-
-[node name="FireWeapon" type="HBoxContainer" parent="TurretMode"]
-margin_right = 210.0
-margin_bottom = 39.0
-custom_constants/separation = 35
+[node name="FireWeapon" type="HBoxContainer" parent="."]
+margin_left = 950.0
+margin_top = 108.0
+margin_right = 1160.01
+margin_bottom = 147.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KeyName" type="Label" parent="TurretMode/FireWeapon"]
+[node name="KeyName" type="Label" parent="FireWeapon"]
 margin_top = 3.0
 margin_right = 104.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "FIRE WEAPON: "
 
-[node name="MenuButton" parent="TurretMode/FireWeapon" instance=ExtResource( 2 )]
-margin_left = 139.0
-margin_right = 181.0
+[node name="MenuButton" parent="FireWeapon" instance=ExtResource( 2 )]
+margin_left = 108.0
+margin_right = 150.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "LMB"
+script = ExtResource( 5 )
 
-[node name="DischargeParry" type="HBoxContainer" parent="TurretMode"]
-margin_top = 43.0
-margin_right = 210.0
-margin_bottom = 82.0
-custom_constants/separation = 8
+[node name="DischargeParry" type="HBoxContainer" parent="."]
+margin_left = 950.0
+margin_top = 404.0
+margin_right = 1160.0
+margin_bottom = 443.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="KeyName" type="Label" parent="TurretMode/DischargeParry"]
+[node name="KeyName" type="Label" parent="DischargeParry"]
 margin_top = 3.0
 margin_right = 142.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "TURRET DISCHARGE: "
 
-[node name="MenuButton" parent="TurretMode/DischargeParry" instance=ExtResource( 2 )]
-margin_left = 150.0
-margin_right = 170.0
+[node name="MenuButton" parent="DischargeParry" instance=ExtResource( 2 )]
+margin_left = 146.0
+margin_right = 166.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "E"
+script = ExtResource( 5 )
 
-[node name="WeapSlot0" type="HBoxContainer" parent="TurretMode"]
-margin_top = 86.0
-margin_right = 210.0
-margin_bottom = 125.0
+[node name="WeapSlot0" type="HBoxContainer" parent="."]
+margin_left = 670.0
+margin_top = 464.0
+margin_right = 880.0
+margin_bottom = 503.0
 custom_constants/separation = 32
 
-[node name="KeyName" type="Label" parent="TurretMode/WeapSlot0"]
+[node name="KeyName" type="Label" parent="WeapSlot0"]
 margin_top = 3.0
 margin_right = 119.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPON SLOT 1: "
 
-[node name="MenuButton" parent="TurretMode/WeapSlot0" instance=ExtResource( 2 )]
+[node name="MenuButton" parent="WeapSlot0" instance=ExtResource( 2 )]
 margin_left = 151.0
 margin_right = 169.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "1"
+script = ExtResource( 5 )
 
-[node name="WeapSlot1" type="HBoxContainer" parent="TurretMode"]
-margin_top = 129.0
-margin_right = 210.0
-margin_bottom = 168.0
+[node name="WeapSlot1" type="HBoxContainer" parent="."]
+margin_left = 670.0
+margin_top = 507.0
+margin_right = 880.0
+margin_bottom = 546.0
 custom_constants/separation = 28
 
-[node name="KeyName" type="Label" parent="TurretMode/WeapSlot1"]
+[node name="KeyName" type="Label" parent="WeapSlot1"]
 margin_top = 3.0
 margin_right = 122.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPON SLOT 2: "
 
-[node name="MenuButton" parent="TurretMode/WeapSlot1" instance=ExtResource( 2 )]
+[node name="MenuButton" parent="WeapSlot1" instance=ExtResource( 2 )]
 margin_left = 150.0
 margin_right = 171.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "2"
+script = ExtResource( 5 )
 
-[node name="WeapSlot2" type="HBoxContainer" parent="TurretMode"]
-margin_top = 172.0
-margin_right = 210.0
-margin_bottom = 211.0
+[node name="WeapSlot2" type="HBoxContainer" parent="."]
+margin_left = 670.0
+margin_top = 550.0
+margin_right = 880.0
+margin_bottom = 589.0
 custom_constants/separation = 28
 
-[node name="KeyName" type="Label" parent="TurretMode/WeapSlot2"]
+[node name="KeyName" type="Label" parent="WeapSlot2"]
 margin_top = 3.0
 margin_right = 122.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPON SLOT 3: "
 
-[node name="MenuButton" parent="TurretMode/WeapSlot2" instance=ExtResource( 2 )]
+[node name="MenuButton" parent="WeapSlot2" instance=ExtResource( 2 )]
 margin_left = 150.0
 margin_right = 171.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "3"
+script = ExtResource( 5 )
 
-[node name="WeapSlot3" type="HBoxContainer" parent="TurretMode"]
-margin_top = 215.0
-margin_right = 210.0
-margin_bottom = 254.0
+[node name="WeapSlot3" type="HBoxContainer" parent="."]
+margin_left = 670.0
+margin_top = 593.0
+margin_right = 880.0
+margin_bottom = 632.0
 custom_constants/separation = 28
 
-[node name="KeyName" type="Label" parent="TurretMode/WeapSlot3"]
+[node name="KeyName" type="Label" parent="WeapSlot3"]
 margin_top = 3.0
 margin_right = 122.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPON SLOT 4: "
 
-[node name="MenuButton" parent="TurretMode/WeapSlot3" instance=ExtResource( 2 )]
+[node name="MenuButton" parent="WeapSlot3" instance=ExtResource( 2 )]
 margin_left = 150.0
 margin_right = 171.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "4"
+script = ExtResource( 5 )
 
-[node name="WeapSlot4" type="HBoxContainer" parent="TurretMode"]
-margin_top = 258.0
-margin_right = 210.0
-margin_bottom = 297.0
+[node name="WeapSlot4" type="HBoxContainer" parent="."]
+margin_left = 670.0
+margin_top = 636.0
+margin_right = 880.0
+margin_bottom = 675.0
 custom_constants/separation = 28
 
-[node name="KeyName" type="Label" parent="TurretMode/WeapSlot4"]
+[node name="KeyName" type="Label" parent="WeapSlot4"]
 margin_top = 3.0
 margin_right = 122.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "WEAPON SLOT 5: "
 
-[node name="MenuButton" parent="TurretMode/WeapSlot4" instance=ExtResource( 2 )]
+[node name="MenuButton" parent="WeapSlot4" instance=ExtResource( 2 )]
 margin_left = 150.0
 margin_right = 171.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "5"
+script = ExtResource( 5 )
 
-[node name="InventoryUI" type="HBoxContainer" parent="TurretMode"]
-margin_top = 301.0
-margin_right = 210.0
-margin_bottom = 340.0
-custom_constants/separation = 35
+[node name="InventoryUI" type="HBoxContainer" parent="."]
+margin_left = 407.0
+margin_top = 464.0
+margin_right = 617.0
+margin_bottom = 503.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="KeyName" type="Label" parent="TurretMode/InventoryUI"]
+[node name="KeyName" type="Label" parent="InventoryUI"]
 margin_top = 3.0
 margin_right = 103.0
 margin_bottom = 36.0
 custom_fonts/font = ExtResource( 1 )
 text = "INVENTORY UI: "
 
-[node name="MenuButton" parent="TurretMode/InventoryUI" instance=ExtResource( 2 )]
-margin_left = 138.0
-margin_right = 177.0
+[node name="MenuButton" parent="InventoryUI" instance=ExtResource( 2 )]
+margin_left = 107.0
+margin_right = 146.0
 margin_bottom = 39.0
+toggle_mode = true
 text = "TAB"
+script = ExtResource( 5 )

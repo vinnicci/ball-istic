@@ -190,7 +190,7 @@ crit_chance = 0.25
 fire_mode = 3
 recoil = -1000
 cam_shake_intensity = 10.0
-melee_damage = 7.0
+melee_damage = 72.0
 
 [node name="MuzzleParticles" parent="Muzzle" index="0"]
 process_material = SubResource( 3 )

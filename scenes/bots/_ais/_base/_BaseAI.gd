@@ -75,9 +75,6 @@ func set_level(level: Node) -> void:
 func _physics_process(_delta: float) -> void:
 	if enabled == false:
 		return
-	if (_check_if_valid_bot(_enemy) == true &&
-		_parent_node.state != Global.CLASS_BOT.State.WEAP_COMMIT):
-		$Rays/Target.look_at(_enemy.global_position)
 	match _current_act:
 		Action.NONE:
 			return
@@ -171,9 +168,8 @@ func engage(bot) -> void:
 	#engage attacker
 	if _check_if_valid_bot(bot) == false || _enemy == bot:
 		return
-	if _get_distance(bot, self) > _get_distance(_enemy, self):
-		return
-	_set_enemy(bot)
+	if _get_distance(self, bot) <= _get_distance(self, _enemy):
+		_set_enemy(bot)
 
 
 signal engaged
@@ -226,6 +222,7 @@ func _on_FleeEvaluate_timeout() -> void:
 	if _flee_routes.keys().size() != 0:
 		$Rays/Velocity.global_rotation = _flee_routes[_flee_routes.keys().max()].global_rotation
 	else:
+		$Rays/Target.look_at(_enemy.global_position)
 		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
 
 
@@ -369,6 +366,8 @@ func task_act_to_turret(task):
 		return
 	if _parent_node.state == Global.CLASS_BOT.State.ROLL:
 		_parent_node.switch_mode()
+		if _check_if_valid_bot(_enemy) == true:
+			$Rays/Target.look_at(_enemy.global_position)
 		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 
 
@@ -447,9 +446,10 @@ func task_act_shoot_enemy(task):
 	if _check_if_valid_bot(_enemy) == false:
 		task.failed()
 		return
+	$Rays/Target.look_at(_enemy.global_position)
+	$Rays/Target.force_raycast_update()
 	var ray_collider = $Rays/Target.get_collider()
 	if _valid_shooting_target(ray_collider) == true:
-		$Rays/Target.look_at(_enemy.global_position)
 		_parent_node.current_weapon.global_rotation = $Rays/Target.global_rotation
 		_parent_node.shoot_weapon()
 	task.succeed()
@@ -463,8 +463,7 @@ func _valid_shooting_target(ray_collider) -> bool:
 		is_instance_valid(ray_collider) == true &&
 		(ray_collider is Global.CLASS_LEVEL_WALL == false ||
 		ray_collider is Global.CLASS_LEVEL_RIGID == false) &&
-		(ray_collider is Global.CLASS_BOT &&
-		ray_collider.current_faction != _parent_node.current_faction))
+		(ray_collider is Global.CLASS_BOT))
 
 
 ####################

@@ -11,8 +11,6 @@
 [ext_resource path="res://scenes/bots/incinerator/IncineratorBot.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/bots/charger/ChargerBig.tscn" type="PackedScene" id=12]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
@@ -258,9 +256,6 @@ detection_range = 2000
 enemy_seek_dist = 4000
 max_shooting_dist = 4000
 
-[node name="Sniper" parent="Bots/SniperBot/Weapons" index="0"]
-z_index = 1
-
 [node name="SniperBot2" parent="Bots" index="6" instance=ExtResource( 10 )]
 position = Vector2( 4048, 79 )
 rotation = 3.2695
@@ -280,9 +275,6 @@ shape = SubResource( 1 )
 detection_range = 2000
 enemy_seek_dist = 4000
 max_shooting_dist = 4000
-
-[node name="Sniper" parent="Bots/SniperBot2/Weapons" index="0"]
-z_index = 1
 
 [node name="SniperBot3" parent="Bots" index="7" instance=ExtResource( 10 )]
 position = Vector2( -321, -571 )
@@ -304,9 +296,6 @@ detection_range = 2000
 enemy_seek_dist = 9000
 max_shooting_dist = 9000
 
-[node name="Sniper" parent="Bots/SniperBot3/Weapons" index="0"]
-z_index = 1
-
 [node name="SniperBot4" parent="Bots" index="8" instance=ExtResource( 10 )]
 position = Vector2( 837, -574 )
 rotation = 1.76817
@@ -327,13 +316,11 @@ detection_range = 2000
 enemy_seek_dist = 9000
 max_shooting_dist = 9000
 
-[node name="Sniper" parent="Bots/SniperBot4/Weapons" index="0"]
-z_index = 1
-
 [node name="ChargerBig" parent="Bots" index="9" instance=ExtResource( 12 )]
 position = Vector2( 4008, -254 )
-shield_cap = 200.0
-health_cap = 600.0
+shield_cap = 240.0
+shield_regen = 2.0
+health_cap = 480.0
 speed = 3200
 respawnable = false
 

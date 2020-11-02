@@ -13,8 +13,6 @@
 [ext_resource path="res://scenes/bots/spawner/BigFSpawner.tscn" type="PackedScene" id=11]
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=12]
 
-
-
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
 
@@ -185,8 +183,9 @@ weap_dmg_rate = 2.0
 
 [node name="BigFSpawner" parent="Bots" index="8" instance=ExtResource( 11 )]
 position = Vector2( 3039, 803 )
-shield_cap = 200.0
-health_cap = 800.0
+shield_cap = 480.0
+shield_regen = 2.0
+health_cap = 960.0
 weap_dmg_rate = 2.0
 respawnable = false
 

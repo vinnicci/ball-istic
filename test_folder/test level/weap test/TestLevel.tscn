@@ -1,28 +1,22 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/SniperBot.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/passives/transform speed/TransformSpeedII.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/passives/weapon heat capacity/WeaponHeatCapacityII.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateIII.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/weapons/pincer/Pincer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/weapons/dagger/Dagger.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=7]
-[ext_resource path="res://levels proper/3-5_area/Gift.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreenLow.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/weapons/rocket/Barrage.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=16]
-[ext_resource path="res://scenes/weapons/rocket/BarrageEco.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
-[ext_resource path="res://scenes/weapons/storm/Storm.tscn" type="PackedScene" id=20]
-[ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=21]
-[ext_resource path="res://scenes/weapons/blaster/AutoBlasterReflecting.tscn" type="PackedScene" id=22]
-[ext_resource path="res://scenes/weapons/mine launcher/MininukeMineLauncher.tscn" type="PackedScene" id=23]
 [ext_resource path="res://scenes/bots/slasher/Slasher.tscn" type="PackedScene" id=24]
 [ext_resource path="res://levels proper/1-4_secret/Slicer.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/bots/balladin/Balladin.tscn" type="PackedScene" id=27]
@@ -34,9 +28,6 @@ bounce = 0.5
 [sub_resource type="PhysicsMaterial" id=2]
 friction = 0.25
 bounce = 0.5
-
-[sub_resource type="CircleShape2D" id=3]
-resource_local_to_scene = true
 
 [node name="TestLevel" instance=ExtResource( 12 )]
 script = ExtResource( 18 )
@@ -59,25 +50,11 @@ position = Vector2( 700, -192 )
 [node name="Depot" parent="Access" index="1" instance=ExtResource( 10 )]
 position = Vector2( 323, -190 )
 
-[node name="Gift" parent="Access/Depot/Items" index="0" instance=ExtResource( 8 )]
+[node name="Dagger" parent="Access/Depot/Items" index="0" instance=ExtResource( 5 )]
 
-[node name="WeapDmgRateIII" parent="Access/Depot/Items" index="1" instance=ExtResource( 5 )]
+[node name="Pincer" parent="Access/Depot/Items" index="1" instance=ExtResource( 3 )]
 
-[node name="TransformSpeedII" parent="Access/Depot/Items" index="2" instance=ExtResource( 3 )]
-
-[node name="WeaponHeatCapacityII" parent="Access/Depot/Items" index="3" instance=ExtResource( 4 )]
-
-[node name="Barrage" parent="Access/Depot/Items" index="4" instance=ExtResource( 14 )]
-
-[node name="BarrageEco" parent="Access/Depot/Items" index="5" instance=ExtResource( 17 )]
-
-[node name="Storm" parent="Access/Depot/Items" index="6" instance=ExtResource( 20 )]
-
-[node name="Siren" parent="Access/Depot/Items" index="7" instance=ExtResource( 21 )]
-
-[node name="AutoBlasterReflecting" parent="Access/Depot/Items" index="8" instance=ExtResource( 22 )]
-
-[node name="MininukeMineLauncher" parent="Access/Depot/Items" index="9" instance=ExtResource( 23 )]
+[node name="PaladinHammer" parent="Access/Depot/Items" index="2" instance=ExtResource( 8 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -135,17 +112,11 @@ destructible = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Player" parent="Bots" index="3" instance=ExtResource( 15 )]
-position = Vector2( -2326, 664 )
+position = Vector2( -97, -238 )
 physics_material_override = SubResource( 2 )
 speed = 1200
 charge_force_mult = 1.0
 destructible = false
-
-[node name="Camera2D" parent="Bots/Player" index="6"]
-zoom = Vector2( 1, 1 )
-
-[node name="CollisionShape" parent="Bots/Player" index="9"]
-shape = SubResource( 3 )
 
 [node name="Slasher" parent="Bots" index="4" instance=ExtResource( 24 )]
 position = Vector2( 3282, 1375 )
@@ -162,6 +133,6 @@ position = Vector2( 2699, 1899 )
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )
 
-[editable path="Access/Depot"]
+[node name="ParallaxBG" parent="." index="5" instance=ExtResource( 4 )]
 
-[editable path="Bots/Player"]
+[editable path="Access/Depot"]

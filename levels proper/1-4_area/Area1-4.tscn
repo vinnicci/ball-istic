@@ -14,8 +14,6 @@
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=12]
 [ext_resource path="res://levels proper/main/Follow.tscn" type="PackedScene" id=13]
 
-
-
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
@@ -124,8 +122,9 @@ health_cap = 60.0
 position = Vector2( -1282, 4729 )
 rotation = -1.5708
 physics_material_override = SubResource( 1 )
-shield_cap = 120.0
-health_cap = 240.0
+shield_cap = 180.0
+shield_regen = 2.0
+health_cap = 300.0
 respawnable = false
 deployed = true
 

@@ -34,7 +34,7 @@ color_ramp = SubResource( 2 )
 script = ExtResource( 2 )
 description = "Stuns on critical hit."
 crit_chance = 0.3
-melee_damage = 18.0
+melee_damage = 36.0
 melee_crit_stun_time = 3.0
 
 [node name="SlotIcon" parent="." index="0"]
