@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -11,9 +11,8 @@
 [ext_resource path="res://scenes/weapons/heavy blaster/HeavyBlaster.tscn" type="PackedScene" id=9]
 [ext_resource path="res://levels proper/main/RandomPassiveI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/weapons/shield recharger/ShieldRecharger.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/passives/speed/SpeedI.tscn" type="PackedScene" id=12]
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=13]
-
-
 
 [node name="Checkpoint1-2" instance=ExtResource( 1 )]
 script = ExtResource( 8 )
@@ -47,7 +46,7 @@ position = Vector2( 322, 705 )
 
 [node name="ShieldRecharger" parent="Access/Depot/Items" index="1" instance=ExtResource( 11 )]
 
-[node name="RandomPassiveI" parent="Access/Depot/Items" index="2" instance=ExtResource( 10 )]
+[node name="SpeedI" parent="Access/Depot/Items" index="2" instance=ExtResource( 12 )]
 
 [node name="RandomPassiveI2" parent="Access/Depot/Items" index="3" instance=ExtResource( 10 )]
 

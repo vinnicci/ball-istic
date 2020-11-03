@@ -222,14 +222,14 @@ respawnable = false
 position = Vector2( 471, -3643 )
 shield_cap = 220.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 
 [node name="Charger2" parent="Bots" index="10" instance=ExtResource( 16 )]
 position = Vector2( 1472, -1361 )
 shield_cap = 220.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 
 [node name="SniperBot" parent="Bots" index="11" instance=ExtResource( 17 )]
@@ -275,7 +275,7 @@ position = Vector2( -62, 888 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
@@ -284,7 +284,7 @@ position = Vector2( 204, 884 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 

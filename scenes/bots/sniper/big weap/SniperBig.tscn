@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/weapons/_base/_BaseWeapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/bots/sniper/big weap/SniperBig.gd" type="Script" id=2]
 [ext_resource path="res://assets/weapons/tex_sniper.png" type="Texture" id=3]
 [ext_resource path="res://scenes/bots/sniper/big weap/SniperProjBig.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/weapons/sfx_sniper.wav" type="AudioStream" id=5]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0, 0.482143, 1 )
@@ -49,3 +50,6 @@ process_material = SubResource( 3 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 3 )
 offset = Vector2( 5, 0 )
+
+[node name="ShootingSound" parent="." index="6"]
+stream = ExtResource( 5 )

@@ -335,9 +335,8 @@ func _integrate_forces(pstate: Physics2DDirectBodyState) -> void:
 	#velocity
 	applied_force = Vector2(0,0)
 	if state == State.ROLL:
-		velocity = velocity.normalized()
-		velocity *= current_speed
-		applied_force = velocity
+		velocity = velocity.normalized() * current_speed
+		pstate.add_central_force(velocity)
 	velocity = Vector2(0,0)
 
 
@@ -366,19 +365,18 @@ func _apply_rolling_effects(delta: float) -> void:
 
 
 func _check_if_turret() -> bool:
-	var output
 	match state:
 		State.TO_TURRET, State.TURRET, State.WEAP_COMMIT:
-			output = true
+			return true
 		State.ROLL, State.TO_ROLL:
-			output = false
+			return false
 		State.DEAD, State.STUN:
 			match $StateMachine.before_stun:
 				State.TURRET, State.TO_TURRET, State.WEAP_COMMIT:
-					output = true
+					return true
 				State.TO_ROLL, State.ROLL:
-					output = false
-	return output
+					return false
+	return false
 
 
 func switch_mode():
@@ -572,7 +570,6 @@ func discharge_parry() -> void:
 func _clear_surrounding_proj() -> void:
 	var areas: Array = $DischargeRadius.get_overlapping_areas()
 	for area in areas:
-#		if area is Global.CLASS_PROJ:
 		if current_faction == area.shooter_faction():
 			continue
 		if area.has_node("Explosion") == true:

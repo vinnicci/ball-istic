@@ -217,20 +217,13 @@ func _connect_bots(lvl: Node) -> void:
 	for bot in lvl.get_node("Bots").get_children():
 		if bot.respawnable == false:
 			var bot_name = lvl.name + bot.name
-			if _temp_despawnable_bots.keys().size() != 0:
-				if _temp_despawnable_bots.keys().has(bot_name) == false:
-					pass
-				elif (_temp_despawnable_bots.keys().has(bot_name) &&
-					_temp_despawnable_bots[bot_name] == false):
-					bot.queue_free()
-					continue
 			if _saved_despawnable_bots.keys().has(bot_name) == false:
 				_saved_despawnable_bots[bot_name] = true
 			elif (_saved_despawnable_bots.keys().has(bot_name) &&
 				_saved_despawnable_bots[bot_name] == false):
-				bot.queue_free()
+				bot.free()
 				continue
-			bot.connect("dead", self, "_on_big_bot_dead", [lvl.name + bot.name])
+			bot.connect("dead", self, "_on_despawnable_bot_dead", [lvl.name + bot.name])
 
 
 func _connect_nav(lvl: Node) -> void:
@@ -329,7 +322,7 @@ func _load_quest(lvl: Node) -> void:
 var _temp_despawnable_bots: Dictionary = {}
 
 
-func _on_big_bot_dead(bot: String) -> void:
+func _on_despawnable_bot_dead(bot: String) -> void:
 	if (is_instance_valid(_player) == false ||
 		_player.state == Global.CLASS_BOT.State.DEAD):
 		return

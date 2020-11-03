@@ -6,10 +6,11 @@ var _enemies: Array
 
 
 func _ready() -> void:
-	$Bots/LongArtilleryBot.set_controller($Bots/ArtilleryController)
+	if has_node("Bots/ArtilleryController") == true:
+		$Bots/LongArtilleryBot.set_controller($Bots/ArtilleryController)
 	var allies: Array
 	for bot in $Bots.get_children():
-		if bot.destructible == false:
+		if bot.destructible == false || is_instance_valid(bot) == false:
 			continue
 		if bot.current_faction == Color(0,1,0):
 			allies.append(bot)
@@ -21,6 +22,7 @@ func _ready() -> void:
 func _on_bot_dead(bot) -> void:
 	if _enemies.has(bot) == true:
 		_enemies.erase(bot)
+	print(_enemies.size())
 	if _enemies.size() == 0:
 		emit_signal("quest_updated", "DACS", "A4")
 	._on_bot_dead(bot)

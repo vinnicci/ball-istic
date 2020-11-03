@@ -272,7 +272,7 @@ position = Vector2( -1526, 3380 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Charger2" parent="Bots" index="3" instance=ExtResource( 13 )]
@@ -280,7 +280,7 @@ position = Vector2( -1524, 3250 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 faction = Color( 0, 1, 0, 1 )
 
 [node name="HeavyFighter" parent="Bots" index="4" instance=ExtResource( 16 )]
@@ -312,7 +312,7 @@ position = Vector2( 1505, 3026 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 faction = Color( 0, 1, 0, 1 )
 
 [node name="FighterBig" parent="Bots" index="8" instance=ExtResource( 14 )]
@@ -344,7 +344,7 @@ position = Vector2( 381, 686 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 faction = Color( 0, 1, 0, 1 )
 
 [node name="SniperBot" parent="Bots" index="12" instance=ExtResource( 17 )]

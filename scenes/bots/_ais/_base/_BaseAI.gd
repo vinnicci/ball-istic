@@ -10,8 +10,8 @@ export (bool) var enabled: bool = true
 
 var _params_dict: Dictionary
 var _enemies: Array
-var _enemy: Global.CLASS_BOT setget , get_enemy
-var _master: Global.CLASS_BOT
+var _enemy: Node setget , get_enemy
+var _master: Node
 var _path_points: Array
 var _next_path_point
 var _flee_routes: Dictionary
@@ -24,7 +24,7 @@ enum Action {
 	SEEK_MASTER,
 	FLEE
 }
-var _parent_node: Global.CLASS_BOT
+var _parent_node: Node
 var _level_node: Node
 
 
@@ -47,14 +47,13 @@ func _ready() -> void:
 		ray.cast_to = Vector2(ray_len, 0)
 		ray.get_node("Pos").position = ray.cast_to
 		ray.global_rotation = deg2rad(i * 45)
-	$Rays/Velocity.cast_to = Vector2(ray_len, 0)
 	#export vars in dictionary
 	_params_dict["master_seek"] = master_seek_dist
 	_params_dict["enemy_seek"] = enemy_seek_dist
 	_params_dict["charge_break"] = charge_break
 
 
-func set_parent(new_parent: Global.CLASS_BOT):
+func set_parent(new_parent: Node):
 	_parent_node = new_parent
 	#ai has weapon heat dissipation advantage/cheat
 	if weap_heat_cooldown != 0:
@@ -64,7 +63,7 @@ func set_parent(new_parent: Global.CLASS_BOT):
 	_parent_node.connect("dead", self, "_on_parent_dead")
 
 
-func set_master(bot: Global.CLASS_BOT) -> void:
+func set_master(bot: Node) -> void:
 	_master = bot
 
 
@@ -107,14 +106,7 @@ func _check_if_valid_bot(bot: Node) -> bool:
 		bot.state != Global.CLASS_BOT.State.DEAD)
 
 
-func _clear_path_points() -> void:
-	_path_points = []
-	_next_path_point = null
-	_flee_routes = {}
-
-
 func _get_path_points(start: Vector2, end: Vector2) -> void:
-	_clear_path_points()
 	_path_points = _level_node.get_points(start, end)
 	_next_path_point = _path_points.front()
 
@@ -166,10 +158,12 @@ func _on_EnemyEvaluate_timeout() -> void:
 func engage(bot) -> void:
 	#if attacker's distance is less than the current enemy distance,
 	#engage attacker
-	if _check_if_valid_bot(bot) == false || _enemy == bot:
+	if (_check_if_valid_bot(_enemy) == true &&
+		_get_distance(self, _enemy) <= _get_distance(self, bot)):
 		return
-	if _get_distance(self, bot) <= _get_distance(self, _enemy):
-		_set_enemy(bot)
+	if _enemies.has(bot) == false:
+		_enemies.append(bot)
+	_set_enemy(bot)
 
 
 signal engaged
@@ -184,7 +178,7 @@ func _set_enemy(bot) -> void:
 		$FoundTarget.play()
 
 
-func _seek(target: Global.CLASS_BOT) -> void:
+func _seek(target: Node) -> void:
 	if _check_if_valid_bot(target) == false:
 		return
 	if (_path_points.size() == 0 ||
@@ -192,21 +186,22 @@ func _seek(target: Global.CLASS_BOT) -> void:
 		_get_path_points(global_position, target.global_position)
 	var seek_dist_min: int = 150
 	if global_position.distance_to(_next_path_point) > seek_dist_min:
-		$Rays/Velocity.look_at(_next_path_point)
-		_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+		_parent_node.velocity = _next_path_point - global_position
 		return
 	_path_points.pop_front()
 	if _path_points.size() == 0:
 		return
 	_next_path_point = _path_points.front()
-	$Rays/Velocity.look_at(_next_path_point)
-	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+	_parent_node.velocity = _next_path_point - global_position
+
+
+var _next_flee_point
 
 
 func _flee() -> void:
 	if _check_if_valid_bot(_enemy) == false:
 		return
-	_parent_node.velocity = Vector2(1,0).rotated($Rays/Velocity.global_rotation)
+	_parent_node.velocity = _next_flee_point - global_position
 
 
 func _on_FleeEvaluate_timeout() -> void:
@@ -218,12 +213,11 @@ func _on_FleeEvaluate_timeout() -> void:
 		if is_instance_valid(ray.get_collider()) == true:
 			continue
 		var flee_points: int = _enemy.global_position.distance_to(ray.get_node("Pos").global_position)
-		_flee_routes[flee_points] = ray
+		_flee_routes[flee_points] = ray.get_node("Pos").global_position
 	if _flee_routes.keys().size() != 0:
-		$Rays/Velocity.global_rotation = _flee_routes[_flee_routes.keys().max()].global_rotation
+		_next_flee_point = _flee_routes[_flee_routes.keys().max()]
 	else:
-		$Rays/Target.look_at(_enemy.global_position)
-		$Rays/Velocity.global_rotation = $Rays/Target.global_rotation - deg2rad(180)
+		_next_flee_point = -_enemy.global_position
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
@@ -305,6 +299,7 @@ func _convert_enum(state: String) -> int:
 		"TO_ROLL": output = Global.CLASS_BOT.State.TO_ROLL
 		"CHARGE_ROLL": output = Global.CLASS_BOT.State.CHARGE_ROLL
 		"WEAP_COMMIT": output = Global.CLASS_BOT.State.WEAP_COMMIT
+		"WEAP_COMMIT": output = Global.CLASS_BOT.State.WEAP_COMMIT
 		"STUN": output = Global.CLASS_BOT.State.STUN
 		"DEAD": output = Global.CLASS_BOT.State.DEAD
 	return output
@@ -384,7 +379,9 @@ func task_act_charge_roll(task):
 				_parent_node.charge_roll($Rays/Target.global_rotation)
 		"velocity":
 			if _next_path_point != null:
-				_parent_node.charge_roll($Rays/Velocity.global_rotation)
+				_parent_node.charge_roll((_next_path_point - global_position).angle())
+			elif _next_flee_point != null:
+				_parent_node.charge_roll((_next_flee_point - global_position).angle())
 	task.succeed()
 	return
 
@@ -403,10 +400,14 @@ func task_cond_is_charge_ready(task):
 func task_act_flee(task):
 	if _check_if_valid_bot(_enemy) == false:
 		$FleeEvaluate.stop()
+		for flee_ray in $FleeRays.get_children():
+			flee_ray.enabled = false
 		task.failed()
 		return
 	if $FleeEvaluate.is_stopped() == true:
 		_on_FleeEvaluate_timeout()
+		for flee_ray in $FleeRays.get_children():
+			flee_ray.enabled = true
 		$FleeEvaluate.start()
 	_current_act = Action.FLEE
 	task.succeed()

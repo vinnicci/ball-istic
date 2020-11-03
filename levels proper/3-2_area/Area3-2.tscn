@@ -17,8 +17,6 @@
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/level/hint/Hint.tscn" type="PackedScene" id=16]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 686, 25 )
 
@@ -54,8 +52,8 @@ rotation = 3.14159
 position = Vector2( 592, -1226 )
 
 [node name="Label" parent="Access/Hint/AccessUI" index="0"]
-text = "There are five cannons we have to disable. Just like ours, there should be a controller for each one. Destroying those controllers would be enough.
-Our surprise attack will begin once we made a hole on the wall up ahead."
+text = "We have to disable their cannons. Just like ours, there is a controller for each one. Destroying those controllers should be enough.
+Our attack will begin once you blow up the wall up ahead."
 
 [node name="Label2" parent="Access/Hint/AccessUI" index="1"]
 visible = false
@@ -162,7 +160,7 @@ position = Vector2( 467, -1589 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
@@ -171,7 +169,7 @@ position = Vector2( 615, -1587 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
@@ -180,7 +178,7 @@ position = Vector2( 804, -1564 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 
@@ -189,7 +187,7 @@ position = Vector2( 978, -1509 )
 shield_cap = 220.0
 shield_regen = 10.0
 health_cap = 220.0
-charge_dmg_rate = 1.0
+charge_dmg_rate = 1.2
 respawnable = false
 faction = Color( 0, 1, 0, 1 )
 

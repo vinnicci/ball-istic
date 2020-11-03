@@ -31,8 +31,7 @@ func _check_big_bots_arr_size() -> int:
 
 
 func _on_SpawnTimer_timeout() -> void:
-	if (is_instance_valid(_level_node.get_player()) == false ||
-		_check_big_bots_arr_size() == 0):
+	if _check_big_bots_arr_size() == 0:
 		return
 	_spawn_table.shuffle()
 	_spawned_bot = _spawn_table.front().instance()

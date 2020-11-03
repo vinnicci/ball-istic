@@ -59,7 +59,7 @@ onready var _keybinds: Dictionary = {
 		"button": $WeapSlot4/MenuButton
 	}
 }
-const CONFIG: String = "res://scenes/global/config/config.ini"
+const CONFIG: String = "user://config/config.ini"
 var config_file: ConfigFile = ConfigFile.new()
 
 
@@ -81,11 +81,23 @@ func _connect_buttons() -> void:
 
 func _load_config() -> void:
 	if config_file.load(CONFIG) != OK:
-		push_error("Config not found.")
-		get_tree().quit()
+		_init_ini_file()
 	for key in config_file.get_section_keys("keybinds"):
 		replace_action(key, config_file.get_value("keybinds", key))
 		update_ui_key(key)
+
+
+func _init_ini_file() -> void:
+	var dir: Directory = Directory.new()
+	var ini_file: File = File.new()
+	if dir.dir_exists("user://config/") == false:
+		dir.make_dir_recursive("user://config/")
+	ini_file.open(CONFIG, 2)
+	ini_file.close()
+	if config_file.load(CONFIG) == OK:
+		for key in _keybinds.keys():
+			config_file.set_value("keybinds", key, _keybinds[key]["default"])
+	save_config()
 
 
 func update_ui_key(key: String) -> void:

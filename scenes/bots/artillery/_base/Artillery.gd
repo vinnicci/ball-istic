@@ -18,5 +18,7 @@ func _on_Shoot_timeout() -> void:
 
 
 func set_controller(bot: Node) -> void:
+	if is_instance_valid(bot) == false:
+		return
 	_controller = bot
 	bot.get_node("AI").set_master(self)

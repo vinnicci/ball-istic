@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=2]
@@ -15,13 +15,12 @@
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=13]
 [ext_resource path="res://levels proper/main/RandomPassiveI.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/weapons/shotgun/Shotgun.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/passives/weapon damage rate/WeapDmgRateI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/weapons/repair nanobots/RepairNanobots.tscn" type="PackedScene" id=19]
 [ext_resource path="res://levels proper/0_hub/MainDoor.gd" type="Script" id=21]
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=22]
 [ext_resource path="res://scenes/bots/dummy/Dummy.tscn" type="PackedScene" id=25]
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrownLow.tscn" type="PackedScene" id=26]
-
-
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 400, 100 )
@@ -92,7 +91,7 @@ position = Vector2( -584, -926 )
 
 [node name="RepairNanobots" parent="Access/Depot/Items" index="1" instance=ExtResource( 19 )]
 
-[node name="RandomPassiveI" parent="Access/Depot/Items" index="2" instance=ExtResource( 14 )]
+[node name="WeapDmgRateI" parent="Access/Depot/Items" index="2" instance=ExtResource( 16 )]
 
 [node name="RandomPassiveI2" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
 

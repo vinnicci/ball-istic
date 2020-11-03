@@ -33,15 +33,18 @@ margin_top = 75.0
 margin_right = 247.0
 margin_bottom = 396.0
 custom_fonts/font = ExtResource( 4 )
-text = "Game created by:
-   Zethru B. a.k.a Vic Ben
+text = "Programming, Art, Design & Sound Effects:
+   Zethru Brandino a.k.a. Vic Ben
 
 
 Plugins:
    Visual Behavior Tree by fian46
 
 Font:
-   Lady Ice by Apostrophic Labs"
+   Lady Ice by Apostrophic Labs
+
+Tools:
+   Krita, Bfxr & Godot Engine"
 
 [node name="LinkYoutube" parent="." instance=ExtResource( 1 )]
 margin_left = 13.0
@@ -51,9 +54,9 @@ margin_bottom = 180.0
 text = "YT channel"
 
 [node name="LinkTwitter" parent="." instance=ExtResource( 1 )]
-margin_left = 120.0
+margin_left = 108.0
 margin_top = 141.0
-margin_right = 212.0
+margin_right = 200.0
 margin_bottom = 180.0
 text = "Twitter"
 
