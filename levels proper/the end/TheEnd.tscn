@@ -1,0 +1,124 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/ui/font_size_40.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://levels proper/the end/TheEnd.gd" type="Script" id=3]
+[ext_resource path="res://scenes/level/next zone/NextZone.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=7]
+resource_name = "0"
+length = 3.0
+
+[sub_resource type="Animation" id=4]
+resource_name = "1"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "This is the end.
+You've done great!" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 4.7, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "2"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "The game is far from finished.
+Follow my game dev journey or leave a feedback.
+Links in the credits." ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 5.7, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "3"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 4, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="TheEnd" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="Hub" parent="Access" index="0" instance=ExtResource( 4 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+anims/0 = SubResource( 7 )
+anims/1 = SubResource( 4 )
+anims/2 = SubResource( 5 )
+anims/3 = SubResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="6"]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" index="0"]
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer" index="1"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 252.0
+margin_right = 1280.0
+margin_bottom = 469.0
+rect_pivot_offset = Vector2( 640, 108 )
+custom_fonts/font = ExtResource( 1 )
+text = "The game is far from finished.
+Follow my game dev journey or leave a feedback.
+Links in the credits."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_started"]

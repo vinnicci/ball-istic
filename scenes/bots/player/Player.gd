@@ -80,9 +80,10 @@ func cap_current_vars() -> void:
 	current_health_cap = clamp(current_health_cap, 1, 9999)
 	current_health = clamp(current_health, 1, 9999)
 	current_speed = clamp(current_speed, 0, 2500)
-	current_transform_speed = clamp(current_transform_speed, 0, 1.0)
+	current_transform_speed = clamp(current_transform_speed, 0, 2)
 	set_current_charge_cooldown(current_charge_cooldown)
 	current_charge_force_mult = clamp(current_charge_force_mult, 0.1, 1.5)
+	current_dmg_resist = clamp(current_dmg_resist, 0, 1.0)
 	current_knockback_resist = clamp(current_knockback_resist, 0, 1.0)
 
 
@@ -101,7 +102,10 @@ var stopped: bool = false
 
 func _control_player() -> void:
 	if stopped == true:
+		$PlayerUI/WeaponSlots.visible = false
 		return
+	else:
+		$PlayerUI/WeaponSlots.visible = true
 	
 	#inventory
 	#can't close the ui if holding an item

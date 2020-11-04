@@ -15,7 +15,8 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
 func _ready() -> void:
+	pass
 #	Engine.time_scale = 0.3
-	for bot in $Bots.get_children():
-		if bot != get_player():
-			bot.get_node("AI").set_master(get_player())
+#	for bot in $Bots.get_children():
+#		if bot != get_player():
+#			bot.get_node("AI").set_master(get_player())

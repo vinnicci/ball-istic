@@ -2,6 +2,8 @@ extends "res://scenes/global/items/_base/_BaseItem.gd"
 
 
 export (float) var effect
+export (float) var effect2
+export (float) var effect3
 
 
 func apply_effect() -> void:
@@ -26,14 +28,15 @@ func _apply_health_cap() -> void:
 
 
 func _apply_resistance() -> void:
-	_parent_node.current_dmg_resist += effect*0.75
-	_parent_node.current_knockback_resist += effect
+	_parent_node.current_dmg_resist += effect
+	_parent_node.current_knockback_resist += effect2
+	_parent_node.current_shield_regen += effect3
 
 
 func _apply_shield_cap() -> void:
 	_parent_node.current_shield_cap += effect
 	_parent_node.set_current_shield(_parent_node.current_shield_cap)
-	_parent_node.current_shield_regen += (effect*0.1)
+	_parent_node.current_shield_regen += effect2
 
 
 func _apply_speed() -> void:

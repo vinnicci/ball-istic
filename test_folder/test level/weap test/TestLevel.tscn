@@ -1,20 +1,22 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/level/tileset/brown/TileMapBrown.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/weapons/pincer/Pincer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateII.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceII.tscn" type="PackedScene" id=3]
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/weapons/dagger/Dagger.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/passives/speed/SpeedII.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/level/tileset/brown/DoorBrown.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/level/tileset/metallic/TileMapMetallic.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/weapons/paladin's hammer/PaladinHammer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/passives/charge damage rate/ChargeDmgRateIII.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreenLow.tscn" type="PackedScene" id=13]
-[ext_resource path="res://scenes/weapons/siren/Siren.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/passives/charge force/ChargeForceIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/passives/speed/SpeedIII.tscn" type="PackedScene" id=17]
 [ext_resource path="res://test_folder/test level/weap test/TestLevel.gd" type="Script" id=18]
 [ext_resource path="res://scenes/level/vault/Vault.tscn" type="PackedScene" id=19]
 
@@ -43,13 +45,17 @@ position = Vector2( 700, -192 )
 [node name="Depot" parent="Access" index="1" instance=ExtResource( 10 )]
 position = Vector2( 323, -190 )
 
-[node name="Dagger" parent="Access/Depot/Items" index="0" instance=ExtResource( 5 )]
+[node name="ChargeDmgRateII" parent="Access/Depot/Items" index="0" instance=ExtResource( 2 )]
 
-[node name="Pincer" parent="Access/Depot/Items" index="1" instance=ExtResource( 3 )]
+[node name="SpeedII" parent="Access/Depot/Items" index="1" instance=ExtResource( 5 )]
 
-[node name="PaladinHammer" parent="Access/Depot/Items" index="2" instance=ExtResource( 8 )]
+[node name="ChargeForceII" parent="Access/Depot/Items" index="2" instance=ExtResource( 3 )]
 
-[node name="Siren" parent="Access/Depot/Items" index="3" instance=ExtResource( 14 )]
+[node name="ChargeDmgRateIII" parent="Access/Depot/Items" index="3" instance=ExtResource( 8 )]
+
+[node name="SpeedIII" parent="Access/Depot/Items" index="4" instance=ExtResource( 17 )]
+
+[node name="ChargeForceIII" parent="Access/Depot/Items" index="5" instance=ExtResource( 14 )]
 
 [node name="Vault" parent="Access" index="2" instance=ExtResource( 19 )]
 position = Vector2( 692, 295 )
@@ -152,7 +158,7 @@ destructible = false
 faction = Color( 0, 1, 0, 1 )
 
 [node name="Player" parent="Bots" index="8" instance=ExtResource( 15 )]
-position = Vector2( -3583, 4039 )
+position = Vector2( 349, 91 )
 
 [node name="Camera2D" parent="." index="4"]
 position = Vector2( 79, -4 )

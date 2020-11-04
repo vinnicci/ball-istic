@@ -25,3 +25,8 @@ func _on_bot_dead(bot) -> void:
 	if _enemies.size() == 0:
 		emit_signal("quest_updated", "DACS", "A5")
 	._on_bot_dead(bot)
+
+
+func _on_Secret_body_entered(body: Node) -> void:
+	if body is Global.CLASS_PLAYER:
+		emit_signal("quest_updated", "SECRETS", name)

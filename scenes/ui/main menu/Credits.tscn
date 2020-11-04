@@ -33,18 +33,21 @@ margin_top = 75.0
 margin_right = 247.0
 margin_bottom = 396.0
 custom_fonts/font = ExtResource( 4 )
-text = "Programming, Art, Design & Sound Effects:
+text = "Programming, Art and Game Design:
    Zethru Brandino a.k.a. Vic Ben
 
 
-Plugins:
+Plugin:
    Visual Behavior Tree by fian46
 
 Font:
    Lady Ice by Apostrophic Labs
 
 Tools:
-   Krita, Bfxr & Godot Engine"
+   Krita, Bfxr and Godot Engine"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LinkYoutube" parent="." instance=ExtResource( 1 )]
 margin_left = 13.0

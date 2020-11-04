@@ -40,7 +40,8 @@ var scenes: Dictionary = {
 	"Checkpoint3-2": preload("res://levels proper/3-2_checkpoint/Checkpoint3-2.tscn"),
 	"Area3-5": preload("res://levels proper/3-5_area/Area3-5.tscn"),
 	"Area3Final": preload("res://levels proper/3_area_final/Area3Final.tscn"),
-	"Secret3-3": preload("res://levels proper/3-3_secret/Secret3-3.tscn")
+	"Secret3-3": preload("res://levels proper/3-3_secret/Secret3-3.tscn"),
+	"TheEnd": preload("res://levels proper/the end/TheEnd.tscn")
 }
 var _saved_player: Dictionary = {
 	"Items": [],
@@ -167,10 +168,10 @@ func _on_scene_changed_deferred(new_lvl: Node, spawn: String) -> void:
 	_current_scene = new_lvl
 	$CanvasLayer/AreaName.text = _current_scene.disp_name
 	_connect_level_components(_current_scene)
-	_load_quest(_current_scene)
 	_current_scene.get_node("Bots").add_child(player)
 	add_child(_current_scene)
 	player.position = _current_scene.get_node(spawn).global_position
+	_load_quest(_current_scene)
 	_load_saved_paths(_current_scene)
 	_resume(player)
 
@@ -269,6 +270,10 @@ var _quest_dict: Dictionary = {
 	"Area3-1": {
 		"Script": preload("res://levels proper/3-1_area/Area3-1.gd"),
 		"Quest": "DACS"
+	},
+	"TheEnd": {
+		"Script": preload("res://levels proper/the end/TheEnd.gd"),
+		"Quest": "SECRETS"
 	}
 }
 
@@ -278,6 +283,10 @@ func _set_info(lvl):
 		_pass_info_to_lvl(lvl, _quest_dict["Hub"])
 	elif lvl is _quest_dict["Area3-1"]["Script"]:
 		_pass_info_to_lvl(lvl, _quest_dict["Area3-1"])
+	elif lvl is _quest_dict["TheEnd"]["Script"]:
+		_pass_info_to_lvl(lvl, _quest_dict["TheEnd"])
+		lvl.set_parent(self)
+		stop_player(true)
 
 
 func _pass_info_to_lvl(lvl: Node, dict: Dictionary) -> void:
@@ -297,14 +306,17 @@ func _on_quest_updated(quest_key: String, val_name: String) -> void:
 	_saved_quests[quest_key].append(val_name)
 	match quest_key:
 		"KEYS":
-			$CanvasLayer/StatusLabel.text = "KEY OBTAINED"
-			if $Anim.current_animation != "destroyed":
-				$Anim.play("objective")
+			_play_objective_anim("KEY OBTAINED")
 		"DACS":
-			$CanvasLayer/StatusLabel.text = ("CANNONS DISABLED: %s/5" %
-				_saved_quests["DACS"].size())
-			if $Anim.current_animation != "destoyed":
-				$Anim.play("objective")
+			_play_objective_anim("CANNONS DISABLED: %s/5" % _saved_quests["DACS"].size())
+		"SECRETS":
+			_play_objective_anim("HIDDEN AREA DISCOVERED")
+
+
+func _play_objective_anim(text: String) -> void:
+	$CanvasLayer/StatusLabel.text = text
+	if $Anim.current_animation != "destroyed":
+		$Anim.queue("objective")
 
 
 func _load_quest(lvl: Node) -> void:

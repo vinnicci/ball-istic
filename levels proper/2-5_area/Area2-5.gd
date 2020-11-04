@@ -2,10 +2,14 @@ extends "res://scenes/level/_base/_BaseLevel.gd"
 
 
 onready var _spawns: Array = [$Spawn, $Spawn2]
-onready var _big_bots: = [$Bots/BigCSpawner]
+onready var _big_bots: Array
 
 
 func _ready() -> void:
+	for bot in $Bots.get_children():
+		if bot.current_faction != Color(1,0,0) || bot.destructible == false:
+			continue
+		_big_bots.append(bot)
 	for spawn in _spawns:
 		spawn.set_level(self)
 		spawn.set_big_bots(_big_bots)

@@ -10,7 +10,9 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ResistanceIII" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-effect = 1.0
+effect = 0.8
+effect2 = 1.0
+effect3 = 12.5
 
 [node name="SlotIcon" parent="." index="0"]
 self_modulate = Color( 1, 0.647059, 0.145098, 1 )
