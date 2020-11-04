@@ -63,6 +63,13 @@ margin_right = 200.0
 margin_bottom = 180.0
 text = "Twitter"
 
+[node name="LinkItch" parent="." instance=ExtResource( 1 )]
+margin_left = 174.0
+margin_top = 141.0
+margin_right = 266.0
+margin_bottom = 180.0
+text = "Itch"
+
 [node name="Back" parent="." instance=ExtResource( 1 )]
 margin_top = 580.0
 margin_right = 74.0
@@ -71,4 +78,5 @@ custom_fonts/font = ExtResource( 3 )
 text = "<BACK"
 [connection signal="pressed" from="LinkYoutube" to="." method="_on_LinkYoutube_pressed"]
 [connection signal="pressed" from="LinkTwitter" to="." method="_on_LinkTwitter_pressed"]
+[connection signal="pressed" from="LinkItch" to="." method="_on_LinkItch_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_Back_pressed"]

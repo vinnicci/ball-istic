@@ -10,7 +10,7 @@ load_path = "res://.import/tex_passive_circle.png-70403aab7d0df4dbfa6f14ba2ef6b5
 
 [node name="ResistanceII" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-effect = 0.4
+effect = 0.37
 effect2 = 0.5
 effect3 = 6.5
 

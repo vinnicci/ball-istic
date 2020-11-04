@@ -12,17 +12,18 @@ func _ready() -> void:
 
 
 onready var door: = $Nav/BarredGate
-var destroyed_bots: Array
+var neutralized_area: Array
 
 
-func set_quest(i_destroyed_bots: Array):
-	destroyed_bots = i_destroyed_bots
+func set_quest(i_neutralized_area: Array):
+	neutralized_area = i_neutralized_area
 
 
 func _on_BarredDoorDisp_body_entered(body: Node) -> void:
 	if body is Global.CLASS_PLAYER:
 		door.open()
-		$CanvasLayer/GateDisp.text = "ENEMY CANNONS DISABLED: %s/5" % destroyed_bots.size()
+		$CanvasLayer/GateDisp.text = ("ENEMY ARTILLERY AREAS NEUTRALIZED: %s/4" %
+			neutralized_area.size())
 		$CanvasLayer/GateDisp.visible = true
 
 

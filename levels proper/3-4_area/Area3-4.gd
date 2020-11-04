@@ -22,7 +22,6 @@ func _ready() -> void:
 func _on_bot_dead(bot) -> void:
 	if _enemies.has(bot) == true:
 		_enemies.erase(bot)
-	print(_enemies.size())
 	if _enemies.size() == 0:
-		emit_signal("quest_updated", "DACS", "A4")
+		emit_signal("quest_updated", "DACS", "A3")
 	._on_bot_dead(bot)

@@ -14,3 +14,7 @@ func _on_LinkYoutube_pressed() -> void:
 
 func _on_LinkTwitter_pressed() -> void:
 	OS.shell_open("https://twitter.com/VicBen56028131")
+
+
+func _on_LinkItch_pressed() -> void:
+	OS.shell_open("https://vinnicci.itch.io/")

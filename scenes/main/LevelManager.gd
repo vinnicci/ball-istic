@@ -308,7 +308,7 @@ func _on_quest_updated(quest_key: String, val_name: String) -> void:
 		"KEYS":
 			_play_objective_anim("KEY OBTAINED")
 		"DACS":
-			_play_objective_anim("CANNONS DISABLED: %s/5" % _saved_quests["DACS"].size())
+			_play_objective_anim("AREA NEUTRALIZED: %s/4" % _saved_quests["DACS"].size())
 		"SECRETS":
 			_play_objective_anim("HIDDEN AREA DISCOVERED")
 

@@ -11,6 +11,7 @@ func _ready() -> void:
 	$AnimationPlayer.queue("1")
 	$AnimationPlayer.queue("2")
 	$AnimationPlayer.queue("3")
+	$AnimationPlayer.queue("4")
 
 
 func set_quest(secrets_found: Array) -> void:
@@ -23,10 +24,10 @@ func set_parent(lvl_mngr: Node) -> void:
 
 func _on_AnimationPlayer_animation_started(anim_name: String) -> void:
 	match anim_name:
-		"3": $CanvasLayer/Label.text = ("Thank you for playing.\nHidden Areas Discovered: %s/12" %
+		"4": $CanvasLayer/Label.text = ("Thank you for playing.\nHidden areas discovered: %s/12" %
 			_secrets_found.size())
 
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	match anim_name:
-		"3": _lvl_mngr.emit_signal("scene_changed", "Menu")
+		"4": _lvl_mngr.emit_signal("scene_changed", "Menu")

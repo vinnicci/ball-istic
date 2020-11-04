@@ -9,6 +9,6 @@ func set_level(lvl_node) -> void:
 
 
 func open() -> void:
-	if _level_node.destroyed_bots.size() != 5:
+	if _level_node.neutralized_area.size() != 4:
 		return
 	.open()

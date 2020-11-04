@@ -52,8 +52,7 @@ rotation = 3.14159
 position = Vector2( 592, -1226 )
 
 [node name="Label" parent="Access/Hint/AccessUI" index="0"]
-text = "We have to disable their cannons. Just like ours, there is a controller for each one. Destroying those controllers should be enough.
-Our attack will begin once you blow up the wall up ahead."
+text = "Our attack will begin once you blow up the wall up ahead."
 
 [node name="Label2" parent="Access/Hint/AccessUI" index="1"]
 visible = false

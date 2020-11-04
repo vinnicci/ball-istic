@@ -17,7 +17,8 @@ _global_script_class_icons={
 
 config/name="Ball-istic Bots"
 run/main_scene="res://levels proper/main/GameDemo.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://assets/ui/tex_loading_screen.png"
+config/icon="res://assets/ui/tex_icon.png"
 
 [autoload]
 
@@ -28,6 +29,7 @@ BTDebugServer="*res://addons/btree/script/bt_debug_server.gd"
 
 window/size/width=1280
 window/size/height=720
+window/size/fullscreen=true
 window/vsync/use_vsync=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"

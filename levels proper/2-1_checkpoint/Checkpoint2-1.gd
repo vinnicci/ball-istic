@@ -21,5 +21,5 @@ func _on_bot_dead(body) -> void:
 
 func _on_Destructible_path_found() -> void:
 	if ($Nav/Secret.visible == true && $Nav/Secret2.visible == true &&
-		$Nav/Secret3.visible == false):
+		$Nav/Secret3.visible == false && has_node("Bots/ExplosiveDummyInv") == true):
 		$Bots/Explosive/AI.engage($Bots/ExplosiveDummyInv)
