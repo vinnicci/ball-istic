@@ -12,8 +12,6 @@
 [ext_resource path="res://scenes/bots/shotgunner/Shotgunner.tscn" type="PackedScene" id=10]
 [ext_resource path="res://levels proper/main/Follow.tscn" type="PackedScene" id=11]
 
-
-
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 120, 25 )
 

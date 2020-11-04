@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels proper/3-1_checkpoint/Checkpoint3-1.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/weapons/phaser/Phaser.tscn" type="PackedScene" id=12]
 [ext_resource path="res://levels proper/main/RandomWeaponSecretIII.tscn" type="PackedScene" id=13]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=14]
 
 [node name="Checkpoint3-1" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -58,5 +59,7 @@ position = Vector2( 328, 1086 )
 
 [node name="Dummy3" parent="Bots" index="2" instance=ExtResource( 5 )]
 position = Vector2( -57, 1089 )
+
+[node name="ParallaxBG" parent="." index="5" instance=ExtResource( 14 )]
 
 [editable path="Access/Depot"]

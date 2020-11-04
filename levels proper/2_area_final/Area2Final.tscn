@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/level/tileset/green/TileMapGreen.tscn" type="PackedScene" id=2]
@@ -11,12 +11,16 @@
 [ext_resource path="res://scenes/level/bot station/BotStation.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/level/depot/Depot.tscn" type="PackedScene" id=10]
 [ext_resource path="res://levels proper/main/RandomWeaponSecretII.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/bots/player/Player.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/weapons/sniper/Sniper.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/passives/shield capacity/ShieldCapacityIII.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/passives/health capacity/HealthCapacityIII.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/bots/_ais/simple fleeing ai/SimpleFleeingAI.tscn" type="PackedScene" id=17]
+[ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CircleShape2D" id=1]
+resource_local_to_scene = true
+
+[sub_resource type="CircleShape2D" id=4]
 resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -82,14 +86,23 @@ faction = Color( 0, 1, 0, 1 )
 [node name="CollisionShape" parent="Bots/Explosive" index="8"]
 shape = SubResource( 1 )
 
-[node name="ExplosiveDummy" parent="Bots" index="1" instance=ExtResource( 8 )]
-position = Vector2( 2558, -32 )
-shield_cap = 20.0
-health_cap = 20.0
+[node name="Explosion" parent="Bots/Explosive" index="9"]
+collision_mask = 35
+
+[node name="ExplosiveDummyInv" parent="Bots" index="1" instance=ExtResource( 8 )]
+visible = false
+position = Vector2( 2558, -210 )
+collision_layer = 32
+collision_mask = 0
 respawnable = false
 
-[node name="AI" parent="Bots/ExplosiveDummy" index="12" instance=ExtResource( 17 )]
-enabled = false
+[node name="CollisionShape" parent="Bots/ExplosiveDummyInv" index="8"]
+shape = SubResource( 4 )
+
+[node name="Explosion" parent="Bots/ExplosiveDummyInv" index="9"]
+collision_mask = 2
+
+[node name="Player" parent="Bots" index="2" instance=ExtResource( 12 )]
 
 [node name="ChargeArea" type="Area2D" parent="." index="5"]
 position = Vector2( 896, 690 )
@@ -107,8 +120,12 @@ shape = SubResource( 3 )
 position = Vector2( -334, 192 )
 rotation = 1.5708
 shape = SubResource( 3 )
+
+[node name="ParallaxBG" parent="." index="6" instance=ExtResource( 16 )]
 [connection signal="body_entered" from="ChargeArea" to="." method="_on_ChargeArea_body_entered"]
 
 [editable path="Access/Depot"]
 
 [editable path="Bots/Explosive"]
+
+[editable path="Bots/ExplosiveDummyInv"]

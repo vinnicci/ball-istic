@@ -8,6 +8,7 @@ func _ready() -> void:
 	$Nav/Destructible.set_level(self)
 	$Nav/Destructible.set_hidden($Nav/Secret)
 	$Nav/BarredGate.set_level(self)
+	$Bots/Explosive.connect("body_entered", self, "_on_Explosive_body_entered")
 
 
 onready var door: = $Nav/BarredGate
@@ -30,11 +31,12 @@ func _on_BarredDoorDisp_body_exited(body: Node) -> void:
 		$CanvasLayer/GateDisp.visible = false
 
 
+func _on_Explosive_body_entered(body: Node) -> void:
+	if body is Global.CLASS_PLAYER && $Nav/Secret.visible == false:
+		$Bots/Explosive/AI.engage($Bots/ExplosiveDummyInv)
+
+
 func _on_bot_dead(body) -> void:
-	if body == $Bots/ExplosiveDummy:
+	if body == $Bots/ExplosiveDummyInv:
 		$Nav/Destructible.destructible = true
 	._on_bot_dead(body)
-
-
-func _on_Secret_visibility_changed() -> void:
-	$Bots/ExplosiveDummy.queue_free()

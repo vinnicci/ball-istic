@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scenes/ui/font_size_25.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/level/_base/_BaseLevel.tscn" type="PackedScene" id=2]
@@ -15,19 +15,18 @@
 [ext_resource path="res://scenes/bots/charger/Charger.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scenes/bots/fighter/FighterBig.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/bots/heavy fighter/HeavyFighter.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/bots/_ais/charger ai/ChargerAI.tscn" type="PackedScene" id=16]
 [ext_resource path="res://levels proper/main/ParallaxBG.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/bots/dummy/ExplosiveDummy.tscn" type="PackedScene" id=18]
 [ext_resource path="res://scenes/bots/self destruct/Explosive.tscn" type="PackedScene" id=19]
-[ext_resource path="res://levels proper/3-1_area/Explosive.gd" type="Script" id=20]
-
-
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.25
 bounce = 0.5
 
 [sub_resource type="CircleShape2D" id=2]
+resource_local_to_scene = true
+
+[sub_resource type="CircleShape2D" id=4]
 resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -192,10 +191,6 @@ faction = Color( 0, 1, 0, 1 )
 
 [node name="Explosive" parent="Bots" index="16" instance=ExtResource( 19 )]
 position = Vector2( 1450, -970 )
-script = ExtResource( 20 )
-shield_cap = 100.0
-health_cap = 100.0
-charge_force_mult = 0.5
 faction = Color( 0, 1, 0, 1 )
 
 [node name="CollisionShape" parent="Bots/Explosive" index="8"]
@@ -216,14 +211,18 @@ shield_cap = 100.0
 health_cap = 100.0
 faction = Color( 0, 1, 0, 1 )
 
-[node name="ExplosiveDummy" parent="Bots" index="19" instance=ExtResource( 18 )]
+[node name="ExplosiveDummyInv" parent="Bots" index="19" instance=ExtResource( 18 )]
 visible = false
 position = Vector2( 3175, 498 )
 collision_layer = 32
 collision_mask = 0
+respawnable = false
 
-[node name="AI" parent="Bots/ExplosiveDummy" index="12" instance=ExtResource( 16 )]
-enabled = false
+[node name="CollisionShape" parent="Bots/ExplosiveDummyInv" index="8"]
+shape = SubResource( 4 )
+
+[node name="Explosion" parent="Bots/ExplosiveDummyInv" index="9"]
+collision_mask = 2
 
 [node name="BarredDoorDisp" type="Area2D" parent="." index="5"]
 position = Vector2( 386, -1302 )
@@ -246,8 +245,9 @@ __meta__ = {
 }
 
 [node name="ParallaxBG" parent="." index="7" instance=ExtResource( 17 )]
-[connection signal="visibility_changed" from="Nav/Secret" to="." method="_on_Secret_visibility_changed"]
 [connection signal="body_entered" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_entered"]
 [connection signal="body_exited" from="BarredDoorDisp" to="." method="_on_BarredDoorDisp_body_exited"]
 
 [editable path="Bots/Explosive"]
+
+[editable path="Bots/ExplosiveDummyInv"]
